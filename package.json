@@ -1,0 +1,57 @@
+{
+  "name": "ionic-conference-app",
+  "description": "Ionic Conference App",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/driftyco/ionic-conference-app.git"
+  },
+  "dependencies": {
+    "angular2": "2.0.0-beta.16",
+    "es6-shim": "^0.35.0",
+    "ionic-angular": "2.0.0-beta.6-201605132240",
+    "ionic-native": "^1.1.0",
+    "ionicons": "3.0.0",
+    "rxjs": "5.0.0-beta.2",
+    "body-parser": "^1.15.0",
+    "compression": "^1.6.1",
+    "cors": "^2.7.1",
+    "es6-promise": "3.0.2",
+    "express": "^4.13.4",
+    "ionic-framework": "2.0.0-beta.1",
+    "reflect-metadata": "0.1.2",
+     "zone.js": "0.5.14"
+  },
+  "devDependencies": {
+    "del": "2.2.0",
+    "gulp": "3.9.1",
+    "gulp-watch": "4.3.5",
+    "ionic-gulp-browserify-typescript": "^1.1.0",
+    "ionic-gulp-fonts-copy": "^1.0.0",
+    "ionic-gulp-html-copy": "^1.0.0",
+    "ionic-gulp-sass-build": "^1.0.0",
+    "ionic-gulp-scripts-copy": "^1.0.1",
+    "run-sequence": "1.1.5"
+  },
+  "cordovaPlugins": [
+    "cordova-plugin-whitelist",
+    "cordova-plugin-device",
+    "cordova-plugin-console",
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-statusbar",
+    "ionic-plugin-keyboard",
+    
+    {
+      "locator": "https://github.com/VersoSolutions/CordovaClipboard",
+      "id": "com.verso.cordova.clipboard"
+    },
+    {
+      "locator": "https://github.com/apache/cordova-plugin-splashscreen.git",
+      "id": "cordova-plugin-splashscreen"
+    }
+  ],
+  "cordovaPlatforms": [
+    "ios",
+    "android"
+  ]
+}
