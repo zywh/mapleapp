@@ -14,7 +14,7 @@ import {ProjectsPage} from './pages/projects/projects';
 import {SchoolSearchPage} from './pages/school-search/school-search';
 import {AboutPage} from './pages/about/about';
 import {HomePage} from './pages/home/home';
-import {MapleConfig} from './providers/maple-rest-data/maple-config';
+import {MapleConf} from './providers/maple-rest-data/maple-config';
 
 interface PageObj {
   title: string;
@@ -60,7 +60,8 @@ class ConferenceApp {
     { title: 'Login', component: LoginPage, icon: 'log-in' },
     { title: 'Signup', component: SignupPage, icon: 'person-add' }
   ];
-  rootPage: any = TutorialPage;
+  //rootPage: any = TutorialPage;
+  rootPage: any = ProjectsPage;
 
   constructor(
     private events: Events,
