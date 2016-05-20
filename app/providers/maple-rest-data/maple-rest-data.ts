@@ -1,8 +1,9 @@
 import {Injectable} from 'angular2/core';
 import {Http} from 'angular2/http';
 import 'rxjs/add/operator/map';
+import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
 
-let mapleRestHost = "http://m.maplecity.com.cn/";
+//let mapleRestHost = "http://m.maplecity.com.cn/";
 /*
   Generated class for the MapleRestData provider.
 
@@ -24,7 +25,7 @@ export class MapleRestData {
 
   load(restURL, parms: Object) {
    
-    let dataURL = mapleRestHost + restURL;
+    let dataURL = 'http://m.maplecity.com.cn/' + restURL;
     //let body = "parms";
 
     let str = [];

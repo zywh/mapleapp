@@ -77,7 +77,7 @@ class ConferenceApp {
     });
 
     // load the conference data
-    confData.load();
+    //confData.load();
 
     // decide which menu items should be hidden by current login status stored in local storage
     this.userData.hasLoggedIn().then((hasLoggedIn) => {

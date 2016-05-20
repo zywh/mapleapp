@@ -5,8 +5,8 @@ import {Http, Headers, RequestOptions} from 'angular2/http';
 import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
 
 //projects: Object;
-let url =  MAPLECONF.restHost +  'index.php?r=projects/getProjects';
 
+var url =  'index.php?r=projects/getProjects';
 //let projects = {};
 @Page({
     templateUrl: 'build/pages/projects/projects.html'
@@ -15,8 +15,8 @@ export class ProjectsPage implements OnInit {
     private nav;
     //public MapleRestData;
     private parms = {};
-    s1 = "Test dfsdafasdfasd";
-    s2 = "Test2";
+    s1 = this.parms.id;
+    s2 = this.parms.type;
     //projects = {name: "Projectname", summary: "fsdfdsfsdfsdfsfsd"};
     projects: Object;
 
@@ -35,17 +35,16 @@ export class ProjectsPage implements OnInit {
 
 
     ngOnInit() {
-        this.getResult(url,this.parms);
+        this.getResult('index.php?r=projects/getProjects',this.parms);
         //this.getResult();
     }
 
-    getResult(restURL, parms) {
-    //getResult() {
-
-        //let result: Object;
-        //this.mapleRestData.load(url, this.parms).then(projects => this.projects = projects);
+    getResult(url, parms) {
+   
+        this.mapleRestData.load(url, parms).then(projects => this.projects = projects);
         //this.mapleRestData.projectStatic().then(projects => this.projects = projects);
-         this.projects = {id: "1", name: "fsdfasdfas"};
+         //this.projects = {id: "Static ID from function", name: "Static Name from function"};
+         console.log(parms);
         
         //return result;
     }
