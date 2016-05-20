@@ -15,8 +15,7 @@ export class ProjectsPage implements OnInit {
     private nav;
     //public MapleRestData;
     private parms = {};
-    s1 = this.parms.id;
-    s2 = this.parms.type;
+    
     //projects = {name: "Projectname", summary: "fsdfdsfsdfsdfsfsd"};
     projects: Object;
 
@@ -36,17 +35,16 @@ export class ProjectsPage implements OnInit {
 
     ngOnInit() {
         this.getResult('index.php?r=projects/getProjects',this.parms);
-        //this.getResult();
     }
 
     getResult(url, parms) {
    
-        this.mapleRestData.load(url, parms).then(projects => this.projects = projects);
+        this.mapleRestData.load(url, parms).then(projects => this.projects = projects); //This generate projects type is not defined error
         //this.mapleRestData.projectStatic().then(projects => this.projects = projects);
-         //this.projects = {id: "Static ID from function", name: "Static Name from function"};
-         console.log(parms);
+
+    // this.projects = {id: "Static ID from function", name: "Static Name from function"}; //This works
         
-        //return result;
+       
     }
 
 
