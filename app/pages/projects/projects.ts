@@ -6,7 +6,7 @@ import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
 
 //projects: Object;
 
-var url =  'index.php?r=projects/getProjects';
+
 //let projects = {};
 @Page({
     templateUrl: 'build/pages/projects/projects.html'
