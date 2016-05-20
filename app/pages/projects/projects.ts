@@ -2,10 +2,10 @@ import {Page, NavController, NavParams} from 'ionic-angular';
 import {OnInit} from 'angular2/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {Http, Headers, RequestOptions} from 'angular2/http';
-import {MapleConfig} from '../../providers/maple-rest-data/maple-config';
+//import {MapleConfig} from '../../providers/maple-rest-data/maple-config';
 
 //projects: Object;
-let dataURL = MapleConfig.restHost + 'index.php?r=projects/getProjects';
+let restURL =  'index.php?r=projects/getProjects';
 //let projects = {};
 @Page({
     templateUrl: 'build/pages/projects/projects.html'
@@ -34,15 +34,15 @@ export class ProjectsPage implements OnInit {
 
 
     ngOnInit() {
-        this.getResult(dataURL,this.parms);
+        this.getResult(restURL,this.parms);
         //this.getResult();
     }
 
-    getResult(dataURL, parms) {
+    getResult(restURL, parms) {
     //getResult() {
 
         //let result: Object;
-        //this.mapleRestData.findAll(dataURL, this.parms).then(projects => this.projects = projects);
+        //this.mapleRestData.load(restURL, this.parms).then(projects => this.projects = projects);
         //this.mapleRestData.projectStatic().then(projects => this.projects = projects);
          this.projects = {id: "1", name: "fsdfasdfas"};
         
