@@ -1,7 +1,9 @@
 import {Injectable} from 'angular2/core';
-import {Http} from 'angular2/http';
+//import {Http} from 'angular2/http';
+import { Http, Headers,RequestOptions } from 'angular2/http';
 import 'rxjs/add/operator/map';
 import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
+import {Observable} from 'rxjs/Observable';
 
 //let mapleRestHost = "http://m.maplecity.com.cn/";
 /*
@@ -29,7 +31,7 @@ export class MapleRestData {
     let body = JSON.stringify({ parms});
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    let url = this.dataURL ;
+    let url = dataURL ;
     //let url = "http://m.maplecity.com.cn/test/hero.json"
     //let body = parmtemp.join("&");
     //console.log(url + "Loaded");
