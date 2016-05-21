@@ -28,7 +28,7 @@ export class MapleRestData {
 
   load(restURL, parms: Object) {
    
-    let dataURL = 'http://m.maplecity.com.cn/' + restURL;
+    let dataURL = 'http://r.maplecity.com.cn/' + restURL;
     let body = JSON.stringify({ parms});
     console.log("REST POST body:" + body)
     let headers = new Headers({ 'Content-Type': 'application/json' });
