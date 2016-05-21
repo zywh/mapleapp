@@ -13,9 +13,13 @@
 
 <ion-content padding class="projects">
 
+<ul >
+    <li *ngFor="#project of projects" >
+      <h2>{{project.name}}</h2>
+      </li>
+  </ul>
+  
 
 
-<p>{{projects.id}}</p>
-<p>{{projects.name}}</p>
 
 </ion-content>
