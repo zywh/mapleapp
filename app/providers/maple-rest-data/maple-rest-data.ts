@@ -30,6 +30,7 @@ export class MapleRestData {
    
     let dataURL = 'http://m.maplecity.com.cn/' + restURL;
     let body = JSON.stringify({ parms});
+    console.log("REST POST body:" + body)
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     let url = dataURL ;
