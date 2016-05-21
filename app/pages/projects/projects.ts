@@ -42,6 +42,10 @@ export class ProjectsPage implements OnInit {
         //let parms = { id: "1", type: "Test" };
         //this.getProjects();
 
+<<<<<<< HEAD
+=======
+        
+>>>>>>> 42cd15b435ef450e67ddb2c8e8db148a279e1c50
 
         this.mapleRestData.load(url,this.parms).subscribe(
             data => { this.projects = data; console.log(this.projects); }
