@@ -1,8 +1,9 @@
 import {ViewChild} from 'angular2/core';
 import {App, Events, Platform, Nav, MenuController} from 'ionic-angular';
 import {StatusBar, Splashscreen} from 'ionic-native';
-import {ConferenceData} from './providers/conference-data';
+//import {ConferenceData} from './providers/conference-data';
 import {UserData} from './providers/user-data';
+
 import {MapleRestData} from './providers/maple-rest-data/maple-rest-data';
 import {AccountPage} from './pages/account/account';
 import {TabsPage} from './pages/tabs/tabs';
@@ -25,7 +26,8 @@ interface PageObj {
 
 @App({
   templateUrl: 'build/app.html',
-  providers: [ConferenceData, UserData, MapleRestData],
+  //providers: [ConferenceData, UserData, MapleRestData],
+   providers: [UserData,MapleRestData],
   // Set any config for your app here, see the docs for
   // more ways to configure your app:
   // http://ionicframework.com/docs/v2/api/config/Config/
@@ -36,7 +38,8 @@ interface PageObj {
     tabbarPlacement: "bottom"
   }
 })
-class ConferenceApp {
+//class ConferenceApp {
+  class MapleApp {
   // the root nav is a child of the root app component
   // @ViewChild(Nav) gets a reference to the app's root nav
   @ViewChild(Nav) nav: Nav;
@@ -67,8 +70,8 @@ class ConferenceApp {
     private events: Events,
     private userData: UserData,
     private menu: MenuController,
-    platform: Platform,
-    confData: ConferenceData
+    platform: Platform
+    //confData: ConferenceData
   ) {
     // Call any initial plugins when ready
     platform.ready().then(() => {
