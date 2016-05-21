@@ -26,31 +26,21 @@ export class MapleRestData {
   load(restURL, parms: Object) {
    
     let dataURL = 'http://m.maplecity.com.cn/' + restURL;
-    //let body = "parms";
-
-    let str = [];
-    for (var p in parms) {
-      if (parms.hasOwnProperty(p)) {
-        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(parms[p]));
-      }
-    }
-    let body = str.join("&");
-
-
-    // don't have the data yet
-    return new Promise(resolve => {
-      // We're using Angular Http provider to request the data,
-      // then on the response it'll map the JSON data to a parsed JS object.
-      // Next we process the data and resolve the promise with the new data.
-      this.http.post(dataURL, body)
+    let body = JSON.stringify({ parms});
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    let url = this.dataURL ;
+    //let url = "http://m.maplecity.com.cn/test/hero.json"
+    //let body = parmtemp.join("&");
+    //console.log(url + "Loaded");
+    return this.http.post(url,body,options)
         .map(res => res.json())
-        .subscribe(data => {
-          // we've got back the raw data, now generate the core schedule data
-          // and save the data for later reference
-          this.data = data;
-          resolve(this.data);
-        });
-    });
+      .catch(this.handleError);
   }
+  handleError(error: any) {
+      console.error(error);
+      return Observable.throw(error.json().error || 'Server error');
+  }
+
 }
 
