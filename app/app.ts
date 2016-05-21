@@ -13,6 +13,7 @@ import {TutorialPage} from './pages/tutorial/tutorial';
 import {MapSearchPage} from './pages/map-search/map-search';
 import {ProjectsPage} from './pages/projects/projects';
 import {SchoolSearchPage} from './pages/school-search/school-search';
+import {StatsPage} from './pages/stats/stats';
 import {AboutPage} from './pages/about/about';
 import {HomePage} from './pages/home/home';
 import {MapleConf} from './providers/maple-rest-data/maple-config';
@@ -48,11 +49,13 @@ interface PageObj {
   // the left menu only works after login
   // the login page disables the left menu
   appPages: PageObj[] = [
-    { title: 'Map Search', component: MapSearchPage, icon: 'information-circle' },
-    { title: 'HomePage', component: TabsPage, icon: 'information-circle' },
-    { title: 'About Us', component: TabsPage, index:1 ,icon: 'information-circle' },
-    { title: 'Projects', component: TabsPage, index: 2, icon: 'information-circle' },
-    { title: 'School Search', component: SchoolSearchPage, index:3, icon: 'information-circle' },
+  
+    { title: '首页', component: HomePage, icon: 'information-circle' },
+      { title: '地图搜索', component: MapSearchPage, icon: 'information-circle' },
+       { title: '学区房', component: SchoolSearchPage, icon: 'information-circle' },
+      { title: '项目推荐', component: ProjectsPage, icon: 'information-circle' },
+    { title: '房源统计', component: StatsPage, icon: 'information-circle' },
+      { title: '关于我们', component: AboutPage, icon: 'information-circle' }
   ];
   
   loggedInPages: PageObj[] = [
