@@ -41,8 +41,15 @@ export class ProjectsPage implements OnInit {
 
         //let parms = { id: "1", type: "Test" };
         //this.getProjects();
+
+        let createanotherdummygit;
+
         let dummyvarforgit;
+<<<<<<< HEAD
         let hello;
+=======
+
+>>>>>>> 4c8769143511b05265c302251c352528b9843cd8
         this.mapleRestData.load(url,this.parms).subscribe(
             data => { this.projects = data; console.log(this.projects); }
         );
