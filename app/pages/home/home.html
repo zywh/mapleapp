@@ -16,7 +16,7 @@
 <ion-content class="home">
    <ion-slides [options]="projectSwiperOptions" class="swiper-container">
     <ion-slide *ngFor="#project of projects">
-      <img [src]="project.room_type_image" class="slide-image"/>
+      <img [src]="project.room_type_image" (click)="goToProject(project.id)" class="slide-image"/>
       <h2 class="slide-title" [innerHTML]="project.name"></h2>
      
     </ion-slide>

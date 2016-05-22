@@ -4,6 +4,7 @@ import {OnInit} from 'angular2/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {Http, Headers, RequestOptions} from 'angular2/http';
 import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
+import {ProjectDetailPage} from '../project-detail/project-detail';
 
 /*
   Generated class for the HomePage page.
@@ -45,6 +46,9 @@ export class HomePage implements OnInit {
       data => { this.projects = data; console.log(this.projects); }
     );
 
+  }
+  goToProject( id ) {
+    this.nav.push(ProjectDetailPage, id);
   }
 
 }
