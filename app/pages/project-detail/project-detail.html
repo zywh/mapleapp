@@ -9,11 +9,14 @@
 </ion-navbar>
 
 <ion-content padding class="project-detail">
-<ul >
-   
-    
-      {{project.name}}
-        {{project.image_list}}
-      
-  </ul>
+  
+
+
+    {{project.name}} 
+
+    <p *ngFor="#image of converto2a(project.image_list)">
+      {{project.replaceurl + image.file}}
+    </p>
+
+  
 </ion-content>

@@ -20,6 +20,7 @@ export class ProjectDetailPage implements OnInit {
     developer_intro: '',
     layout_list: {},
     cityname: '',
+    replaceurl: ''
   };
 
   static get parameters() {
@@ -43,7 +44,9 @@ export class ProjectDetailPage implements OnInit {
 
     )
   }
-
+  converto2a(val) {
+    return Array.from(val);
+  }
 
 
 
