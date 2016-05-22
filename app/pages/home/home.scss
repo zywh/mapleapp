@@ -1,7 +1,25 @@
 .home {
+ 
+  .slide-title {
 
+    position: absolute;
+    margin: 0px 6px;
+    z-index: 9999;
+    top: 0px;
+    width:100%;
+    font-size: 17px;
+    color: #fff;
+    text-align: center;
+    *background: #ff4103;
+    opacity: 0.8;
+  }
+.swiper-container {
+    height: 180px;
+    width: 100%;
+    
+  }
 .slide-image {
-    max-height: 210px;
+    height: 230px;
     width: 100%;
     
   }

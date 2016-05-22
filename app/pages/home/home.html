@@ -13,12 +13,12 @@
   
 </ion-navbar>
 
-<ion-content padding class="home">
-   <ion-slides [options]="projectSwiperOptions">
+<ion-content class="home">
+   <ion-slides [options]="projectSwiperOptions" class="swiper-container">
     <ion-slide *ngFor="#project of projects">
       <img [src]="project.room_type_image" class="slide-image"/>
       <h2 class="slide-title" [innerHTML]="project.name"></h2>
-      <p [innerHTML]="project.city_id"></p>
+     
     </ion-slide>
     
   </ion-slides> 
