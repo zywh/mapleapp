@@ -4,10 +4,6 @@ import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {Http, Headers, RequestOptions} from 'angular2/http';
 import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
 
-//projects: Object;
-
-
-//let projects = {};
 @Page({
   templateUrl: 'build/pages/project-detail/project-detail.html'
 })
@@ -17,7 +13,13 @@ export class ProjectDetailPage implements OnInit {
   project = {
     id: '',
     name: '',
-    room_type_image: ''
+    image_list: {},
+    summary: '',
+    amenities: '',
+    point: '',
+    developer_intro: '',
+    layout_list: {},
+    cityname: '',
   };
 
   static get parameters() {
@@ -37,7 +39,7 @@ export class ProjectDetailPage implements OnInit {
 
   getResult(url) {
     this.mapleRestData.load(url, this.parms).subscribe(
-      data => { this.project = data[0]; console.log(this.project) }
+      data => { this.project = data; console.log(this.project) }
 
     )
   }
