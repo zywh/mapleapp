@@ -9,14 +9,25 @@
 </ion-navbar>
 
 <ion-content padding class="project-detail">
-  
 
 
-    {{project.name}} 
 
-    <p *ngFor="#image of converto2a(project.image_list)">
-      {{project.replaceurl + image.file}}
-    </p>
+  {{project.name}}
 
-  
+
+  <ion-slides [options]="swiperOptions" class="swiper-container">
+    <ion-slide *ngFor="#image of converto2a(project.image_list)">
+      <img [src]="smallImg(image.file)" class="slide-image" />
+    </ion-slide>
+
+  </ion-slides>
+
+  <ion-slides [options]="swiperOptions" class="swiper-container">
+    <ion-slide *ngFor="#image of converto2a(project.layout_list)">
+      <img [src]="smallImg(image.file)" class="slide-image" />
+    </ion-slide>
+
+  </ion-slides>
+
+
 </ion-content>

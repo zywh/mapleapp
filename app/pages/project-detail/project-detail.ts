@@ -1,7 +1,6 @@
 import {Page, NavController, NavParams} from 'ionic-angular';
 import {OnInit} from 'angular2/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-import {Http, Headers, RequestOptions} from 'angular2/http';
 import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
 
 @Page({
@@ -32,7 +31,12 @@ export class ProjectDetailPage implements OnInit {
     this.parms = { 'id': navParams.data };
 
   }
-
+  swiperOptions = {
+    loop: true,
+    //pager: true,
+    speed: 4000,
+    autoplay: 300
+  };
 
   ngOnInit() {
     this.getResult('index.php?r=ngget/getProjects');
@@ -45,7 +49,23 @@ export class ProjectDetailPage implements OnInit {
     )
   }
   converto2a(val) {
+    // let img = Array.from(val)
+    // let imgsmall;
+    // for (var key in img) {
+    //   if (img.hasOwnProperty(key)) {
+    //     let file = img[key]['file'].replace('uploads',this.project.replaceurl);
+    //     imgsmall[key]['file'] = file;
+    //     //console.log("FileName:" + file);
+
+    //   }
+    // }
+
     return Array.from(val);
+    //return imgsmall;
+  }
+
+  smallImg(img) {
+    return img.replace('uploads', this.project.replaceurl);
   }
 
 
