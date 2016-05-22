@@ -14,7 +14,11 @@ import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
 export class ProjectDetailPage implements OnInit {
   private nav;
   private parms: Object;
-  projects: Object;
+  project = {
+    id: '',
+    name: '',
+    room_type_image: ''
+  };
 
   static get parameters() {
     return [[NavController], [NavParams], [MapleRestData]];
@@ -22,7 +26,7 @@ export class ProjectDetailPage implements OnInit {
 
   constructor(nav, private navParams: NavParams, private mapleRestData: MapleRestData) {
     this.nav = nav;
-      this.parms = { 'id': navParams.data };
+    this.parms = { 'id': navParams.data };
 
   }
 
@@ -33,11 +37,10 @@ export class ProjectDetailPage implements OnInit {
 
   getResult(url) {
     this.mapleRestData.load(url, this.parms).subscribe(
-      data => { this.projects = data; console.log(this.projects); }
-    );
+      data => { this.project = data[0]; console.log(this.project) }
 
+    )
   }
-
 
 
 
