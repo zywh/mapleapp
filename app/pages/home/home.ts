@@ -30,7 +30,9 @@ export class HomePage implements OnInit {
   
   projectSwiperOptions = {
      loop: true,
-     autoplay: 3000
+     pager: true,
+     speed: 4000,
+     autoplay: 300
   };
 
 
