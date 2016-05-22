@@ -27,7 +27,7 @@ export class ProjectsPage implements OnInit {
         this.nav = nav;
         //this.MapleRestData = MapleRestData;
         //this.parms = navParams.get('id');
-        this.parms = { id: "8", type: "rent" };
+        //this.parms = { id: "8", type: "rent" };
         //this.projects = projects;
 
     }

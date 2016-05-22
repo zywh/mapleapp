@@ -28,7 +28,7 @@ interface PageObj {
 @App({
   templateUrl: 'build/app.html',
   //providers: [ConferenceData, UserData, MapleRestData],
-   providers: [UserData,MapleRestData],
+  providers: [UserData, MapleRestData],
   // Set any config for your app here, see the docs for
   // more ways to configure your app:
   // http://ionicframework.com/docs/v2/api/config/Config/
@@ -40,7 +40,7 @@ interface PageObj {
   }
 })
 //class ConferenceApp {
-  class MapleApp {
+class MapleApp {
   // the root nav is a child of the root app component
   // @ViewChild(Nav) gets a reference to the app's root nav
   @ViewChild(Nav) nav: Nav;
@@ -49,15 +49,15 @@ interface PageObj {
   // the left menu only works after login
   // the login page disables the left menu
   appPages: PageObj[] = [
-  
+
     { title: '首页', component: HomePage, icon: 'information-circle' },
-      { title: '地图搜索', component: MapSearchPage, icon: 'information-circle' },
-       { title: '学区房', component: SchoolSearchPage, icon: 'information-circle' },
-      { title: '项目推荐', component: ProjectsPage, icon: 'information-circle' },
+    { title: '地图搜索', component: MapSearchPage, icon: 'information-circle' },
+    { title: '学区房', component: SchoolSearchPage, icon: 'information-circle' },
+    { title: '项目推荐', component: ProjectsPage, icon: 'information-circle' },
     { title: '房源统计', component: StatsPage, icon: 'information-circle' },
-      { title: '关于我们', component: AboutPage, icon: 'information-circle' }
+    { title: '关于我们', component: AboutPage, icon: 'information-circle' }
   ];
-  
+
   loggedInPages: PageObj[] = [
     { title: 'Account', component: AccountPage, icon: 'person' },
     { title: 'Logout', component: TabsPage, icon: 'log-out' }
@@ -67,8 +67,8 @@ interface PageObj {
     { title: 'Signup', component: SignupPage, icon: 'person-add' }
   ];
   //rootPage: any = TutorialPage;
-  rootPage: any = ProjectsPage;
-
+  // rootPage: any = ProjectsPage;
+  rootPage: any = HomePage;
   constructor(
     private events: Events,
     private userData: UserData,
