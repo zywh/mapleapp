@@ -1,8 +1,9 @@
 import {ViewChild} from 'angular2/core';
 import {App, Events, Platform, Nav, MenuController} from 'ionic-angular';
 import {StatusBar, Splashscreen} from 'ionic-native';
-import {ConferenceData} from './providers/conference-data';
+//import {ConferenceData} from './providers/conference-data';
 import {UserData} from './providers/user-data';
+
 import {MapleRestData} from './providers/maple-rest-data/maple-rest-data';
 import {AccountPage} from './pages/account/account';
 import {TabsPage} from './pages/tabs/tabs';
@@ -12,6 +13,7 @@ import {TutorialPage} from './pages/tutorial/tutorial';
 import {MapSearchPage} from './pages/map-search/map-search';
 import {ProjectsPage} from './pages/projects/projects';
 import {SchoolSearchPage} from './pages/school-search/school-search';
+import {StatsPage} from './pages/stats/stats';
 import {AboutPage} from './pages/about/about';
 import {HomePage} from './pages/home/home';
 import {MapleConf} from './providers/maple-rest-data/maple-config';
@@ -25,7 +27,8 @@ interface PageObj {
 
 @App({
   templateUrl: 'build/app.html',
-  providers: [ConferenceData, UserData, MapleRestData],
+  //providers: [ConferenceData, UserData, MapleRestData],
+  providers: [UserData, MapleRestData],
   // Set any config for your app here, see the docs for
   // more ways to configure your app:
   // http://ionicframework.com/docs/v2/api/config/Config/
@@ -36,7 +39,8 @@ interface PageObj {
     tabbarPlacement: "bottom"
   }
 })
-class ConferenceApp {
+//class ConferenceApp {
+class MapleApp {
   // the root nav is a child of the root app component
   // @ViewChild(Nav) gets a reference to the app's root nav
   @ViewChild(Nav) nav: Nav;
@@ -45,13 +49,15 @@ class ConferenceApp {
   // the left menu only works after login
   // the login page disables the left menu
   appPages: PageObj[] = [
-    { title: 'Map Search', component: MapSearchPage, icon: 'information-circle' },
-    { title: 'HomePage', component: TabsPage, icon: 'information-circle' },
-    { title: 'About Us', component: TabsPage, index:1 ,icon: 'information-circle' },
-    { title: 'Projects', component: TabsPage, index: 2, icon: 'information-circle' },
-    { title: 'School Search', component: SchoolSearchPage, index:3, icon: 'information-circle' },
+
+    { title: '首页', component: HomePage, icon: 'information-circle' },
+    { title: '地图搜索', component: MapSearchPage, icon: 'information-circle' },
+    { title: '学区房', component: SchoolSearchPage, icon: 'information-circle' },
+    { title: '项目推荐', component: ProjectsPage, icon: 'information-circle' },
+    { title: '房源统计', component: StatsPage, icon: 'information-circle' },
+    { title: '关于我们', component: AboutPage, icon: 'information-circle' }
   ];
-  
+
   loggedInPages: PageObj[] = [
     { title: 'Account', component: AccountPage, icon: 'person' },
     { title: 'Logout', component: TabsPage, icon: 'log-out' }
@@ -61,14 +67,14 @@ class ConferenceApp {
     { title: 'Signup', component: SignupPage, icon: 'person-add' }
   ];
   //rootPage: any = TutorialPage;
-  rootPage: any = ProjectsPage;
-
+  // rootPage: any = ProjectsPage;
+  rootPage: any = HomePage;
   constructor(
     private events: Events,
     private userData: UserData,
     private menu: MenuController,
-    platform: Platform,
-    confData: ConferenceData
+    platform: Platform
+    //confData: ConferenceData
   ) {
     // Call any initial plugins when ready
     platform.ready().then(() => {

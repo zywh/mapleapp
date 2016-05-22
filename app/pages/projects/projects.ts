@@ -27,21 +27,20 @@ export class ProjectsPage implements OnInit {
         this.nav = nav;
         //this.MapleRestData = MapleRestData;
         //this.parms = navParams.get('id');
-        this.parms = { id: "1", type: "rent" };
+        //this.parms = { id: "8", type: "rent" };
         //this.projects = projects;
 
     }
 
 
     ngOnInit() {
-        this.getResult('index.php?r=projects/getProjects');
+        this.getResult('index.php?r=ngget/getProjects');
     }
 
     getResult(url) {
 
-        //let parms = { id: "1", type: "Test" };
-        //this.getProjects();
-        this.mapleRestData.load(url,this.parms).subscribe(
+      
+       this.mapleRestData.load(url,this.parms).subscribe(
             data => { this.projects = data; console.log(this.projects); }
         );
 

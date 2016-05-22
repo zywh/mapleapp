@@ -6,7 +6,7 @@ import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/Rx';
 
-//let mapleRestHost = "http://m.maplecity.com.cn/";
+
 /*
   Generated class for the MapleRestData provider.
 
@@ -16,8 +16,7 @@ import 'rxjs/Rx';
 @Injectable()
 export class MapleRestData {
   private http: Http;
-  private data: any;
- 
+  
   static get parameters() {
     return [[Http]]
   }
@@ -27,15 +26,13 @@ export class MapleRestData {
      }
 
   load(restURL, parms: Object) {
-   
-    let dataURL = 'http://m.maplecity.com.cn/' + restURL;
+   let mapleRestHost = "http://r.maplecity.com.cn/";
+    let dataURL = mapleRestHost + restURL;
     let body = JSON.stringify({ parms});
+    console.log("REST POST body:" + body)
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     let url = dataURL ;
-    //let url = "http://m.maplecity.com.cn/test/hero.json"
-    //let body = parmtemp.join("&");
-    //console.log(url + "Loaded");
     return this.http.post(url,body,options)
         .map(res => res.json())
       .catch(this.handleError);

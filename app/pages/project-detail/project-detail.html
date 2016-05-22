@@ -1,18 +1,14 @@
 <!--
-  Generated template for the ProjectsPage page.
+  Generated template for the ProjectDetailPage page.
 
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 -->
 <ion-navbar *navbar>
-  <button menuToggle>
-    <ion-icon name="menu"></ion-icon>
-  </button>
-  <ion-title>项目推荐</ion-title>
+  <ion-title>ProjectDetail</ion-title>
 </ion-navbar>
 
-<ion-content padding class="projects">
-
+<ion-content padding class="project-detail">
 <ul >
     <li *ngFor="#project of projects" >
       <h2>{{project.name}}</h2>
@@ -20,8 +16,4 @@
       {{project.room_type_image}}
       </li>
   </ul>
-  
-
-
-
 </ion-content>

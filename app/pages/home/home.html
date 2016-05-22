@@ -9,10 +9,17 @@
    <button menuToggle>
     <ion-icon name="menu"></ion-icon>
   </button>
-   <ion-title>home</ion-title>
+   <ion-title>枫之都</ion-title>
   
 </ion-navbar>
 
-<ion-content padding class="home">
-  
+<ion-content class="home">
+   <ion-slides [options]="projectSwiperOptions" class="swiper-container">
+    <ion-slide *ngFor="#project of projects">
+      <img [src]="project.room_type_image" (click)="goToProject(project.id)" class="slide-image"/>
+      <h2 class="slide-title" [innerHTML]="project.name"></h2>
+     
+    </ion-slide>
+    
+  </ion-slides> 
 </ion-content>
