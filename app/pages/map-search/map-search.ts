@@ -1,4 +1,6 @@
 import {Page, NavController} from 'ionic-angular';
+import {ConferenceData} from '../../providers/conference-data';
+
 
 /*
   Generated class for the MapSearchPage page.
@@ -9,27 +11,40 @@ import {Page, NavController} from 'ionic-angular';
 @Page({
   templateUrl: 'build/pages/map-search/map-search.html',
 })
+
+
 export class MapSearchPage {
-  private searchQuery: String;
-  private items: Array<String>;
-  constructor(public nav: NavController) {
-    this.searchQuery = '';
-    //this.initializeItems();
-    this.items = [];
-  }
-  getItems(searchbar) {
-    // Reset items back to all of the items
-    this.items = [];
+  constructor(private confData: ConferenceData) {}
 
-    // set q to the value of the searchbar
-    var q = searchbar.value;
+  onPageLoaded() {
+    this.confData.getMap().then(mapData => {
+      let mapEle = document.getElementById('map');
 
-    // if the value is an empty string don't filter the items
-    if (q.trim() == '') {
-      return;
-    }else{
-      //Call REST
-       this.items = ["1","2","fdasfasf"];
-    }
+      let map = new google.maps.Map(mapEle, {
+        center: mapData.find(d => d.center),
+        zoom: 16
+      });
+
+      mapData.forEach(markerData => {
+        let infoWindow = new google.maps.InfoWindow({
+          content: `<h5>${markerData.name}</h5>`
+        });
+
+        let marker = new google.maps.Marker({
+          position: markerData,
+          map: map,
+          title: markerData.name
+        });
+
+        marker.addListener('click', () => {
+          infoWindow.open(map, marker);
+        });
+      });
+
+      google.maps.event.addListenerOnce(map, 'idle', () => {
+        mapEle.classList.add('show-map');
+      });
+
+    });
   }
 }
