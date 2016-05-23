@@ -20,7 +20,7 @@
     "express": "^4.13.4",
     "ionic-framework": "2.0.0-beta.1",
     "reflect-metadata": "0.1.2",
-     "zone.js": "0.6.12"
+    "zone.js": "0.6.12"
   },
   "devDependencies": {
     "del": "2.2.0",
@@ -40,7 +40,6 @@
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
-    
     {
       "locator": "https://github.com/VersoSolutions/CordovaClipboard",
       "id": "com.verso.cordova.clipboard"
@@ -48,7 +47,8 @@
     {
       "locator": "https://github.com/apache/cordova-plugin-splashscreen.git",
       "id": "cordova-plugin-splashscreen"
-    }
+    },
+    "cordova-plugin-geolocation"
   ],
   "cordovaPlatforms": [
     "ios",
