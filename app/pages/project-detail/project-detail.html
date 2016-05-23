@@ -10,24 +10,47 @@
 
 <ion-content padding class="project-detail">
 
+  <h3 id="page5-heading1" style="color:#FF4103;text-align:center;" class=" "> {{project.name}}</h3>
+  <h4 id="page5-heading3" style="color:#000000;text-align:center;" class=" "> {{project.cityname}}</h4>
+
+  <ion-item class="item-divider " id="page5-list-item-divider6">项目简介</ion-item>
+  <p class="item item-body "> {{project.summary}}
+  </p>
 
 
-  {{project.name}}
 
+  <ion-item class="item-divider " id="page5-list-item-divider11">项目图片</ion-item>
 
-  <ion-slides [options]="swiperOptions" class="swiper-container">
+  <ion-slides [options]="swiperOptions" class="item item-body swiper-container">
     <ion-slide *ngFor="#image of converto2a(project.image_list)">
       <img [src]="smallImg(image.file)" class="slide-image" />
     </ion-slide>
-
   </ion-slides>
 
-  <ion-slides [options]="swiperOptions" class="swiper-container">
+
+  <ion-item class="item-divider " id="page5-list-item-divider12">项目详情</ion-item>
+
+  <p class="item item-body ">
+    {{project.point}}
+  </p>
+
+
+  <ion-item class="item-divider " id="page5-list-item-divider8">房间布局</ion-item>
+
+
+  <ion-slides [options]="swiperOptions" class="item item-body swiper-container">
     <ion-slide *ngFor="#image of converto2a(project.layout_list)">
       <img [src]="smallImg(image.file)" class="slide-image" />
     </ion-slide>
 
   </ion-slides>
+
+
+  <ion-item class="item-divider " id="page5-list-item-divider10">开发商</ion-item>
+
+  <p class="item item-body ">
+    {{project.developer_intro}}
+  </p>
 
 
 </ion-content>
