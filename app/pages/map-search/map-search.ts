@@ -10,5 +10,26 @@ import {Page, NavController} from 'ionic-angular';
   templateUrl: 'build/pages/map-search/map-search.html',
 })
 export class MapSearchPage {
-  constructor(public nav: NavController) {}
+  private searchQuery: String;
+  private items: Array<String>;
+  constructor(public nav: NavController) {
+    this.searchQuery = '';
+    //this.initializeItems();
+    this.items = [];
+  }
+  getItems(searchbar) {
+    // Reset items back to all of the items
+    this.items = [];
+
+    // set q to the value of the searchbar
+    var q = searchbar.value;
+
+    // if the value is an empty string don't filter the items
+    if (q.trim() == '') {
+      return;
+    }else{
+      //Call REST
+       this.items = ["1","2","fdasfasf"];
+    }
+  }
 }

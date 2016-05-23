@@ -36,7 +36,8 @@ interface PageObj {
     // Place the tabs on the bottom for all platforms
     // See the theming docs for the default values:
     // http://ionicframework.com/docs/v2/theming/platform-specific-styles/
-    tabbarPlacement: "bottom"
+    tabbarPlacement: "bottom",
+    backButtonText: "返回"
   }
 })
 //class ConferenceApp {

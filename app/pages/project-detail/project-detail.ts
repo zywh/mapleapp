@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams} from 'ionic-angular';
+import {Page, NavController, NavParams,Platform} from 'ionic-angular';
 import {OnInit} from 'angular2/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
@@ -9,7 +9,9 @@ import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
 export class ProjectDetailPage implements OnInit {
   private nav;
   private parms: Object;
-  project = {
+  private section: string = "summary";
+  private isAndroid: boolean = false;
+  private project = {
     id: '',
     name: '',
     image_list: {},
@@ -26,9 +28,10 @@ export class ProjectDetailPage implements OnInit {
     return [[NavController], [NavParams], [MapleRestData]];
   }
 
-  constructor(nav, private navParams: NavParams, private mapleRestData: MapleRestData) {
+  constructor(nav, private navParams: NavParams, private mapleRestData: MapleRestData,platform: Platform) {
     this.nav = nav;
     this.parms = { 'id': navParams.data };
+     //this.isAndroid = platform.is('android');
 
   }
   swiperOptions = {
