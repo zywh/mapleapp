@@ -1,3 +1,30 @@
 .projects {
 
+  ion-card {
+    position: relative;
+    text-align: center;
+    *height: 210px;
+  }
+  
+  ion-card img {
+      height: 169px;
+  }
+
+  .card-title {
+   position: absolute;
+    top: 40%;
+    font-size: 20px;
+    width: 100%;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .card-subtitle {
+   font-size: 24px;
+    position: absolute;
+    top: 74%;
+    width: 100%;
+    color: #fff;
+  }
+
 }
