@@ -1,7 +1,7 @@
 import {ViewChild} from 'angular2/core';
 import {App, Events, Platform, Nav, MenuController} from 'ionic-angular';
 import {StatusBar, Splashscreen} from 'ionic-native';
-//import {ConferenceData} from './providers/conference-data';
+import {ConferenceData} from './providers/conference-data';
 import {UserData} from './providers/user-data';
 
 import {MapleRestData} from './providers/maple-rest-data/maple-rest-data';
@@ -28,7 +28,7 @@ interface PageObj {
 @App({
   templateUrl: 'build/app.html',
   //providers: [ConferenceData, UserData, MapleRestData],
-  providers: [UserData, MapleRestData],
+  providers: [ConferenceData,UserData, MapleRestData],
   // Set any config for your app here, see the docs for
   // more ways to configure your app:
   // http://ionicframework.com/docs/v2/api/config/Config/
@@ -36,7 +36,8 @@ interface PageObj {
     // Place the tabs on the bottom for all platforms
     // See the theming docs for the default values:
     // http://ionicframework.com/docs/v2/theming/platform-specific-styles/
-    tabbarPlacement: "bottom"
+    tabbarPlacement: "bottom",
+    backButtonText: "返回"
   }
 })
 //class ConferenceApp {

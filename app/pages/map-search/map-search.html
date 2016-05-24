@@ -5,12 +5,23 @@
   Ionic pages and navigation.
 -->
 <ion-navbar *navbar>
-    <button menuToggle>
+  <button menuToggle>
     <ion-icon name="menu"></ion-icon>
   </button>
-  <ion-title>地图搜索</ion-title>
+  <ion-searchbar [(ngModel)]="searchQuery" (input)="getItems($event)" placeholder="Input City or MLS#"></ion-searchbar>
+
 </ion-navbar>
 
-<ion-content padding class="map-search">
+<ion-content  class="map-search">
+
+  <ion-item padding *ngFor="#item of items">
+    {{ item }}
+  </ion-item>
+
+
+<div id="map"></div>
+ <button small fab fab-bottom fab-left>
+    <ion-icon small name="locate" is-active="false"></ion-icon>
+  </button>
   
 </ion-content>

@@ -1,8 +1,8 @@
 import {Page, NavController, NavParams} from 'ionic-angular';
 import {OnInit} from 'angular2/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-import {Http, Headers, RequestOptions} from 'angular2/http';
 import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
+import {ProjectDetailPage} from '../project-detail/project-detail';
 
 //projects: Object;
 
@@ -31,28 +31,26 @@ export class ProjectsPage implements OnInit {
         //this.projects = projects;
 
     }
-
+    swiperOptions = {
+        loop: true,
+        //pager: true,
+        speed: 4000,
+        autoplay: 300
+    };
 
     ngOnInit() {
         this.getResult('index.php?r=ngget/getProjects');
     }
 
     getResult(url) {
-
-      
-       this.mapleRestData.load(url,this.parms).subscribe(
+        this.mapleRestData.load(url, this.parms).subscribe(
             data => { this.projects = data; console.log(this.projects); }
         );
-
-        //this.mapleRestData.load(url, parms).then(projects => this.projects = projects); //This generate projects type is not defined error
-        //this.mapleRestData.projectStatic().then(projects => this.projects = projects);
-
-        // this.projects = {id: "Static ID from function", name: "Static Name from function"}; //This works
-
-
     }
 
-
+    goToProject(id) {
+        this.nav.push(ProjectDetailPage, id);
+    }
 
 
 
