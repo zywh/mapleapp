@@ -1,6 +1,9 @@
 import {Page, NavController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
-import {ConferenceData} from '../../providers/conference-data';
+import {OnInit} from 'angular2/core';
+import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
+import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
+//import {ConferenceData} from '../../providers/conference-data';
 
 
 /*
@@ -14,38 +17,41 @@ import {ConferenceData} from '../../providers/conference-data';
 })
 
 
-export class MapSearchPage {
+export class MapSearchPage implements OnInit {
   private searchQuery: String;
   private items: Array<String>;
-  private map: any;
-  //private latLng: any;
-  private lat: number;
-  private lng: number;
-  constructor(private confData: ConferenceData) {
+  private parms: Object;
+  private houselist: any;
+  //private map: any;
+  constructor(private mapleRestData: MapleRestData) {
     this.searchQuery = '';
-    //this.initializeItems();
     this.items = [];
-
-    //
-
-
-
   }
 
+  //  ngOnInit() {
+  //     this.getResult('index.php?r=ngget/getMapHouse');
+  //   }
 
+  getResult(url) {
+    this.mapleRestData.load(url, this.parms).subscribe(
+      data => { this.houselist = data.Data; console.log(this.houselist) }
 
-  onPageLoaded() {
+    )
+  }
+
+  //onPageLoaded() {
+  ngOnInit() {
     Geolocation.getCurrentPosition().then((resp) => {
       let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
       console.log("Lat:" + resp.coords.latitude + "Lng:" + resp.coords.longitude);
       this.loadMap(latLng);
     })
   }
-  
-  
-  loadMap(LatLng){
-    
- 
+
+
+  loadMap(LatLng) {
+
+
     //  let latLng = new google.maps.LatLng(-34.9290, 138.6010);
     //let latLng = new google.maps.LatLng(-34.9290, 138.6010);
     //this.confData.getMap().then(mapData => {
