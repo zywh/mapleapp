@@ -23,12 +23,15 @@ export class MapSearchPage implements OnInit {
   private mlsItems: any;
   private parms: Object;
   private houselist: any;
+  public map;
+  private center;
   //private map: any;
   constructor(public nav: NavController, private mapleRestData: MapleRestData) {
     this.searchQuery = '';
-    this.cityItems = [];
-    this.addressItems = [];
-    this.mlsItems = [];
+    // this.cityItems = [];
+    // this.addressItems = [];
+    // this.mlsItems = [];
+    this.resetItems();
   }
 
   //  ngOnInit() {
@@ -50,24 +53,36 @@ export class MapSearchPage implements OnInit {
   //onPageLoaded() {
   ngOnInit() {
     Geolocation.getCurrentPosition().then((resp) => {
-      let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
-      console.log("Lat:" + resp.coords.latitude + "Lng:" + resp.coords.longitude);
-      this.loadMap(latLng);
+
+      if (resp.coords.latitude > 20) {
+        let lat = resp.coords.latitude;
+        let lng = resp.coords.longitude;
+        console.log("Lat:" + resp.coords.latitude + "Lng:" + resp.coords.longitude);
+        this.loadMap(lat, lng, 16);
+
+      } else {
+        //default to Toronto
+        let lat: Number = 43.6532;
+		      let lng: Number = -79.3832;
+        //let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+        this.loadMap(lat, lng, 16);
+      }
+
     })
   }
 
 
-  loadMap(LatLng) {
+  loadMap(lat, lng, zoom) {
 
-
+    this.center = new google.maps.LatLng(lat, lng);
     //  let latLng = new google.maps.LatLng(-34.9290, 138.6010);
     //let latLng = new google.maps.LatLng(-34.9290, 138.6010);
     //this.confData.getMap().then(mapData => {
     let mapEle = document.getElementById('map');
 
-    let map = new google.maps.Map(mapEle, {
+    this.map = new google.maps.Map(mapEle, {
       //center: mapData.find(d => d.center),
-      center: LatLng,
+      center: this.center,
       mapTypeControl: true,
       mapTypeControlOptions: {
         style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
@@ -82,7 +97,7 @@ export class MapSearchPage implements OnInit {
       streetViewControlOptions: {
         position: google.maps.ControlPosition.TOP_RIGHT
       },
-      zoom: 16
+      zoom: zoom
     });
 
     // mapData.forEach(markerData => {
@@ -101,19 +116,42 @@ export class MapSearchPage implements OnInit {
     //   });
     // });
 
-    google.maps.event.addListenerOnce(map, 'idle', () => {
+    google.maps.event.addListenerOnce(this.map, 'idle', () => {
       mapEle.classList.add('show-map');
     });
 
     //});
   }
-
-  itemTapped(event, item) {
-    this.nav.push(HouseDetailPage, {
-      item: item
-    });
+  //select autocomplete action
+  resetItems() {
+    this.cityItems = [];
+    this.addressItems = [];
+    this.mlsItems = [];
+    this.searchQuery = '';
   }
+  itemTapped(event, item, type) {
+    if (type == 1) { //CITY Action
+      let lat = item.lat;
+      let lng = item.lng;
+      let center = new google.maps.LatLng(lat, lng);
+      this.setLocation(center, 14);
+      this.resetItems();
+    }
 
+    if (type == 2) { //MLS Action
+      this.nav.push(HouseDetailPage, {
+        item: item.id //pass MLS# to house detail
+      });
+    }
+
+    if (type == 3) { //Address Action
+      this.nav.push(HouseDetailPage, {
+        item: item.id //pass MLS# to house detail
+      });
+    }
+
+  }
+  //auto complete REST CAll
   getItems(searchbar) {
     // Reset items back to all of the items
     this.cityItems = [];
@@ -145,15 +183,18 @@ export class MapSearchPage implements OnInit {
             console.log("ADDRESS Autocomplete:" + this.addressItems);
           }
           console.log(data);
-        }
-      );
+        }); //end of callback
       //this.items = ["city", "address", "MLS"];
     }
   }
-
+  //SetCenter and Zoom
+  setLocation(center, zoom) {
+    this.map.setCenter(center);
+    this.map.setZoom(zoom);
+  }
 }
 
-
+//Map Option Page
 @Page({
   templateUrl: './build/pages/map-search/map-search-options.html'
 })
