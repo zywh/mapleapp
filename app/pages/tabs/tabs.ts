@@ -1,10 +1,8 @@
 import {Page, NavParams} from 'ionic-angular';
-import {SchedulePage} from '../schedule/schedule';
-import {SpeakerListPage} from '../speaker-list/speaker-list';
-import {MapPage} from '../map/map';
 import {AboutPage} from '../about/about';
 import {MapSearchPage} from '../map-search/map-search';
 import {ProjectsPage} from '../projects/projects';
+import {StatsPage} from '../stats/stats';
 import {SchoolSearchPage} from '../school-search/school-search';
 import {HomePage} from '../home/home';
 //import {MapleConf} from './providers/maple-rest-data/maple-config';
@@ -15,13 +13,14 @@ import {HomePage} from '../home/home';
 })
 export class TabsPage {
   // set the root pages for each tab
-  tab1Root: any = HomePage;
-  tab2Root: any = AboutPage;
-  tab3Root: any = ProjectsPage;
-  tab4Root: any = SchoolSearchPage;
+  home: any = HomePage;
+  map: any = MapSearchPage;
+  project: any = ProjectsPage;
+  school: any = SchoolSearchPage;
+  stats: any = StatsPage;
   mySelectedIndex: number;
-  
-  
+
+
 
   constructor(navParams: NavParams) {
     this.mySelectedIndex = navParams.data.tabIndex || 0;
