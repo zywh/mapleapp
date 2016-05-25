@@ -13,10 +13,7 @@ import {ProjectDetailPage} from '../project-detail/project-detail';
 })
 export class ProjectsPage implements OnInit {
     private nav;
-    //public MapleRestData;
     private parms = {};
-
-    //projects = {name: "Projectname", summary: "fsdfdsfsdfsdfsfsd"};
     projects: Object;
 
     static get parameters() {
@@ -25,13 +22,9 @@ export class ProjectsPage implements OnInit {
 
     constructor(nav, navParams, private mapleRestData: MapleRestData) {
         this.nav = nav;
-        //this.MapleRestData = MapleRestData;
-        //this.parms = navParams.get('id');
-        //this.parms = { id: "8", type: "rent" };
-        //this.projects = projects;
-
     }
-    swiperOptions = {
+    
+    private swiperOptions = {
         loop: true,
         //pager: true,
         speed: 4000,

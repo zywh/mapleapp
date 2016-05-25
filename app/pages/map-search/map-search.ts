@@ -18,13 +18,17 @@ import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 
 export class MapSearchPage implements OnInit {
   private searchQuery: String;
-  private items: Array<String>;
+  private cityItems: any;
+  private addressItems: any;
+  private mlsItems: any;
   private parms: Object;
   private houselist: any;
   //private map: any;
-  constructor(public nav: NavController,private mapleRestData: MapleRestData) {
+  constructor(public nav: NavController, private mapleRestData: MapleRestData) {
     this.searchQuery = '';
-    this.items = [];
+    this.cityItems = [];
+    this.addressItems = [];
+    this.mlsItems = [];
   }
 
   //  ngOnInit() {
@@ -35,7 +39,7 @@ export class MapSearchPage implements OnInit {
     let modal = Modal.create(MapSearchOptionsPage, characterNum);
     this.nav.present(modal);
   }
-  
+
   getResult(url) {
     this.mapleRestData.load(url, this.parms).subscribe(
       data => { this.houselist = data.Data; console.log(this.houselist) }
@@ -64,6 +68,20 @@ export class MapSearchPage implements OnInit {
     let map = new google.maps.Map(mapEle, {
       //center: mapData.find(d => d.center),
       center: LatLng,
+      mapTypeControl: true,
+      mapTypeControlOptions: {
+        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+        position: google.maps.ControlPosition.TOP_LEFT
+      },
+      zoomControl: true,
+      zoomControlOptions: {
+        position: google.maps.ControlPosition.RIGHT_TOP
+      },
+      scaleControl: true,
+      streetViewControl: true,
+      streetViewControlOptions: {
+        position: google.maps.ControlPosition.TOP_RIGHT
+      },
       zoom: 16
     });
 
@@ -95,9 +113,12 @@ export class MapSearchPage implements OnInit {
       item: item
     });
   }
+
   getItems(searchbar) {
     // Reset items back to all of the items
-    this.items = [];
+    this.cityItems = [];
+    this.addressItems = [];
+    this.mlsItems = [];
 
     // set q to the value of the searchbar
     var q = searchbar.value;
@@ -106,8 +127,27 @@ export class MapSearchPage implements OnInit {
     if (q.trim() == '') {
       return;
     } else {
-      //Call REST
-      this.items = ["1", "2", "fdasfasf"];
+      let parm = { term: q.trim() };
+      //Call REST and generate item object
+      this.mapleRestData.load('index.php?r=ngget/getCityList', parm).subscribe(
+        data => {
+          if (data.hasOwnProperty("CITY")) {
+            this.cityItems = data.CITY;
+            console.log("CITY Autocomplete:" + this.cityItems);
+          };
+
+          if (data.hasOwnProperty("MLS")) {
+            this.mlsItems = data.MLS;
+            console.log("MLS Autocomplete:" + this.mlsItems);
+          }
+          if (data.hasOwnProperty("ADDRESS")) {
+            this.addressItems = data.ADDRESS;
+            console.log("ADDRESS Autocomplete:" + this.addressItems);
+          }
+          console.log(data);
+        }
+      );
+      //this.items = ["city", "address", "MLS"];
     }
   }
 
@@ -121,9 +161,9 @@ class MapSearchOptionsPage {
   character;
 
   constructor(
-      public platform: Platform,
-      public params: NavParams,
-      public viewCtrl: ViewController
+    public platform: Platform,
+    public params: NavParams,
+    public viewCtrl: ViewController
   ) {
     var characters = [
       {
@@ -164,6 +204,6 @@ class MapSearchOptionsPage {
   dismiss() {
     this.viewCtrl.dismiss();
   }
-  
-  
+
+
 }

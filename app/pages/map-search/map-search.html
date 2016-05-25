@@ -4,35 +4,51 @@
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-navbar *navbar>
-  <button menuToggle>
-    <ion-icon name="menu"></ion-icon>
-  </button>
-  <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (input)="getItems($event)" placeholder="Input City or MLS#" ></ion-searchbar>
-
+<ion-navbar *navbar class="map-search">
+  <ion-buttons start>
+      <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+  </ion-buttons>  
+  <ion-buttons >  
+    <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (input)="getItems($event)" placeholder="Input City or MLS#"></ion-searchbar>
+    </ion-buttons >
+  <ion-buttons  end (click)="openModal({charNum: 0})">
+      <button class="btn-options">
+        <ion-icon name="options"></ion-icon>
+      </button>
+  </ion-buttons>    
+  
+ 
 </ion-navbar>
 
-<ion-content  class="map-search">
+<ion-content class="map-search">
 
-  <ion-item padding *ngFor="#item of items" (click)="itemTapped($event, item)">
-    {{ item }}
+  <ion-item padding *ngFor="#item of cityItems" (click)="itemTapped($event, item)">
+    {{ item.value }}
+  </ion-item>
+  <ion-item padding *ngFor="#item of mlsItems" (click)="itemTapped($event, item)">
+    {{ item.value }}
+  </ion-item>
+  <ion-item padding *ngFor="#item of addressItems" (click)="itemTapped($event, item)">
+    {{ item.value }}
   </ion-item>
 
 
-<div id="map"></div>
- 
-  
-  
+  <div id="map"></div>
+
+
+
   <button fab outline fab-bottom fab-left (click)="openModal({charNum: 0})" large>
     <ion-icon name="locate"></ion-icon>
   </button>
-  <button fab outline secondary fab-top fab-center large>
-    <ion-icon name="school" is-active="false"></ion-icon>
+  <button fab outline secondary fab-bottom fab-center large (click)="openModal({charNum: 0})">
+    <ion-icon name="list-box" is-active="false"></ion-icon>
   </button>
-  <button fab outline secondary fab-top fab-right large>
-    <ion-icon name="mic" is-active="false"></ion-icon>
+  <button fab outline secondary fab-bottom fab-right large (click)="openModal({charNum: 0})">
+    <ion-icon name="funnel" is-active="false"></ion-icon>
   </button>
 
- 
-  
+
+
 </ion-content>
