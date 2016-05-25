@@ -14,7 +14,7 @@ export class HouseDetailPage {
     return [[NavController]];
   }
 
-  constructor(nav) {
-    this.nav = nav;
+  constructor(private nav: NavController) {
+    //this.nav = nav;
   }
 }

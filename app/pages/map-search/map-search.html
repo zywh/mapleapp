@@ -8,20 +8,31 @@
   <button menuToggle>
     <ion-icon name="menu"></ion-icon>
   </button>
-  <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (input)="getItems($event)" placeholder="Input City or MLS#"></ion-searchbar>
+  <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (input)="getItems($event)" placeholder="Input City or MLS#" ></ion-searchbar>
 
 </ion-navbar>
 
 <ion-content  class="map-search">
 
-  <ion-item padding *ngFor="#item of items">
+  <ion-item padding *ngFor="#item of items" (click)="itemTapped($event, item)">
     {{ item }}
   </ion-item>
 
 
 <div id="map"></div>
- <button small fab fab-bottom fab-left (click)="openModal({charNum: 0})">
-    <ion-icon small name="locate" is-active="false"></ion-icon>
+ 
+  
+  
+  <button fab outline secondary large fab-bottom fab-left (click)="openModal({charNum: 0})" large>
+    <ion-icon name="locate"></ion-icon>
   </button>
+  <button fab outline secondary fab-bottom fab-center large>
+    <ion-icon name="school" is-active="false"></ion-icon>
+  </button>
+  <button fab outline secondary fab-bottom fab-right large>
+    <ion-icon name="mic" is-active="false"></ion-icon>
+  </button>
+
+ 
   
 </ion-content>

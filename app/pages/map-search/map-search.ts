@@ -1,9 +1,8 @@
 import {IonicApp, Modal, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 import {OnInit} from 'angular2/core';
+import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
-//import {ConferenceData} from '../../providers/conference-data';
 
 
 /*
@@ -91,7 +90,11 @@ export class MapSearchPage implements OnInit {
     //});
   }
 
-
+  itemTapped(event, item) {
+    this.nav.push(HouseDetailPage, {
+      item: item
+    });
+  }
   getItems(searchbar) {
     // Reset items back to all of the items
     this.items = [];
@@ -161,4 +164,6 @@ class MapSearchOptionsPage {
   dismiss() {
     this.viewCtrl.dismiss();
   }
+  
+  
 }
