@@ -1,10 +1,10 @@
-import {Page, NavController} from 'ionic-angular';
+import {IonicApp, Modal, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
+//import {RichMarker} from 'rich-marker';
 import {OnInit} from 'angular2/core';
+import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
-//import {ConferenceData} from '../../providers/conference-data';
-
+declare var RichMarker: any;
 
 /*
   Generated class for the MapSearchPage page.
@@ -19,18 +19,33 @@ import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
 
 export class MapSearchPage implements OnInit {
   private searchQuery: String;
-  private items: Array<String>;
+  private cityItems: any;
+  private addressItems: any;
+  private mlsItems: any;
   private parms: Object;
   private houselist: any;
+  public map;
+  private center;
+  private markerArray = [];
+  private htmlArray = [];
+  private htmlArrayPosition = 0;
+  private totalCount: Number; //Returned House
+  private listAllHtml = ''; //hold houses on current map
   //private map: any;
-  constructor(private mapleRestData: MapleRestData) {
+  constructor(public nav: NavController, private mapleRestData: MapleRestData) {
     this.searchQuery = '';
-    this.items = [];
+    this.resetItems();
   }
 
   //  ngOnInit() {
   //     this.getResult('index.php?r=ngget/getMapHouse');
   //   }
+
+  openModal(characterNum) {
+    let modal = Modal.create(MapSearchOptionsPage, characterNum);
+    this.nav.present(modal);
+  }
+
 
   getResult(url) {
     this.mapleRestData.load(url, this.parms).subscribe(
@@ -42,25 +57,51 @@ export class MapSearchPage implements OnInit {
   //onPageLoaded() {
   ngOnInit() {
     Geolocation.getCurrentPosition().then((resp) => {
-      let latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
-      console.log("Lat:" + resp.coords.latitude + "Lng:" + resp.coords.longitude);
-      this.loadMap(latLng);
+
+      if (resp.coords.latitude > 20) {
+        let lat = resp.coords.latitude;
+        let lng = resp.coords.longitude;
+        console.log("Lat:" + resp.coords.latitude + "Lng:" + resp.coords.longitude);
+        this.loadMap(lat, lng, 16);
+
+      } else {
+        //default to Toronto
+        let lat: Number = 43.6532;
+        let lng: Number = -79.3832;
+        this.loadMap(lat, lng, 16);
+      }
+
     })
   }
 
 
-  loadMap(LatLng) {
+  loadMap(lat, lng, zoom) {
 
-
+    this.center = new google.maps.LatLng(lat, lng);
     //  let latLng = new google.maps.LatLng(-34.9290, 138.6010);
     //let latLng = new google.maps.LatLng(-34.9290, 138.6010);
     //this.confData.getMap().then(mapData => {
     let mapEle = document.getElementById('map');
 
-    let map = new google.maps.Map(mapEle, {
+    this.map = new google.maps.Map(mapEle, {
       //center: mapData.find(d => d.center),
-      center: LatLng,
-      zoom: 16
+      center: this.center,
+      minZoom: 4,
+      mapTypeControl: true,
+      mapTypeControlOptions: {
+        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+        position: google.maps.ControlPosition.TOP_LEFT
+      },
+      zoomControl: true,
+      zoomControlOptions: {
+        position: google.maps.ControlPosition.RIGHT_TOP
+      },
+      scaleControl: true,
+      streetViewControl: true,
+      streetViewControlOptions: {
+        position: google.maps.ControlPosition.TOP_RIGHT
+      },
+      zoom: zoom
     });
 
     // mapData.forEach(markerData => {
@@ -79,28 +120,418 @@ export class MapSearchPage implements OnInit {
     //   });
     // });
 
-    google.maps.event.addListenerOnce(map, 'idle', () => {
+    //google.maps.event.addListenerOnce(this.map, 'idle', () => {
+    google.maps.event.addListener(this.map, 'idle', () => {
       mapEle.classList.add('show-map');
+      this.changeMap();
     });
 
     //});
   }
+  //select autocomplete action
+  resetItems() {
+    this.cityItems = [];
+    this.addressItems = [];
+    this.mlsItems = [];
+    this.searchQuery = '';
+  }
+  itemTapped(event, item, type) {
+    if (type == 1) { //CITY Action
+      let lat = item.lat;
+      let lng = item.lng;
+      let center = new google.maps.LatLng(lat, lng);
+      this.setLocation(center, 14);
+      this.resetItems();
+    }
 
+    if (type == 2) { //MLS Action
+      this.nav.push(HouseDetailPage, {
+        item: item.id //pass MLS# to house detail
+      });
+    }
 
+    if (type == 3) { //Address Action
+      this.nav.push(HouseDetailPage, {
+        item: item.id //pass MLS# to house detail
+      });
+    }
+
+  }
+  //auto complete REST CAll
   getItems(searchbar) {
     // Reset items back to all of the items
-    this.items = [];
+    this.cityItems = [];
+    this.addressItems = [];
+    this.mlsItems = [];
 
     // set q to the value of the searchbar
-    var q = searchbar.value;
+    let q = searchbar.value;
 
     // if the value is an empty string don't filter the items
     if (q.trim() == '') {
       return;
     } else {
-      //Call REST
-      this.items = ["1", "2", "fdasfasf"];
+      let parm = { term: q.trim() };
+      //Call REST and generate item object
+      this.mapleRestData.load('index.php?r=ngget/getCityList', parm).subscribe(
+        data => {
+          if (data.hasOwnProperty("CITY")) {
+            this.cityItems = data.CITY;
+            console.log("CITY Autocomplete:" + this.cityItems);
+          };
+
+          if (data.hasOwnProperty("MLS")) {
+            this.mlsItems = data.MLS;
+            console.log("MLS Autocomplete:" + this.mlsItems);
+          }
+          if (data.hasOwnProperty("ADDRESS")) {
+            this.addressItems = data.ADDRESS;
+            console.log("ADDRESS Autocomplete:" + this.addressItems);
+          }
+          console.log(data);
+        }); //end of callback
+      //this.items = ["city", "address", "MLS"];
     }
   }
+  //SetCenter and Zoom
+  setLocation(center, zoom) {
+    this.map.setCenter(center);
+    this.map.setZoom(zoom);
+  }
+
+
+  setContent(lat, lng, count, htmlinfo, price) {
+    let point = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+    let content = this.setMarkerCss(count, price);
+	   let marker = new RichMarker({
+      position: point,
+      map: this.map,
+      draggable: false,
+      content: content,
+      flat: true
+    });
+    this.markerArray.push(marker);
+    //maplemap.setMarkerCss(count);
+
+
+    google.maps.event.addListener(marker, 'click', function (e) {
+
+
+      // if ( count >1) {
+      // 	$("#panelhtml").html(htmlinfo);
+      // 	$("#houseviewpanel").panel( "open" );
+
+      // }else {
+      // 	$("#popuphtml").html(htmlinfo);
+      // 	$("#houseviewpopup").popup( "open" );
+      // }
+
+
+      //info.open(map, marker);
+
+      //setMapView(parseFloat(lat), parseFloat(lng), mapZoom);
+    });
+
+    //htmlArrayPosition++;
+
+
+  }
+
+  setContentCount(lat, lng, totalCount, city, price) {
+    //let content = "<i class='icon_map_mark'><span>" + totalCount + "</span></i>";
+    let point = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+    let content = this.setMarkerCss(totalCount, price); //default color
+	   let marker = new RichMarker({
+      position: point,
+      map: this.map,
+      draggable: false,
+      content: content,
+      flat: true
+    });
+
+    //maplemap.setMarkerCss(totalCount);
+		/*Regular Marker
+		let marker = new google.maps.Marker({
+			position: point,
+			map: map,
+			draggable: false,
+			label: totalCount
+		});
+		*/
+
+    this.markerArray.push(marker);
+    google.maps.event.addListener(marker, 'click', function () {
+      this.map.setCenter(this.position);
+      let currentzoom = this.map.getZoom();
+      this.map.setZoom(currentzoom + 2);
+    });
+
+
+  }
+
+  clearAll() {
+    if (this.markerArray) {
+      for (let i in this.markerArray) {
+        this.markerArray[i].setMap(null);
+      }
+      this.markerArray.length = 0;
+    }
+
+    this.htmlArray = [];
+    this.htmlArrayPosition = 0;
+
+  }
+
+  setMarkerCss(countn, price) {
+    let markercontent = '';
+
+    let color = "hsl(" + this.getPrice2Scale(price) + ", 100%, 50%)";
+    if (countn < 10) {
+      // markercontent = "<i class='common_bg icon_map_mark16' style='background-color:" + color + ";'><span>" + countn + "</span></i>";
+      markercontent = "<i class=' icon_map_mark1' style='background-color:" + color + ";'><span>" + countn + "</span></i>";
+    }
+    if ((countn >= 10) && (countn < 100)) {
+      markercontent = "<i class=' icon_map_mark2' style='background-color:" + color + ";'><span>" + countn + "</span></i>";
+    }
+    if ((countn >= 100) && (countn < 1000)) {
+      markercontent = "<i class=' icon_map_mark3' style='background-color:" + color + ";'><span>" + countn + "</span></i>";
+    }
+    if (countn >= 1000) {
+      markercontent = "<i class='icon_map_mark4' style='background-color:" + color + ";'><span>" + countn + "</span></i>";
+    }
+
+    return markercontent;
+
+  }
+
+  getPrice2Scale(price) {
+
+    //let wanPrice = Math.log2(price);
+    let wanPrice = Math.ceil(price / 10);
+    let hue = 0;
+    let hueStart = 0;
+    let hueEnd = 70;
+
+    //let maxPrice = Math.log2(500); // In 10,000
+    let maxPrice = 50; // In 10,000
+    let minPrice = 0;
+    let PriceStep = (hueEnd - hueStart) / (maxPrice - minPrice);
+
+    if (wanPrice >= maxPrice) {
+      hue = 0;
+    } else {
+      hue = hueEnd - PriceStep * wanPrice;
+    }
+    //console.log("Price:" + price +" Hue:" + hue + "PriceStep:" + PriceStep);
+
+    return Math.floor(hue);
+  }
+
+  changeMap() {
+    console.log("Change Map");
+
+    this.clearAll();
+    this.listAllHtml = '';
+
+    let gridSize = 60;	//60px
+    //get element size to calcute number of grid
+    let mapHeight = window.innerHeight;
+    let mapWidth = window.innerWidth;
+    let gridx = Math.ceil(mapWidth / gridSize);
+    let gridy = Math.ceil(mapHeight / gridSize);
+    let _sw = this.map.getBounds().getSouthWest();
+    let _ne = this.map.getBounds().getNorthEast();
+    let centerlat = (_ne.lat() + _sw.lat()) / 2;
+    let centerlng = (_ne.lng() + _sw.lng()) / 2;
+    let HouseArray = [];
+    let marker;
+    let _bounds = _sw.lat() + "," + _sw.lng() + "," + _ne.lat() + "," + _ne.lng();
+
+    let mapParms = {
+      bounds: _bounds,
+      gridx: gridx,
+      gridy: gridy
+      // sr : 	options['sel_sr'], 
+      // housetype: options['sel_type'], 
+      // houseprice: options['sel_price'],
+      // houseroom: options['sel_bedroom'],	
+      // housearea: options['sel_housearea']
+
+				};
+    console.log("Map House Search Parms:" + _bounds + "gridx:" + gridx);
+    this.mapleRestData.load('index.php?r=ngget/getMapHouse', mapParms).subscribe(
+      data => {
+
+
+        this.totalCount = data.Data.Total;
+        let markerType = data.Data.Type;
+        console.log(data.Data);
+        //Start City Markers
+        if ((markerType == 'city') || (markerType == 'grid')) {
+          for (let p in data.Data.AreaHouseCount) {
+
+            let areaHouse = data.Data.AreaHouseCount[p];
+            if (areaHouse.HouseCount > 0) {
+              let price = areaHouse.TotalPrice / areaHouse.HouseCount;
+              console.log("Name:" + areaHouse.NameCn + "Lat:" + areaHouse.GeocodeLat + "Count:" + areaHouse.HouseCount + "AvgPrice:" + price);
+              this.setContentCount(areaHouse.GeocodeLat, areaHouse.GeocodeLng, areaHouse.HouseCount.toString(), areaHouse.NameCn, price);
+
+            }
+          }
+        }   //End of City Markers
+
+
+        if (markerType == 'house') {
+
+          let count = 1;
+          let panelhtml = '';
+          let totalprice = 0;
+
+          let totalhouse = data.Data.MapHouseList.length;
+          let imgHost = data.Data.imgHost;
+          let nextLat;
+          let nextLng;
+          let listAllHtml;
+          for (let index = 0, l = totalhouse; index < l; index++) {
+            let house = data.Data.MapHouseList[index];
+            if (index < (totalhouse - 1)) {
+              nextLat = data.Data.MapHouseList[index + 1].GeocodeLat;
+              nextLng = data.Data.MapHouseList[index + 1].GeocodeLng;
+
+            }
+            //console.log("Current:" + this.GeocodeLng + "Next:" + nextLng + "Total:" + totalhouse + "index:" + index + "Count:" + count);
+            let imgurl = imgHost + house.CoverImg;
+            let imgurltn = imgHost + house.CoverImgtn;
+            let hprice = (house.SaleLease == 'Lease') ? Math.round(house.Price) * 10000 + '加元/月' : Math.round(house.Price) + '万加元';
+            let markerprice = Math.round(house.Price);
+
+            let tlat = parseFloat(house.GeocodeLat);
+            let tlng = parseFloat(house.GeocodeLng);
+
+            let li = "<li >"
+
+              + "<a href='index.php?r=mhouse/view&id=" + house.MLS + "'>"
+              + "<img src=' " + imgurltn + "'>"
+              + " <div >"
+              + "<div>" + house.Address + "</div>"
+              + "<div >" + house.MunicipalityName + " " + house.ProvinceCname + "</div>"
+              + "<div >" + house.HouseType + ":" + house.Beds + "卧" + house.Baths + "卫" + house.Kitchen + "厨" + "</div>"
+              + "<div>价钱:" + hprice + "</div> </div>"
+              + "</a>"
+
+              + "</li>";
+            listAllHtml = listAllHtml + li;
+
+
+
+            if ((nextLng != house.GeocodeLng) || (nextLat != house.GeocodeLat)) {
+
+              if (count == 1) {
+                //Generate single house popup view
+                let html = "<div <a href='index.php?r=mhouse/view&id=" + house.MLS + "' > <img src='" + imgurl + "'></a></div>"
+                  + "<div ><div><a href='index.php?r=mhouse/view&id=" + house.MLS + "' >MLS: " + house.MLS + "</a><div>"
+                  + "<div >价格：" + hprice + "</div>"
+                  + "<div>地址：" + house.Address + "</div>"
+                  + "<div>城市：" + house.MunicipalityName + " " + house.ProvinceCname + " " + house.Zip + "</div>"
+                  + "<div >类型：" + house.HouseType + " " + house.Beds + "卧" + house.Baths + "卫" + house.Kitchen + "厨</div></div>";
+
+
+
+                this.setContent(tlat, tlng, 1, html, markerprice);
+              } else {
+                //generate panel list view
+                //let li =  "<li class='panel_house_view' data-icon='false'>" 
+
+                + "<a href='index.php?r=mhouse/view&id=" + house.MLS + "'>"
+                  + "<img src=' " + imgurltn + "'>"
+                  + " <div >"
+                  + "<div>" + house.Address + "</div>"
+                  + "<div >" + house.MunicipalityName + " " + house.ProvinceCname + "</div>"
+                  + "<div >" + house.HouseType + ":" + house.Beds + "卧" + house.Baths + "卫" + house.Kitchen + "厨" + "</div>"
+                  + "<div>价钱:" + hprice + "</div> </div>"
+                  + "</a>"
+
+                  + "</li>";
+                let htmlp = panelhtml + li;
+                let price = (totalprice + markerprice) / count;
+                this.setContent(tlat, tlng, count, htmlp, price);
+                count = 1;
+                totalprice = 0;
+                panelhtml = '';
+              }
+
+
+            }
+            else {
+              ++count;
+              totalprice = totalprice + markerprice;
+              panelhtml = panelhtml + li;
+
+            }
+
+          }
+        } //End of if HOUSE
+      });
+
+    //END of Data Subscribe
+
+  }
+
+  //End of MAP import function
+
+}
+
+//Map Option Page
+@Page({
+  templateUrl: './build/pages/map-search/map-search-options.html'
+})
+class MapSearchOptionsPage {
+  character;
+
+  constructor(
+    public platform: Platform,
+    public params: NavParams,
+    public viewCtrl: ViewController
+  ) {
+    let characters = [
+      {
+        name: 'Gollum',
+        quote: 'Sneaky little hobbitses!',
+        image: 'img/avatar-gollum.jpg',
+        items: [
+          { title: 'Race', note: 'Hobbit' },
+          { title: 'Culture', note: 'River Folk' },
+          { title: 'Alter Ego', note: 'Smeagol' }
+        ]
+      },
+      {
+        name: 'Frodo',
+        quote: 'Go back, Sam! I\'m going to Mordor alone!',
+        image: 'img/avatar-frodo.jpg',
+        items: [
+          { title: 'Race', note: 'Hobbit' },
+          { title: 'Culture', note: 'Shire Folk' },
+          { title: 'Weapon', note: 'Sting' }
+        ]
+      },
+      {
+        name: 'Samwise Gamgee',
+        quote: 'What we need is a few good taters.',
+        image: 'img/avatar-samwise.jpg',
+        items: [
+          { title: 'Race', note: 'Hobbit' },
+          { title: 'Culture', note: 'Shire Folk' },
+          { title: 'Nickname', note: 'Sam' }
+        ]
+      }
+    ];
+    this.character = characters[this.params.get('charNum')];
+    console.log("DEBUG IMAGE:" + this.character.image);
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
+  }
+
 
 }

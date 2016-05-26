@@ -1,25 +1,26 @@
 {
-  "name": "ionic-conference-app",
-  "description": "Ionic Conference App",
+  "name": "maplecity-app",
+  "description": "Maple City Mobile App",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/driftyco/ionic-conference-app.git"
+    "url": "https://github.com/zywh/maplecityapp.git"
   },
   "dependencies": {
     "angular2": "2.0.0-beta.16",
-    "es6-shim": "^0.35.0",
-    "ionic-angular": "2.0.0-beta.6-201605132240",
-    "ionic-native": "^1.1.0",
-    "ionicons": "3.0.0",
-    "rxjs": "5.0.0-beta.2",
     "body-parser": "^1.15.0",
     "compression": "^1.6.1",
     "cors": "^2.7.1",
     "es6-promise": "3.0.2",
+    "es6-shim": "^0.35.0",
     "express": "^4.13.4",
+    "ionic-angular": "2.0.0-beta.6-201605132240",
     "ionic-framework": "2.0.0-beta.1",
+    "ionic-native": "^1.1.0",
+    "ionicons": "3.0.0",
     "reflect-metadata": "0.1.2",
+    "rich-marker": "0.0.1",
+    "rxjs": "5.0.0-beta.2",
     "zone.js": "0.6.12"
   },
   "devDependencies": {

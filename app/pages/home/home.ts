@@ -3,8 +3,10 @@ import {Page, NavController, NavParams} from 'ionic-angular';
 import {OnInit} from 'angular2/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {Http, Headers, RequestOptions} from 'angular2/http';
-import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
+//import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
+
 import {ProjectDetailPage} from '../project-detail/project-detail';
+import {MapleFooter} from '../maple-footer/maple-footer';
 
 /*
   Generated class for the HomePage page.
@@ -14,6 +16,7 @@ import {ProjectDetailPage} from '../project-detail/project-detail';
 */
 @Page({
   templateUrl: 'build/pages/home/home.html',
+  directives: [MapleFooter]
 })
 export class HomePage implements OnInit {
   private nav;
@@ -52,3 +55,4 @@ export class HomePage implements OnInit {
   }
 
 }
+
