@@ -112,21 +112,23 @@
   </div>
 
   <div class="house_list" *ngIf="divShow('houselist')">
-    <ion-card *ngFor="#house of currentHouseList">
-      <ion-list-header>
-        {{house.MLS}}
-      </ion-list-header>
-      <img [src]="imgHost + house.CoverImg" />
-
-      <div class="card-subtitle">城市：{{house.MunicipalityName}}</div>
-    </ion-card>
-
+   
+   <ion-slides [options]="swiperOptions" class="swiper-container">
+    <ion-slide *ngFor="#house of currentHouseList">
+      <img [src]="imgHost + house.CoverImg" class="slide-image"/>
+      <h2 class="slide-title" [innerHTML]="house.MLS"></h2>
+     
+    </ion-slide>
+  
+  </ion-slides>
+   
+ 
 
   </div>
   
   
   
-  <div id="map"></div>
+  <div id="map" ngFocus></div>
 
 
 

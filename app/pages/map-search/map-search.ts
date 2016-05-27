@@ -65,10 +65,10 @@ export class MapSearchPage implements OnInit {
     this.currentDiv = "mapoption";
   }
 
-  
- divShow(name){
-   return ( name == this.currentDiv)? true :false;
- }
+
+  divShow(name) {
+    return (name == this.currentDiv) ? true : false;
+  }
   updateOption() {
     this.optionShow = false;
     this.changeMap();
@@ -90,24 +90,45 @@ export class MapSearchPage implements OnInit {
 
   //onPageLoaded() {
   ngOnInit() {
-    Geolocation.getCurrentPosition().then((resp) => {
+    let options = { timeout: 10000, enableHighAccuracy: true };
 
-      if (resp.coords.latitude > 20) {
-        let lat = resp.coords.latitude;
-        let lng = resp.coords.longitude;
-        console.log("Lat:" + resp.coords.latitude + "Lng:" + resp.coords.longitude);
-        this.loadMap(lat, lng, 16);
+    // navigator.geolocation.getCurrentPosition(
 
-      } else {
-        //default to Toronto
-        let lat: Number = 43.6532;
-        let lng: Number = -79.3832;
-        this.loadMap(lat, lng, 16);
-      }
+    //   (position) => {
 
-    })
+    //     //let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    //     let lat = position.coords.latitude;
+    //     let lng = position.coords.longitude;
+
+    //     if (lat > 20) {
+    //       this.loadMap(lat, lng, 16);
+    //     } else {
+    //       let lat: Number = 43.6532;
+    //       let lng: Number = -79.3832;
+    //       this.loadMap(lat, lng, 16);
+    //     }
+
+    //   },
+
+    //   (error) => {
+    //     let lat: Number = 43.6532;
+    //     let lng: Number = -79.3832;
+    //     this.loadMap(lat, lng, 16);
+    //     console.log(error);
+    //   }, options
+
+    // );
+    let lat: Number = 43.6532;
+    let lng: Number = -79.3832;
+    this.loadMap(lat, lng, 16);
+
   }
-
+  swiperOptions = {
+    loop: true,
+    //pager: true,
+    speed: 4000,
+    autoplay: 300
+  };
 
   loadMap(lat, lng, zoom) {
 
@@ -170,14 +191,14 @@ export class MapSearchPage implements OnInit {
     //this.searchQuery = '';
   }
   resetSelections() {
-   this.selectPrice ='';
-  this.selectType ='';
-  this.selectBeds = '';
-  this.selectBaths = '';
-  this.selectHousesize = '';
-  this.selectLandsize = '';
-  this.currentHouseList ='';
-   
+    this.selectPrice = '';
+    this.selectType = '';
+    this.selectBeds = '';
+    this.selectBaths = '';
+    this.selectHousesize = '';
+    this.selectLandsize = '';
+    this.currentHouseList = '';
+
   }
   itemTapped(event, item, type) {
     console.log("Item tapped:" + type);
@@ -209,7 +230,7 @@ export class MapSearchPage implements OnInit {
     // this.addressItems = [];
     // this.mlsItems = [];
     this.resetItems();
-    this.optionShow =false;
+    this.optionShow = false;
     this.currentDiv = 'searchlist';
 
     // set q to the value of the searchbar
@@ -379,7 +400,7 @@ export class MapSearchPage implements OnInit {
     console.log("Change Map");
 
     this.clearAll();
-    this.listAllHtml = '';
+    this.currentHouseList = [];
 
     let gridSize = 60;	//60px
     //get element size to calcute number of grid
