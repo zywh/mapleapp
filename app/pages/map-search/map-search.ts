@@ -44,6 +44,7 @@ export class MapSearchPage implements OnInit {
   private selectHousesize;
   private selectLandsize;
   public currentHouseList;
+  private currentDiv;
   //private map: any;
   constructor(
     public nav: NavController,
@@ -60,13 +61,17 @@ export class MapSearchPage implements OnInit {
   optionToggle(state) {
     this.resetItems(); //reset search to prevent overlapping menu
     this.optionShow = state;
+    this.currentDiv = "mapoption";
   }
 
   
-
+ divShow(name){
+   return ( name == this.currentDiv)? true :false;
+ }
   updateOption() {
     this.optionShow = false;
     this.changeMap();
+    this.currentDiv = '';
     console.log("Change Options:" + this.selectPrice);
   }
   // openModal(characterNum) {
@@ -174,6 +179,7 @@ export class MapSearchPage implements OnInit {
    
   }
   itemTapped(event, item, type) {
+    console.log("Item tapped:" + type);
     if (type == 1) { //CITY Action
       let lat = item.lat;
       let lng = item.lng;
@@ -203,6 +209,7 @@ export class MapSearchPage implements OnInit {
     // this.mlsItems = [];
     this.resetItems();
     this.optionShow =false;
+    this.currentDiv = 'searchlist';
 
     // set q to the value of the searchbar
     let q = searchbar.value;

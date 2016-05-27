@@ -14,9 +14,12 @@
 <ion-content padding class="projects">
 
   <ion-card *ngFor="#project of projects">
+    <ion-list-header>
+    {{project.name}}
+  </ion-list-header>
     <img [src]="project.room_type_image" (click)="goToProject(project.id)"/>
-    <div class="card-title">{{project.name}}</div>
-    <div class="card-subtitle">{{project.cityname}}</div>
+    
+    <div class="card-subtitle">城市：{{project.cityname}}</div>
   </ion-card>
 
  

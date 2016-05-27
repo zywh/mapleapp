@@ -11,7 +11,7 @@
       </button>
   </ion-buttons>
   <ion-buttons>
-    <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (input)="getItems($event)" placeholder="城市/地址/MLS#"></ion-searchbar>
+    <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (focus)="currentDiv='searchlist'" (blur)="currentDiv=''" (input)="getItems($event)" placeholder="城市/地址/MLS#"></ion-searchbar>
   </ion-buttons>
   <ion-buttons end>
     <button class="btn-options" (click)="optionToggle('true')">
@@ -30,7 +30,7 @@
 </ion-navbar>
 
 <ion-content class="map-search">
-  <div>
+  <div class="search_list" *ngIf="divShow('searchlist')">
     <ion-item padding *ngFor="#item of cityItems" (click)="itemTapped($event, item,1)">
       {{ item.value }}
     </ion-item>
@@ -41,7 +41,7 @@
       {{ item.value }}
     </ion-item>
   </div>
-  <div class="map_options" *ngIf="optionShow">
+  <div class="map_options" *ngIf="divShow('mapoption')">
     <ion-list>
       <ion-item>
         <ion-label>物业类型</ion-label>
@@ -110,6 +110,10 @@
 
   </div>
 
+  <div class="house_list" *ngIf="divShow('houselist')">
+    fsdfdsa
+    fsdafsdafsdaf
+    </div>
   <div id="map"></div>
 
 
