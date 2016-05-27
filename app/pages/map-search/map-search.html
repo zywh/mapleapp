@@ -11,7 +11,8 @@
       </button>
   </ion-buttons>
   <ion-buttons>
-    <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (focus)="currentDiv='searchlist'" (blur)="currentDiv=''" (input)="getItems($event)" placeholder="城市/地址/MLS#"></ion-searchbar>
+    <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (focus)="currentDiv='searchlist'" (blur)="currentDiv=''" (input)="getItems($event)"
+      placeholder="城市/地址/MLS#"></ion-searchbar>
   </ion-buttons>
   <ion-buttons end>
     <button class="btn-options" (click)="optionToggle('true')">
@@ -111,9 +112,20 @@
   </div>
 
   <div class="house_list" *ngIf="divShow('houselist')">
-    fsdfdsa
-    fsdafsdafsdaf
-    </div>
+    <ion-card *ngFor="#house of currentHouseList">
+      <ion-list-header>
+        {{house.MLS}}
+      </ion-list-header>
+      <img [src]="imgHost + house.CoverImg" />
+
+      <div class="card-subtitle">城市：{{house.MunicipalityName}}</div>
+    </ion-card>
+
+
+  </div>
+  
+  
+  
   <div id="map"></div>
 
 
@@ -121,14 +133,13 @@
   <button fab outline fab-bottom fab-left (click)="openModal({charNum: 0})" large>
     <ion-icon name="locate"></ion-icon>
   </button>
-  <button fab outline secondary fab-bottom fab-center large (click)="enableMenu()">
+  <button fab outline secondary fab-bottom fab-center large (click)="currentDiv= (currentDiv == 'houselist')? '':'houselist'">
     <ion-icon name="list-box" is-active="false"></ion-icon>
   </button>
-  <button  menuToggle fab outline secondary fab-bottom fab-right large >
+  <button menuToggle fab outline secondary fab-bottom fab-right large>
     <ion-icon name="funnel" is-active="false"></ion-icon>
   </button>
 
 
 
 </ion-content>
-

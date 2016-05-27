@@ -35,6 +35,7 @@ export class MapSearchPage implements OnInit {
   private totalCount: Number; //Returned House
   private listAllHtml = ''; //hold houses on current map
   private optionShow: boolean = false;
+  private imgHost: String;
 
   //selection Parms
   private selectPrice;
@@ -433,12 +434,12 @@ export class MapSearchPage implements OnInit {
           let totalprice = 0;
 
           let totalhouse = data.Data.MapHouseList.length;
-          let imgHost = data.Data.imgHost;
+          this.imgHost = data.Data.imgHost;
           let nextLat;
           let nextLng;
           //let listAllHtml;
           this.currentHouseList = data.Data.MapHouseList;
-          console.log(this.currentHouseList);
+          console.log('Image Host:' + this.imgHost);
           for (let index = 0, l = totalhouse; index < l; index++) {
             let house = data.Data.MapHouseList[index];
             if (index < (totalhouse - 1)) {
@@ -447,8 +448,8 @@ export class MapSearchPage implements OnInit {
 
             }
             //console.log("Current:" + this.GeocodeLng + "Next:" + nextLng + "Total:" + totalhouse + "index:" + index + "Count:" + count);
-            let imgurl = imgHost + house.CoverImg;
-            let imgurltn = imgHost + house.CoverImgtn;
+            let imgurl = this.imgHost + house.CoverImg;
+            let imgurltn = this.imgHost + house.CoverImgtn;
             let hprice = (house.SaleLease == 'Lease') ? Math.round(house.Price) * 10000 + '加元/月' : Math.round(house.Price) + '万加元';
             let markerprice = Math.round(house.Price);
 
