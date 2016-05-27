@@ -11,11 +11,10 @@
       </button>
   </ion-buttons>
   <ion-buttons>
-    <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (focus)="currentDiv='searchlist'" (blur)="currentDiv=''" (input)="getItems($event)"
-      placeholder="城市/地址/MLS#"></ion-searchbar>
+    <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (focus)="currentDiv='searchlist'" (input)="getItems($event)" placeholder="城市/地址/MLS#"></ion-searchbar>
   </ion-buttons>
   <ion-buttons end>
-    <button class="btn-options" (click)="optionToggle('true')">
+    <button class="btn-options" (click)="currentDiv= (currentDiv == 'mapoption')? '':'mapoption'">
         <ion-icon name="options"></ion-icon>
       </button>
 
@@ -31,7 +30,7 @@
 </ion-navbar>
 
 <ion-content class="map-search">
-  <div class="search_list" *ngIf="divShow('searchlist')">
+  <div class="search_list" *ngIf="currentDiv == 'searchlist'">
     <ion-item padding *ngFor="#item of cityItems" (click)="itemTapped($event, item,1)">
       {{ item.value }}
     </ion-item>
@@ -42,7 +41,7 @@
       {{ item.value }}
     </ion-item>
   </div>
-  <div class="map_options" *ngIf="divShow('mapoption')">
+  <div class="map_options" *ngIf="currentDiv == 'mapoption'">
     <ion-list>
       <ion-item>
         <ion-label>物业类型</ion-label>
@@ -102,46 +101,67 @@
         </ion-select>
       </ion-item>
     </ion-list>
-    <button primary (click)="resetSelections()">
-      <ion-icon name="close"></ion-icon>选择复位
-      </button>
-    <button primary (click)="updateOption()">
-      <ion-icon name="checkmark"></ion-icon> 确认
-     </button>
-
+    <ion-row>
+      <ion-col>
+        <div text-center>
+          <button outline primary (click)="resetSelections()">
+             <ion-icon name="close"></ion-icon>选择复位
+          </button>
+        </div>
+      </ion-col>
+      <ion-col>
+         <div text-center>
+        <button outline primary (click)="updateOption()">
+          <ion-icon name="checkmark"></ion-icon> 确认
+        </button>
+         </div>
+      </ion-col>
+    </ion-row>
   </div>
 
-  <div class="house_list" *ngIf="divShow('houselist')">
-   
-   <ion-slides [options]="swiperOptions" class="swiper-container">
-    <ion-slide *ngFor="#house of currentHouseList">
-      <img [src]="imgHost + house.CoverImg" class="slide-image"/>
-      <h2 class="slide-title" [innerHTML]="house.MLS"></h2>
-     
-    </ion-slide>
-  
-  </ion-slides>
-   
- 
+  <div class="house_list" *ngIf="listShow()">
+    <ion-slides [options]="swiperOptions" class="swiper-container">
+      <ion-slide *ngFor="#house of currentHouseList" class="swiper-slide" (click)="gotoHouseDetail(house.MLS)">
+        <ion-card class="house_card">
+          <img [src]="imgHost + house.CoverImg" />
+          <div padding-left class="house_desc">
+            <div class="card-title" primary text-left text-nowrap>MLS:{{house.MLS}}-{{house.Address}}万</div>
+            <div class="card-subtitle" text-left>
+              <div ><label>类型：</label> {{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨</div>
+              <div> <label>城市：</label>{{house.Address}},{{house.MunicipalityName}},{{house.ProvinceCname}}</div>
+            </div>
+          </div>
+        </ion-card>
+      </ion-slide>
 
+    </ion-slides>
   </div>
-  
-  
-  
-  <div id="map" ngFocus></div>
 
 
+  <div class="house_list" *ngIf="currentDiv == 'singleMarkerList'">
+    <ion-slides [options]="swiperOptions" class="swiper-container">
+      <ion-slide *ngFor="#house of currentHouses" class="swiper-slide" (click)="gotoHouseDetail(house.MLS)">
+        <ion-card class="house_card">
+          <img [src]="imgHost + house.CoverImg" />
+          <div padding-left class="house_desc">
+            <div class="card-title" primary text-left text-nowrap>MLS:{{house.MLS}}-{{house.Address}}万</div>
+            <div class="card-subtitle" text-left>
+              <div ><label>类型：</label> {{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨</div>
+              <div> <label>城市：</label>{{house.Address}},{{house.MunicipalityName}},{{house.ProvinceCname}}</div>
+            </div>
+          </div>
+        </ion-card>
+      </ion-slide>
 
-  <button fab outline fab-bottom fab-left (click)="openModal({charNum: 0})" large>
-    <ion-icon name="locate"></ion-icon>
-  </button>
-  <button fab outline secondary fab-bottom fab-center large (click)="currentDiv= (currentDiv == 'houselist')? '':'houselist'">
-    <ion-icon name="list-box" is-active="false"></ion-icon>
-  </button>
-  <button menuToggle fab outline secondary fab-bottom fab-right large>
-    <ion-icon name="funnel" is-active="false"></ion-icon>
-  </button>
+    </ion-slides>
+  </div>
 
+  <div id="map"></div>
 
+  <div *ngIf="true">
+    <button fab  primary outline fab-bottom fab-center (click)="currentDiv = (currentDiv == 'houselist')? '':'houselist'">
+      <ion-icon name="list-box" is-active="true"></ion-icon>
+    </button>
+  </div>
 
 </ion-content>

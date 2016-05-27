@@ -34,7 +34,8 @@ export class MapSearchPage implements OnInit {
   private htmlArrayPosition = 0;
   private totalCount: Number; //Returned House
   private listAllHtml = ''; //hold houses on current map
-  private optionShow: boolean = false;
+  public isListShow: boolean = true;
+  private markerType;
   private imgHost: String;
 
   //selection Parms
@@ -44,9 +45,11 @@ export class MapSearchPage implements OnInit {
   private selectBaths;
   private selectHousesize;
   private selectLandsize;
-  public currentHouseList;
-  private currentDiv;
-  //private map: any;
+  private currentHouseList; //Hold list of all houses on current map
+  private currentHouses; //Hold array of houses for single marker
+
+  private currentDiv; 
+
   constructor(
     public nav: NavController,
     private mapleRestData: MapleRestData,
@@ -54,23 +57,15 @@ export class MapSearchPage implements OnInit {
   ) {
     this.searchQuery = '';
     this.resetItems();
+    
   }
 
   //  ngOnInit() {
   //     this.getResult('index.php?r=ngget/getMapHouse');
   //   }
-  optionToggle(state) {
-    this.resetItems(); //reset search to prevent overlapping menu
-    this.optionShow = state;
-    this.currentDiv = "mapoption";
-  }
 
 
-  divShow(name) {
-    return (name == this.currentDiv) ? true : false;
-  }
   updateOption() {
-    this.optionShow = false;
     this.changeMap();
     this.currentDiv = '';
     console.log("Change Options:" + this.selectPrice);
@@ -129,7 +124,14 @@ export class MapSearchPage implements OnInit {
     speed: 4000,
     autoplay: 300
   };
+  listShow() {
+    //Show House List
+    return ((this.currentDiv == 'houselist') && (this.markerType == 'house'));
 
+  }
+  gotoHouseDetail(mls) {
+    this.nav.push(HouseDetailPage, mls);
+  }
   loadMap(lat, lng, zoom) {
 
     this.center = new google.maps.LatLng(lat, lng);
@@ -175,11 +177,25 @@ export class MapSearchPage implements OnInit {
     //   });
     // });
 
-    //google.maps.event.addListenerOnce(this.map, 'idle', () => {
+
+    // google.maps.event.addListener(this.map, 'idle', () => {
+    //   mapEle.classList.add('show-map');
+    //   this.changeMap();
+    // });
+    //google.maps.event.addListener(this.map, 'bounds_changed', () => {
     google.maps.event.addListener(this.map, 'idle', () => {
-      mapEle.classList.add('show-map');
+      //mapEle.classList.add('show-map');
       this.changeMap();
+
     });
+
+    google.maps.event.addListener(this.map, 'click', () => {
+      //this.currentDiv = '';
+      
+      console.log("CLICKED EVENT Detected: CURRENT DIV-" + this.currentDiv);
+    });
+
+
 
     //});
   }
@@ -225,12 +241,8 @@ export class MapSearchPage implements OnInit {
   }
   //auto complete REST CAll
   getItems(searchbar) {
-    // Reset items back to all of the items
-    // this.cityItems = [];
-    // this.addressItems = [];
-    // this.mlsItems = [];
+
     this.resetItems();
-    this.optionShow = false;
     this.currentDiv = 'searchlist';
 
     // set q to the value of the searchbar
@@ -265,11 +277,18 @@ export class MapSearchPage implements OnInit {
   //SetCenter and Zoom
   setLocation(center, zoom) {
     this.map.setCenter(center);
+
     this.map.setZoom(zoom);
+    let marker = new google.maps.Marker({
+      position: center,
+      map: this.map,
+      draggable: false,
+
+    });
   }
 
 
-  setContent(lat, lng, count, htmlinfo, price) {
+  setContent(lat, lng, count, houses, price) {
     let point = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
     let content = this.setMarkerCss(count, price);
 	   let marker = new RichMarker({
@@ -280,29 +299,13 @@ export class MapSearchPage implements OnInit {
       flat: true
     });
     this.markerArray.push(marker);
-    //maplemap.setMarkerCss(count);
 
-
-    google.maps.event.addListener(marker, 'click', function (e) {
-
-
-      // if ( count >1) {
-      // 	$("#panelhtml").html(htmlinfo);
-      // 	$("#houseviewpanel").panel( "open" );
-
-      // }else {
-      // 	$("#popuphtml").html(htmlinfo);
-      // 	$("#houseviewpopup").popup( "open" );
-      // }
-
-
-      //info.open(map, marker);
-
-      //setMapView(parseFloat(lat), parseFloat(lng), mapZoom);
+    google.maps.event.addListener(marker, 'click', () => {
+      this.currentHouseList = houses;
+      //this.currentDiv = 'singleMarkerList';
+      this.currentDiv = 'singleMarkerList';
+      console.log(houses);      
     });
-
-    //htmlArrayPosition++;
-
 
   }
 
@@ -397,10 +400,10 @@ export class MapSearchPage implements OnInit {
   }
 
   changeMap() {
-    console.log("Change Map");
-
+    console.log("Change Map: Button Show?" + this.isListShow);
+    this.currentDiv = '';
     this.clearAll();
-    this.currentHouseList = [];
+
 
     let gridSize = 60;	//60px
     //get element size to calcute number of grid
@@ -427,20 +430,22 @@ export class MapSearchPage implements OnInit {
       housearea: this.selectHousesize
 
 				};
-    console.log("Map House Search Parms:" + mapParms);
+    //console.log("Map House Search Parms:" + mapParms);
     this.mapleRestData.load('index.php?r=ngget/getMapHouse', mapParms).subscribe(
       data => {
+
         this.totalCount = data.Data.Total;
-        let markerType = data.Data.Type;
-        console.log(data.Data);
+        this.markerType = data.Data.Type;
+        console.log("Change Map Refresh Data:" + this.markerType);
         //Start City Markers
-        if ((markerType == 'city') || (markerType == 'grid')) {
+        if ((this.markerType == 'city') || (this.markerType == 'grid')) {
+          this.isListShow = false;
           for (let p in data.Data.AreaHouseCount) {
 
             let areaHouse = data.Data.AreaHouseCount[p];
             if (areaHouse.HouseCount > 0) {
               let price = areaHouse.TotalPrice / areaHouse.HouseCount;
-              console.log("Name:" + areaHouse.NameCn + "Lat:" + areaHouse.GeocodeLat + "Count:" + areaHouse.HouseCount + "AvgPrice:" + price);
+              //console.log("Name:" + areaHouse.NameCn + "Lat:" + areaHouse.GeocodeLat + "Count:" + areaHouse.HouseCount + "AvgPrice:" + price);
               this.setContentCount(areaHouse.GeocodeLat, areaHouse.GeocodeLng, areaHouse.HouseCount.toString(), areaHouse.NameCn, price);
 
             }
@@ -448,10 +453,10 @@ export class MapSearchPage implements OnInit {
         }   //End of City Markers
 
 
-        if (markerType == 'house') {
-
+        if (this.markerType == 'house') {
+          this.isListShow = true;
           let count = 1;
-          let panelhtml = '';
+          let houses = [];
           let totalprice = 0;
 
           let totalhouse = data.Data.MapHouseList.length;
@@ -460,7 +465,10 @@ export class MapSearchPage implements OnInit {
           let nextLng;
           //let listAllHtml;
           this.currentHouseList = data.Data.MapHouseList;
-          console.log('Image Host:' + this.imgHost);
+
+          console.log("Current House List Length:" + this.currentHouseList.length);
+          console.log("Bounds_Changed - CURRENT DIV:" + this.currentDiv);
+          // console.log('Image Host:' + this.imgHost);
           for (let index = 0, l = totalhouse; index < l; index++) {
             let house = data.Data.MapHouseList[index];
             if (index < (totalhouse - 1)) {
@@ -477,19 +485,7 @@ export class MapSearchPage implements OnInit {
             let tlat = parseFloat(house.GeocodeLat);
             let tlng = parseFloat(house.GeocodeLng);
 
-            let li = "<li >"
 
-              + "<a href='index.php?r=mhouse/view&id=" + house.MLS + "'>"
-              + "<img src=' " + imgurltn + "'>"
-              + " <div >"
-              + "<div>" + house.Address + "</div>"
-              + "<div >" + house.MunicipalityName + " " + house.ProvinceCname + "</div>"
-              + "<div >" + house.HouseType + ":" + house.Beds + "卧" + house.Baths + "卫" + house.Kitchen + "厨" + "</div>"
-              + "<div>价钱:" + hprice + "</div> </div>"
-              + "</a>"
-
-              + "</li>";
-            this.listAllHtml = this.listAllHtml + li;
 
 
 
@@ -497,36 +493,20 @@ export class MapSearchPage implements OnInit {
 
               if (count == 1) {
                 //Generate single house popup view
-                let html = "<div <a href='index.php?r=mhouse/view&id=" + house.MLS + "' > <img src='" + imgurl + "'></a></div>"
-                  + "<div ><div><a href='index.php?r=mhouse/view&id=" + house.MLS + "' >MLS: " + house.MLS + "</a><div>"
-                  + "<div >价格：" + hprice + "</div>"
-                  + "<div>地址：" + house.Address + "</div>"
-                  + "<div>城市：" + house.MunicipalityName + " " + house.ProvinceCname + " " + house.Zip + "</div>"
-                  + "<div >类型：" + house.HouseType + " " + house.Beds + "卧" + house.Baths + "卫" + house.Kitchen + "厨</div></div>";
 
-
-
-                this.setContent(tlat, tlng, 1, html, markerprice);
+                houses.push(house);
+                this.setContent(tlat, tlng, 1, houses, markerprice);
+                houses = [];
               } else {
                 //generate panel list view
-                //let li =  "<li class='panel_house_view' data-icon='false'>" 
 
-                + "<a href='index.php?r=mhouse/view&id=" + house.MLS + "'>"
-                  + "<img src=' " + imgurltn + "'>"
-                  + " <div >"
-                  + "<div>" + house.Address + "</div>"
-                  + "<div >" + house.MunicipalityName + " " + house.ProvinceCname + "</div>"
-                  + "<div >" + house.HouseType + ":" + house.Beds + "卧" + house.Baths + "卫" + house.Kitchen + "厨" + "</div>"
-                  + "<div>价钱:" + hprice + "</div> </div>"
-                  + "</a>"
-
-                  + "</li>";
-                let htmlp = panelhtml + li;
+                houses.push(house);
+                //let htmlp = panelhtml + li;
                 let price = (totalprice + markerprice) / count;
-                this.setContent(tlat, tlng, count, htmlp, price);
+                this.setContent(tlat, tlng, count, houses, price);
                 count = 1;
                 totalprice = 0;
-                panelhtml = '';
+
               }
 
 
@@ -534,7 +514,7 @@ export class MapSearchPage implements OnInit {
             else {
               ++count;
               totalprice = totalprice + markerprice;
-              panelhtml = panelhtml + li;
+              houses.push(house);
 
             }
 
