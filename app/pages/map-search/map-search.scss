@@ -2,10 +2,6 @@
 
 .map-search {
   
-  ion-content {
-  background: rgb(229, 227, 223);
-}
-
  #map {
   width: 100%;
   height: 100%;
@@ -21,7 +17,7 @@
     flex: auto;
 }
 .btn-options {
- font-size: 14px;
+ font-size: 14px; /* option button font size*/
 }
  
  

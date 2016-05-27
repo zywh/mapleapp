@@ -12,16 +12,16 @@ import {ProjectDetailPage} from '../project-detail/project-detail';
     templateUrl: 'build/pages/projects/projects.html'
 })
 export class ProjectsPage implements OnInit {
-    private nav;
+    //private nav;
     private parms = {};
     projects: Object;
 
     static get parameters() {
-        return [[NavController], [NavParams], [MapleRestData]];
+        return [[NavController], [MapleRestData]];
     }
 
-    constructor(nav, navParams, private mapleRestData: MapleRestData) {
-        this.nav = nav;
+    constructor(private nav: NavController, private mapleRestData: MapleRestData) {
+        //this.nav = nav;
     }
     
     private swiperOptions = {

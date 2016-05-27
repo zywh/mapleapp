@@ -13,34 +13,102 @@
   <ion-buttons>
     <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (input)="getItems($event)" placeholder="城市/地址/MLS#"></ion-searchbar>
   </ion-buttons>
-  <ion-buttons end >
-    <button class="btn-options" (click)="openModal({charNum: 0})">
+  <ion-buttons end>
+    <button class="btn-options" (click)="optionToggle('true')">
         <ion-icon name="options"></ion-icon>
       </button>
-     
+
   </ion-buttons>
-  <ion-buttons end >
+  <ion-buttons end>
     <button class="btn-options" (click)="setLocation(center,16)">
         <ion-icon name="locate"></ion-icon>
       </button>
-     
+
   </ion-buttons>
 
 
 </ion-navbar>
 
 <ion-content class="map-search">
+  <div>
+    <ion-item padding *ngFor="#item of cityItems" (click)="itemTapped($event, item,1)">
+      {{ item.value }}
+    </ion-item>
+    <ion-item padding *ngFor="#item of mlsItems" (click)="itemTapped($event, item,2)">
+      {{ item.value }}
+    </ion-item>
+    <ion-item padding *ngFor="#item of addressItems" (click)="itemTapped($event, item,3)">
+      {{ item.value }}
+    </ion-item>
+  </div>
+  <div class="map_options" *ngIf="optionShow">
+    <ion-list>
+      <ion-item>
+        <ion-label>物业类型</ion-label>
+        <ion-select [(ngModel)]="selectType" okText="确认" cancelText="取消">
+          <ion-option value="1">独立屋</ion-option>
+          <ion-option value="2">半独立</ion-option>
+          <ion-option value="3">楼房</ion-option>
+        </ion-select>
+      </ion-item>
 
-  <ion-item padding *ngFor="#item of cityItems" (click)="itemTapped($event, item,1)">
-    {{ item.value }}
-  </ion-item>
-  <ion-item padding *ngFor="#item of mlsItems" (click)="itemTapped($event, item,2)">
-    {{ item.value }}
-  </ion-item>
-  <ion-item padding *ngFor="#item of addressItems" (click)="itemTapped($event, item,3)">
-    {{ item.value }}
-  </ion-item>
+      <ion-item>
+        <ion-label>价格(万)</ion-label>
+        <ion-select [(ngModel)]="selectPrice" okText="确认" cancelText="取消">
+          <ion-option value="0-50">50</ion-option>
+          <ion-option value="50-100">50-100</ion-option>
+          <ion-option value="100-200">100-200</ion-option>
+        </ion-select>
+      </ion-item>
 
+      <ion-item>
+        <ion-label>卧室</ion-label>
+        <ion-select [(ngModel)]="selectBeds" okText="确认" cancelText="取消">
+          <ion-option value="1">1</ion-option>
+          <ion-option value="2">2</ion-option>
+          <ion-option value="3">3</ion-option>
+          <ion-option value="4">4</ion-option>
+          <ion-option value="5">5</ion-option>
+          <ion-option value="6">6</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>洗手间</ion-label>
+        <ion-select [(ngModel)]="selectBaths" okText="确认" cancelText="取消">
+          <ion-option value="1">1</ion-option>
+          <ion-option value="2">2</ion-option>
+          <ion-option value="3">3</ion-option>
+          <ion-option value="4">4</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>房屋面积</ion-label>
+        <ion-select [(ngModel)]="selectHousesize" okText="确认" cancelText="取消">
+          <ion-option value="1">独立屋</ion-option>
+          <ion-option value="2">半独立</ion-option>
+          <ion-option value="3">楼房</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>土地面积</ion-label>
+        <ion-select [(ngModel)]="selectLandsize" okText="确认" cancelText="取消">
+          <ion-option value="1">独立屋</ion-option>
+          <ion-option value="2">半独立</ion-option>
+          <ion-option value="3">楼房</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <button primary (click)="resetSelections()">
+      <ion-icon name="close"></ion-icon>选择复位
+      </button>
+    <button primary (click)="updateOption()">
+      <ion-icon name="checkmark"></ion-icon> 确认
+     </button>
+
+  </div>
 
   <div id="map"></div>
 
@@ -49,13 +117,14 @@
   <button fab outline fab-bottom fab-left (click)="openModal({charNum: 0})" large>
     <ion-icon name="locate"></ion-icon>
   </button>
-  <button fab outline secondary fab-bottom fab-center large (click)="openModal({charNum: 0})">
+  <button fab outline secondary fab-bottom fab-center large (click)="enableMenu()">
     <ion-icon name="list-box" is-active="false"></ion-icon>
   </button>
-  <button fab outline secondary fab-bottom fab-right large (click)="openModal({charNum: 0})">
+  <button  menuToggle fab outline secondary fab-bottom fab-right large >
     <ion-icon name="funnel" is-active="false"></ion-icon>
   </button>
 
 
 
 </ion-content>
+

@@ -1,5 +1,6 @@
-import {IonicApp, Modal, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
+import {IonicApp, Modal, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
+//import {AngularRange} from 'angular-ranger';
 //import {RichMarker} from 'rich-marker';
 import {OnInit} from 'angular2/core';
 import {HouseDetailPage} from '../house-detail/house-detail';
@@ -18,11 +19,13 @@ declare var RichMarker: any;
 
 
 export class MapSearchPage implements OnInit {
+
   private searchQuery: String;
   private cityItems: any;
   private addressItems: any;
   private mlsItems: any;
   private parms: Object;
+
   private houselist: any;
   public map;
   private center;
@@ -31,8 +34,22 @@ export class MapSearchPage implements OnInit {
   private htmlArrayPosition = 0;
   private totalCount: Number; //Returned House
   private listAllHtml = ''; //hold houses on current map
+  private optionShow: boolean = false;
+
+  //selection Parms
+  private selectPrice;
+  private selectType;
+  private selectBeds;
+  private selectBaths;
+  private selectHousesize;
+  private selectLandsize;
+  public currentHouseList;
   //private map: any;
-  constructor(public nav: NavController, private mapleRestData: MapleRestData) {
+  constructor(
+    public nav: NavController,
+    private mapleRestData: MapleRestData,
+    private menu: MenuController
+  ) {
     this.searchQuery = '';
     this.resetItems();
   }
@@ -40,11 +57,22 @@ export class MapSearchPage implements OnInit {
   //  ngOnInit() {
   //     this.getResult('index.php?r=ngget/getMapHouse');
   //   }
-
-  openModal(characterNum) {
-    let modal = Modal.create(MapSearchOptionsPage, characterNum);
-    this.nav.present(modal);
+  optionToggle(state) {
+    this.resetItems(); //reset search to prevent overlapping menu
+    this.optionShow = state;
   }
+
+  
+
+  updateOption() {
+    this.optionShow = false;
+    this.changeMap();
+    console.log("Change Options:" + this.selectPrice);
+  }
+  // openModal(characterNum) {
+  //   let modal = Modal.create(MapSearchOptionsPage, characterNum);
+  //   this.nav.present(modal);
+  // }
 
 
   getResult(url) {
@@ -133,7 +161,17 @@ export class MapSearchPage implements OnInit {
     this.cityItems = [];
     this.addressItems = [];
     this.mlsItems = [];
-    this.searchQuery = '';
+    //this.searchQuery = '';
+  }
+  resetSelections() {
+   this.selectPrice ='';
+  this.selectType ='';
+  this.selectBeds = '';
+  this.selectBaths = '';
+  this.selectHousesize = '';
+  this.selectLandsize = '';
+  this.currentHouseList ='';
+   
   }
   itemTapped(event, item, type) {
     if (type == 1) { //CITY Action
@@ -160,9 +198,11 @@ export class MapSearchPage implements OnInit {
   //auto complete REST CAll
   getItems(searchbar) {
     // Reset items back to all of the items
-    this.cityItems = [];
-    this.addressItems = [];
-    this.mlsItems = [];
+    // this.cityItems = [];
+    // this.addressItems = [];
+    // this.mlsItems = [];
+    this.resetItems();
+    this.optionShow =false;
 
     // set q to the value of the searchbar
     let q = searchbar.value;
@@ -350,19 +390,17 @@ export class MapSearchPage implements OnInit {
     let mapParms = {
       bounds: _bounds,
       gridx: gridx,
-      gridy: gridy
+      gridy: gridy,
       // sr : 	options['sel_sr'], 
-      // housetype: options['sel_type'], 
-      // houseprice: options['sel_price'],
-      // houseroom: options['sel_bedroom'],	
-      // housearea: options['sel_housearea']
+      housetype: this.selectType,
+      houseprice: this.selectPrice,
+      houseroom: this.selectBeds,
+      housearea: this.selectHousesize
 
 				};
-    console.log("Map House Search Parms:" + _bounds + "gridx:" + gridx);
+    console.log("Map House Search Parms:" + mapParms);
     this.mapleRestData.load('index.php?r=ngget/getMapHouse', mapParms).subscribe(
       data => {
-
-
         this.totalCount = data.Data.Total;
         let markerType = data.Data.Type;
         console.log(data.Data);
@@ -391,7 +429,9 @@ export class MapSearchPage implements OnInit {
           let imgHost = data.Data.imgHost;
           let nextLat;
           let nextLng;
-          let listAllHtml;
+          //let listAllHtml;
+          this.currentHouseList = data.Data.MapHouseList;
+          console.log(this.currentHouseList);
           for (let index = 0, l = totalhouse; index < l; index++) {
             let house = data.Data.MapHouseList[index];
             if (index < (totalhouse - 1)) {
@@ -420,7 +460,7 @@ export class MapSearchPage implements OnInit {
               + "</a>"
 
               + "</li>";
-            listAllHtml = listAllHtml + li;
+            this.listAllHtml = this.listAllHtml + li;
 
 
 
@@ -478,60 +518,5 @@ export class MapSearchPage implements OnInit {
   }
 
   //End of MAP import function
-
-}
-
-//Map Option Page
-@Page({
-  templateUrl: './build/pages/map-search/map-search-options.html'
-})
-class MapSearchOptionsPage {
-  character;
-
-  constructor(
-    public platform: Platform,
-    public params: NavParams,
-    public viewCtrl: ViewController
-  ) {
-    let characters = [
-      {
-        name: 'Gollum',
-        quote: 'Sneaky little hobbitses!',
-        image: 'img/avatar-gollum.jpg',
-        items: [
-          { title: 'Race', note: 'Hobbit' },
-          { title: 'Culture', note: 'River Folk' },
-          { title: 'Alter Ego', note: 'Smeagol' }
-        ]
-      },
-      {
-        name: 'Frodo',
-        quote: 'Go back, Sam! I\'m going to Mordor alone!',
-        image: 'img/avatar-frodo.jpg',
-        items: [
-          { title: 'Race', note: 'Hobbit' },
-          { title: 'Culture', note: 'Shire Folk' },
-          { title: 'Weapon', note: 'Sting' }
-        ]
-      },
-      {
-        name: 'Samwise Gamgee',
-        quote: 'What we need is a few good taters.',
-        image: 'img/avatar-samwise.jpg',
-        items: [
-          { title: 'Race', note: 'Hobbit' },
-          { title: 'Culture', note: 'Shire Folk' },
-          { title: 'Nickname', note: 'Sam' }
-        ]
-      }
-    ];
-    this.character = characters[this.params.get('charNum')];
-    console.log("DEBUG IMAGE:" + this.character.image);
-  }
-
-  dismiss() {
-    this.viewCtrl.dismiss();
-  }
-
 
 }
