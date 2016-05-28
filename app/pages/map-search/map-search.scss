@@ -12,7 +12,10 @@ ion-page.modal {
 
 .houselist_modal{
     width: $imgWidth;
-    
+ .item {
+    min-height: 0px;
+  }  
+   
  ion-card {
     position: relative;
      width: $imgWidth;

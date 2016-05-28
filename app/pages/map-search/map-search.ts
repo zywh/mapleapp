@@ -1,4 +1,4 @@
-import {IonicApp, Modal, Alert, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
+import {IonicApp, Modal, Alert, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 //import {AngularRange} from 'angular-ranger';
 //import {RichMarker} from 'rich-marker';
@@ -118,12 +118,14 @@ export class MapSearchPage implements OnInit {
     this.loadMap(lat, lng, 16);
 
   }
+
   swiperOptions = {
     loop: true,
     //pager: true,
     speed: 4000,
     autoplay: 300
   };
+
   listShow() {
     //Show House List
     return ((this.currentDiv == 'houselist') && (this.markerType == 'house'));
@@ -131,6 +133,42 @@ export class MapSearchPage implements OnInit {
   }
   gotoHouseDetail(mls) {
     this.nav.push(HouseDetailPage, mls);
+  }
+
+  openHouseList() {
+    if (this.markerType == 'house') {
+      this.currentDiv = (this.currentDiv == 'houselist') ? '' : 'houselist';
+      console.log("House list show");
+    } else {
+      console.log("house grid/city,show alert window");
+      let actionSheet = ActionSheet.create({
+        title: '当前房源' + this.totalCount + '套，选择查询参数或放大地图搜索',
+        buttons: [
+          {
+            text: '查询参数',
+            role: 'destructive',
+            handler: () => {
+              this.currentDiv = 'mapoption';
+            }
+          }, {
+            text: '放大地图',
+            handler: () => {
+
+              let currentzoom = this.map.getZoom();
+              this.map.setZoom(currentzoom + 2);
+            }
+          }, {
+            text: '取消',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          }
+        ]
+      });
+      this.nav.present(actionSheet);
+
+    }
   }
   loadMap(lat, lng, zoom) {
 
@@ -196,6 +234,7 @@ export class MapSearchPage implements OnInit {
     this.currentHouseList = '';
 
   }
+
   itemTapped(event, item, type) {
     console.log("Item tapped:" + type);
     if (type == 1) { //CITY Action
@@ -267,7 +306,7 @@ export class MapSearchPage implements OnInit {
     });
   }
 
-
+  //set house marker
   setContent(lat, lng, count, houses, price) {
     let point = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
     let content = this.setMarkerCss(count, price);
@@ -300,7 +339,7 @@ export class MapSearchPage implements OnInit {
 
 
   }
-
+  //set grid and city marker
   setContentCount(lat, lng, totalCount, city, price) {
     //let content = "<i class='icon_map_mark'><span>" + totalCount + "</span></i>";
     let point = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
@@ -332,7 +371,7 @@ export class MapSearchPage implements OnInit {
 
 
   }
-
+  //clear marker when map changed
   clearAll() {
     if (this.markerArray) {
       for (let i in this.markerArray) {
@@ -534,16 +573,15 @@ export class MapSearchPage implements OnInit {
         <ion-card class="house_card" *ngFor="#house of houselist" (click)="openHouseDetail(house.MLS)">
           <img [src]="imgHost + house.CoverImg" />
           <div class="house_desc" text-left text-nowrap>
-          <ion-toolbar no-padding>
-                
-            <ion-title>{{house.MLS}}</ion-title>
-            <ion-buttons end>
-            <ion-badge item-right>{{house.Price}}万</ion-badge>
-            </ion-buttons>
-          </ion-toolbar>
-              <div padding class="card-subtitle" text-left>
-              <div><label>类型：</label> {{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨</div>
-              <div><label>城市：</label>{{house.Address}},{{house.MunicipalityName}}</div>
+          
+            <ion-item>    
+             <ion-badge item-left>MLS:{{house.MLS}}</ion-badge>
+             <ion-badge item-right><i class="fa fa-usd" aria-hidden="true"></i>{{house.Price}}万</ion-badge>
+            </ion-item>
+          
+             <div padding class="card-subtitle" text-left>
+              <div><i padding-right secondary class="fa fa-building" aria-hidden="true"></i><span padding-right>{{house.HouseType}}</span>{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨</div>
+              <div><i padding-right secondary class="fa fa-location-arrow" aria-hidden="true"></i><span padding-right>{{house.Address}}</span>{{house.MunicipalityName}}</div>
               </div>
           </div>
         </ion-card>
