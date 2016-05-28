@@ -51,7 +51,7 @@ export class MapSearchPage implements OnInit {
   private currentDiv;
 
   constructor(
-    public nav: NavController,
+    private nav: NavController,
     private mapleRestData: MapleRestData,
     private menu: MenuController
   ) {
@@ -530,7 +530,7 @@ export class MapSearchPage implements OnInit {
   <ion-content padding class="houselist_modal">
   
       <ion-slides [options]="swiperOptions" class="swiper-container">
-      <ion-slide *ngFor="#house of houselist" class="swiper-slide" (click)="gotoHouseDetail(house.MLS)">
+      <ion-slide *ngFor="#house of houselist" class="swiper-slide" (click)="openHouseDetail(house.MLS)">
         <ion-card class="house_card">
           <img [src]="imgHost + house.CoverImg" />
           <div padding-left class="house_desc" text-left text-nowrap>
@@ -554,6 +554,7 @@ class HouseList {
   constructor(
     private platform: Platform,
     private params: NavParams,
+    private nav: NavController,
     private viewCtrl: ViewController
   ) {
     //this.viewCtrl = viewCtrl;
@@ -563,8 +564,12 @@ class HouseList {
     console.log(this.houselist[0]);
   }
 
-
+ openHouseDetail(mls){
+   let parms = {mls: mls}
+   this.nav.push(HouseDetailPage,parms)
+ }
   close() {
     this.viewCtrl.dismiss();
+   
   }
 }
