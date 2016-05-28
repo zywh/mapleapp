@@ -189,11 +189,11 @@ export class MapSearchPage implements OnInit {
 
     });
 
-    google.maps.event.addListener(this.map, 'click', () => {
-      //this.currentDiv = '';
+    // google.maps.event.addListener(this.map, 'click', () => {
+    //   //this.currentDiv = '';
       
-      console.log("CLICKED EVENT Detected: CURRENT DIV-" + this.currentDiv);
-    });
+    //   console.log("CLICKED EVENT Detected: CURRENT DIV-" + this.currentDiv);
+    // });
 
 
 
