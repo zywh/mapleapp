@@ -1,4 +1,4 @@
-import {IonicApp, Modal, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
+import {IonicApp, Modal, Alert, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 //import {AngularRange} from 'angular-ranger';
 //import {RichMarker} from 'rich-marker';
@@ -34,7 +34,7 @@ export class MapSearchPage implements OnInit {
   private htmlArrayPosition = 0;
   private totalCount: Number; //Returned House
   private listAllHtml = ''; //hold houses on current map
-  public isListShow: boolean = true;
+  public isListShow: boolean = false;
   private markerType;
   private imgHost: String;
 
@@ -48,7 +48,7 @@ export class MapSearchPage implements OnInit {
   private currentHouseList; //Hold list of all houses on current map
   private currentHouses; //Hold array of houses for single marker
 
-  private currentDiv; 
+  private currentDiv;
 
   constructor(
     public nav: NavController,
@@ -57,7 +57,7 @@ export class MapSearchPage implements OnInit {
   ) {
     this.searchQuery = '';
     this.resetItems();
-    
+
   }
 
   //  ngOnInit() {
@@ -161,37 +161,16 @@ export class MapSearchPage implements OnInit {
       zoom: zoom
     });
 
-    // mapData.forEach(markerData => {
-    //   let infoWindow = new google.maps.InfoWindow({
-    //     content: `<h5>${markerData.name}</h5>`
-    //   });
 
-    //   let marker = new google.maps.Marker({
-    //     position: markerData,
-    //     map: map,
-    //     title: markerData.name
-    //   });
-
-    //   marker.addListener('click', () => {
-    //     infoWindow.open(map, marker);
-    //   });
-    // });
-
-
-    // google.maps.event.addListener(this.map, 'idle', () => {
-    //   mapEle.classList.add('show-map');
-    //   this.changeMap();
-    // });
-    //google.maps.event.addListener(this.map, 'bounds_changed', () => {
     google.maps.event.addListener(this.map, 'idle', () => {
-      //mapEle.classList.add('show-map');
+      this.currentDiv = '';
+      this.isListShow = true;
       this.changeMap();
 
     });
 
-    // google.maps.event.addListener(this.map, 'click', () => {
+    // google.maps.event.addListener(this.map, 'dragstart', () => {
     //   //this.currentDiv = '';
-      
     //   console.log("CLICKED EVENT Detected: CURRENT DIV-" + this.currentDiv);
     // });
 
@@ -299,13 +278,23 @@ export class MapSearchPage implements OnInit {
       flat: true
     });
     this.markerArray.push(marker);
+    var contentString = "fsdafsadfsdafsda";
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString,
+      disableAutoPan: true
 
-    google.maps.event.addListener(marker, 'click', () => {
-      this.currentHouseList = houses;
-      //this.currentDiv = 'singleMarkerList';
-      this.currentDiv = 'singleMarkerList';
-      console.log(houses);      
     });
+
+    marker.addListener('click', () => {
+       let modalHouseList = Modal.create(HouseList,houses);
+     this.nav.present(modalHouseList);
+      //this.currentHouseList = houses;
+      //this.currentDiv = 'singleMarkerList';
+      //console.log(houses);
+
+      //infowindow.open(this.map, marker);
+    });
+
 
   }
 
@@ -493,20 +482,21 @@ export class MapSearchPage implements OnInit {
 
               if (count == 1) {
                 //Generate single house popup view
-
+                console.log("Single House:" + house.MLS)
                 houses.push(house);
                 this.setContent(tlat, tlng, 1, houses, markerprice);
                 houses = [];
+                
               } else {
                 //generate panel list view
-
+                console.log("Push Last House:" + house.MLS)   
                 houses.push(house);
                 //let htmlp = panelhtml + li;
                 let price = (totalprice + markerprice) / count;
                 this.setContent(tlat, tlng, count, houses, price);
                 count = 1;
                 totalprice = 0;
-
+                houses = []; 
               }
 
 
@@ -528,4 +518,32 @@ export class MapSearchPage implements OnInit {
 
   //End of MAP import function
 
+}
+
+
+@Page({
+  template: `
+  
+  <ion-content padding class="houselist_modal">
+    <h2>I'm a modal!</h2>
+    {{houselist}}
+    <button (click)="close()">Close</button>
+  </ion-content>`
+})
+class HouseList {
+  private houselist;
+  constructor( 
+    public platform: Platform,
+      public params: NavParams,
+      public viewCtrl: ViewController
+    ) {
+    //this.viewCtrl = viewCtrl;
+    this.houselist = this.params;
+    console.log(this.houselist);
+  }
+  
+
+  close() {
+    this.viewCtrl.dismiss();
+  }
 }
