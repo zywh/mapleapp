@@ -2,10 +2,56 @@
 $imgWidth: 300px;
 $imgHeight: 240px;
 
+
+
+ion-page.modal {
+  padding: 30px;
+  background: rgba(0,0,0,0.5);
+}
+
 .houselist_modal{
-     opacity: 0.5;
-     width: 50%;
-     height: 50%;
+    .swiper-container {
+    height: $imgHeight;
+    
+    
+  }
+  .swiper-slide {
+   
+    width: $imgWidth;
+    
+  }
+
+   ion-card {
+    position: relative;
+     width: $imgWidth; 
+  }
+  
+  ion-card img {
+      height: $imgHeight - 20px;
+      width: $imgWidth;
+      min-height: $imgHeight - 20px;
+      min-width: $imgWidth;
+            
+  }
+ .house_desc{
+    background: #ebebeb;
+    background-image: -webkit-linear-gradient(top, #ebebeb, #2e2e2e);
+    background-image: -moz-linear-gradient(top, #ebebeb, #2e2e2e);
+    background-image: -ms-linear-gradient(top, #ebebeb, #2e2e2e);
+    background-image: -o-linear-gradient(top, #ebebeb, #2e2e2e);
+    background-image: linear-gradient(to bottom, #ebebeb, #2e2e2e);
+    opacity: 0.8;
+    position: absolute;
+    bottom: 0%;
+    width: 100%;
+  }
+  .card-title {
+      color: #fff;
+   }
+  
+  .card-subtitle {
+    color: #fff;
+   }
 }
 
 .map-search {
@@ -22,7 +68,7 @@ $imgHeight: 240px;
 }
   
 .toolbar-content {
-    flex: auto;
+    *flex: auto;
 }
 .btn-options {
  font-size: 14px; /* option button font size*/
@@ -98,6 +144,8 @@ $imgHeight: 240px;
   ion-card img {
       height: $imgHeight - 20px;
       width: $imgWidth;
+       min-height: $imgHeight - 20px;
+      min-width: $imgWidth;
             
   }
  .house_desc{

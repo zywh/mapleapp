@@ -28,7 +28,7 @@ interface PageObj {
 @App({
   templateUrl: 'build/app.html',
   //providers: [ConferenceData, UserData, MapleRestData],
-  providers: [ConferenceData,UserData, MapleRestData],
+  providers: [ConferenceData, UserData, MapleRestData],
   // Set any config for your app here, see the docs for
   // more ways to configure your app:
   // http://ionicframework.com/docs/v2/api/config/Config/
@@ -37,7 +37,13 @@ interface PageObj {
     // See the theming docs for the default values:
     // http://ionicframework.com/docs/v2/theming/platform-specific-styles/
     tabbarPlacement: "bottom",
-    backButtonText: "返回"
+    backButtonText: "返回",
+    //temp padding to fix ionic view status bar overlapping
+    platforms: {
+      ios: {
+        statusbarPadding: true
+      }
+    }
   }
 })
 //class ConferenceApp {
@@ -56,10 +62,10 @@ class MapleApp {
     // { title: '学区房', component: SchoolSearchPage, icon: 'information-circle' },
     // { title: '项目推荐', component: ProjectsPage, icon: 'information-circle' },
     // { title: '房源统计', component: StatsPage, icon: 'information-circle' },
-     { title: '首页', component: TabsPage, icon: 'home' },
-    { title: '地图搜索', component: MapSearchPage,index: 1, icon: 'map' },
-    { title: '学区房', component: SchoolSearchPage,index:2 , icon: 'school' },
-    { title: '项目推荐', component: TabsPage, index: 3,icon: 'thumbs-up' },
+    { title: '首页', component: TabsPage, icon: 'home' },
+    { title: '地图搜索', component: MapSearchPage, index: 1, icon: 'map' },
+    { title: '学区房', component: SchoolSearchPage, index: 2, icon: 'school' },
+    { title: '项目推荐', component: TabsPage, index: 3, icon: 'thumbs-up' },
     { title: '房源统计', component: TabsPage, index: 4, icon: 'stats' },
     { title: '关于我们', component: AboutPage, icon: 'information-circle' }
   ];
@@ -75,7 +81,7 @@ class MapleApp {
   //rootPage: any = TutorialPage;
   // rootPage: any = ProjectsPage;
   //rootPage: any = HomePage;
-    rootPage: any = TabsPage;
+  rootPage: any = TabsPage;
   constructor(
     private events: Events,
     private userData: UserData,

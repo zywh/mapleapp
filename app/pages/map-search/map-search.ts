@@ -165,6 +165,7 @@ export class MapSearchPage implements OnInit {
     google.maps.event.addListener(this.map, 'idle', () => {
       this.currentDiv = '';
       this.isListShow = true;
+      console.log("Print isListShow:" + this.isListShow);
       this.changeMap();
 
     });
@@ -286,11 +287,13 @@ export class MapSearchPage implements OnInit {
     });
 
     marker.addListener('click', () => {
-       let modalHouseList = Modal.create(HouseList,houses);
-     this.nav.present(modalHouseList);
-      //this.currentHouseList = houses;
-      //this.currentDiv = 'singleMarkerList';
-      //console.log(houses);
+      let parms = { 
+        houses: houses,
+        imgHost: this.imgHost
+      };
+      let modalHouseList = Modal.create(HouseList, parms);
+      this.nav.present(modalHouseList);
+      console.log(houses);
 
       //infowindow.open(this.map, marker);
     });
@@ -456,7 +459,7 @@ export class MapSearchPage implements OnInit {
           this.currentHouseList = data.Data.MapHouseList;
 
           console.log("Current House List Length:" + this.currentHouseList.length);
-          console.log("Bounds_Changed - CURRENT DIV:" + this.currentDiv);
+
           // console.log('Image Host:' + this.imgHost);
           for (let index = 0, l = totalhouse; index < l; index++) {
             let house = data.Data.MapHouseList[index];
@@ -482,21 +485,21 @@ export class MapSearchPage implements OnInit {
 
               if (count == 1) {
                 //Generate single house popup view
-                console.log("Single House:" + house.MLS)
+
                 houses.push(house);
                 this.setContent(tlat, tlng, 1, houses, markerprice);
                 houses = [];
-                
+
               } else {
                 //generate panel list view
-                console.log("Push Last House:" + house.MLS)   
+
                 houses.push(house);
                 //let htmlp = panelhtml + li;
                 let price = (totalprice + markerprice) / count;
                 this.setContent(tlat, tlng, count, houses, price);
                 count = 1;
                 totalprice = 0;
-                houses = []; 
+                houses = [];
               }
 
 
@@ -525,23 +528,41 @@ export class MapSearchPage implements OnInit {
   template: `
   
   <ion-content padding class="houselist_modal">
-    <h2>I'm a modal!</h2>
-    {{houselist}}
+  
+      <ion-slides [options]="swiperOptions" class="swiper-container">
+      <ion-slide *ngFor="#house of houselist" class="swiper-slide" (click)="gotoHouseDetail(house.MLS)">
+        <ion-card class="house_card">
+          <img [src]="imgHost + house.CoverImg" />
+          <div padding-left class="house_desc" text-left text-nowrap>
+              <h1 primary>MLS:{{house.MLS}}- {{house.Price}}万</h1>
+              <div class="card-subtitle" text-left>
+              <div><label>类型：</label> {{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨</div>
+              <div><label>城市：</label>{{house.Address}},{{house.MunicipalityName}},{{house.ProvinceCname}}</div>
+              </div>
+          </div>
+        </ion-card>
+      </ion-slide>
+
+    </ion-slides>
+    
     <button (click)="close()">Close</button>
   </ion-content>`
 })
 class HouseList {
   private houselist;
-  constructor( 
-    public platform: Platform,
-      public params: NavParams,
-      public viewCtrl: ViewController
-    ) {
+  private imgHost;
+  constructor(
+    private platform: Platform,
+    private params: NavParams,
+    private viewCtrl: ViewController
+  ) {
     //this.viewCtrl = viewCtrl;
-    this.houselist = this.params;
-    console.log(this.houselist);
+    console.log(this.params);
+    this.houselist = this.params.get('houses');
+    this.imgHost = this.params.get('imgHost');
+    console.log(this.houselist[0]);
   }
-  
+
 
   close() {
     this.viewCtrl.dismiss();
