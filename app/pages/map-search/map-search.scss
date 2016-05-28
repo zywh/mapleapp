@@ -5,32 +5,25 @@ $imgHeight: 240px;
 
 
 ion-page.modal {
-  padding: 30px;
-  background: rgba(0,0,0,0.5);
+  padding: 10px;
+  width: $imgWidth + 20px;
+  background: rgba(235, 234, 230, 0.6);
 }
 
 .houselist_modal{
-    .swiper-container {
-    height: $imgHeight;
-    
-    
-  }
-  .swiper-slide {
-   
     width: $imgWidth;
     
-  }
-
-   ion-card {
+ ion-card {
     position: relative;
-     width: $imgWidth; 
+     width: $imgWidth;
+     height: $imgHeight 
   }
   
   ion-card img {
-      height: $imgHeight - 20px;
-      width: $imgWidth;
-      min-height: $imgHeight - 20px;
-      min-width: $imgWidth;
+      max-height: $imgHeight;
+      max-width: $imgWidth - 24px;
+      min-height: $imgHeight;
+      min-width: $imgWidth - 24px;
             
   }
  .house_desc{
@@ -43,7 +36,7 @@ ion-page.modal {
     opacity: 0.8;
     position: absolute;
     bottom: 0%;
-    width: 100%;
+    width: 276px;
   }
   .card-title {
       color: #fff;
@@ -52,7 +45,7 @@ ion-page.modal {
   .card-subtitle {
     color: #fff;
    }
-}
+    }
 
 .map-search {
   
@@ -127,27 +120,23 @@ ion-page.modal {
 
 .swiper-container {
     height: $imgHeight;
-    
-    
-  }
-  .swiper-slide {
-   
-    width: $imgWidth;
-    
-  }
+}
+.swiper-slide {
+     width: $imgWidth;
+}
 
-   ion-card {
+ion-card {
     position: relative;
      width: $imgWidth; 
-  }
+}
   
-  ion-card img {
+ion-card img {
       height: $imgHeight - 20px;
       width: $imgWidth;
        min-height: $imgHeight - 20px;
       min-width: $imgWidth;
             
-  }
+}
  .house_desc{
     background: #ebebeb;
     background-image: -webkit-linear-gradient(top, #ebebeb, #2e2e2e);
@@ -159,13 +148,15 @@ ion-page.modal {
     position: absolute;
     bottom: 0%;
     width: 100%;
-  }
+}
   .card-title {
       color: #fff;
-   }
+}
   
   .card-subtitle {
     color: #fff;
-   }
+}
   
+
+
 } 

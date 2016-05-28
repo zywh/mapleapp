@@ -279,19 +279,19 @@ export class MapSearchPage implements OnInit {
       flat: true
     });
     this.markerArray.push(marker);
-    var contentString = "fsdafsadfsdafsda";
-    var infowindow = new google.maps.InfoWindow({
-      content: contentString,
-      disableAutoPan: true
+    // var contentString = "fsdafsadfsdafsda";
+    // var infowindow = new google.maps.InfoWindow({
+    //   content: contentString,
+    //   disableAutoPan: true
 
-    });
+    // });
 
     marker.addListener('click', () => {
-      let parms = { 
+      let parms = {
         houses: houses,
         imgHost: this.imgHost
       };
-      let modalHouseList = Modal.create(HouseList, parms);
+      let modalHouseList = Modal.create(ModalHouseList, parms);
       this.nav.present(modalHouseList);
       console.log(houses);
 
@@ -526,29 +526,31 @@ export class MapSearchPage implements OnInit {
 
 @Page({
   template: `
+   <button full (click)="close()">
+    <ion-icon name="close"></ion-icon> 关闭窗口</button>
+  <ion-content no-padding class="houselist_modal">
   
-  <ion-content padding class="houselist_modal">
-  
-      <ion-slides [options]="swiperOptions" class="swiper-container">
-      <ion-slide *ngFor="#house of houselist" class="swiper-slide" (click)="openHouseDetail(house.MLS)">
-        <ion-card class="house_card">
+     
+        <ion-card class="house_card" *ngFor="#house of houselist" (click)="openHouseDetail(house.MLS)">
           <img [src]="imgHost + house.CoverImg" />
-          <div padding-left class="house_desc" text-left text-nowrap>
-              <h1 primary>MLS:{{house.MLS}}- {{house.Price}}万</h1>
-              <div class="card-subtitle" text-left>
+          <div class="house_desc" text-left text-nowrap>
+          <ion-toolbar no-padding>
+                
+            <ion-title>{{house.MLS}}</ion-title>
+            <ion-buttons end>
+            <ion-badge item-right>{{house.Price}}万</ion-badge>
+            </ion-buttons>
+          </ion-toolbar>
+              <div padding class="card-subtitle" text-left>
               <div><label>类型：</label> {{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨</div>
-              <div><label>城市：</label>{{house.Address}},{{house.MunicipalityName}},{{house.ProvinceCname}}</div>
+              <div><label>城市：</label>{{house.Address}},{{house.MunicipalityName}}</div>
               </div>
           </div>
         </ion-card>
-      </ion-slide>
-
-    </ion-slides>
-    
-    <button (click)="close()">Close</button>
-  </ion-content>`
+      
+    `
 })
-class HouseList {
+class ModalHouseList {
   private houselist;
   private imgHost;
   constructor(
@@ -564,12 +566,14 @@ class HouseList {
     console.log(this.houselist[0]);
   }
 
- openHouseDetail(mls){
-   let parms = {mls: mls}
-   this.nav.push(HouseDetailPage,parms)
- }
+  openHouseDetail(mls) {
+    let parms = {
+      mls: mls
+    }
+    this.nav.push(HouseDetailPage, parms)
+  }
   close() {
     this.viewCtrl.dismiss();
-   
+
   }
 }

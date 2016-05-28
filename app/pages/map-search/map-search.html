@@ -138,23 +138,6 @@
   </div>
 
 
-  <div class="single_marker_list" *ngIf="currentDiv == 'singleMarkerList'">
-    <ion-slides [options]="swiperOptions" class="swiper-container">
-      <ion-slide *ngFor="#house of currentHouses" class="swiper-slide" (click)="gotoHouseDetail(house.MLS)">
-        <ion-card class="house_card">
-          <img [src]="imgHost + house.CoverImg" />
-          <div padding-left class="house_desc" text-nowrap>
-            <div class="card-title" primary text-left >MLS:{{house.MLS}}-{{house.Price}}万</div>
-            <div class="card-subtitle" text-left>
-              <div ><label>类型：</label> {{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨</div>
-              <div> <label>城市：</label >{{house.Address}},{{house.MunicipalityName}},{{house.ProvinceCname}}</div>
-            </div>
-          </div>
-        </ion-card>
-      </ion-slide>
-
-    </ion-slides>
-  </div>
 
   <div id="map"></div>
 
@@ -163,10 +146,6 @@
       <ion-icon name="list-box" is-active="true"></ion-icon>
     </button>
   </div>
-  <div *ngIf="true">
-    <button fab  primary outline fab-bottom left (click)="currentDiv = (currentDiv == 'singleMarkerList')? '':'singleMarkerList'">
-      <ion-icon name="list-box" is-active="true"></ion-icon>
-    </button>
-  </div>
+
 
 </ion-content>
