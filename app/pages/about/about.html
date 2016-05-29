@@ -1,36 +1,55 @@
-
 <ion-navbar *navbar>
   <button menuToggle>
     <ion-icon name="menu"></ion-icon>
   </button>
-  <ion-title>About</ion-title>
+  <ion-title>关于我们</ion-title>
 </ion-navbar>
 
-<ion-content>
-  <div class="about-header">
-    <img src="img/ionic-logo-white.svg">
-  </div>
-  <div padding class="about-info">
-    <h4>Ionic Conference</h4>
+<ion-content padding class='about_page'>
 
-    <div>
-      <ion-icon name="calendar"></ion-icon>
-      05/17/2047
+
+
+  <ion-toolbar [attr.primary]="isAndroid ? '' : null">
+    <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
+      <ion-segment-button value="about">
+        关于
+      </ion-segment-button>
+      <ion-segment-button value="advantage">
+        优势
+      </ion-segment-button>
+
+      <ion-segment-button value="contact">
+        联系
+      </ion-segment-button>
+      <ion-segment-button value="hire">
+        招募
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <div class="spacer" style="width: 284.545px; height: 17.9886px;"></div>
+  <div [ngSwitch]="section">
+    <div *ngSwitchWhen="'about'">
+      <div class="zcwz_label">
+        <div class="zcwz_label_left" style="padding-left:0px;">{{postAbout.title}}</div>
+        <div class="zcwz_label_right"></div>
+      </div>
+      <div class="fyxqdown">
+        <div class="fyxqdown_left">
+          <div class="zcwz about_js"></div>
+        </div>
+      </div>
+
     </div>
 
-    <div>
-      <ion-icon name="pin"></ion-icon>
-      Madison, WI
+    <div *ngSwitchWhen="'advantage'">
+
     </div>
 
-    <p>
-      Ionic Conference is a one-day conference featuring talks from the
-      Ionic team. It is focused on Ionic applications being built with
-      Ionic 2. This includes migrating apps from Ionic 1 to Ionic 2,
-      Angular concepts, Webpack, Sass, and many other technologies used
-      in Ionic 2. Tickets are completely sold out, and we’re expecting
-      more than 1000 developers – making this the largest Ionic
-      conference ever!
-    </p>
+    <div *ngSwitchWhen="'contact'">
+
+    </div>
+
+    <div *ngSwitchWhen="'hire'">
+    </div>
   </div>
 </ion-content>

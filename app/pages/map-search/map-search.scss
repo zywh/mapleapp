@@ -2,6 +2,94 @@
 $imgWidth: 300px;
 $imgHeight: 240px;
 
+/* start Slider CSS*/
+input[type=range].mapleslider {
+  -webkit-appearance: none;
+  width: 100%;
+  margin: 8px 0;
+}
+input[type=range].mapleslider:focus {
+  outline: none;
+}
+input[type=range].mapleslider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+  box-shadow: 0px 0px 1.7px rgba(255, 219, 178, 0.86), 0px 0px 0px rgba(255, 231, 204, 0.86);
+  background: rgba(255, 65, 27, 0.47);
+  border-radius: 1px;
+  border: 1.1px solid #ffffff;
+}
+input[type=range].mapleslider::-webkit-slider-thumb {
+  box-shadow: 0.6px 0.6px 0.5px #ffffff, 0px 0px 0.6px #ffffff;
+  border: 2px solid #ff531a;
+  height: 20px;
+  width: 20px;
+  border-radius: 14px;
+  background: #ff4103;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -9.1px;
+}
+input[type=range].mapleslider:focus::-webkit-slider-runnable-track {
+  background: rgba(255, 159, 139, 0.47);
+}
+input[type=range].mapleslider::-moz-range-track {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+  box-shadow: 0px 0px 1.7px rgba(255, 219, 178, 0.86), 0px 0px 0px rgba(255, 231, 204, 0.86);
+  background: rgba(255, 65, 27, 0.47);
+  border-radius: 1px;
+  border: 1.1px solid #ffffff;
+}
+input[type=range].mapleslider::-moz-range-thumb {
+  box-shadow: 0.6px 0.6px 0.5px #ffffff, 0px 0px 0.6px #ffffff;
+  border: 2px solid #ff531a;
+  height: 20px;
+  width: 20px;
+  border-radius: 14px;
+  background: #ff4103;
+  cursor: pointer;
+}
+input[type=range].mapleslider::-ms-track {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range].mapleslider::-ms-fill-lower {
+  background: rgba(170, 28, 0, 0.47);
+  border: 1.1px solid #ffffff;
+  border-radius: 2px;
+  box-shadow: 0px 0px 1.7px rgba(255, 219, 178, 0.86), 0px 0px 0px rgba(255, 231, 204, 0.86);
+}
+input[type=range].mapleslider::-ms-fill-upper {
+  background: rgba(255, 65, 27, 0.47);
+  border: 1.1px solid #ffffff;
+  border-radius: 2px;
+  box-shadow: 0px 0px 1.7px rgba(255, 219, 178, 0.86), 0px 0px 0px rgba(255, 231, 204, 0.86);
+}
+input[type=range].mapleslider::-ms-thumb {
+  box-shadow: 0.6px 0.6px 0.5px #ffffff, 0px 0px 0.6px #ffffff;
+  border: 2px solid #ff531a;
+  height: 20px;
+  width: 20px;
+  border-radius: 14px;
+  background: #ff4103;
+  cursor: pointer;
+  height: 4px;
+}
+input[type=range].mapleslider:focus::-ms-fill-lower {
+  background: rgba(255, 65, 27, 0.47);
+}
+input[type=range].mapleslider:focus::-ms-fill-upper {
+  background: rgba(255, 159, 139, 0.47);
+}
+
+/* End Slider CSS*/
 
 
 ion-page.modal {
