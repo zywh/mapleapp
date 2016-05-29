@@ -123,7 +123,8 @@ export class MapSearchPage implements OnInit {
     loop: true,
     //pager: true,
     speed: 4000,
-    autoplay: 300
+    spaceBetween: 30,
+    //autoplay: 300
   };
 
   listShow() {
@@ -142,7 +143,7 @@ export class MapSearchPage implements OnInit {
     } else {
       console.log("house grid/city,show alert window");
       let actionSheet = ActionSheet.create({
-        title: '当前房源' + this.totalCount + '套，选择查询参数或放大地图搜索',
+        title: '当前房源' + this.totalCount + '套，选择查询参数或放大地图',
         buttons: [
           {
             text: '查询参数',
@@ -579,7 +580,7 @@ export class MapSearchPage implements OnInit {
              <ion-badge item-right><i class="fa fa-usd" aria-hidden="true"></i>{{house.Price}}万</ion-badge>
             </ion-item>
           
-             <div padding class="card-subtitle" text-left>
+             <div class="card-subtitle" text-left>
               <div><i padding-right secondary class="fa fa-building" aria-hidden="true"></i><span padding-right>{{house.HouseType}}</span>{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨</div>
               <div><i padding-right secondary class="fa fa-location-arrow" aria-hidden="true"></i><span padding-right>{{house.Address}}</span>{{house.MunicipalityName}}</div>
               </div>

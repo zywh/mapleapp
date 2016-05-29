@@ -47,6 +47,7 @@ ion-page.modal {
   
   .card-subtitle {
     color: #fff;
+    padding: 5px 0 5px 16px;
    }
     }
 
@@ -55,12 +56,12 @@ ion-page.modal {
  #map {
   width: 100%;
   height: 100%;
-  *opacity: 0;
-  *transition: opacity 150ms ease-in
+ 
 }
 
-#map.show-map {
-  opacity: 1;
+.bar-button-menutoggle {
+    padding: 0;
+    min-width: 0;
 }
   
 .toolbar-content {
@@ -128,6 +129,10 @@ ion-page.modal {
      width: $imgWidth;
 }
 
+.swiper-zoom {
+     width: $imgWidth;
+}
+
 ion-card {
     position: relative;
      width: $imgWidth; 
@@ -154,10 +159,12 @@ ion-card img {
 }
   .card-title {
       color: #fff;
+      
 }
   
   .card-subtitle {
     color: #fff;
+    padding: 5px 0 5px 16px;
 }
   
 
