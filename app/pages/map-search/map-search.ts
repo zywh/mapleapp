@@ -214,6 +214,7 @@ export class MapSearchPage implements OnInit {
       //close all open POP UP options/list etc
       this._zone.run(() => {
         this.currentDiv = '';
+        //this.nav.pop();
       });
      
     });
@@ -475,9 +476,10 @@ export class MapSearchPage implements OnInit {
         console.log("Change Map Refresh Data:" + this.markerType);
         //Start City Markers
         if ((this.markerType == 'city') || (this.markerType == 'grid')) {
-          this._zone.run(() => {
-            this.isListShow = false;
-          });
+          // this._zone.run(() => {
+          //   this.isListShow = false;
+          //   this.currentDiv = '';
+          // });
           for (let p in data.Data.AreaHouseCount) {
 
             let areaHouse = data.Data.AreaHouseCount[p];
@@ -494,6 +496,7 @@ export class MapSearchPage implements OnInit {
         if (this.markerType == 'house') {
           this._zone.run(() => {
             this.isListShow = true;
+            this.currentDiv = 'listButton';
           });
           let count = 1;
           let houses = [];

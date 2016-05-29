@@ -166,7 +166,7 @@
 
   <div id="map"></div>
 
-  <div *ngIf="isListShow">
+  <div *ngIf="currentDiv == 'listButton'">
     <button fab  primary outline fab-bottom fab-center (click)="openHouseList()">
       <ion-icon name="ios-albums" is-active="true"></ion-icon>
     </button>
