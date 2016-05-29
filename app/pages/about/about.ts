@@ -12,20 +12,18 @@ export class AboutPage implements OnInit {
  
   private section: string = "about";
   private isAndroid: boolean = false;
-  // private postAbout = {
-  //   id: '',
-  //   title: ''
-  //  };
-  private postAbout: Object;
+  
+  private postAbout: Post;
+  private postAdvantage: Post;
+  private postContact: Post;
+  private postHire: Post;
  // private postAbout: Post;
 
   static get parameters() {
     return [[MapleRestData]];
   }
 
-  constructor(private mapleRestData: MapleRestData) {
-   
-  }
+  constructor(private mapleRestData: MapleRestData) { }
 
 
   ngOnInit() {
@@ -34,17 +32,17 @@ export class AboutPage implements OnInit {
 
   getResult(url) {
     this.mapleRestData.load(url, { id: 27 }).subscribe(
-      data => { this.postAbout = data; console.log("About Page Title:" + this.postAbout.title) }
+      data => { this.postAbout = data;  }
     );
-    // this.mapleRestData.load(url, {id: 28}).subscribe(
-    //   data => this.postAdvantage = data
-    // );
-    // this.mapleRestData.load(url, {id: 30}).subscribe(
-    //     data => this.postContact = data
-    // );
-    // this.mapleRestData.load(url, {id: 31}).subscribe(
-    //    data => this.postHire = data
-    // );
+    this.mapleRestData.load(url, {id: 28}).subscribe(
+      data => this.postAdvantage = data
+    );
+    this.mapleRestData.load(url, {id: 30}).subscribe(
+        data => this.postContact = data
+    );
+    this.mapleRestData.load(url, {id: 31}).subscribe(
+       data => this.postHire = data
+    );
   }
 
 
