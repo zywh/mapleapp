@@ -76,28 +76,6 @@
       </ion-item>
 
       <ion-item>
-        <ion-label>卧室</ion-label>
-        <ion-select [(ngModel)]="selectBeds" okText="确认" cancelText="取消">
-          <ion-option value="1">1</ion-option>
-          <ion-option value="2">2</ion-option>
-          <ion-option value="3">3</ion-option>
-          <ion-option value="4">4</ion-option>
-          <ion-option value="5">5</ion-option>
-          <ion-option value="6">6</ion-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>洗手间</ion-label>
-        <ion-select [(ngModel)]="selectBaths" okText="确认" cancelText="取消">
-          <ion-option value="1">1</ion-option>
-          <ion-option value="2">2</ion-option>
-          <ion-option value="3">3</ion-option>
-          <ion-option value="4">4</ion-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-item>
         <ion-label>房屋面积</ion-label>
         <ion-select [(ngModel)]="selectHousesize" okText="确认" cancelText="取消">
           <ion-option value="0-700" >700平方尺以下</ion-option>
@@ -111,16 +89,25 @@
           <ion-option value="4000-0">4000平方尺以上</ion-option>
         </ion-select>
       </ion-item>
+  
    </ion-list>
-      <ion-row center>
-        <ion-col width-20> 
-         <button clear> Beds{{selectBeds}}</button>
-        </ion-col>
-        <ion-col width-80>
-          <input [(ngModel)]="selectBeds" class="mapleslider" label="abc" type ="range" min ="1" max="6" step ="1" value ="3"/>
-        </ion-col>
-      </ion-row> 
-    
+  <div padding-left padding-right class="slider-box">
+    <div class="slider-label">
+       卧室 (至少{{selectBeds}}间 )
+    </div>   
+    <div class="slider"> 
+      <input [(ngModel)]="selectBeds" class="mapleslider" type ="range" min ="1" max="6" value="1" step ="1"/>
+    </div>        
+  </div>  
+  <div padding-left padding-right class="slider-box">
+    <div class="slider-label">
+       洗手间 (至少{{selectBaths}}间 )
+    </div>   
+    <div class="slider"> 
+      <input [(ngModel)]="selectBaths" class="mapleslider" type ="range" min ="1" max="5" value="1" step ="1"/>
+    </div>        
+  </div>  
+ 
     <ion-row>
       <ion-col>
         <div text-center>
