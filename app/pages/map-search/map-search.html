@@ -16,12 +16,12 @@
         <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (focus)="currentDiv='searchlist'" (input)="getItems($event)" placeholder="城市/地址/MLS#"></ion-searchbar>
     </ion-col>
     <ion-col width-10 no-padding>
-      <button menuToggle (click)="currentDiv= (currentDiv == 'mapoption')? '':'mapoption'">
+      <button class="bar-button-default" (click)="currentDiv= (currentDiv == 'mapoption')? '':'mapoption'">
         <ion-icon name="options"></ion-icon>
       </button>
     </ion-col>
     <ion-col width-10 no-padding>
-      <button menuToggle (click)="setLocation(center,16)">
+      <button class="bar-button-default" (click)="setLocation(center,16)">
         <ion-icon name="locate"></ion-icon>
       </button>
     </ion-col>
@@ -31,8 +31,8 @@
 </ion-navbar>
 
 <ion-content class="map-search">
-  <div class="search_list" *ngIf="currentDiv == 'searchlist'" (click)="itemTapped($event, item,1)">
-    <ion-item padding *ngFor="#item of cityItems" >
+  <div class="search_list" *ngIf="currentDiv == 'searchlist'" >
+    <ion-item padding *ngFor="#item of cityItems" (click)="itemTapped($event, item,1)" >
       <ion-icon primary padding-right name="search"></ion-icon>{{ item.value }}
        <ion-badge item-right>城市</ion-badge>
     </ion-item>
@@ -159,7 +159,7 @@
 
   <div id="map"></div>
 
-  <div *ngIf="true">
+  <div *ngIf="isListShow">
     <button fab  primary outline fab-bottom fab-center (click)="openHouseList()">
       <ion-icon name="list-box" is-active="true"></ion-icon>
     </button>

@@ -2,7 +2,7 @@ import {IonicApp, Modal, Alert, ActionSheet, MenuController, Platform, NavContro
 import {Geolocation} from 'ionic-native';
 //import {AngularRange} from 'angular-ranger';
 //import {RichMarker} from 'rich-marker';
-import {OnInit} from 'angular2/core';
+import {OnInit, NgZone} from 'angular2/core';
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 declare var RichMarker: any;
@@ -53,7 +53,8 @@ export class MapSearchPage implements OnInit {
   constructor(
     private nav: NavController,
     private mapleRestData: MapleRestData,
-    private menu: MenuController
+    private menu: MenuController,
+    private _zone: NgZone
   ) {
     this.searchQuery = '';
     this.resetItems();
@@ -123,7 +124,9 @@ export class MapSearchPage implements OnInit {
     loop: true,
     //pager: true,
     speed: 4000,
-    spaceBetween: 30,
+    spaceBetween: 20,
+    slidesPerView: 'auto',
+    //loopedSlides: 10
     //autoplay: 300
   };
 
@@ -202,17 +205,18 @@ export class MapSearchPage implements OnInit {
 
 
     google.maps.event.addListener(this.map, 'idle', () => {
-      this.currentDiv = '';
-      this.isListShow = true;
-      console.log("Print isListShow:" + this.isListShow);
+     
       this.changeMap();
 
     });
 
-    // google.maps.event.addListener(this.map, 'dragstart', () => {
-    //   //this.currentDiv = '';
-    //   console.log("CLICKED EVENT Detected: CURRENT DIV-" + this.currentDiv);
-    // });
+    google.maps.event.addListener(this.map, 'click', () => {
+      //close all open POP UP options/list etc
+      this._zone.run(() => {
+        this.currentDiv = '';
+      });
+     
+    });
 
 
 
@@ -471,7 +475,9 @@ export class MapSearchPage implements OnInit {
         console.log("Change Map Refresh Data:" + this.markerType);
         //Start City Markers
         if ((this.markerType == 'city') || (this.markerType == 'grid')) {
-          this.isListShow = false;
+          this._zone.run(() => {
+            this.isListShow = false;
+          });
           for (let p in data.Data.AreaHouseCount) {
 
             let areaHouse = data.Data.AreaHouseCount[p];
@@ -486,7 +492,9 @@ export class MapSearchPage implements OnInit {
 
 
         if (this.markerType == 'house') {
-          this.isListShow = true;
+          this._zone.run(() => {
+            this.isListShow = true;
+          });
           let count = 1;
           let houses = [];
           let totalprice = 0;
