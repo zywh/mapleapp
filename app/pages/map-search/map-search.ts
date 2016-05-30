@@ -5,6 +5,7 @@ import {Geolocation} from 'ionic-native';
 import {OnInit, NgZone} from 'angular2/core';
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
+import {McSearchOption} from './search-option';
 declare var RichMarker: any;
 
 /*
@@ -15,6 +16,7 @@ declare var RichMarker: any;
 */
 @Page({
   templateUrl: 'build/pages/map-search/map-search.html',
+  directives: [McSearchOption]
 })
 
 

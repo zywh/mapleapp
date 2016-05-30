@@ -44,7 +44,10 @@
        <button light clear><ion-icon primary padding-right name="search"></ion-icon>{{ item.value }},{{item.city}}</button>
        <ion-badge item-right>地址</ion-badge>
     </ion-item>
-      </div>
+  </div>
+  
+  
+  
   <div class="map_options" *ngIf="currentDiv == 'mapoption'">
     <ion-list>
       <ion-item>
@@ -106,27 +109,24 @@
           
         </ion-select>
       </ion-item>
-   </ion-list>
-  <div padding-left padding-right padding-bottom class="slider-box">
-    <div class="slider-label">
-       卧室 ({{ (selectBeds > 0)? "至少" + selectBeds +"间" : "不限" }})
-    </div>   
-    <div class="slider"> 
-      <input [(ngModel)]="selectBeds" class="mapleslider" type ="range" min ="1" max="6" value="1" step ="1"/>
-    </div>        
-  </div>  
-  <div padding-left padding-right padding-bottom  class="slider-box">
-    <div class="slider-label">
-       洗手间 ({{ (selectBaths > 0)? "至少" + selectBaths +"间" : "不限" }})
-    </div>   
-    <div class="slider"> 
-      <input [(ngModel)]="selectBaths" class="mapleslider" type ="range" min ="1" max="5" value="1" step ="1"/>
-    </div>        
-  </div>  
+    </ion-list>
+    <div padding-left padding-right padding-bottom class="slider-box">
+      <div class="slider-label">
+        卧室 ({{ (selectBeds > 0)? "至少" + selectBeds +"间" : "不限" }})
+      </div>   
+      <div class="slider"> 
+        <input [(ngModel)]="selectBeds" class="mapleslider" type ="range" min ="1" max="6" value="1" step ="1"/>
+      </div>        
+    </div>  
+    <div padding-left padding-right padding-bottom  class="slider-box">
+      <div class="slider-label">
+        洗手间 ({{ (selectBaths > 0)? "至少" + selectBaths +"间" : "不限" }})
+      </div>   
+      <div class="slider"> 
+        <input [(ngModel)]="selectBaths" class="mapleslider" type ="range" min ="1" max="5" value="1" step ="1"/>
+      </div>        
+    </div>  
   
-  
-
- 
     <ion-row>
       <ion-col>
         <div text-center>
@@ -144,6 +144,7 @@
       </ion-col>
     </ion-row>
   </div>
+
 
   <div class="house_list" *ngIf="listShow()">
     <ion-slides [options]="swiperOptions" class="swiper-container">
