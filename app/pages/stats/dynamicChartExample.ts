@@ -1,5 +1,5 @@
 
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 import { CHART_DIRECTIVES,Highcharts } from 'angular2-highcharts';
 
 
@@ -12,6 +12,7 @@ import { CHART_DIRECTIVES,Highcharts } from 'angular2-highcharts';
         <button (click)="addPoint()">Add Point</button>
     `
 })
+
 export class DynamicChartExample {
     constructor() {
         this.options = {

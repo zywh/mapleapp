@@ -1,7 +1,7 @@
 import {IonicApp, Modal, Loading, Alert, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 //import {AngularRange} from 'angular-ranger';
-//import {RichMarker} from 'rich-marker';
+//import {RichMarker} from 'rich-marker'; It doesn't provide TS definition. Use ext URL to include in index.html
 import {OnInit, NgZone} from 'angular2/core';
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
@@ -123,13 +123,13 @@ export class MapSearchPage implements OnInit {
   }
 
   swiperOptions = {
-    loop: true,
+    //loop: true,
     //pager: true,
-    speed: 4000,
+    //speed: 4000,
     spaceBetween: 20,
     slidesPerView: 'auto',
     //loopedSlides: 10
-    //autoplay: 300
+    autoplay: 300
   };
 
   listShow() {

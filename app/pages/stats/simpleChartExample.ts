@@ -1,5 +1,5 @@
 
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 import { CHART_DIRECTIVES,Highcharts } from 'angular2-highcharts';
 
 
@@ -9,7 +9,7 @@ Highcharts.setOptions({
 });
 
 @Component({
-    selector: 'hc',
+    selector: 'simple-chart-example',
     directives: [CHART_DIRECTIVES],
     template: `
         <chart [options]="options"></chart>
