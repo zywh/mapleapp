@@ -7,6 +7,15 @@ import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {McSearchOption} from './search-option';
 declare var RichMarker: any;
+interface selectOptionsObj {
+    selectPrice?: String,
+    selectType?: Number,
+    selectBeds?: Number,
+    selectBaths?: Number,
+    selectSR?: Boolean,
+    selectHousesize?: String,
+    selectLandsize?: String
+}
 
 /*
   Generated class for the MapSearchPage page.
@@ -41,13 +50,25 @@ export class MapSearchPage implements OnInit {
   private imgHost: String;
 
   //selection Parms
-  private selectPrice;
-  private selectType;
-  private selectBeds: Number = 0;
-  private selectBaths: Number = 0;
-  private selectSR: Boolean = true;
-  private selectHousesize;
-  private selectLandsize;
+  // private selectPrice;
+  // private selectType;
+  // private selectBeds: Number = 0;
+  // private selectBaths: Number = 0;
+  // private selectSR: Boolean = true;
+  // private selectHousesize;
+  // private selectLandsize;
+  //private selectOptions: selectOptionsObj;
+  private selectOptions = {
+    selectSR: true,
+    selectBaths: 0,
+    selectBeds: 0,
+    selectHousesize: '',
+    selectLandsize: '',
+    selectPrice: '',
+    selectType: ''
+    
+  }
+  
   private currentHouseList; //Hold list of all houses on current map
   private currentHouses; //Hold array of houses for single marker
 
@@ -60,20 +81,24 @@ export class MapSearchPage implements OnInit {
     private _zone: NgZone
   ) {
     this.searchQuery = '';
+    // this.selectOptions.selectBeds = 0;
+    // this.selectOptions.selectBaths =0;
+    // this.selectOptions.selectSR = true;
     this.resetItems();
 
   }
 
-  //  ngOnInit() {
-  //     this.getResult('index.php?r=ngget/getMapHouse');
-  //   }
-
-
-  updateOption() {
-    this.changeMap();
+  // updateOption() {
+  //   this.changeMap();
+  //   this.currentDiv = '';
+   
+  // }
+  
+  optionChange(event){
     this.currentDiv = '';
-    console.log("Change Options:" + this.selectType);
-    console.log("Change Options:" + this.selectPrice);
+    this.selectOptions = event;
+    this.changeMap();
+    console.log(event);
   }
   // openModal(characterNum) {
   //   let modal = Modal.create(MapSearchOptionsPage, characterNum);
@@ -234,17 +259,17 @@ export class MapSearchPage implements OnInit {
     this.mlsItems = [];
     //this.searchQuery = '';
   }
-  resetSelections() {
-    this.selectPrice = '';
-    this.selectType = '';
-    this.selectBeds = 0;
-    this.selectBaths = 0;
-    this.selectSR = true;
-    this.selectHousesize = '';
-    this.selectLandsize = '';
-    this.currentHouseList = '';
+  // resetSelections() {
+  //   this.selectPrice = '';
+  //   this.selectType = '';
+  //   this.selectBeds = 0;
+  //   this.selectBaths = 0;
+  //   this.selectSR = true;
+  //   this.selectHousesize = '';
+  //   this.selectLandsize = '';
+  //   this.currentHouseList = '';
 
-  }
+  // }
 
   itemTapped(event, item, type) {
     if (type == 1) { //CITY Action
@@ -465,17 +490,23 @@ export class MapSearchPage implements OnInit {
     let HouseArray = [];
     let marker;
     let _bounds = _sw.lat() + "," + _sw.lng() + "," + _ne.lat() + "," + _ne.lng();
-    console.log(this.selectLandsize);
+    
     let mapParms = {
       bounds: _bounds,
       gridx: gridx,
       gridy: gridy,
-      sr : 	(this.selectSR == true)?'Sale':'Lease', 
-      housetype: this.selectType,
-      houseprice: this.selectPrice,
-      houseroom: this.selectBeds,
-      housearea: this.selectHousesize,
-      houseground: this.selectLandsize
+      // sr : 	(this.selectSR == true)?'Sale':'Lease', 
+      // housetype: this.selectType,
+      // houseprice: this.selectPrice,
+      // houseroom: this.selectBeds,
+      // housearea: this.selectHousesize,
+      // houseground: this.selectLandsize
+      sr : 	(this.selectOptions.selectSR == true)?'Sale':'Lease', 
+      housetype: this.selectOptions.selectType,
+      houseprice: this.selectOptions.selectPrice,
+      houseroom: this.selectOptions.selectBeds,
+      housearea: this.selectOptions.selectHousesize,
+      houseground: this.selectOptions.selectLandsize
       
 				};
     //console.log("Map House Search Parms:" + mapParms);

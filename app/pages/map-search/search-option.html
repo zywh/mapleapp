@@ -1,11 +1,11 @@
 <ion-list>
     <ion-item>
-        <ion-label>{{(selectSR == true)? '出售':'出租'}}</ion-label>
-        <ion-toggle [(ngModel)]="selectSR"></ion-toggle>
+        <ion-label>{{(selectOptions?.selectSR == true)? '出售':'出租'}}</ion-label>
+        <ion-toggle [(ngModel)]="selectOptions.selectSR"></ion-toggle>
     </ion-item>
     <ion-item>
         <ion-label>物业类型</ion-label>
-        <ion-select multiple [(ngModel)]="selectType" okText="确认" cancelText="取消">
+        <ion-select multiple [(ngModel)]="selectOptions.selectType" okText="确认" cancelText="取消">
             <ion-option value="1">独栋别墅</ion-option>
             <ion-option value="2">联排别墅</ion-option>
             <ion-option value="3">豪华公寓</ion-option>
@@ -19,7 +19,7 @@
 
     <ion-item>
         <ion-label>价格(万加币)</ion-label>
-        <ion-select multiple [(ngModel)]="selectPrice" okText="确认" cancelText="取消">
+        <ion-select multiple [(ngModel)]="selectOptions.selectPrice" okText="确认" cancelText="取消">
             <ion-option value="0-30"> 低于30万</ion-option>
             <ion-option value="30-50">30-50万</ion-option>
             <ion-option value="50-100">50-100万</ion-option>
@@ -33,7 +33,7 @@
 
     <ion-item>
         <ion-label>房屋面积</ion-label>
-        <ion-select multiple [(ngModel)]="selectHousesize" okText="确认" cancelText="取消">
+        <ion-select multiple [(ngModel)]="selectOptions.selectHousesize" okText="确认" cancelText="取消">
             <ion-option value="0-700">700平方尺以下</ion-option>
             <ion-option value="700-1100">700-1100平方尺</ion-option>
             <ion-option value="1100-1500">1100-1500平方尺</ion-option>
@@ -47,7 +47,7 @@
     </ion-item>
     <ion-item>
         <ion-label>土地面积</ion-label>
-        <ion-select multiple [(ngModel)]="selectLandsize" okText="确认" cancelText="取消">
+        <ion-select multiple [(ngModel)]="selectOptions.selectLandsize" okText="确认" cancelText="取消">
             <ion-option value="0-2000">2000平方尺以下</ion-option>
             <ion-option value="200-4000">2000-4000平方尺</ion-option>
             <ion-option value="4000-6000">4000-6000平方尺</ion-option>
@@ -62,18 +62,18 @@
 
 <div padding-left padding-right padding-bottom class="slider-box">
     <div class="slider-label">
-        卧室 ({{ (selectBeds > 0)? "至少" + selectBeds +"间" : "不限" }})
+        卧室 ({{ (selectOptions?.selectBeds > 0)? "至少" + selectOptions?.selectBeds +"间" : "不限" }})
     </div>
     <div class="slider">
-        <input [(ngModel)]="selectBeds" class="mapleslider" type="range" min="1" max="6" value="1" step="1" />
+        <input [(ngModel)]="selectOptions.selectBeds" class="mapleslider" type="range" min="1" max="6" value="1" step="1" />
     </div>
 </div>
 <div padding-left padding-right padding-bottom class="slider-box">
     <div class="slider-label">
-        洗手间 ({{ (selectBaths > 0)? "至少" + selectBaths +"间" : "不限" }})
+        洗手间 ({{ (selectOptions?.selectBaths > 0)? "至少" + selectOptions?.selectBaths +"间" : "不限" }})
     </div>
     <div class="slider">
-        <input [(ngModel)]="selectBaths" class="mapleslider" type="range" min="1" max="5" value="1" step="1" />
+        <input [(ngModel)]="selectOptions.selectBaths" class="mapleslider" type="range" min="1" max="5" value="1" step="1" />
     </div>
 </div>
 
