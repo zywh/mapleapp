@@ -49,7 +49,7 @@
     <ion-list>
       <ion-item>
         <ion-label>物业类型</ion-label>
-        <ion-select [(ngModel)]="selectType" okText="确认" cancelText="取消">
+        <ion-select multiple [(ngModel)]="selectType" okText="确认" cancelText="取消">
         	<ion-option value="1" >独栋</ion-option>
           <ion-option value="2">联排</ion-option>
           <ion-option value="3">公寓</ion-option>
@@ -93,7 +93,7 @@
    </ion-list>
   <div padding-left padding-right padding-bottom class="slider-box">
     <div class="slider-label">
-       卧室 (至少{{selectBeds}}间 )
+       卧室 ({{ (selectBeds > 0)? "至少" + selectBeds +"间" : "不限" }})
     </div>   
     <div class="slider"> 
       <input [(ngModel)]="selectBeds" class="mapleslider" type ="range" min ="1" max="6" value="1" step ="1"/>
@@ -101,12 +101,21 @@
   </div>  
   <div padding-left padding-right padding-bottom  class="slider-box">
     <div class="slider-label">
-       洗手间 (至少{{selectBaths}}间 )
+       洗手间 ({{ (selectBaths > 0)? "至少" + selectBaths +"间" : "不限" }})
     </div>   
     <div class="slider"> 
       <input [(ngModel)]="selectBaths" class="mapleslider" type ="range" min ="1" max="5" value="1" step ="1"/>
     </div>        
   </div>  
+  
+  
+    <div data-role="rangeslider">
+        <label for="range-1a">Rangeslider:</label>
+        <input type="range" name="range-1a" id="range-1a" min="0" max="100" value="40">
+        <label for="range-1b">Rangeslider:</label>
+        <input type="range" name="range-1b" id="range-1b" min="0" max="100" value="80">
+    </div>
+
  
     <ion-row>
       <ion-col>
@@ -154,8 +163,8 @@
   <div id="map"></div>
 
   <div *ngIf="currentDiv == 'listButton'">
-    <button fab  primary outline fab-bottom fab-center (click)="openHouseList()">
-      <ion-icon name="ios-albums" is-active="true"></ion-icon>
+    <button fab  secondary fab-bottom fab-center (click)="openHouseList()">
+      <ion-icon name="list" is-active="true"></ion-icon>
     </button>
   </div>
 

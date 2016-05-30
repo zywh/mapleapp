@@ -2,7 +2,9 @@
 $imgWidth: 300px;
 $imgHeight: 240px;
 
-
+.searchbar-input {
+    padding: 6px 40px;
+}
 ion-page.modal {
   padding: 10px;
   width: $imgWidth + 20px;

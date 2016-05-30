@@ -1,4 +1,4 @@
-import {IonicApp, Modal, Alert, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
+import {IonicApp, Modal, Loading, Alert, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 //import {AngularRange} from 'angular-ranger';
 //import {RichMarker} from 'rich-marker';
@@ -41,8 +41,8 @@ export class MapSearchPage implements OnInit {
   //selection Parms
   private selectPrice;
   private selectType;
-  private selectBeds;
-  private selectBaths;
+  private selectBeds: Number = 0;
+  private selectBaths: Number = 0;
   private selectHousesize;
   private selectLandsize;
   private currentHouseList; //Hold list of all houses on current map
@@ -69,6 +69,7 @@ export class MapSearchPage implements OnInit {
   updateOption() {
     this.changeMap();
     this.currentDiv = '';
+    console.log("Change Options:" + this.selectType);
     console.log("Change Options:" + this.selectPrice);
   }
   // openModal(characterNum) {
@@ -205,7 +206,7 @@ export class MapSearchPage implements OnInit {
 
 
     google.maps.event.addListener(this.map, 'idle', () => {
-     
+
       this.changeMap();
 
     });
@@ -216,7 +217,7 @@ export class MapSearchPage implements OnInit {
         this.currentDiv = '';
         //this.nav.pop();
       });
-     
+
     });
 
 
@@ -233,8 +234,8 @@ export class MapSearchPage implements OnInit {
   resetSelections() {
     this.selectPrice = '';
     this.selectType = '';
-    this.selectBeds = '';
-    this.selectBaths = '';
+    this.selectBeds = 0;
+    this.selectBaths = 0;
     this.selectHousesize = '';
     this.selectLandsize = '';
     this.currentHouseList = '';
@@ -242,7 +243,6 @@ export class MapSearchPage implements OnInit {
   }
 
   itemTapped(event, item, type) {
-    console.log("Item tapped:" + type);
     if (type == 1) { //CITY Action
       let lat = item.lat;
       let lng = item.lng;
@@ -438,8 +438,14 @@ export class MapSearchPage implements OnInit {
 
   changeMap() {
     console.log("Change Map: Button Show?" + this.isListShow);
-    this.currentDiv = '';
-    this.clearAll();
+    this.currentDiv = ''; //reset all popup
+
+    this.clearAll(); //clear marker
+    let loading = Loading.create({
+      content: '加载房源...'
+    });
+    this.nav.present(loading);
+
 
 
     let gridSize = 60;	//60px
@@ -470,7 +476,7 @@ export class MapSearchPage implements OnInit {
     //console.log("Map House Search Parms:" + mapParms);
     this.mapleRestData.load('index.php?r=ngget/getMapHouse', mapParms).subscribe(
       data => {
-
+        loading.dismiss();
         this.totalCount = data.Data.Total;
         this.markerType = data.Data.Type;
         console.log("Change Map Refresh Data:" + this.markerType);
