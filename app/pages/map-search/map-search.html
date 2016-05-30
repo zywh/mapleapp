@@ -33,15 +33,15 @@
 <ion-content class="map-search">
   <div class="search_list" *ngIf="currentDiv == 'searchlist'" >
     <ion-item padding *ngFor="#item of cityItems" (click)="itemTapped($event, item,1)" >
-      <ion-icon primary padding-right name="search"></ion-icon>{{ item.value }}
+     <button light clear> <ion-icon primary padding-right name="search"></ion-icon>{{ item.value }}</button>
        <ion-badge item-right>城市</ion-badge>
     </ion-item>
     <ion-item padding *ngFor="#item of mlsItems" (click)="itemTapped($event, item,2)">
-      <ion-icon primary padding-right name="search"></ion-icon>{{ item.value }},{{item.city}}
+       <button light clear><ion-icon primary padding-right name="search"></ion-icon>{{ item.value }},{{item.city}}</button>
        <ion-badge item-right>MLS</ion-badge>
     </ion-item>
     <ion-item padding *ngFor="#item of addressItems" (click)="itemTapped($event, item,3)">
-      <ion-icon primary padding-right name="search"></ion-icon>{{ item.value }},{{item.city}}
+       <button light clear><ion-icon primary padding-right name="search"></ion-icon>{{ item.value }},{{item.city}}</button>
        <ion-badge item-right>地址</ion-badge>
     </ion-item>
       </div>
