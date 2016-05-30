@@ -43,6 +43,7 @@ export class MapSearchPage implements OnInit {
   private selectType;
   private selectBeds: Number = 0;
   private selectBaths: Number = 0;
+  private selectSR: Boolean = true;
   private selectHousesize;
   private selectLandsize;
   private currentHouseList; //Hold list of all houses on current map
@@ -236,6 +237,7 @@ export class MapSearchPage implements OnInit {
     this.selectType = '';
     this.selectBeds = 0;
     this.selectBaths = 0;
+    this.selectSR = true;
     this.selectHousesize = '';
     this.selectLandsize = '';
     this.currentHouseList = '';
@@ -461,17 +463,18 @@ export class MapSearchPage implements OnInit {
     let HouseArray = [];
     let marker;
     let _bounds = _sw.lat() + "," + _sw.lng() + "," + _ne.lat() + "," + _ne.lng();
-
+    console.log(this.selectLandsize);
     let mapParms = {
       bounds: _bounds,
       gridx: gridx,
       gridy: gridy,
-      // sr : 	options['sel_sr'], 
+      sr : 	(this.selectSR == true)?'Sale':'Lease', 
       housetype: this.selectType,
       houseprice: this.selectPrice,
       houseroom: this.selectBeds,
-      housearea: this.selectHousesize
-
+      housearea: this.selectHousesize,
+      houseground: this.selectLandsize
+      
 				};
     //console.log("Map House Search Parms:" + mapParms);
     this.mapleRestData.load('index.php?r=ngget/getMapHouse', mapParms).subscribe(
