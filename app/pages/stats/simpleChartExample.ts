@@ -1,7 +1,7 @@
 
-import {Component} from '@angular/core';
-import { CHART_DIRECTIVES,Highcharts } from 'angular2-highcharts';
-
+import {Component} from 'angular2/core';
+//import { CHART_DIRECTIVES,Highcharts } from 'angular2-highcharts';
+declare var Highcharts: any;
 
 
 Highcharts.setOptions({
@@ -10,9 +10,9 @@ Highcharts.setOptions({
 
 @Component({
     selector: 'simple-chart-example',
-    directives: [CHART_DIRECTIVES],
+    //directives: [CHART_DIRECTIVES],
     template: `
-        <chart [options]="options"></chart>
+        <div id='mc-chart'></div>
     `
 })
 export class SimpleChartExample {
@@ -25,4 +25,7 @@ export class SimpleChartExample {
         };
     }
     options: Object;
+    //let mapEle = document.getElementById('map');
+
+    
 }

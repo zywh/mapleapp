@@ -1,11 +1,8 @@
 import {Page, NavController} from 'ionic-angular';
-//import { CHART_DIRECTIVES,Highcharts } from 'angular2-highcharts';
-//import { Component} from '@angular/core';
-//import { DirectiveDecorator} from '@angular/core';
-// import { SimpleChartExample } from './simpleChartExample';
-// import { ChartEventsExample } from './chartEventsExample';
-// import { StockChartExample } from './stockChartExample';
-//import { DynamicChartExample } from './dynamicChartExample';
+//import {OnInit, NgZone} from 'angular2/core';
+import {mcHistChart} from './mcHistChart';
+//import {mcStockChart} from './mcStockChart';
+declare var Highcharts: any;
 
 
 /*
@@ -16,20 +13,15 @@ import {Page, NavController} from 'ionic-angular';
 */
 @Page({
     templateUrl: 'build/pages/stats/stats.html',
-   // selector: 'app',
-    //directives: [DynamicChartExample],
-    //directives: [CHART_DIRECTIVES]
-    // template: `
-    //     <h2>angular2-highcharts examples</h2>
-     
-    // `
+    directives: [mcHistChart]
+
 })
 
 export class StatsPage {
-
+   
     constructor() {
-
+      
     }
-
+   
 
 }

@@ -1,9 +1,15 @@
 import {Page, NavController, NavParams, Platform} from 'ionic-angular';
 import {OnInit} from 'angular2/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-import {Post} from './post';
-//import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
 
+interface Post {
+  id: number;
+  title: String;
+  content: String;
+  imgHost: String;
+  catname: String;
+
+}
 @Page({
   templateUrl: 'build/pages/about/about.html',
  
