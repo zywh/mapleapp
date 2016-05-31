@@ -62,7 +62,7 @@
 
 <div padding-left padding-right padding-bottom class="slider-box">
     <div class="slider-label">
-        卧室 ({{ (selectOptions?.selectBeds > 0)? "至少" + selectOptions?.selectBeds +"间" : "不限" }})
+        卧室 ({{ (selectOptions.selectBeds > 0)? "至少" + selectOptions.selectBeds +"间" : "不限" }})
     </div>
     <div class="slider">
         <input [(ngModel)]="selectOptions.selectBeds" class="mapleslider" type="range" min="1" max="6" value="1" step="1" />
@@ -70,7 +70,7 @@
 </div>
 <div padding-left padding-right padding-bottom class="slider-box">
     <div class="slider-label">
-        洗手间 ({{ (selectOptions?.selectBaths > 0)? "至少" + selectOptions?.selectBaths +"间" : "不限" }})
+        洗手间 ({{ (selectOptions.selectBaths > 0)? "至少" + selectOptions.selectBaths +"间" : "不限" }})
     </div>
     <div class="slider">
         <input [(ngModel)]="selectOptions.selectBaths" class="mapleslider" type="range" min="1" max="5" value="1" step="1" />
