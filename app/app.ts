@@ -28,7 +28,7 @@ interface PageObj {
 @App({
   templateUrl: 'build/app.html',
   //providers: [ConferenceData, UserData, MapleRestData],
-  providers: [ConferenceData, UserData, MapleRestData],
+  providers: [ConferenceData, UserData, MapleRestData,MapleConf],
   // Set any config for your app here, see the docs for
   // more ways to configure your app:
   // http://ionicframework.com/docs/v2/api/config/Config/
@@ -86,7 +86,8 @@ class MapleApp {
     private events: Events,
     private userData: UserData,
     private menu: MenuController,
-    platform: Platform
+    platform: Platform,
+    mapleconf: MapleConf
     //confData: ConferenceData
   ) {
     // Call any initial plugins when ready
@@ -97,6 +98,7 @@ class MapleApp {
 
     // load the conference data
     //confData.load();
+    mapleconf.load();
 
     // decide which menu items should be hidden by current login status stored in local storage
     this.userData.hasLoggedIn().then((hasLoggedIn) => {
