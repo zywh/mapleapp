@@ -28,6 +28,16 @@ export class McSearchOption {
         // this.selectSR = true;
         // this.selectHousesize = '';
         // this.selectLandsize = '';
+        this.selectOptions = {
+            selectSR: true,
+            selectBaths: 0,
+            selectBeds: 0,
+            selectHousesize: '',
+            selectLandsize: '',
+            selectPrice: '',
+            selectType: ''
+
+        }
 
     }
     updateOption() {
