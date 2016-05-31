@@ -18,6 +18,7 @@ export class TabsPage {
   project: any = ProjectsPage;
   school: any = SchoolSearchPage;
   stats: any = StatsPage;
+  about: any = AboutPage;
   mySelectedIndex: number;
 
 

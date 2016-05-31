@@ -63,11 +63,11 @@ class MapleApp {
     // { title: '项目推荐', component: ProjectsPage, icon: 'information-circle' },
     // { title: '房源统计', component: StatsPage, icon: 'information-circle' },
     { title: '首页', component: TabsPage, icon: 'home' },
-    { title: '地图搜索', component: MapSearchPage, index: 1, icon: 'map' },
-    { title: '学区房', component: SchoolSearchPage, index: 2, icon: 'school' },
+    { title: '地图搜索', component: TabsPage, index: 1, icon: 'map' },
+    { title: '学区房', component: TabsPage, index: 2, icon: 'school' },
     { title: '项目推荐', component: TabsPage, index: 3, icon: 'thumbs-up' },
     { title: '房源统计', component: TabsPage, index: 4, icon: 'stats' },
-    { title: '关于我们', component: AboutPage, icon: 'information-circle' }
+    { title: '关于我们', component: TabsPage, index: 5, icon: 'information-circle'  }
   ];
 
   loggedInPages: PageObj[] = [
