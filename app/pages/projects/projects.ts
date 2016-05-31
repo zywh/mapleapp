@@ -1,7 +1,7 @@
 import {Page, NavController, NavParams} from 'ionic-angular';
 import {OnInit} from 'angular2/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
+import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {ProjectDetailPage} from '../project-detail/project-detail';
 
 //projects: Object;
@@ -12,16 +12,16 @@ import {ProjectDetailPage} from '../project-detail/project-detail';
     templateUrl: 'build/pages/projects/projects.html'
 })
 export class ProjectsPage implements OnInit {
-    private nav;
+    //private nav;
     private parms = {};
     projects: Object;
 
     static get parameters() {
-        return [[NavController], [NavParams], [MapleRestData]];
+        return [[NavController], [MapleRestData],[MapleConf]];
     }
 
-    constructor(nav, navParams, private mapleRestData: MapleRestData) {
-        this.nav = nav;
+    constructor(private nav: NavController, private mapleRestData: MapleRestData,private mapleconf: MapleConf) {
+        //this.nav = nav;
     }
     
     private swiperOptions = {
@@ -33,6 +33,7 @@ export class ProjectsPage implements OnInit {
 
     ngOnInit() {
         this.getResult('index.php?r=ngget/getProjects');
+        console.log("Page projects: picURL" + this.mapleconf.data.picHost);
     }
 
     getResult(url) {

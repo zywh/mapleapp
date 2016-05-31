@@ -1,7 +1,7 @@
 import {Page, NavController, NavParams,Platform} from 'ionic-angular';
 import {OnInit} from 'angular2/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
+//import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
 
 @Page({
   templateUrl: 'build/pages/project-detail/project-detail.html'

@@ -5,57 +5,86 @@
   Ionic pages and navigation.
 -->
 <ion-navbar *navbar class="map-search">
-  <ion-buttons start>
-    <button menuToggle>
+  
+  <ion-row center >
+    <ion-col width-10 no-padding>
+      <button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
-  </ion-buttons>
-  <ion-buttons>
-    <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (input)="getItems($event)" placeholder="城市/地址/MLS#"></ion-searchbar>
-  </ion-buttons>
-  <ion-buttons end >
-    <button class="btn-options" (click)="openModal({charNum: 0})">
+    </ion-col>
+    <ion-col width-67 no-padding>
+        <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (focus)="currentDiv='searchlist'" (input)="getItems($event)" placeholder="城市/地址/MLS#"></ion-searchbar>
+    </ion-col>
+    <ion-col width-10 no-padding>
+      <button class="bar-button-default" (click)="currentDiv= (currentDiv == 'mapoption')? '':'mapoption'">
         <ion-icon name="options"></ion-icon>
       </button>
-     
-  </ion-buttons>
-  <ion-buttons end >
-    <button class="btn-options" (click)="setLocation(center,16)">
-        <ion-icon name="locate"></ion-icon>
+    </ion-col>
+    <ion-col width-10 no-padding>
+      <button class="bar-button-default" (click)="setLocation(center,16)">
+        <ion-icon ios="ios-locate-outline" md="md-locate"></ion-icon>
       </button>
-     
-  </ion-buttons>
-
-
+    </ion-col>
+  </ion-row>  
+  
+ 
 </ion-navbar>
 
 <ion-content class="map-search">
+  <div class="search_list" *ngIf="currentDiv == 'searchlist'" >
+    <ion-item padding *ngFor="#item of cityItems" (click)="itemTapped($event, item,1)" >
+     <button light clear> <ion-icon primary padding-right name="search"></ion-icon>{{ item.value }}</button>
+       <ion-badge item-right>城市</ion-badge>
+    </ion-item>
+    <ion-item padding *ngFor="#item of mlsItems" (click)="itemTapped($event, item,2)">
+       <button light clear><ion-icon primary padding-right name="search"></ion-icon>{{ item.value }},{{item.city}}</button>
+       <ion-badge item-right>MLS</ion-badge>
+    </ion-item>
+    <ion-item padding *ngFor="#item of addressItems" (click)="itemTapped($event, item,3)">
+       <button light clear><ion-icon primary padding-right name="search"></ion-icon>{{ item.value }},{{item.city}}</button>
+       <ion-badge item-right>地址</ion-badge>
+    </ion-item>
+  </div>
+  
+  
+  
+  <div class="map_options" *ngIf="currentDiv == 'mapoption'">
+    <mc-search-option [selectOptions]="selectOptions" (optionChange)="optionChange($event);"></mc-search-option>
+  </div>
 
-  <ion-item padding *ngFor="#item of cityItems" (click)="itemTapped($event, item,1)">
-    {{ item.value }}
-  </ion-item>
-  <ion-item padding *ngFor="#item of mlsItems" (click)="itemTapped($event, item,2)">
-    {{ item.value }}
-  </ion-item>
-  <ion-item padding *ngFor="#item of addressItems" (click)="itemTapped($event, item,3)">
-    {{ item.value }}
-  </ion-item>
+
+  <div class="house_list" *ngIf="listShow()">
+    <ion-slides [options]="swiperOptions" class="swiper-container">
+      <ion-slide *ngFor="#house of currentHouseList" class="swiper-slide" (click)="gotoHouseDetail(house.MLS)">
+        <ion-card class="house_card">
+         <img [src]="imgHost + house.CoverImg" />
+          <div class="house_desc" text-left text-nowrap>
+          
+            <ion-item>    
+             <ion-badge item-left>MLS:{{house.MLS}}</ion-badge>
+             <ion-badge item-right><i class="fa fa-usd" aria-hidden="true"></i>{{house.Price}}万</ion-badge>
+            </ion-item>
+          
+             <div class="card-subtitle" text-left>
+              <div><i padding-right secondary class="fa fa-building" aria-hidden="true"></i><span padding-right>{{house.HouseType}}</span>{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨</div>
+              <div> <ion-icon padding-right secondary name="navigate"></ion-icon><span padding-right>{{house.Address}}</span>{{house.MunicipalityName}}</div>
+              </div>
+          </div>
+        </ion-card>
+      </ion-slide>
+
+    </ion-slides>
+  </div>
+
 
 
   <div id="map"></div>
 
-
-
-  <button fab outline fab-bottom fab-left (click)="openModal({charNum: 0})" large>
-    <ion-icon name="locate"></ion-icon>
-  </button>
-  <button fab outline secondary fab-bottom fab-center large (click)="openModal({charNum: 0})">
-    <ion-icon name="list-box" is-active="false"></ion-icon>
-  </button>
-  <button fab outline secondary fab-bottom fab-right large (click)="openModal({charNum: 0})">
-    <ion-icon name="funnel" is-active="false"></ion-icon>
-  </button>
-
+  <div *ngIf="currentDiv == 'listButton'">
+    <button fab  secondary fab-bottom fab-center (click)="openHouseList()">
+      <ion-icon name="list" is-active="true"></ion-icon>
+    </button>
+  </div>
 
 
 </ion-content>

@@ -2,7 +2,7 @@ import {Injectable} from 'angular2/core';
 //import {Http} from 'angular2/http';
 import { Http, Headers, RequestOptions } from 'angular2/http';
 //import 'rxjs/add/operator/map';
-import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
+import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/Rx';
 
@@ -15,19 +15,19 @@ import 'rxjs/Rx';
 */
 @Injectable()
 export class MapleRestData {
-  private http: Http;
+ 
 
   static get parameters() {
-    return [[Http]]
+    return [[Http],[MapleConf]]
   }
 
-  constructor(http) {
-    this.http = http;
+  constructor(private http:Http, private mapleconf: MapleConf) {
+  
   }
 
   load(restURL, parms: Object) {
-    let mapleRestHost = "http://r.maplecity.com.cn/";
-    let dataURL = mapleRestHost + restURL;
+   
+    let dataURL = this.mapleconf.restHost + restURL;
     let body = JSON.stringify({ parms });
     console.log("REST POST body:" + body);
     let headers = new Headers({ 'Content-Type': 'application/json' });
