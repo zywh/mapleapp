@@ -1,5 +1,5 @@
 import {Page, NavController, NavParams, Platform} from 'ionic-angular';
-import {OnInit} from 'angular2/core';
+import {OnInit} from '@angular/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 
 interface Post {

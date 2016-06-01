@@ -1,4 +1,4 @@
-import {Component, ElementRef, Renderer, HostListener, ViewEncapsulation} from 'angular2/core';
+import {Component, ElementRef, Renderer, HostListener, ViewEncapsulation} from '@angular/core';
 
 import {Config,NavParams,ViewController,Transition, TransitionOptions,Animation} from 'ionic-angular';
 import {isPresent} from 'ionic-angular/util';

@@ -2,7 +2,7 @@ import {IonicApp, Modal, Loading, Alert, ActionSheet, MenuController, Platform, 
 import {Geolocation} from 'ionic-native';
 //import {AngularRange} from 'angular-ranger';
 //import {RichMarker} from 'rich-marker'; It doesn't provide TS definition. Use ext URL to include in index.html
-import {OnInit, NgZone} from 'angular2/core';
+import {OnInit, NgZone} from '@angular/core';;
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {McSearchOption} from './search-option';
@@ -596,7 +596,7 @@ export class MapSearchPage implements OnInit {
   <ion-content no-padding class="houselist_modal">
   
      
-        <ion-card class="house_card" *ngFor="#house of houselist" (click)="openHouseDetail(house.MLS)">
+        <ion-card class="house_card" *ngFor="let house of houselist" (click)="openHouseDetail(house.MLS)">
           <img [src]="imgHost + house.CoverImg" />
           <div class="house_desc" text-left text-nowrap>
           

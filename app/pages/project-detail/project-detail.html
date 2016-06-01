@@ -45,7 +45,7 @@
       <p> {{project.summary}} </p>
       
       <ion-slides [options]="swiperOptions" class="swiper-container">
-        <ion-slide *ngFor="#image of converto2a(project.image_list)">
+        <ion-slide *ngFor="let image of converto2a(project.image_list)">
           <img [src]="smallImg(image.file)" class="slide-image" />
         </ion-slide>
       </ion-slides>
@@ -61,7 +61,7 @@
 
     <div *ngSwitchWhen="'layout'">
       <ion-slides [options]="swiperOptions" class="swiper-container">
-        <ion-slide *ngFor="#image of converto2a(project.layout_list)">
+        <ion-slide *ngFor="let image of converto2a(project.layout_list)">
           <img [src]="smallImg(image.file)" class="slide-image" />
         </ion-slide>
       </ion-slides>
