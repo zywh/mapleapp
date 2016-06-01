@@ -6,6 +6,11 @@
 -->
 <ion-navbar *navbar>
   <ion-title>项目详情</ion-title>
+  <ion-buttons end>
+  <button  (click)="share('Project Title', 'Project Detail', null, 'https://m.maplecity.com.cn')">
+  <ion-icon isActive="false" name="share" ></ion-icon>
+  </button>
+  </ion-buttons>
 </ion-navbar>
 
 
@@ -44,12 +49,12 @@
           <img [src]="smallImg(image.file)" class="slide-image" />
         </ion-slide>
       </ion-slides>
+     <button full outline (click)="share('Hello World', 'Attention', null, 'https://www.thepolyglotdeveloper.com')">Share</button>
+   
+
     </div>
 
-    <div *ngSwitchWhen="'images'">
-
-    </div>
-
+   
     <div *ngSwitchWhen="'point'">
       <p>{{project.point}}</p>
     </div>

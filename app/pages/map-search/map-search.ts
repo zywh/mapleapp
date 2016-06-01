@@ -69,7 +69,8 @@ export class MapSearchPage implements OnInit {
     private nav: NavController,
     private mapleRestData: MapleRestData,
     private menu: MenuController,
-    private _zone: NgZone
+    private _zone: NgZone,
+    private viewCtrl: ViewController
   ) {
     this.searchQuery = '';
     this.resetItems();
@@ -228,8 +229,10 @@ export class MapSearchPage implements OnInit {
       this._zone.run(() => {
         this.currentDiv = '';
         this.searchQuery = '';
+          this.viewCtrl.dismiss();
         //this.nav.pop();
       });
+    
 
     });
 
@@ -608,7 +611,7 @@ export class MapSearchPage implements OnInit {
               </div>
           </div>
         </ion-card>
-      
+     </ion-content> 
     `
 })
 class ModalHouseList {

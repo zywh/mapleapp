@@ -49,7 +49,8 @@
       "locator": "https://github.com/apache/cordova-plugin-splashscreen.git",
       "id": "cordova-plugin-splashscreen"
     },
-    "cordova-plugin-geolocation"
+    "cordova-plugin-geolocation",
+    "cordova-plugin-x-socialsharing"
   ],
   "cordovaPlatforms": [
     "ios",
