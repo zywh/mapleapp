@@ -1,5 +1,5 @@
 
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 //import {HTTP_PROVIDERS,Jsonp,ConnectionBackend} from 'angular2/http';
 //import { CHART_DIRECTIVES,Highcharts } from 'angular2-highcharts';
 declare var Highcharts: any;

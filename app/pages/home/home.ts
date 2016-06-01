@@ -1,8 +1,8 @@
 //import {Page, NavController} from 'ionic-angular';
 import {Page, NavController, NavParams} from 'ionic-angular';
-import {OnInit} from 'angular2/core';
+import {OnInit} from '@angular/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-import {Http, Headers, RequestOptions} from 'angular2/http';
+import {Http, Headers, RequestOptions} from '@angular/http';
 //import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
 
 import {ProjectDetailPage} from '../project-detail/project-detail';
