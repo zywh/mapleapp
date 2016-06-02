@@ -350,10 +350,27 @@ export class MapSearchPage implements OnInit {
       // console.log(houses);
       let alert = Alert.create({
         //title: 'Confirm purchase',
-        message: html
+        message: html,
+        cssClass: 'house_popup',
+        buttons: [
+          {
+            text: '取消',
+            role: 'cancel',
+            handler: () => {
+              console.log('cancel clicked' + this.totalCount);
+            }
+          },
+          {
+            text: '详情',
+            handler: () => {
+              console.log('Agree clicked');
+              this.nav.push(HouseDetailPage);
+            }
+          }
+        ]
       });
       this.nav.present(alert);
-      //infowindow.open(this.map, marker);
+      //   //infowindow.open(this.map, marker);
     });
 
 
@@ -553,19 +570,19 @@ export class MapSearchPage implements OnInit {
             //   + "</li>";
 
 
-            let li = ' <ion-card class="house_card"  (click)="openHouseDetail('+house.MLS+')">' 
-               + '<img src="' + this.imgHost + house.CoverImg +'" />'
-                + '<div class="house_desc" text-left text-nowrap>'
-             +    '<ion-item>'    
-              + '<ion-badge item-left>MLS:' +house.MLS +'</ion-badge>'
-              + '  <ion-badge item-right><i class="fa fa-usd" aria-hidden="true"></i>' +house.Price +'万</ion-badge>'
+            let li = ' <ion-card>'
+              + '<img src="' + this.imgHost + house.CoverImg + '" />'
+              + '<div class="house_desc" text-left text-nowrap>'
+              + '<ion-item>'
+              + '<ion-badge item-left>MLS:' + house.MLS + '</ion-badge>'
+              + '  <ion-badge item-right><i class="fa fa-usd" aria-hidden="true"></i>' + house.Price + '万</ion-badge>'
               + '   </ion-item>'
-                
+
               + '    <div class="card-subtitle" text-left>'
-               + '     <div><i padding-right secondary class="fa fa-building" aria-hidden="true"></i><span padding-right>'+house.HouseType+'</span>'+house.Beds+'卧'+house.Baths+'卫'+house.Kitchen+'厨</div>'
-               + '     <div><i padding-right secondary class="fa fa-location-arrow" aria-hidden="true"></i><span padding-right>'+house.Address+'</span>'+house.MunicipalityName+'</div>'
-               + '     </div></div>'
-             + ' </ion-card> '
+              + '     <div><i padding-right secondary class="fa fa-building" aria-hidden="true"></i><span padding-right>' + house.HouseType + '</span>' + house.Beds + '卧' + house.Baths + '卫' + house.Kitchen + '厨</div>'
+              + '     <div><i padding-right secondary class="fa fa-location-arrow" aria-hidden="true"></i><span padding-right>' + house.Address + '</span>' + house.MunicipalityName + '</div>'
+              + '     </div></div>'
+              + ' </ion-card> '
 
             if ((nextLng != house.GeocodeLng) || (nextLat != house.GeocodeLat)) {
 
@@ -584,7 +601,7 @@ export class MapSearchPage implements OnInit {
                 houses.push(house);
                 panelhtml = panelhtml + li;
                 let price = (totalprice + markerprice) / count;
-                // this.setContent(tlat, tlng, count, houses, price);
+                //this.setContent(tlat, tlng, count, houses, price);
                 this.setContent(tlat, tlng, count, panelhtml, price);
                 count = 1;
                 totalprice = 0;

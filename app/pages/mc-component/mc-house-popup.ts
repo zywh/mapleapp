@@ -306,7 +306,7 @@ export class Alert extends ViewController {
  * @private
  */
 @Component({
-  selector: 'mc-house-popup',
+  selector: 'Alert',
   template:
     '<div (click)="bdClick()" tappable disable-activated class="backdrop" role="presentation"></div>' +
     '<div class="alert-wrapper">' +
