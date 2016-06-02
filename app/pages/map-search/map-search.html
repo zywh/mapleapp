@@ -16,7 +16,7 @@
         <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (focus)="currentDiv='searchlist'" (input)="getItems($event)" placeholder="城市/地址/MLS#"></ion-searchbar>
     </ion-col>
     <ion-col width-10 no-padding>
-      <button class="bar-button-default" (click)="currentDiv= (currentDiv == 'mapoption')? '':'mapoption'">
+      <button class="bar-button-default" (click)="openModal(selectOptions)">
         <ion-icon name="options"></ion-icon>
       </button>
     </ion-col>

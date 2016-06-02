@@ -6,6 +6,7 @@ import {OnInit, NgZone} from '@angular/core';;
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {McSearchOption} from './search-option';
+import {SelectOptionModal} from './map-option-modal';
 declare var RichMarker: any;
 interface selectOptionsObj {
   selectPrice?: String,
@@ -85,10 +86,14 @@ export class MapSearchPage implements OnInit {
     this.changeMap();
 
   }
-  // openModal(characterNum) {
-  //   let modal = Modal.create(MapSearchOptionsPage, characterNum);
-  //   this.nav.present(modal);
-  // }
+  openModal(opt) {
+    let modal = Modal.create(SelectOptionModal, {data: opt});
+    modal.onDismiss(data => {
+      this.selectOptions = data;
+      this.changeMap();
+     });
+    this.nav.present(modal);
+  }
 
 
   getResult(url) {
@@ -573,7 +578,7 @@ export class MapSearchPage implements OnInit {
             let li = ' <ion-card>'
               + '<img src="' + this.imgHost + house.CoverImg + '" />'
               + '<div class="house_desc" text-left text-nowrap>'
-              + '<ion-item>'
+              + '<ion-item padding-left>'
               + '<ion-badge item-left>MLS:' + house.MLS + '</ion-badge>'
               + '  <ion-badge item-right><i class="fa fa-usd" aria-hidden="true"></i>' + house.Price + '万</ion-badge>'
               + '   </ion-item>'
@@ -631,56 +636,3 @@ export class MapSearchPage implements OnInit {
 
 }
 
-
-@Page({
-  template: `
-   <button full (click)="close()">
-    <ion-icon name="close"></ion-icon> 关闭窗口</button>
-  <ion-content no-padding class="houselist_modal">
-  
-     
-        <ion-card class="house_card" *ngFor="let house of houselist" (click)="openHouseDetail(house.MLS)">
-          <img [src]="imgHost + house.CoverImg" />
-          <div class="house_desc" text-left text-nowrap>
-          
-            <ion-item>    
-             <ion-badge item-left>MLS:{{house.MLS}}</ion-badge>
-             <ion-badge item-right><i class="fa fa-usd" aria-hidden="true"></i>{{house.Price}}万</ion-badge>
-            </ion-item>
-          
-             <div class="card-subtitle" text-left>
-              <div><i padding-right secondary class="fa fa-building" aria-hidden="true"></i><span padding-right>{{house.HouseType}}</span>{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨</div>
-              <div><i padding-right secondary class="fa fa-location-arrow" aria-hidden="true"></i><span padding-right>{{house.Address}}</span>{{house.MunicipalityName}}</div>
-              </div>
-          </div>
-        </ion-card>
-     </ion-content> 
-    `
-})
-class ModalHouseList {
-  private houselist;
-  private imgHost;
-  constructor(
-    private platform: Platform,
-    private params: NavParams,
-    private nav: NavController,
-    private viewCtrl: ViewController
-  ) {
-    //this.viewCtrl = viewCtrl;
-    console.log(this.params);
-    this.houselist = this.params.get('houses');
-    this.imgHost = this.params.get('imgHost');
-    console.log(this.houselist[0]);
-  }
-
-  openHouseDetail(mls) {
-    let parms = {
-      mls: mls
-    }
-    this.nav.push(HouseDetailPage, parms)
-  }
-  close() {
-    this.viewCtrl.dismiss();
-
-  }
-}

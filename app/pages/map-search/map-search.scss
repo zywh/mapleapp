@@ -7,54 +7,8 @@ $popupsize: 240px;
     padding: 6px 40px;
 }
 
-/* CSS for House Pop up window -alert*/
-.house_popup {
-  ion-card {
-      position: relative;
-      width: $popupsize;
-      height: $popupsize ;
-      margin: 0px;
-      
-  }
-  
-  ion-card img {
-      width: $popupsize;
-      height: $popupsize;
-            
-  }
-  
- .house_desc{
-    background: #ebebeb;
-    background-image: -webkit-linear-gradient(top, #ebebeb, #2e2e2e);
-    background-image: -moz-linear-gradient(top, #ebebeb, #2e2e2e);
-    background-image: -ms-linear-gradient(top, #ebebeb, #2e2e2e);
-    background-image: -o-linear-gradient(top, #ebebeb, #2e2e2e);
-    background-image: linear-gradient(to bottom, #ebebeb, #2e2e2e);
-    opacity: 0.8;
-    position: absolute;
-    bottom: 0%;
-    width: 100%;
-  }
-  .card-title {
-      color: #fff;
-   }
-  
-  .card-subtitle {
-    color: #fff;
-    padding: 5px 5px 5px 16px;
-   }
-}    
-
-.map-search {
-  
-  .slider-box {
-    color: #7f7f7f;
-  }
-  .slider-label {
-    *font-size: 17px;
-  }
-
-  ion-label {
+.map-option-modal {
+   ion-label {
     margin: 0; 
     color: #7f7f7f;
   }
@@ -151,10 +105,62 @@ $popupsize: 240px;
     background: #ff4103;
   }
   
- 
   .item {
     min-height: 0px;
-  }  
+  } 
+}
+
+/* CSS for House Pop up window -alert*/
+.house_popup {
+  ion-card {
+      position: relative;
+      width: $popupsize;
+      height: $popupsize ;
+      margin: 0px;
+      
+  }
+  
+  ion-card img {
+      width: $popupsize;
+      height: $popupsize;
+            
+  }
+  
+ .house_desc{
+    background: #ebebeb;
+    background-image: -webkit-linear-gradient(top, #ebebeb, #2e2e2e);
+    background-image: -moz-linear-gradient(top, #ebebeb, #2e2e2e);
+    background-image: -ms-linear-gradient(top, #ebebeb, #2e2e2e);
+    background-image: -o-linear-gradient(top, #ebebeb, #2e2e2e);
+    background-image: linear-gradient(to bottom, #ebebeb, #2e2e2e);
+    opacity: 0.8;
+    position: absolute;
+    bottom: 0%;
+    width: 100%;
+  }
+  .card-title {
+      color: #fff;
+   }
+  
+  .card-subtitle {
+    color: #fff;
+    padding: 5px 5px 5px 16px;
+   }
+}    
+
+.map-search {
+  
+  .slider-box {
+    color: #7f7f7f;
+    font-size: 17px;
+  }
+  .slider-label {
+    font-size: 17px;
+    color: #7f7f7f;
+  }
+
+ 
+  
   #map {
     width: 100%;
     height: 100%;
