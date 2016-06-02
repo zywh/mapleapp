@@ -3,10 +3,10 @@ import {Page, NavController, NavParams} from 'ionic-angular';
 import {OnInit} from '@angular/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {Http, Headers, RequestOptions} from '@angular/http';
-//import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
-
+import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {ProjectDetailPage} from '../project-detail/project-detail';
 import {MapleFooter} from '../maple-footer/maple-footer';
+
 
 /*
   Generated class for the HomePage page.
@@ -19,29 +19,38 @@ import {MapleFooter} from '../maple-footer/maple-footer';
   directives: [MapleFooter]
 })
 export class HomePage implements OnInit {
-  private nav;
-  private parms = {};
+  //private nav;
+  // private parms = {};
   projects: Object;
 
   static get parameters() {
-    return [[NavController], [NavParams], [MapleRestData]];
+    return [[NavController], [NavParams], [MapleRestData], [MapleConf]];
   }
 
-  constructor(nav, navParams, private mapleRestData: MapleRestData) {
-    this.nav = nav;
+  constructor(
+    private nav: NavController,
+    private parms: NavParams,
+    private mapleRestData: MapleRestData,
+    private mapleconf: MapleConf
+  ) {
+    //this.nav = nav;
 
   }
-  
+
   projectSwiperOptions = {
-     loop: true,
-     //pager: true,
-     speed: 4000,
-     autoplay: 300
+    loop: true,
+    //pager: true,
+    speed: 4000,
+    autoplay: 300
   };
 
 
   ngOnInit() {
-    this.getProjects('index.php?r=ngget/getProjects');
+    this.mapleconf.load().then(data => {
+      console.log(data.projectRest);
+      //this.getProjects('index.php?r=ngget/getProjects');
+      this.getProjects(data.projectRest);
+    })
   }
 
   getProjects(url) {
@@ -50,7 +59,7 @@ export class HomePage implements OnInit {
     );
 
   }
-  goToProject( id ) {
+  goToProject(id) {
     this.nav.push(ProjectDetailPage, id);
   }
 

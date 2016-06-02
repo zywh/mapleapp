@@ -98,8 +98,7 @@ class MapleApp {
 
     // load the conference data
     //confData.load();
-    mapleconf.load();
-
+   
     // decide which menu items should be hidden by current login status stored in local storage
     this.userData.hasLoggedIn().then((hasLoggedIn) => {
       this.enableMenu(hasLoggedIn == 'true');
