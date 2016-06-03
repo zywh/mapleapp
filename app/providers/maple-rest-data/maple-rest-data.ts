@@ -1,6 +1,6 @@
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 //import {Http} from 'angular2/http';
-import { Http, Headers, RequestOptions } from 'angular2/http';
+import { Http, Headers, RequestOptions } from '@angular/http';;
 //import 'rxjs/add/operator/map';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {Observable} from 'rxjs/Observable';

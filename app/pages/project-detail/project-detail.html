@@ -6,6 +6,11 @@
 -->
 <ion-navbar *navbar>
   <ion-title>项目详情</ion-title>
+  <ion-buttons end>
+  <button  (click)="share('Project Title', 'Project Detail', null, 'https://m.maplecity.com.cn')">
+  <ion-icon isActive="false" name="share" ></ion-icon>
+  </button>
+  </ion-buttons>
 </ion-navbar>
 
 
@@ -40,23 +45,23 @@
       <p> {{project.summary}} </p>
       
       <ion-slides [options]="swiperOptions" class="swiper-container">
-        <ion-slide *ngFor="#image of converto2a(project.image_list)">
+        <ion-slide *ngFor="let image of converto2a(project.image_list)">
           <img [src]="smallImg(image.file)" class="slide-image" />
         </ion-slide>
       </ion-slides>
+     <button full outline (click)="share('Hello World', 'Attention', null, 'https://www.thepolyglotdeveloper.com')">Share</button>
+   
+
     </div>
 
-    <div *ngSwitchWhen="'images'">
-
-    </div>
-
+   
     <div *ngSwitchWhen="'point'">
       <p>{{project.point}}</p>
     </div>
 
     <div *ngSwitchWhen="'layout'">
       <ion-slides [options]="swiperOptions" class="swiper-container">
-        <ion-slide *ngFor="#image of converto2a(project.layout_list)">
+        <ion-slide *ngFor="let image of converto2a(project.layout_list)">
           <img [src]="smallImg(image.file)" class="slide-image" />
         </ion-slide>
       </ion-slides>

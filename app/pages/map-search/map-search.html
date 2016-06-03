@@ -16,7 +16,7 @@
         <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (focus)="currentDiv='searchlist'" (input)="getItems($event)" placeholder="城市/地址/MLS#"></ion-searchbar>
     </ion-col>
     <ion-col width-10 no-padding>
-      <button class="bar-button-default" (click)="currentDiv= (currentDiv == 'mapoption')? '':'mapoption'">
+      <button class="bar-button-default" (click)="openModal(selectOptions)">
         <ion-icon name="options"></ion-icon>
       </button>
     </ion-col>
@@ -32,15 +32,15 @@
 
 <ion-content class="map-search">
   <div class="search_list" *ngIf="currentDiv == 'searchlist'" >
-    <ion-item padding *ngFor="#item of cityItems" (click)="itemTapped($event, item,1)" >
+    <ion-item padding *ngFor="let item of cityItems" (click)="itemTapped($event, item,1)" >
      <button light clear> <ion-icon primary padding-right name="search"></ion-icon>{{ item.value }}</button>
        <ion-badge item-right>城市</ion-badge>
     </ion-item>
-    <ion-item padding *ngFor="#item of mlsItems" (click)="itemTapped($event, item,2)">
+    <ion-item padding *ngFor="let item of mlsItems" (click)="itemTapped($event, item,2)">
        <button light clear><ion-icon primary padding-right name="search"></ion-icon>{{ item.value }},{{item.city}}</button>
        <ion-badge item-right>MLS</ion-badge>
     </ion-item>
-    <ion-item padding *ngFor="#item of addressItems" (click)="itemTapped($event, item,3)">
+    <ion-item padding *ngFor="let item of addressItems" (click)="itemTapped($event, item,3)">
        <button light clear><ion-icon primary padding-right name="search"></ion-icon>{{ item.value }},{{item.city}}</button>
        <ion-badge item-right>地址</ion-badge>
     </ion-item>
@@ -55,7 +55,7 @@
 
   <div class="house_list" *ngIf="listShow()">
     <ion-slides [options]="swiperOptions" class="swiper-container">
-      <ion-slide *ngFor="#house of currentHouseList" class="swiper-slide" (click)="gotoHouseDetail(house.MLS)">
+      <ion-slide *ngFor="let house of currentHouseList" class="swiper-slide" (click)="gotoHouseDetail(house.MLS)">
         <ion-card class="house_card">
          <img [src]="imgHost + house.CoverImg" />
           <div class="house_desc" text-left text-nowrap>
@@ -83,6 +83,9 @@
   <div *ngIf="currentDiv == 'listButton'">
     <button fab  secondary fab-bottom fab-center (click)="openHouseList()">
       <ion-icon name="list" is-active="true"></ion-icon>
+    </button>
+     <button fab  secondary fab-bottom fab-left (click)="viewCtrl.dismiss()">
+      <ion-icon name="home" is-active="true"></ion-icon>
     </button>
   </div>
 

@@ -1,6 +1,6 @@
 
-import {Component} from 'angular2/core';
-//import {HTTP_PROVIDERS,Jsonp,ConnectionBackend} from 'angular2/http';
+import {Component} from '@angular/core';
+import {HTTP_PROVIDERS,Jsonp,ConnectionBackend} from '@angular/http';
 //import { CHART_DIRECTIVES,Highcharts } from 'angular2-highcharts';
 declare var Highcharts: any;
 
@@ -9,8 +9,8 @@ declare var Highcharts: any;
     selector: 'mc-stock-chart',
     //directives: [CHART_DIRECTIVES],
     
-    template: ` <div id='mc-hist-chart'></div>`,
-    //providers: [Jsonp,ConnectionBackend]
+    template: ` <div id='mc-stock-chart'></div>`,
+    providers: [Jsonp,ConnectionBackend]
 })
 export class mcStockChart {
     private chart;
@@ -29,7 +29,7 @@ export class mcStockChart {
         //     colors: ['#058DC7', '#50B432', '#ED561B']
         // });
         
-         this.jsonp.request('https://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=JSONP_CALLBACK').subscribe(res => {
+         //this.jsonp.request('https://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=JSONP_CALLBACK').subscribe(res => {
             // this.options = {
             //     title: { text: 'AAPL Stock Price' },
             //     series: [{
@@ -40,7 +40,9 @@ export class mcStockChart {
             //         }
             //     }]
             // };
-            this.data = res.json();
+           // this.data = res.json();
+           this.data = {};
+            console.log(this.data);
             this.chart = new Highcharts.StockChart({
                 chart: {
                     renderTo: 'mc-stock-chart'
@@ -56,7 +58,7 @@ export class mcStockChart {
                     }
                 }]
             });
-        });
+      //  });
         
        
 

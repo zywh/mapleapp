@@ -1,6 +1,6 @@
 import {IONIC_DIRECTIVES} from 'ionic-angular';
 //import {Component} from 'angular2/core';
-import {Component, Input, Output, EventEmitter} from 'angular2/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 
 @Component({
     selector: 'mc-search-option',
