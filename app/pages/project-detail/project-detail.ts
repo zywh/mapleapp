@@ -1,11 +1,11 @@
 import {Page, NavController, NavParams,Platform} from 'ionic-angular';
-import {OnInit} from '@angular/core';;
+import {OnInit,Component} from '@angular/core';;
 //import {Geolocation} from 'ionic-native';
 import {SocialSharing} from 'ionic-native';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 //import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
 
-@Page({
+@Component({
   templateUrl: 'build/pages/project-detail/project-detail.html'
 })
 export class ProjectDetailPage implements OnInit {

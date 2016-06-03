@@ -2,7 +2,7 @@ import {Modal, Loading, Alert, ActionSheet, MenuController, Platform, NavControl
 import {Geolocation} from 'ionic-native';
 //import {AngularRange} from 'angular-ranger';
 //import {RichMarker} from 'rich-marker'; It doesn't provide TS definition. Use ext URL to include in index.html
-import {OnInit, NgZone} from '@angular/core';;
+import {OnInit, NgZone,Component} from '@angular/core';;
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {McSearchOption} from './search-option';
@@ -25,7 +25,7 @@ interface selectOptionsObj {
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
-@Page({
+@Component({
   templateUrl: 'build/pages/map-search/map-search.html',
   directives: [McSearchOption]
 })

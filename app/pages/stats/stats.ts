@@ -1,6 +1,7 @@
 import {Page, NavController} from 'ionic-angular';
 //import {OnInit, NgZone} from 'angular2/core';
 import {mcHistChart} from './mcHistChart';
+import {OnInit,Component} from '@angular/core';;
 import {mcStockChart} from './mcStockChart';
 declare var Highcharts: any;
 
@@ -11,7 +12,7 @@ declare var Highcharts: any;
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
-@Page({
+@Component({
     templateUrl: 'build/pages/stats/stats.html',
     directives: [[mcHistChart],[mcStockChart]]
 

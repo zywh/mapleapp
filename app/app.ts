@@ -1,9 +1,8 @@
-import {ViewChild} from '@angular/core';
-import {App, Events, Platform, Nav, MenuController} from 'ionic-angular';
+import {ViewChild, Component} from '@angular/core';
+import {ionicBootstrap, Events, Platform, Nav, MenuController} from 'ionic-angular';
 import {StatusBar, Splashscreen} from 'ionic-native';
 import {ConferenceData} from './providers/conference-data';
 import {UserData} from './providers/user-data';
-
 import {MapleRestData} from './providers/maple-rest-data/maple-rest-data';
 import {AccountPage} from './pages/account/account';
 import {TabsPage} from './pages/tabs/tabs';
@@ -25,29 +24,13 @@ interface PageObj {
   index?: number;
 }
 
-@App({
+@Component({
   templateUrl: 'build/app.html',
-  //providers: [ConferenceData, UserData, MapleRestData],
-  providers: [ConferenceData, UserData, MapleRestData,MapleConf],
-  // Set any config for your app here, see the docs for
-  // more ways to configure your app:
-  // http://ionicframework.com/docs/v2/api/config/Config/
-  config: {
-    // Place the tabs on the bottom for all platforms
-    // See the theming docs for the default values:
-    // http://ionicframework.com/docs/v2/theming/platform-specific-styles/
-    tabbarPlacement: "bottom",
-    backButtonText: "返回",
-    //temp padding to fix ionic view status bar overlapping
-    platforms: {
-      ios: {
-        statusbarPadding: true
-      }
-    }
-  }
+ 
 })
-//class ConferenceApp {
+
 class MapleApp {
+
   // the root nav is a child of the root app component
   // @ViewChild(Nav) gets a reference to the app's root nav
   @ViewChild(Nav) nav: Nav;
@@ -67,7 +50,7 @@ class MapleApp {
     { title: '学区房', component: TabsPage, index: 2, icon: 'school' },
     { title: '项目推荐', component: TabsPage, index: 3, icon: 'thumbs-up' },
     { title: '房源统计', component: TabsPage, index: 4, icon: 'stats' },
-    { title: '关于我们', component: TabsPage, index: 5, icon: 'information-circle'  }
+    { title: '关于我们', component: TabsPage, index: 5, icon: 'information-circle' }
   ];
 
   loggedInPages: PageObj[] = [
@@ -98,7 +81,7 @@ class MapleApp {
 
     // load the conference data
     //confData.load();
-   
+
     // decide which menu items should be hidden by current login status stored in local storage
     this.userData.hasLoggedIn().then((hasLoggedIn) => {
       this.enableMenu(hasLoggedIn == 'true');
@@ -145,3 +128,18 @@ class MapleApp {
     this.menu.enable(!loggedIn, "loggedOutMenu");
   }
 }
+
+ionicBootstrap(
+  MapleApp,
+  [ConferenceData, UserData, MapleRestData, MapleConf],
+  {
+    tabbarPlacement: "bottom",
+    backButtonText: "返回",
+    //temp padding to fix ionic view status bar overlapping
+    platforms: {
+      ios: {
+        statusbarPadding: true
+      },
+    }
+  }
+);

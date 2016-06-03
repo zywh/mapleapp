@@ -1,6 +1,6 @@
 //import {Page, NavController} from 'ionic-angular';
 import {Page, NavController, NavParams} from 'ionic-angular';
-import {OnInit} from '@angular/core';
+import {OnInit,Component} from '@angular/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {Http, Headers, RequestOptions} from '@angular/http';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
@@ -15,9 +15,9 @@ import {MapleFooter} from '../maple-footer/maple-footer';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
-@Page({
+@Component({
   templateUrl: 'build/pages/home/home.html',
-  directives: [MapleFooter]
+ // directives: [MapleFooter]
 })
 export class HomePage implements OnInit {
   //private nav;
