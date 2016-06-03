@@ -1,4 +1,4 @@
-import {IonicApp, Modal, Loading, Alert, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
+import {Modal, Loading, Alert, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 //import {AngularRange} from 'angular-ranger';
 //import {RichMarker} from 'rich-marker'; It doesn't provide TS definition. Use ext URL to include in index.html
