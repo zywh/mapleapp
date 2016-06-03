@@ -1,6 +1,7 @@
 import {Page, NavController, NavParams, Platform} from 'ionic-angular';
 import {OnInit} from '@angular/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
+import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 
 interface Post {
   id: number;
@@ -26,14 +27,20 @@ export class AboutPage implements OnInit {
  // private postAbout: Post;
 
   static get parameters() {
-    return [[MapleRestData]];
+    return [[MapleRestData],[MapleConf]];
   }
 
-  constructor(private mapleRestData: MapleRestData) { }
+  constructor(private mapleRestData: MapleRestData, private mapleconf: MapleConf) { }
 
 
   ngOnInit() {
-    this.getResult('index.php?r=ngget/getAbout');
+    
+      this.mapleconf.load().then(data => {
+      console.log(data.projectRest);
+      this.getResult(data.aboutRest);
+    })
+    
+    //this.getResult('index.php?r=ngget/getAbout');
   }
 
   getResult(url) {

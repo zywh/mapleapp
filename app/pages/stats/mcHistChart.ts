@@ -1,6 +1,6 @@
 
 import {Input,Component} from '@angular/core';
-//import { CHART_DIRECTIVES,Highcharts } from 'angular2-highcharts';
+//import {} from 'highcharts';
 declare var Highcharts: any;
 
 
@@ -33,5 +33,8 @@ export class mcHistChart {
         // });
         this.chart = new Highcharts.chart('mc-hist-chart', this.options);
 
+    }
+    updateChart(){
+        
     }
 }

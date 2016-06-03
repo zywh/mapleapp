@@ -8,6 +8,7 @@ import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {McSearchOption} from './search-option';
 import {SelectOptionModal} from './map-option-modal';
 declare var RichMarker: any;
+
 interface selectOptionsObj {
   selectPrice?: String,
   selectType?: Number,

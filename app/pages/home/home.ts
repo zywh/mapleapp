@@ -6,6 +6,7 @@ import {Http, Headers, RequestOptions} from '@angular/http';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {ProjectDetailPage} from '../project-detail/project-detail';
 import {MapleFooter} from '../maple-footer/maple-footer';
+//import {RangeKnob,Range} from '../ion-range/range';
 
 
 /*
@@ -44,6 +45,14 @@ export class HomePage implements OnInit {
     autoplay: 300
   };
 
+  brightness: number = 20;
+  saturation: number = 0;
+  warmth: number = 1300;
+  structure: any = {lower: 33, upper: 60};
+
+  onChange(ev) {
+    console.log("Changed", ev);
+  }
 
   ngOnInit() {
     this.mapleconf.load().then(data => {
