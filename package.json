@@ -6,22 +6,30 @@
     "type": "git",
     "url": "https://github.com/zywh/maplecityapp.git"
   },
+  "globalDependencies": {
+    "highcharts": "^4.2.5"
+  },
   "dependencies": {
-    "angular2": "2.0.0-beta.16",
+    "@angular/common": "^2.0.0-rc.1",
+    "@angular/compiler": "^2.0.0-rc.1",
+    "@angular/core": "^2.0.0-rc.1",
+    "@angular/http": "^2.0.0-rc.1",
+    "@angular/platform-browser": "^2.0.0-rc.1",
+    "@angular/platform-browser-dynamic": "^2.0.0-rc.1",
+    "@angular/router": "^2.0.0-rc.1",
     "body-parser": "^1.15.0",
     "compression": "^1.6.1",
     "cors": "^2.7.1",
-    "es6-promise": "3.0.2",
+    "es6-promise": "^3.2.1",
     "es6-shim": "^0.35.0",
     "express": "^4.13.4",
-    "highcharts": "^4.2.5",
-    "ionic-angular": "2.0.0-beta.6-201605132240",
-    "ionic-framework": "2.0.0-beta.1",
-    "ionic-native": "^1.1.0",
+    "gulp-watch": "^4.3.6",
+    "ionic-angular": "^2.0.0-beta.7",
+    "ionic-native": "^1.2.2",
     "ionicons": "3.0.0",
-    "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-beta.2",
-    "zone.js": "0.6.12"
+    "reflect-metadata": "^0.1.2",
+    "rxjs": "^5.0.0-beta.6",
+    "zone.js": "^0.6.12"
   },
   "devDependencies": {
     "del": "2.2.0",
@@ -31,7 +39,7 @@
     "ionic-gulp-fonts-copy": "^1.0.0",
     "ionic-gulp-html-copy": "^1.0.0",
     "ionic-gulp-sass-build": "^1.0.0",
-    "ionic-gulp-scripts-copy": "^1.0.1",
+    "ionic-gulp-scripts-copy": "^2.0.0",
     "run-sequence": "1.1.5"
   },
   "cordovaPlugins": [
@@ -49,7 +57,8 @@
       "locator": "https://github.com/apache/cordova-plugin-splashscreen.git",
       "id": "cordova-plugin-splashscreen"
     },
-    "cordova-plugin-geolocation"
+    "cordova-plugin-geolocation",
+    "cordova-plugin-x-socialsharing"
   ],
   "cordovaPlatforms": [
     "ios",

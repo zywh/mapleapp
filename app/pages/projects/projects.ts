@@ -1,5 +1,5 @@
 import {Page, NavController, NavParams} from 'ionic-angular';
-import {OnInit} from 'angular2/core';
+import {OnInit} from '@angular/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {ProjectDetailPage} from '../project-detail/project-detail';
@@ -33,7 +33,7 @@ export class ProjectsPage implements OnInit {
 
     ngOnInit() {
         this.getResult('index.php?r=ngget/getProjects');
-        console.log("Page projects: picURL" + this.mapleconf.data.picHost);
+        console.log("Page projects: picURL" + this.mapleconf.data.picHost); //for testing purpose to be removed
     }
 
     getResult(url) {
@@ -45,6 +45,7 @@ export class ProjectsPage implements OnInit {
     goToProject(id) {
         this.nav.push(ProjectDetailPage, id);
     }
+
 
 
 

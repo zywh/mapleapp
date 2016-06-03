@@ -1,3 +1,10 @@
+<ion-navbar *navbar>
+  <button menuToggle >
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <ion-title>Search Option</ion-title>
+</ion-navbar>
+<ion-content padding class="map-option-modal">
 <ion-list>
     <ion-item>
         <ion-label fixed>{{(selectOptions?.selectSR == true)? '出售':'出租'}}</ion-label>
@@ -87,9 +94,10 @@
     </ion-col>
     <ion-col>
         <div text-center>
-            <button primary (click)="updateOption()">
+            <button primary (click)="dismiss()">
           <ion-icon name="checkmark"></ion-icon> 确认
         </button>
         </div>
     </ion-col>
 </ion-row>
+</ion-content>

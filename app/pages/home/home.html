@@ -15,13 +15,24 @@
 
 <ion-content class="home">
    <ion-slides [options]="projectSwiperOptions" class="swiper-container">
-    <ion-slide *ngFor="#project of projects">
+    <ion-slide *ngFor="let project of projects">
       <img [src]="project.room_type_image" (click)="goToProject(project.id)" class="slide-image"/>
       <h2 class="slide-title" [innerHTML]="project.name"></h2>
      
     </ion-slide>
     
   </ion-slides> 
+  <div padding>
+  <ion-item-divider  divider>推荐房源</ion-item-divider>
+  <ion-card>
+  </ion-card>
+  <ion-item-divider divider>地产咨询</ion-item-divider>
+  <ion-card>
+  </ion-card>
+  <ion-item-divider divider>加国信息</ion-item-divider>
+  <ion-card>
+  </ion-card>
+  </div>
   
 </ion-content>
 

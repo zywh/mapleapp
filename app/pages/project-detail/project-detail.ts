@@ -1,5 +1,7 @@
 import {Page, NavController, NavParams,Platform} from 'ionic-angular';
-import {OnInit} from 'angular2/core';
+import {OnInit} from '@angular/core';;
+//import {Geolocation} from 'ionic-native';
+import {SocialSharing} from 'ionic-native';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 //import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
 
@@ -28,7 +30,7 @@ export class ProjectDetailPage implements OnInit {
     return [[NavController], [NavParams], [MapleRestData]];
   }
 
-  constructor(nav, private navParams: NavParams, private mapleRestData: MapleRestData,platform: Platform) {
+  constructor(nav, private navParams: NavParams, private mapleRestData: MapleRestData,private platform: Platform) {
     this.nav = nav;
     this.parms = { 'id': navParams.data };
      //this.isAndroid = platform.is('android');
@@ -52,24 +54,34 @@ export class ProjectDetailPage implements OnInit {
     )
   }
   converto2a(val) {
-    // let img = Array.from(val)
-    // let imgsmall;
-    // for (var key in img) {
-    //   if (img.hasOwnProperty(key)) {
-    //     let file = img[key]['file'].replace('uploads',this.project.replaceurl);
-    //     imgsmall[key]['file'] = file;
-    //     //console.log("FileName:" + file);
-
-    //   }
-    // }
-
-    return Array.from(val);
+     return Array.from(val);
     //return imgsmall;
   }
 
   smallImg(img) {
     return img.replace('uploads', this.project.replaceurl);
   }
+  
+  
+   share(message, subject, file, link) {
+       // this.platform.ready().then(() => {
+            //window.plugins.socialsharing.share(message, subject, file, link);
+            SocialSharing.share(message, subject, file, link);
+           
+       // });
+    }
+ 
+    shareViaTwitter(message, image, link) {
+        // this.platform.ready().then(() => {
+        //     if(window.plugins.socialsharing) {
+        //         window.plugins.socialsharing.canShareVia("twitter", message, null, image, link, function(result) {
+        //             window.plugins.socialsharing.shareViaTwitter(message, image, link);
+        //         }, function(error) {
+        //             console.error(error);
+        //         });
+        //     }
+        // });
+    }
 
 
 

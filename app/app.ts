@@ -1,4 +1,4 @@
-import {ViewChild} from 'angular2/core';
+import {ViewChild} from '@angular/core';
 import {App, Events, Platform, Nav, MenuController} from 'ionic-angular';
 import {StatusBar, Splashscreen} from 'ionic-native';
 import {ConferenceData} from './providers/conference-data';
@@ -98,8 +98,7 @@ class MapleApp {
 
     // load the conference data
     //confData.load();
-    mapleconf.load();
-
+   
     // decide which menu items should be hidden by current login status stored in local storage
     this.userData.hasLoggedIn().then((hasLoggedIn) => {
       this.enableMenu(hasLoggedIn == 'true');

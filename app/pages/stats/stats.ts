@@ -1,7 +1,7 @@
 import {Page, NavController} from 'ionic-angular';
 //import {OnInit, NgZone} from 'angular2/core';
 import {mcHistChart} from './mcHistChart';
-//import {mcStockChart} from './mcStockChart';
+import {mcStockChart} from './mcStockChart';
 declare var Highcharts: any;
 
 
@@ -13,15 +13,17 @@ declare var Highcharts: any;
 */
 @Page({
     templateUrl: 'build/pages/stats/stats.html',
-    directives: [mcHistChart]
+    directives: [[mcHistChart],[mcStockChart]]
 
 })
 
+
 export class StatsPage {
-   
+    private section: string = "canada";
+    private isAndroid: boolean = false;
     constructor() {
-      
+
     }
-   
+
 
 }
