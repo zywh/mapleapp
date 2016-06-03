@@ -55,9 +55,9 @@ export class MapSearchPage implements OnInit {
     selectSR: true,
     selectBaths: 0,
     selectBeds: 0,
-    selectHousesize: '',
-    selectLandsize: '',
-    selectPrice: '',
+    selectHousesize: {lower:0,upper:4000},
+    selectLandsize: {lower:0,upper:43560},
+    selectPrice: {lower:0,upper:600},
     selectType: ''
 
   }
