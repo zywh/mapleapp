@@ -8,18 +8,36 @@ $popupsize: 240px;
 }
 
 .map-option-modal {
+  
+  .range-s {
+      margin-top: -12px;
+    }
+  
+  .item-inner {
+     border-bottom: 0px;
+  }
+  
    ion-label {
     margin: 0; 
     color: #7f7f7f;
   }
   
+  .range-label{
+    font-size: 17px;
+    padding-right: 18px;
+  }
+  .range-p {
+    padding-left: 10px;
+  }
+  
   ion-list {
-    margin: 0px 0 12px 0;
+    margin: 0;
   }
   
     
   .item {
     min-height: 0px;
+    padding-left:10px;
   } 
   
   

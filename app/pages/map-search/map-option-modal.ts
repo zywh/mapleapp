@@ -22,6 +22,8 @@ interface selectOptionsObj {
 })
 export class SelectOptionModal {
     selectOptions: Object;
+    private selectUnit: Boolean = true;
+    private unit;
     constructor(
         private platform: Platform,
         private params: NavParams,
@@ -31,6 +33,7 @@ export class SelectOptionModal {
         //this.viewCtrl = viewCtrl;
         console.log(this.params);
         this.selectOptions = params.get('data');
+        this.unit = 10;
 
     }
 
@@ -39,9 +42,10 @@ export class SelectOptionModal {
     // warmth: number = 1300;
 
     // structure: any = { lower: 33, upper: 60 };
-    // onChange(ev) {
-    //     console.log("Changed", ev);
-    // }
+    onChange(ev) {
+        console.log("Changed", ev);
+        this.unit = (this.selectUnit == true)? 10: 1;
+    }
 
 
     resetSelections() {

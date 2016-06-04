@@ -62,6 +62,7 @@ export class MapSearchPage {
     selectType: ''
 
   }
+  
 
   private currentHouseList; //Hold list of all houses on current map
   private currentHouses; //Hold array of houses for single marker
@@ -106,7 +107,7 @@ export class MapSearchPage {
     )
   }
 
-  onPageLoaded() {
+  ionViewLoaded() {
     //ngOnInit() {
     let options = { timeout: 10000, enableHighAccuracy: true };
 
