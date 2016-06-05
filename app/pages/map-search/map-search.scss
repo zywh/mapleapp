@@ -104,18 +104,19 @@ $popupsize: 240px;
   }
 
   .bar-button-default {
-      padding: 0;
+      padding: 0 0 0 0px;
       min-width: 0;
       box-shadow: 0 0 0 0;
     }
     
-  .toolbar-content {
-      *flex: auto;
-  }
+  
   .btn-options {
   font-size: 14px; /* option button font size*/
   }
   
+  ion-label {
+    margin: 0;
+  }
   
   .icon_map_mark4 span{
     line-height: 24px;margin-left: 0px;

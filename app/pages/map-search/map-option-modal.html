@@ -26,14 +26,14 @@
     
 
     <ion-row>
-        <ion-col with-40>
+        <ion-col >
             <ion-item>
                 <ion-label>{{(selectOptions?.selectSR == true)? '出售':'出租'}}</ion-label>
                 <ion-toggle [(ngModel)]="selectOptions.selectSR"></ion-toggle>
             </ion-item>
         </ion-col>
 
-        <ion-col width-60>
+        <ion-col >
             <ion-item>
                 <ion-label>单位({{(selectUnit == true)? '米':'尺'}})</ion-label>
                 <ion-toggle (ionChange)="onChange($event)" [(ngModel)]="selectUnit"></ion-toggle>
@@ -92,20 +92,5 @@
         </ion-range>
     </ion-list>
 
-    <ion-row>
-        <ion-col>
-            <div text-center>
-                <button primary (click)="resetSelections()">
-             <ion-icon name="close"></ion-icon>复位
-          </button>
-            </div>
-        </ion-col>
-        <ion-col>
-            <div text-center>
-                <button primary (click)="dismiss()">
-          <ion-icon name="checkmark"></ion-icon> 确认
-        </button>
-            </div>
-        </ion-col>
-    </ion-row>
+  
 </ion-content>

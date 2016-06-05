@@ -14,6 +14,7 @@ import {ProjectsPage} from './pages/projects/projects';
 import {SchoolSearchPage} from './pages/school-search/school-search';
 import {StatsPage} from './pages/stats/stats';
 import {AboutPage} from './pages/about/about';
+import {PostPage} from './pages/post/post';
 import {HomePage} from './pages/home/home';
 import {MapleConf} from './providers/maple-rest-data/maple-config';
 
@@ -50,7 +51,8 @@ class MapleApp {
     { title: '学区房', component: TabsPage, index: 2, icon: 'school' },
     { title: '项目推荐', component: TabsPage, index: 3, icon: 'thumbs-up' },
     { title: '房源统计', component: TabsPage, index: 4, icon: 'stats' },
-    { title: '关于我们', component: TabsPage, index: 5, icon: 'information-circle' }
+    { title: '关于我们', component: TabsPage, index: 5, icon: 'information-circle' },
+     { title: 'Post', component: PostPage, icon: 'information-circle' }
   ];
 
   loggedInPages: PageObj[] = [

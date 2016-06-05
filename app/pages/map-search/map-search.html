@@ -13,7 +13,7 @@
       </button>
     </ion-col>
     <ion-col width-67 no-padding>
-        <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (focus)="currentDiv='searchlist'" (input)="getItems($event)" placeholder="城市/地址/MLS#"></ion-searchbar>
+        <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (ionFocus)="currentDiv='searchlist'" (ionInput)="getItems($event)" placeholder="城市/地址/MLS#"></ion-searchbar>
     </ion-col>
     <ion-col width-10 no-padding>
       <button class="bar-button-default" (click)="openModal(selectOptions)">
@@ -33,7 +33,7 @@
 <ion-content class="map-search">
   <div class="search_list" *ngIf="currentDiv == 'searchlist'" >
     <ion-item padding *ngFor="let item of cityItems" (click)="itemTapped($event, item,1)" >
-     <button light clear> <ion-icon primary padding-right name="search"></ion-icon>{{ item.value }}</button>
+     <button light clear> <ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }}</span></button>
        <ion-badge item-right>城市</ion-badge>
     </ion-item>
     <ion-item padding *ngFor="let item of mlsItems" (click)="itemTapped($event, item,2)">
