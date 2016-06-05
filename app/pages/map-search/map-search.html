@@ -80,11 +80,10 @@
 
   <div id="map"></div>
 
-  <div *ngIf="currentDiv == 'listButton'">
-    <button fab  secondary fab-bottom fab-center (click)="openHouseList()">
-      <ion-icon name="list" is-active="true"></ion-icon>
-    </button>
-  </div>
-
-
 </ion-content>
+
+<div *ngIf="currentDiv == 'listButton'" style="z-index:100;opacity:0.8;">
+  <button fab fab-bottom fab-center (click)="openHouseList()">
+    <ion-icon name="list" is-active="false"></ion-icon>
+  </button>
+</div>

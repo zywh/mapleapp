@@ -17,6 +17,7 @@ interface Post {
 })
 export class PostPage implements OnInit {
   private postRest;
+  private postpicHost;
   private postId;
   private post: Post;
   private nextPost: Number;
@@ -26,15 +27,17 @@ export class PostPage implements OnInit {
 
 
   static get parameters() {
-    return [[MapleRestData], [MapleConf]];
+    return [[MapleRestData], [MapleConf],[NavParams]];
   }
 
   constructor(
     private mapleRestData: MapleRestData,
     private mapleconf: MapleConf,
-    private parm: NavParams
+    private navParms: NavParams
   ) {
-    this.postId = 32;
+    this.postId = navParms.data;
+    //this.postId = navParms.get('id');
+    console.log("Post ID:" + this.postId);
   }
 
 
@@ -43,10 +46,10 @@ export class PostPage implements OnInit {
     this.mapleconf.load().then(data => {
       console.log(data.postRest);
       this.postRest = data.postRest;
+      this.postpicHost = data.postpicHost;
       this.getResult(this.postRest, this.postId);
     })
 
-    //this.getResult('index.php?r=ngget/getAbout');
   }
 
   getResult(url, id) {
@@ -54,22 +57,24 @@ export class PostPage implements OnInit {
       data => {
         this.post = data.current;
         let next = data.next;
-        if (next.hasOwnProperty("id")) {
+        if (next.id != null) {
           this.nextPost = next.id;
-          console.log("Next ID:" + this.nextPost);
+          this.nextButton = true
+
         } else {
           this.nextButton = false;
         }
         let pre = data.pre;
-        if (pre.hasOwnProperty("id")) {
+        //if (pre.hasOwnProperty("id")) {
+        if (pre.id != null) {
           this.prePost = pre.id;
-          console.log("Previous ID:" + this.prePost);
+          this.preButton = true;
+
         } else {
           this.preButton = false;
         }
 
         console.log(this.post);
-
 
       }
     );
