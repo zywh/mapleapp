@@ -12,12 +12,14 @@
 </ion-navbar>
 
 <ion-content padding class="stats">
-  <mc-hist-chart [chartOptions]="chartOptions" ></mc-hist-chart>
+  <!--<mc-hist-chart [id]="chartDiv"  [chartOptions]="options" ></mc-hist-chart>
    
-   <!--<mc-stock-chart></mc-stock-chart>-->
+    <mc-hist-chart [id]="chartDiv2" [chartOptions]="options1" ></mc-hist-chart>
+   -->
+  
   
   <ion-toolbar [attr.primary]="isAndroid ? '' : null">
-    <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
+    <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null" (ionChange)="onChange($event)">
       <ion-segment-button value="canada">
        全国统计
       </ion-segment-button>
@@ -34,31 +36,20 @@
   <div class="spacer" style="width: 284.545px; height: 17.9886px;"></div>
   <div [ngSwitch]="section">
     <div *ngSwitchWhen="'canada'">
-      <ion-list>
-        <ion-list-header>
-        Canada HPI
-        </ion-list-header>
-        <ion-item>Chart1</ion-item>
-        <ion-item>Chart2</ion-item>
-        <ion-item>Chart3</ion-item>
-      </ion-list>
+       <div id="chart1">
+      </div>  
+      <div id="chart2">
+      </div>  
        
     </div>
 
    
     <div *ngSwitchWhen="'toronto'">
-      <ion-list>
-        <ion-list-header>
-        Canada HPI
-        </ion-list-header>
-        <a ion-item>Chart2</a>
-           <a ion-item>Chart2</a>
-      </ion-list>
-       
+    
     </div>
 
     <div *ngSwitchWhen="'house'">
-       <ion-list>
+       <!--<ion-list>
         <ion-list-header>
         Canada HPI
         </ion-list-header>
@@ -66,7 +57,7 @@
         <ion-item>Chart2</ion-item>
         <ion-item>Chart3</ion-item>
       </ion-list>
-       
+       -->
     </div>
 
   </div>
