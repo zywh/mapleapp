@@ -4,21 +4,19 @@
     <button name="close"></button>
 </ion-navbar>-->
 
-<ion-toolbar padding-left padding-right>
+
+<ion-toolbar>
   <ion-buttons start>
-    <button solid (click)="resetSelections()">
-        复位
-      <ion-icon name="close"></ion-icon>
-    </button>
+   <button (click)="resetSelections()"> 复位</button>
   </ion-buttons>
+
   <ion-title>搜索条件</ion-title>
+
   <ion-buttons end>
-    <button solid (click)="dismiss()">
-       确认
-      <ion-icon name="checkmark"></ion-icon>
-    </button>
+     <button (click)="dismiss()">确认</button>
   </ion-buttons>
 </ion-toolbar>
+
 
 
 
