@@ -36,11 +36,9 @@
   <div class="spacer" style="width: 284.545px; height: 17.9886px;"></div>
   <div [ngSwitch]="section">
     <div *ngSwitchWhen="'canada'">
-       <div id="chart1">
-      </div>  
-      <div id="chart2">
-      </div>  
-       
+     
+       <chart id='chartcontainer' width='100%' [options]="options" [type]="ctype" (load)="saveInstance($event.context)"></chart>
+            
     </div>
 
    

@@ -4,8 +4,13 @@ import {Page, NavController} from 'ionic-angular';
 import {OnInit, Component} from '@angular/core';;
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
+import {SimpleChartExample} from './simpleChartExample';
+import {McStockChart} from './mcStockChart';
 
-declare var Highcharts: any;
+//import { Component } from '@angular/core';
+import { CHART_DIRECTIVES, Highcharts } from 'angular2-highcharts';
+
+//declare var Highcharts: any;
 
 
 
@@ -18,7 +23,7 @@ declare var Highcharts: any;
 */
 @Component({
     templateUrl: 'build/pages/stats/stats.html',
-    //directives: [[mcHistChart], [mcStockChart]]
+    directives: [[SimpleChartExample], [CHART_DIRECTIVES], [McStockChart]]
 
 })
 
@@ -29,10 +34,28 @@ export class StatsPage {
     }
     private section: string = "canada";
     private isAndroid: boolean = false;
-    private options;
-    private options1;
-    private chart1;
-    private chart2;
+    //private ctype = "Chart";
+    private ctype = "StockChart";
+    private options: HighstockOptions = {
+        //renderTo: 'chartcontainer',
+        
+        credits: { enabled: false },
+        chart: { zoomType: 'x' },
+        rangeSelector: { selected: 5 },
+        legend: { enabled: true },
+        navigator: { enabled: false },
+        scrollbar: { enabled: false },
+        title: {
+            text: '平均价格（万）'
+        },
+        series: [{
+           name: 'init',
+                 
+        }]
+       
+
+    };
+    private chart: HighchartsChartObject;
     private mlsdata;
     private seriesOptions = [];
     private cnnames = {
@@ -63,27 +86,36 @@ export class StatsPage {
 
     };
 
+    private highchartsOptions = Highcharts.setOptions({
+        lang: {
+            loading: '加载中...',
+            months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+            shortMonths: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+            weekdays: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+            exportButtonTitle: '导出',
+            printButtonTitle: '打印',
+            rangeSelectorFrom: '从',
+            rangeSelectorTo: '到',
+            rangeSelectorZoom: "缩放",
+            downloadPNG: '下载PNG格式',
+            downloadJPEG: '下载JPEG格式',
+            downloadPDF: '下载PDF格式',
+            downloadSVG: '下载SVG格式'
+        }
+    });
+
     constructor(
         private mapleRestData: MapleRestData,
         private mapleconf: MapleConf
     ) {
-        this.options = {
-            title: { text: 'simple chart' },
-            series: [{
-                data: Array.from(new Array(100), (x, i) => i),
-            }]
-        };
-        this.options1 = {
-            title: { text: 'simple chart2' },
-            series: [{
-                data: Array.from(new Array(100), (x, i) => i),
-            }]
-        };
-
+       
+    }
+    saveInstance(chartInstance) {
+        this.chart = chartInstance;
     }
 
-    ngOnInit() {
-
+    // ngOnInit() {
+    ionViewLoaded() {
         this.mapleconf.load().then(data => {
             console.log(data.getMlsDataRest);
             this.getResult(data.getMlsDataRest);
@@ -93,53 +125,83 @@ export class StatsPage {
     getResult(url) {
         this.mapleRestData.load(url, { id: 0 }).subscribe(
             data => {
-                // this.mlsdata = data.mlsdata;
+
                 let results = data.mlsdata;
-                console.log(results);
+
                 for (let type in results) {
-                    let value = results[type];
+                    let value = results[type]; // all,condo,detach
+
                     for (let f in value) {
                         let data = value[f];
-                        console.log("KEY" + f);
-                        console.log("Value:" + results[type])
-                        var seriesname = + "_" + f;  //all_avgprice
-                        var chartdata = [];
+                        let seriesname = type + "_" + f;  //all_avgprice
+                        let chartdata = [];
                         let xdata = [];
 
                         //Loop through each day
-                        $(data).each(function (index) {
+                        for (let v in data) {
                             //var array = [ Number(this[0]) ,Number(this[1])];
-                            chartdata.push(Number(this[1]));
-                            xdata.push(this[0]);
-                        });
+                            chartdata.push([Number(data[v][0]), Number(data[v][1])]);
+                            //xdata.push(data[v][0]);
+                        }
 
 
                         this.seriesOptions[seriesname] = {
                             type: 'line',
-                            name: cnnames[seriesname],
-                            data: chartdata
+                            name: this.cnnames[seriesname],
+                            data: chartdata,
+                            tooltip: {
+                                valueDecimals: 0,
+                                dateTimeLabelFormats: {
+                                    minute: "%A, %b %e, %Y",
+                                    hour: "%Y/%b",
+                                    day: "%Y/%b",
 
-                        }
+                                }
+
+                            }
+                        };
+                        //console.log(this.seriesOptions[seriesname]);
                     }
 
                 }
-            }
-        );
+                let viewHeight = window.innerHeight;
+                let viewWidth = window.innerWidth;    
+
+                console.log(viewHeight + ":" + viewWidth);
+
+                this.chart.addSeries(this.seriesOptions["all_avgprice"]);
+                this.chart.addSeries(this.seriesOptions["condo_avgprice"]);
+                console.log(this.seriesOptions["condo_avgprice"]);
+                this.chart.addSeries(this.seriesOptions["detach_avgprice"]);
+                this.chart.series[0].remove();
+                this.chart.setSize(viewWidth, viewHeight);
+                this.chart.redraw();
+               
+                
+            });
     }
     ngAfterViewInit() {
 
-        // let viewHeight = window.innerHeight;
-        // let viewWidth = window.innerWidth;
-        // console.log("After ContentInit" + viewHeight + "Width:" + viewWidth);
-        // Highcharts.setOptions({
-        //     colors: ['#058DC7', '#50B432', '#ED561B']
-        // });
-        // this.chart = new Highcharts.chart('mc-hist-chart', this.chartOptions);
-        this.chart1 = new Highcharts.chart('chart1', this.options);
-        this.chart2 = new Highcharts.chart('chart2', this.options1);
 
+        //     // let viewHeight = window.innerHeight;
+        //     // let viewWidth = window.innerWidth;
+        //     // console.log("After ContentInit" + viewHeight + "Width:" + viewWidth);
+        //     // Highcharts.setOptions({
+        //     //     colors: ['#058DC7', '#50B432', '#ED561B']
+        //     // });
+        //     // this.chart = new Highcharts.chart('mc-hist-chart', this.chartOptions);
+        //     this.chart1 = new Highcharts.chart('chart1', this.coption);
+        //     console.log("Load chart before enter")
+
+        //     //this.chart2 = new Highcharts.chart('chart2', this.options1);
+        console.log("ngAfterViewInit")
 
     }
+    ionViewWillEnter() {
+        console.log("view loaded")
+
+    }
+
     onChange(e) {
         console.log(e.value);
         console.log(e);
