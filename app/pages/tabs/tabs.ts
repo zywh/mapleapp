@@ -1,4 +1,5 @@
-import {Page, NavParams} from 'ionic-angular';
+import {NavParams} from 'ionic-angular';
+import {Component} from '@angular/core';;
 import {AboutPage} from '../about/about';
 import {MapSearchPage} from '../map-search/map-search';
 import {ProjectsPage} from '../projects/projects';
@@ -8,7 +9,7 @@ import {HomePage} from '../home/home';
 //import {MapleConf} from './providers/maple-rest-data/maple-config';
 
 
-@Page({
+@Component({
   templateUrl: 'build/pages/tabs/tabs.html'
 })
 export class TabsPage {

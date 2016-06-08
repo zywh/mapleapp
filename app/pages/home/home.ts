@@ -1,10 +1,11 @@
 //import {Page, NavController} from 'ionic-angular';
 import {Page, NavController, NavParams} from 'ionic-angular';
-import {OnInit} from '@angular/core';
+import {OnInit, Component} from '@angular/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {Http, Headers, RequestOptions} from '@angular/http';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {ProjectDetailPage} from '../project-detail/project-detail';
+import {PostPage} from '../post/post';
 import {MapleFooter} from '../maple-footer/maple-footer';
 //import {RangeKnob,Range} from '../ion-range/range';
 
@@ -15,14 +16,16 @@ import {MapleFooter} from '../maple-footer/maple-footer';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
-@Page({
+@Component({
   templateUrl: 'build/pages/home/home.html',
-  directives: [MapleFooter]
+  // directives: [MapleFooter]
 })
 export class HomePage implements OnInit {
   //private nav;
   // private parms = {};
   projects: Object;
+  private postListRest;
+  private post1;
 
   static get parameters() {
     return [[NavController], [NavParams], [MapleRestData], [MapleConf]];
@@ -45,20 +48,14 @@ export class HomePage implements OnInit {
     autoplay: 300
   };
 
-  brightness: number = 20;
-  saturation: number = 0;
-  warmth: number = 1300;
-  structure: any = {lower: 33, upper: 60};
-
-  onChange(ev) {
-    console.log("Changed", ev);
-  }
-
   ngOnInit() {
     this.mapleconf.load().then(data => {
       console.log(data.projectRest);
       //this.getProjects('index.php?r=ngget/getProjects');
+      this.postListRest = data.postRest;
       this.getProjects(data.projectRest);
+      this.getPosts(data.postListRest, 12);
+     
     })
   }
 
@@ -68,8 +65,19 @@ export class HomePage implements OnInit {
     );
 
   }
+
+  getPosts(url, catId) {
+    this.mapleRestData.load(url, { id: catId }).subscribe(
+      data => { this.post1 = data.posts; console.log(this.post1); }
+    );
+
+  }
   goToProject(id) {
     this.nav.push(ProjectDetailPage, id);
+  }
+
+  goToPost(id) {
+    this.nav.push(PostPage, id);
   }
 
 }

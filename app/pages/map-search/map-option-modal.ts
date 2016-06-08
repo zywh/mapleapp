@@ -1,9 +1,7 @@
-import {Modal, Loading, Alert, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
-//import {ionicBootstrap} from 'ionic-angular'
+import {Modal, Range, Loading, Alert, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
-//import {AngularRange} from 'angular-ranger';
-//import {RichMarker} from 'rich-marker'; It doesn't provide TS definition. Use ext URL to include in index.html
-import {OnInit, NgZone} from '@angular/core';;
+
+import {OnInit, NgZone, Component} from '@angular/core';;
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {McSearchOption} from './search-option';
@@ -18,12 +16,14 @@ interface selectOptionsObj {
     selectLandsize?: String
 }
 
-@Page({
+@Component({
     templateUrl: 'build/pages/map-search/map-option-modal.html'
 
 })
 export class SelectOptionModal {
     selectOptions: Object;
+    private selectUnit: Boolean = true;
+    private unit;
     constructor(
         private platform: Platform,
         private params: NavParams,
@@ -33,33 +33,38 @@ export class SelectOptionModal {
         //this.viewCtrl = viewCtrl;
         console.log(this.params);
         this.selectOptions = params.get('data');
+        this.unit = 10;
 
     }
 
+    // brightness: number = 20;
+    // saturation: number = 0;
+    // warmth: number = 1300;
+
+    // structure: any = { lower: 33, upper: 60 };
+    onChange(ev) {
+        console.log("Changed", ev);
+        this.unit = (this.selectUnit == true)? 10: 1;
+    }
+
+
     resetSelections() {
-        // this.selectPrice = '';
-        // this.selectType = '';
-        // this.selectBeds = 0;
-        // this.selectBaths = 0;
-        // this.selectSR = true;
-        // this.selectHousesize = '';
-        // this.selectLandsize = '';
         this.selectOptions = {
             selectSR: true,
             selectBaths: 0,
             selectBeds: 0,
-            selectHousesize: '',
-            selectLandsize: '',
-            selectPrice: '',
+            selectHousesize: { lower: 0, upper: 4000 },
+            selectLandsize: { lower: 0, upper: 43560 },
+            selectPrice: { lower: 0, upper: 600 },
             selectType: ''
 
         }
     }
-    
- 
+
+
     dismiss() {
         this.viewCtrl.dismiss(this.selectOptions);
     }
-    
-    
+
+
 }

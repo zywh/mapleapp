@@ -22,13 +22,15 @@
     </ion-slide>
     
   </ion-slides> 
-  <div padding>
+  <div >
   <ion-item-divider  divider>推荐房源</ion-item-divider>
   <ion-card>
   </ion-card>
-  <ion-item-divider divider>地产咨询</ion-item-divider>
-  <ion-card>
-  </ion-card>
+
+  <ion-list>
+    <ion-list-header> 地产咨询</ion-list-header>
+    <a ion-item *ngFor="let post of post1" (click)="goToPost(post.id)"> {{post?.title}} </a> 
+  </ion-list>  
   <ion-item-divider divider>加国信息</ion-item-divider>
   <ion-card>
   </ion-card>

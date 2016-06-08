@@ -2,11 +2,12 @@ import {Modal, Loading, Alert, ActionSheet, MenuController, Platform, NavControl
 import {Geolocation} from 'ionic-native';
 //import {AngularRange} from 'angular-ranger';
 //import {RichMarker} from 'rich-marker'; It doesn't provide TS definition. Use ext URL to include in index.html
-import {OnInit, NgZone} from '@angular/core';;
+import { NgZone, Component} from '@angular/core';;
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {McSearchOption} from './search-option';
 import {SelectOptionModal} from './map-option-modal';
+import {ConferenceData} from '../../providers/conference-data';
 declare var RichMarker: any;
 
 interface selectOptionsObj {
@@ -25,13 +26,13 @@ interface selectOptionsObj {
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
-@Page({
+@Component({
   templateUrl: 'build/pages/map-search/map-search.html',
   directives: [McSearchOption]
 })
 
 
-export class MapSearchPage implements OnInit {
+export class MapSearchPage {
 
   private searchQuery: String;
   private cityItems: any;
@@ -55,12 +56,13 @@ export class MapSearchPage implements OnInit {
     selectSR: true,
     selectBaths: 0,
     selectBeds: 0,
-    selectHousesize: '',
-    selectLandsize: '',
-    selectPrice: '',
+    selectHousesize: { lower: 0, upper: 4000 },
+    selectLandsize: { lower: 0, upper: 43560 },
+    selectPrice: { lower: 0, upper: 600 },
     selectType: ''
 
   }
+  
 
   private currentHouseList; //Hold list of all houses on current map
   private currentHouses; //Hold array of houses for single marker
@@ -71,6 +73,7 @@ export class MapSearchPage implements OnInit {
     private nav: NavController,
     private mapleRestData: MapleRestData,
     private menu: MenuController,
+    private confData: ConferenceData,
     private _zone: NgZone,
     private viewCtrl: ViewController
   ) {
@@ -88,11 +91,11 @@ export class MapSearchPage implements OnInit {
 
   }
   openModal(opt) {
-    let modal = Modal.create(SelectOptionModal, {data: opt});
+    let modal = Modal.create(SelectOptionModal, { data: opt });
     modal.onDismiss(data => {
       this.selectOptions = data;
       this.changeMap();
-     });
+    });
     this.nav.present(modal);
   }
 
@@ -104,8 +107,8 @@ export class MapSearchPage implements OnInit {
     )
   }
 
-  //onPageLoaded() {
-  ngOnInit() {
+  ionViewLoaded() {
+    //ngOnInit() {
     let options = { timeout: 10000, enableHighAccuracy: true };
 
     // navigator.geolocation.getCurrentPosition(
@@ -136,8 +139,10 @@ export class MapSearchPage implements OnInit {
     // );
     let lat: Number = 43.6532;
     let lng: Number = -79.3832;
-    this.loadMap(lat, lng, 16);
 
+    this.confData.getMap().then(mapData => {  //Need this for werid map issue. Menu page switch will make map blank
+      this.loadMap(lat, lng, 16);
+    })
   }
 
   swiperOptions = {
