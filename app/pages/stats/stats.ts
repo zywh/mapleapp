@@ -55,7 +55,27 @@ export class StatsPage {
        
 
     };
+    private options1: HighstockOptions = {
+        //renderTo: 'chartcontainer',
+        
+        credits: { enabled: false },
+        chart: { zoomType: 'x' },
+        rangeSelector: { selected: 5 },
+        legend: { enabled: true },
+        navigator: { enabled: false },
+        scrollbar: { enabled: false },
+        title: {
+            text: '平均价格（万）'
+        },
+        series: [{
+           name: 'init',
+                 
+        }]
+       
+
+    };
     private chart: HighchartsChartObject;
+    private chart1: HighchartsChartObject;
     private mlsdata;
     private seriesOptions = [];
     private cnnames = {
@@ -112,6 +132,9 @@ export class StatsPage {
     }
     saveInstance(chartInstance) {
         this.chart = chartInstance;
+    }
+     saveInstance1(chartInstance) {
+        this.chart1 = chartInstance;
     }
 
     // ngOnInit() {
@@ -175,7 +198,14 @@ export class StatsPage {
                 this.chart.addSeries(this.seriesOptions["detach_avgprice"]);
                 this.chart.series[0].remove();
                 this.chart.setSize(viewWidth, viewHeight);
-                this.chart.redraw();
+            //    // this.chart.redraw();
+
+            //      this.chart1.addSeries(this.seriesOptions["all_avgdom"]);
+                        
+            //     this.chart1.series[0].remove();
+            //     this.chart1.setSize(viewWidth, viewHeight);
+            //    // this.chart1.redraw();
+               
                
                 
             });
@@ -204,6 +234,10 @@ export class StatsPage {
 
     onChange(e) {
         console.log(e.value);
+        this.chart.series[0].update(this.seriesOptions["all_avgdom"]);
+        this.chart.series[1].remove();
+         this.chart.series[1].remove();
+
         console.log(e);
     }
 
