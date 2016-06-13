@@ -173,18 +173,18 @@ export class SchoolMapPage {
 
     google.maps.event.addListener(this.map, 'idle', () => {
 
-      this.changeMap();
+     this.changeMap();
 
     });
 
     google.maps.event.addListener(this.map, 'click', () => {
       //close all open POP UP options/list etc
-      this._zone.run(() => {
-        this.currentDiv = '';
-        this.searchQuery = '';
-        this.viewCtrl.dismiss();
-        //this.nav.pop();
-      });
+      // this._zone.run(() => {
+      //   this.currentDiv = '';
+      //   this.searchQuery = '';
+      //   //this.viewCtrl.dismiss();
+      //   //this.nav.pop();
+      // });
 
 
     });
@@ -196,7 +196,7 @@ export class SchoolMapPage {
   //select autocomplete action
   resetItems() {
     this.cityItems = [];
-    this.addressItems = [];
+    //this.addressItems = [];
     
   }
 

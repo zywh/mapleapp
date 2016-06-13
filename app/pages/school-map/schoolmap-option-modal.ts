@@ -6,7 +6,7 @@ import {HouseDetailPage} from '../house-detail/house-detail';
 //import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 //import {McSearchOption} from './search-option';
 declare var RichMarker: any;
-interface schoolSelectOptionsObj {
+interface selectOptionsObj {
     selectType?: Boolean,
     selectRank?: Number,
     selectPingfen?: Number,
@@ -18,7 +18,7 @@ interface schoolSelectOptionsObj {
 
 })
 export class SelectOptionModal {
-    private selectOptions: schoolSelectOptionsObj;
+    private selectOptions: selectOptionsObj;
   
     constructor(
         private platform: Platform,

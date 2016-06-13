@@ -9,7 +9,7 @@ export class MapPage {
 
   onPageLoaded() {
     this.confData.getMap().then(mapData => {
-      let mapEle = document.getElementById('map');
+      let mapEle = document.getElementById('mapnew');
 
       let map = new google.maps.Map(mapEle, {
         center: mapData.find(d => d.center),

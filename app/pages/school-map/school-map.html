@@ -16,7 +16,7 @@
         <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (ionFocus)="currentDiv='searchlist'" (ionInput)="getItems($event)" placeholder="城市/地址/MLS#"></ion-searchbar>
     </ion-col>
     <ion-col width-10 no-padding>
-      <button class="bar-button-default" (click)="openModal(selectOptions)">
+      <button class="bar-button-default" (click)="openModal(selectSchool)">
         <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
       </button>
     </ion-col>
@@ -47,11 +47,12 @@
 
 
   <div id="schoolmap"></div>
-
-</ion-content>
-
-<div *ngIf="currentDiv == 'listButton'" style="z-index:100;opacity:0.8;">
+  <div *ngIf="currentDiv == 'listButton'" style="z-index:100;opacity:0.8;">
   <button fab fab-bottom fab-center (click)="openSchoolList()">
     <ion-icon name="list" is-active="false"></ion-icon>
   </button>
 </div>
+
+</ion-content>
+
+

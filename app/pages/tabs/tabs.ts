@@ -6,6 +6,7 @@ import {ProjectsPage} from '../projects/projects';
 import {StatsPage} from '../stats/stats';
 import {SchoolSearchPage} from '../school-search/school-search';
 import {SchoolMapPage} from '../school-map/school-map';
+import {MapPage} from '../map/map';
 import {HomePage} from '../home/home';
 //import {MapleConf} from './providers/maple-rest-data/maple-config';
 
@@ -19,6 +20,7 @@ export class TabsPage {
   map: any = MapSearchPage;
   project: any = ProjectsPage;
   school: any = SchoolMapPage;
+  //school: any = MapPage;
   stats: any = StatsPage;
   about: any = AboutPage;
   mySelectedIndex: number;
