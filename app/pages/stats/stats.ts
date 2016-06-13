@@ -23,25 +23,25 @@ import { CHART_DIRECTIVES, Highcharts } from 'angular2-highcharts';
 */
 @Component({
     templateUrl: 'build/pages/stats/stats.html',
-    directives: [[SimpleChartExample], [CHART_DIRECTIVES], [McStockChart]]
+    directives: [[CHART_DIRECTIVES]]
 
 })
 
 
 export class StatsPage {
-    static get parameters() {
-        return [[MapleRestData], [MapleConf]];
-    }
+    // static get parameters() {
+    //     return [[MapleRestData], [MapleConf]];
+    // }
     private section: string = "canada";
     private isAndroid: boolean = false;
     //private ctype = "Chart";
     private ctype = "StockChart";
     private options: HighstockOptions = {
         //renderTo: 'chartcontainer',
-        
+
         credits: { enabled: false },
         chart: { zoomType: 'x' },
-        rangeSelector: { selected: 5 },
+        rangeSelector: { inputEnabled: false },
         legend: { enabled: true },
         navigator: { enabled: false },
         scrollbar: { enabled: false },
@@ -49,33 +49,15 @@ export class StatsPage {
             text: '平均价格（万）'
         },
         series: [{
-           name: 'init',
-                 
+            name: 'init',
+
         }]
-       
+
 
     };
-    private options1: HighstockOptions = {
-        //renderTo: 'chartcontainer',
-        
-        credits: { enabled: false },
-        chart: { zoomType: 'x' },
-        rangeSelector: { selected: 5 },
-        legend: { enabled: true },
-        navigator: { enabled: false },
-        scrollbar: { enabled: false },
-        title: {
-            text: '平均价格（万）'
-        },
-        series: [{
-           name: 'init',
-                 
-        }]
-       
-
-    };
+ 
     private chart: HighchartsChartObject;
-    private chart1: HighchartsChartObject;
+ 
     private mlsdata;
     private seriesOptions = [];
     private cnnames = {
@@ -128,14 +110,12 @@ export class StatsPage {
         private mapleRestData: MapleRestData,
         private mapleconf: MapleConf
     ) {
-       
+
     }
     saveInstance(chartInstance) {
         this.chart = chartInstance;
     }
-     saveInstance1(chartInstance) {
-        this.chart1 = chartInstance;
-    }
+  
 
     // ngOnInit() {
     ionViewLoaded() {
@@ -188,55 +168,44 @@ export class StatsPage {
 
                 }
                 let viewHeight = window.innerHeight;
-                let viewWidth = window.innerWidth;    
+                let viewWidth = window.innerWidth;
 
                 console.log(viewHeight + ":" + viewWidth);
 
                 this.chart.addSeries(this.seriesOptions["all_avgprice"]);
                 this.chart.addSeries(this.seriesOptions["condo_avgprice"]);
-                console.log(this.seriesOptions["condo_avgprice"]);
+                //console.log(this.seriesOptions["condo_avgprice"]);
                 this.chart.addSeries(this.seriesOptions["detach_avgprice"]);
                 this.chart.series[0].remove();
                 this.chart.setSize(viewWidth, viewHeight);
-            //    // this.chart.redraw();
+                this.chart.reflow();
 
-            //      this.chart1.addSeries(this.seriesOptions["all_avgdom"]);
-                        
-            //     this.chart1.series[0].remove();
-            //     this.chart1.setSize(viewWidth, viewHeight);
-            //    // this.chart1.redraw();
-               
-               
-                
+                //      this.chart1.addSeries(this.seriesOptions["all_avgdom"]);
+
+                //     this.chart1.series[0].remove();
+                //     this.chart1.setSize(viewWidth, viewHeight);
+                //    // this.chart1.redraw();
+
+
+
             });
     }
-    ngAfterViewInit() {
+    // ngAfterViewInit() {
 
 
-        //     // let viewHeight = window.innerHeight;
-        //     // let viewWidth = window.innerWidth;
-        //     // console.log("After ContentInit" + viewHeight + "Width:" + viewWidth);
-        //     // Highcharts.setOptions({
-        //     //     colors: ['#058DC7', '#50B432', '#ED561B']
-        //     // });
-        //     // this.chart = new Highcharts.chart('mc-hist-chart', this.chartOptions);
-        //     this.chart1 = new Highcharts.chart('chart1', this.coption);
-        //     console.log("Load chart before enter")
+    //     console.log("ngAfterViewInit")
 
-        //     //this.chart2 = new Highcharts.chart('chart2', this.options1);
-        console.log("ngAfterViewInit")
+    // }
+    // ionViewWillEnter() {
+    //     console.log("view loaded")
 
-    }
-    ionViewWillEnter() {
-        console.log("view loaded")
-
-    }
+    // }
 
     onChange(e) {
         console.log(e.value);
         this.chart.series[0].update(this.seriesOptions["all_avgdom"]);
         this.chart.series[1].remove();
-         this.chart.series[1].remove();
+        this.chart.series[1].remove();
 
         console.log(e);
     }

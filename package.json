@@ -59,7 +59,14 @@
       "id": "cordova-plugin-splashscreen"
     },
     "cordova-plugin-geolocation",
-    "cordova-plugin-x-socialsharing"
+    "cordova-plugin-x-socialsharing",
+    {
+      "variables": {
+        "wechatappid": "wx223b36a9265ba2d5"
+      },
+      "locator": "cordova-plugin-wechat",
+      "id": "cordova-plugin-wechat"
+    }
   ],
   "cordovaPlatforms": [
     "ios",
