@@ -1,4 +1,4 @@
-import {Modal, Loading, Alert, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
+import {Modal, Loading, Alert, ActionSheet, Events,MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 //import {AngularRange} from 'angular-ranger';
 //import {RichMarker} from 'rich-marker'; It doesn't provide TS definition. Use ext URL to include in index.html
@@ -31,13 +31,11 @@ interface schoolSelectOptionsObj {
 
 export class SchoolMapPage {
 
-  private searchQuery: String;
+  private searchQuery: String = '';
   private cityItems: any;
   private schoolItems: any;
   private parms: Object;
-
- 
-  public map;
+  private map;
   private center;
   private markerArray = [];
   private htmlArray = [];
@@ -61,12 +59,12 @@ export class SchoolMapPage {
   constructor(
     private nav: NavController,
     private mapleRestData: MapleRestData,
-    private menu: MenuController,
     private confData: ConferenceData,
     private _zone: NgZone,
-    private viewCtrl: ViewController
+    private viewCtrl: ViewController,
+    private events: Events
   ) {
-    this.searchQuery = '';
+    
     this.resetItems();
 
   }
@@ -126,6 +124,7 @@ export class SchoolMapPage {
     this.confData.getMap().then(mapData => {  //Need this for werid map issue. Menu page switch will make map blank
       this.loadMap(lat, lng, 16);
     })
+   //this.loadMap(lat, lng, 16);
   }
 
  
@@ -170,13 +169,13 @@ export class SchoolMapPage {
       zoom: zoom
     });
 
-
+    this.listenEvents();
     google.maps.event.addListener(this.map, 'idle', () => {
 
      this.changeMap();
 
     });
-
+    
     google.maps.event.addListener(this.map, 'click', () => {
       //close all open POP UP options/list etc
       // this._zone.run(() => {
@@ -194,6 +193,16 @@ export class SchoolMapPage {
     //});
   }
   //select autocomplete action
+  listenEvents(){
+     this.events.subscribe('tab:schoolmap', () => {
+      //this.enableMenu(true);
+      console.log("Event Table schoomap is received");
+     // this.map.setCenter();
+    // this.nav.setRoot(SchoolMapPage);
+      //this.changeMap();
+    });
+
+  }
   resetItems() {
     this.cityItems = [];
     //this.addressItems = [];
@@ -390,9 +399,9 @@ export class SchoolMapPage {
   }
 
   changeMap() {
-    console.log("Change Map: Button Show?");
-    this.currentDiv = ''; //reset all popup
-
+    console.log("Change Map: ");
+    google.maps.event.trigger(this.map,'resize');
+    
     this.clearAll(); //clear marker
     // let loading = Loading.create({
     //   content: '加载房源...'

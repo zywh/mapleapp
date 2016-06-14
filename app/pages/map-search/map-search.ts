@@ -5,6 +5,7 @@ import {Geolocation} from 'ionic-native';
 import { NgZone, Component} from '@angular/core';;
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
+import {Connectivity} from '../../providers/connectivity/connectivity';
 import {McSearchOption} from './search-option';
 import {SelectOptionModal} from './map-option-modal';
 import {ConferenceData} from '../../providers/conference-data';
@@ -28,20 +29,22 @@ interface selectOptionsObj {
 */
 @Component({
   templateUrl: 'build/pages/map-search/map-search.html',
-  directives: [McSearchOption]
+  //directives: [McSearchOption]
+  providers: [Connectivity]
 })
 
 
 export class MapSearchPage {
 
-  private searchQuery: String;
+  private searchQuery: String = '';
   private cityItems: any;
   private addressItems: any;
   private mlsItems: any;
   private parms: Object;
 
   private houselist: any;
-  public map;
+  private map = null;
+  private mapInitialised = false;
   private center;
   private markerArray = [];
   private htmlArray = [];
@@ -75,9 +78,10 @@ export class MapSearchPage {
     private menu: MenuController,
     private confData: ConferenceData,
     private _zone: NgZone,
-    private viewCtrl: ViewController
+    private viewCtrl: ViewController,
+    private connectivity: Connectivity
   ) {
-    this.searchQuery = '';
+    //this.searchQuery = '';
     this.resetItems();
 
   }
@@ -143,6 +147,7 @@ export class MapSearchPage {
     this.confData.getMap().then(mapData => {  //Need this for werid map issue. Menu page switch will make map blank
       this.loadMap(lat, lng, 16);
     })
+    //this.loadMap(lat, lng, 16);
   }
 
   swiperOptions = {
@@ -470,6 +475,7 @@ export class MapSearchPage {
 
   changeMap() {
     console.log("Change Map: Button Show?" + this.isListShow);
+    google.maps.event.trigger(this.map,'resize');
     this.currentDiv = ''; //reset all popup
 
     this.clearAll(); //clear marker

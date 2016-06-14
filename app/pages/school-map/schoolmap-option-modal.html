@@ -42,7 +42,7 @@
     <ion-list no-lines>
         <ion-range class='range-p' min="0" max="10" step="1" [(ngModel)]="selectOptions.selectPingfen">
             <ion-label class='range-label' range-left>评分</ion-label>
-            <ion-badge range-right>{{ (selectOptions.selectPingfen > 0)? "至少" + selectOptions.selectPingfen +"间" : "不限" }}</ion-badge>
+            <ion-badge range-right>{{ (selectOptions.selectPingfen > 0)? "高于" + selectOptions.selectPingfen : "不限" }}</ion-badge>
 
         </ion-range>
 

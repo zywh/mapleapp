@@ -1,4 +1,4 @@
-import {NavParams} from 'ionic-angular';
+import {NavParams,Events,NavController} from 'ionic-angular';
 import {Component} from '@angular/core';;
 import {AboutPage} from '../about/about';
 import {MapSearchPage} from '../map-search/map-search';
@@ -27,7 +27,14 @@ export class TabsPage {
 
 
 
-  constructor(navParams: NavParams) {
+  constructor(private nav: NavController, navParams: NavParams,private events: Events) {
     this.mySelectedIndex = navParams.data.tabIndex || 0;
+  }
+
+  schoolTabSelected(){
+    //console.log("School Tab is selected");
+    //this.events.publish("tab:schoolmap");
+    // this.nav.setRoot(TabsPage ,{ tabIndex: 2 });
+     this.nav.setRoot(SchoolMapPage);
   }
 }
