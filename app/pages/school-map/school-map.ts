@@ -68,9 +68,16 @@ export class SchoolMapPage {
   ) {
 
     this.resetItems();
+    this.loadRichMarker(); //Load richmarker after googlemap. Check network connection to avoid blank page
 
   }
 
+
+  loadRichMarker(){
+     let script = document.createElement("script");
+      script.src = "extjs/richmarker.js";
+      document.body.appendChild(script);
+  }
 
 
   optionChange(event) {
@@ -94,39 +101,39 @@ export class SchoolMapPage {
     //ngOnInit() {
     let options = { timeout: 10000, enableHighAccuracy: true };
 
-    // navigator.geolocation.getCurrentPosition(
+    navigator.geolocation.getCurrentPosition(
 
-    //   (position) => {
+      (position) => {
 
-    //     //let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    //     let lat = position.coords.latitude;
-    //     let lng = position.coords.longitude;
+        //let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        let lat = position.coords.latitude;
+        let lng = position.coords.longitude;
 
-    //     if (lat > 20) {
-    //       this.loadMap(lat, lng, 16);
-    //     } else {
-    //       let lat: Number = 43.6532;
-    //       let lng: Number = -79.3832;
-    //       this.loadMap(lat, lng, 16);
-    //     }
+        if (lat > 20) {
+          this.loadMap(lat, lng, 14);
+        } else {
+          let lat: Number = 43.6532;
+          let lng: Number = -79.3832;
+          this.loadMap(lat, lng, 14);
+        }
 
-    //   },
+      },
 
-    //   (error) => {
-    //     let lat: Number = 43.6532;
-    //     let lng: Number = -79.3832;
-    //     this.loadMap(lat, lng, 16);
-    //     console.log(error);
-    //   }, options
+      (error) => {
+        let lat: Number = 43.6532;
+        let lng: Number = -79.3832;
+        this.loadMap(lat, lng, 14);
+        console.log(error);
+      }, options
 
-    // );
-    let lat: Number = 43.6532;
-    let lng: Number = -79.3832;
+    );
+    // let lat: Number = 43.6532;
+    // let lng: Number = -79.3832;
 
-    this.confData.getMap().then(mapData => {  //Need this for werid map issue. Menu page switch will make map blank
-      this.loadMap(lat, lng, 14);
-    })
-    //this.loadMap(lat, lng, 16);
+    // this.confData.getMap().then(mapData => {  //Need this for werid map issue. Menu page switch will make map blank
+    //   this.loadMap(lat, lng, 14);
+    // })
+    
   }
 
   ionViewWillEnter() {

@@ -66,7 +66,8 @@
       },
       "locator": "cordova-plugin-wechat",
       "id": "cordova-plugin-wechat"
-    }
+    },
+    "cordova-plugin-network-information"
   ],
   "cordovaPlatforms": [
     "ios",

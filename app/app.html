@@ -60,26 +60,7 @@
 
 </ion-menu>
 
-<ion-menu side="right" id="houseListMenu" [content]="content">
 
-  <ion-toolbar>
-    <ion-icon name="close"></ion-icon><ion-title>House List</ion-title>
-  </ion-toolbar>
-
-  <ion-content class="outer-content">
-      <ion-list>
-      
-      <button ion-item menuClose *ngFor=" let house of currentHouseList" (click)="openPage(p)">
-       
-        {{house.MLS}}: {{house.Address}}
-      </button>
-    </ion-list>
-
-   
-
-  </ion-content>
-
-</ion-menu>
 
 
 <!-- main navigation -->

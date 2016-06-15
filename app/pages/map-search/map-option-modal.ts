@@ -1,11 +1,9 @@
-import {Modal, Range, Loading, Alert, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
-import {Geolocation} from 'ionic-native';
+import {Modal, Range, NavParams, Page, ViewController} from 'ionic-angular';
+import {Component} from '@angular/core';;
+//import {HouseDetailPage} from '../house-detail/house-detail';
+//import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
+//import {McSearchOption} from './search-option';
 
-import {OnInit, NgZone, Component} from '@angular/core';;
-import {HouseDetailPage} from '../house-detail/house-detail';
-import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-import {McSearchOption} from './search-option';
-declare var RichMarker: any;
 interface selectOptionsObj {
     selectPrice?: String,
     selectType?: Number,
@@ -25,9 +23,9 @@ export class SelectOptionModal {
     private selectUnit: Boolean = true;
     private unit;
     constructor(
-        private platform: Platform,
+        //private platform: Platform,
         private params: NavParams,
-        private nav: NavController,
+        //private nav: NavController,
         private viewCtrl: ViewController
     ) {
         //this.viewCtrl = viewCtrl;

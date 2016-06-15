@@ -5,8 +5,8 @@ import {Geolocation} from 'ionic-native';
 import { NgZone, Component} from '@angular/core';;
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-import {Connectivity} from '../../providers/connectivity/connectivity';
-import {McSearchOption} from './search-option';
+//import {Connectivity} from '../../providers/connectivity/connectivity';
+//import {McSearchOption} from './search-option';
 import {SelectOptionModal} from './map-option-modal';
 import {ConferenceData} from '../../providers/conference-data';
 declare var RichMarker: any;
@@ -30,7 +30,7 @@ interface selectOptionsObj {
 @Component({
   templateUrl: 'build/pages/map-search/map-search.html',
   //directives: [McSearchOption]
-  providers: [Connectivity]
+  
 })
 
 
@@ -44,7 +44,6 @@ export class MapSearchPage {
 
   private houselist: any;
   private map = null;
-  private mapInitialised = false;
   private center;
   private markerArray = [];
   private htmlArray = [];
@@ -80,16 +79,23 @@ export class MapSearchPage {
     private navparm: NavParams,
     private _zone: NgZone,
     private viewCtrl: ViewController,
-    private connectivity: Connectivity,
     private events: Events
   ) {
     //this.searchQuery = '';
     this.resetItems();
     console.log(navparm.data);
-    this.listenEvents(); //listen center change
+    this.listenEvents(); //listen School map event
+    this.loadRichMarker();
     
   }
 
+  loadRichMarker(){
+     let script = document.createElement("script");
+      script.src = "extjs/richmarker.js";
+      document.body.appendChild(script);
+  }
+
+//change center if school is selected from school map page
  listenEvents() {
     this.events.subscribe('school:mappage', (data) => {
      
@@ -97,7 +103,7 @@ export class MapSearchPage {
       let lat = data[0].lat;
       let lng = data[0].lng;
       let center = new google.maps.LatLng(lat, lng);
-      this.setLocation(center, 14);
+      this.setLocation(center, 15);
             
     });
  }
@@ -128,39 +134,39 @@ export class MapSearchPage {
     //ngOnInit() {
     let options = { timeout: 10000, enableHighAccuracy: true };
 
-    // navigator.geolocation.getCurrentPosition(
+    navigator.geolocation.getCurrentPosition(
 
-    //   (position) => {
+      (position) => {
 
-    //     //let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    //     let lat = position.coords.latitude;
-    //     let lng = position.coords.longitude;
+        //let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        let lat = position.coords.latitude;
+        let lng = position.coords.longitude;
 
-    //     if (lat > 20) {
-    //       this.loadMap(lat, lng, 16);
-    //     } else {
-    //       let lat: Number = 43.6532;
-    //       let lng: Number = -79.3832;
-    //       this.loadMap(lat, lng, 16);
-    //     }
+        if (lat > 20) {
+          this.loadMap(lat, lng, 16);
+        } else {
+          let lat: Number = 43.6532;
+          let lng: Number = -79.3832;
+          this.loadMap(lat, lng, 16);
+        }
 
-    //   },
+      },
 
-    //   (error) => {
-    //     let lat: Number = 43.6532;
-    //     let lng: Number = -79.3832;
-    //     this.loadMap(lat, lng, 16);
-    //     console.log(error);
-    //   }, options
+      (error) => {
+        let lat: Number = 43.6532;
+        let lng: Number = -79.3832;
+        this.loadMap(lat, lng, 16);
+        console.log(error);
+      }, options
 
-    // );
-    let lat: Number = 43.6532;
-    let lng: Number = -79.3832;
+    );
+    // let lat: Number = 43.6532;
+    // let lng: Number = -79.3832;
 
-    this.confData.getMap().then(mapData => {  //Need this for werid map issue. Menu page switch will make map blank
-      this.loadMap(lat, lng, 16);
-    })
-    //this.loadMap(lat, lng, 16);
+    // this.confData.getMap().then(mapData => {  //Need this for werid map issue. Menu page switch will make map blank
+    //   this.loadMap(lat, lng, 16);
+    // })
+   
   }
 
   ionViewWillEnter() {
@@ -371,21 +377,10 @@ export class MapSearchPage {
       flat: true
     });
     this.markerArray.push(marker);
-    // var contentString = "fsdafsadfsdafsda";
-    // var infowindow = new google.maps.InfoWindow({
-    //   content: contentString,
-    //   disableAutoPan: true
-
-    // });
+  
 
     marker.addListener('click', () => {
-      // let parms = {
-      //   houses: houses,
-      //   imgHost: this.imgHost
-      // };
-      // let modalHouseList = Modal.create(ModalHouseList, parms);
-      // this.nav.present(modalHouseList);
-      // console.log(houses);
+    
       let alert = Alert.create({
         //title: 'Confirm purchase',
         message: html,
