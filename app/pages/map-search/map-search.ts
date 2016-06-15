@@ -1,4 +1,4 @@
-import {Modal, Loading, Alert, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
+import {Modal, Loading, Events, Alert, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 //import {AngularRange} from 'angular-ranger';
 //import {RichMarker} from 'rich-marker'; It doesn't provide TS definition. Use ext URL to include in index.html
@@ -65,7 +65,7 @@ export class MapSearchPage {
     selectType: ''
 
   }
-  
+
 
   private currentHouseList; //Hold list of all houses on current map
   private currentHouses; //Hold array of houses for single marker
@@ -77,17 +77,30 @@ export class MapSearchPage {
     private mapleRestData: MapleRestData,
     private menu: MenuController,
     private confData: ConferenceData,
+    private navparm: NavParams,
     private _zone: NgZone,
     private viewCtrl: ViewController,
-    private connectivity: Connectivity
+    private connectivity: Connectivity,
+    private events: Events
   ) {
     //this.searchQuery = '';
     this.resetItems();
-
+    console.log(navparm.data);
+    this.listenEvents(); //listen center change
+    
   }
 
-
-
+ listenEvents() {
+    this.events.subscribe('school:mappage', (data) => {
+     
+     console.log("Map get event triggered by school map click");   
+      let lat = data[0].lat;
+      let lng = data[0].lng;
+      let center = new google.maps.LatLng(lat, lng);
+      this.setLocation(center, 14);
+            
+    });
+ }
   optionChange(event) {
     this.currentDiv = '';
     this.selectOptions = event;
@@ -150,6 +163,15 @@ export class MapSearchPage {
     //this.loadMap(lat, lng, 16);
   }
 
+  ionViewWillEnter() {
+    console.log("House Map View will enter");
+  }
+
+  ionViewDidEnter() {
+    console.log("House Map View did entered");
+    // this.changeMap();
+    //google.maps.event.trigger(this.map, 'resize');
+  }
   swiperOptions = {
     //loop: true,
     //pager: true,
@@ -372,15 +394,19 @@ export class MapSearchPage {
           {
             text: '取消',
             role: 'cancel',
-            handler: () => {
-              console.log('cancel clicked' + this.totalCount);
-            }
+
           },
           {
             text: '详情',
             handler: () => {
-              console.log('Agree clicked');
-              this.nav.push(HouseDetailPage);
+              let navTransition = alert.dismiss();
+              navTransition.then(() => {
+                this.nav.pop();
+                this.nav.push(HouseDetailPage);
+                
+               
+              });
+              return false;
             }
           }
         ]
@@ -475,7 +501,7 @@ export class MapSearchPage {
 
   changeMap() {
     console.log("Change Map: Button Show?" + this.isListShow);
-    google.maps.event.trigger(this.map,'resize');
+    google.maps.event.trigger(this.map, 'resize');
     this.currentDiv = ''; //reset all popup
 
     this.clearAll(); //clear marker

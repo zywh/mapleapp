@@ -76,12 +76,10 @@ export class ProjectDetailPage implements OnInit {
     let link = "http://m.maplecity.com.cn/index.php?r=projects/more&id=" + this.project.id;
     let img = this.project.room_type_image.replace('uploads', this.project.replaceurl);
     //let link = "http://m.maplecity.com.cn/index.php?r=projects/more&id=" + this.project.id;
-    //SocialSharing.share(this.project.summary, this.project.name, img, link);
-    SocialSharing.share(link, link, link, link);
-    //SocialSharing.shareVia()
-    //SocialSharing.canShareVia('com.tencent.mm/com.tencent.mm.ui.tools.ShareToTimeLineUI', 'msg', null, img, null, function(e){alert(e)}, function(e){alert(e)})
-
+    SocialSharing.share(this.project.summary, this.project.name, img, link);
+    
     //wx223b36a9265ba2d5
+    //(<any>window).Wechat.whatever();
     
   }
 

@@ -1,13 +1,14 @@
-import {Modal, Loading, Alert, ActionSheet, Events,MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
+import {Modal, Loading,Tabs, Alert, ActionSheet, Events, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 //import {AngularRange} from 'angular-ranger';
 //import {RichMarker} from 'rich-marker'; It doesn't provide TS definition. Use ext URL to include in index.html
-import { NgZone, Component} from '@angular/core';;
+import { NgZone, Component, ViewChild} from '@angular/core';;
 import {MapSearchPage} from '../map-search/map-search';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 
 import {SelectOptionModal} from './schoolmap-option-modal';
 import {ConferenceData} from '../../providers/conference-data';
+import {TabsPage} from '../tabs/tabs';
 declare var RichMarker: any;
 
 interface schoolSelectOptionsObj {
@@ -30,7 +31,7 @@ interface schoolSelectOptionsObj {
 
 
 export class SchoolMapPage {
-
+  @ViewChild('mcTabs') tabRef: Tabs;
   private searchQuery: String = '';
   private cityItems: any;
   private schoolItems: any;
@@ -38,13 +39,14 @@ export class SchoolMapPage {
   private map;
   private center;
   private markerArray = [];
-  private htmlArray = [];
+  //private htmlArray = [];
   private htmlArrayPosition = 0;
   private totalCount: Number; //Returned House
-  private listAllHtml = ''; //hold houses on current map
-  public isListShow: boolean = false;
+  // private listAllHtml = ''; //hold houses on current map
+  // public isListShow: boolean = false;
+  private schoolList: Array<any>;
   private markerType;
- 
+
 
   private selectSchool: schoolSelectOptionsObj = {
     selectPingfen: 0,
@@ -64,7 +66,7 @@ export class SchoolMapPage {
     private viewCtrl: ViewController,
     private events: Events
   ) {
-    
+
     this.resetItems();
 
   }
@@ -122,22 +124,30 @@ export class SchoolMapPage {
     let lng: Number = -79.3832;
 
     this.confData.getMap().then(mapData => {  //Need this for werid map issue. Menu page switch will make map blank
-      this.loadMap(lat, lng, 16);
+      this.loadMap(lat, lng, 14);
     })
-   //this.loadMap(lat, lng, 16);
+    //this.loadMap(lat, lng, 16);
   }
 
- 
+  ionViewWillEnter() {
+    console.log("School Map View will enter");
+  }
 
-  gotoHouseMap(lat,lng) {
-    let center = {lat: lat, lng: lng}
+  ionViewDidEnter() {
+    console.log("School Map View did entered");
+   // this.changeMap();
+   //google.maps.event.trigger(this.map, 'resize');
+  }
+
+  gotoHouseMap(lat, lng) {
+    let center = { lat: lat, lng: lng }
     this.nav.push(MapSearchPage, center);
   }
 
   openSchoolList() {
-   
+    console.log()
 
-    
+
   }
 
   loadMap(lat, lng, zoom) {
@@ -169,21 +179,18 @@ export class SchoolMapPage {
       zoom: zoom
     });
 
-    this.listenEvents();
+    //this.listenEvents();
     google.maps.event.addListener(this.map, 'idle', () => {
 
-     this.changeMap();
+      this.changeMap();
 
     });
-    
+
     google.maps.event.addListener(this.map, 'click', () => {
-      //close all open POP UP options/list etc
-      // this._zone.run(() => {
-      //   this.currentDiv = '';
-      //   this.searchQuery = '';
-      //   //this.viewCtrl.dismiss();
-      //   //this.nav.pop();
-      // });
+      this._zone.run(() => {
+        this.searchQuery = '';
+        this.currentDiv = '';
+      });
 
 
     });
@@ -192,21 +199,21 @@ export class SchoolMapPage {
 
     //});
   }
-  //select autocomplete action
-  listenEvents(){
-     this.events.subscribe('tab:schoolmap', () => {
-      //this.enableMenu(true);
-      console.log("Event Table schoomap is received");
-     // this.map.setCenter();
-    // this.nav.setRoot(SchoolMapPage);
-      //this.changeMap();
-    });
+  // //select autocomplete action
+  // listenEvents() {
+  //   this.events.subscribe('tab:schoolmap', () => {
+  //     //this.enableMenu(true);
+  //     console.log("Event Table schoomap is received");
+  //     // this.map.setCenter();
+  //     // this.nav.setRoot(SchoolMapPage);
+  //     //this.changeMap();
+  //   });
 
-  }
+  //}
   resetItems() {
     this.cityItems = [];
     //this.addressItems = [];
-    
+
   }
 
 
@@ -219,16 +226,16 @@ export class SchoolMapPage {
       this.resetItems();
     }
 
-    if (type == 2) { //MLS Action
-       let lat = item.lat;
+    if (type == 2) { //SCHOOL Action
+      let lat = item.lat;
       let lng = item.lng;
       this.nav.push(MapSearchPage, {
-       lat: lat,
-       lng: lng
+        lat: lat,
+        lng: lng
       });
     }
 
-   
+
 
   }
   //auto complete REST CAll
@@ -250,14 +257,14 @@ export class SchoolMapPage {
         data => {
           if (data.hasOwnProperty("CITY")) {
             this.cityItems = data.CITY;
-           
+
           };
 
           if (data.hasOwnProperty("SCHOOL")) {
-            this.schoolItems = data.MLS;
-           
+            this.schoolItems = data.SCHOOL;
+
           }
-         
+
         }); //end of callback
       //this.items = ["city", "address", "MLS"];
     }
@@ -297,30 +304,23 @@ export class SchoolMapPage {
     // });
 
     marker.addListener('click', () => {
-      // let parms = {
-      //   houses: houses,
-      //   imgHost: this.imgHost
-      // };
-      // let modalHouseList = Modal.create(ModalHouseList, parms);
-      // this.nav.present(modalHouseList);
-      // console.log(houses);
+
       let alert = Alert.create({
-        //title: 'Confirm purchase',
+        title: '学校简介',
         message: html,
-        cssClass: 'house_popup',
+        cssClass: 'school_popup',
         buttons: [
           {
             text: '取消',
             role: 'cancel',
-            handler: () => {
-              console.log('cancel clicked');
-            }
+           
           },
           {
-            text: '详情',
+            text: '周边房源',
             handler: () => {
-              console.log('Agree clicked');
-              this.nav.push(MapSearchPage);
+           
+             this.events.publish('school:mappage',{lat: lat,lng: lng}); //public event and trigger tab select and map change
+            
             }
           }
         ]
@@ -363,8 +363,8 @@ export class SchoolMapPage {
       this.markerArray.length = 0;
     }
 
-    this.htmlArray = [];
-    this.htmlArrayPosition = 0;
+    //this.htmlArray = [];
+    //this.htmlArrayPosition = 0;
 
   }
 
@@ -400,8 +400,8 @@ export class SchoolMapPage {
 
   changeMap() {
     console.log("Change Map: ");
-    google.maps.event.trigger(this.map,'resize');
-    
+    google.maps.event.trigger(this.map, 'resize');
+
     this.clearAll(); //clear marker
     // let loading = Loading.create({
     //   content: '加载房源...'
@@ -435,15 +435,17 @@ export class SchoolMapPage {
 
 
 				};
-    //console.log("Map House Search Parms:" + mapParms);
+    
     this.mapleRestData.load('index.php?r=ngget/getSchoolmap', mapParms).subscribe(
       data => {
-      
+
         this.markerType = data.type;
-        console.log("Change Map Refresh Data:" + this.markerType);
-        //Start City Markers
+        this._zone.run(() => {
+          this.currentDiv = '';
+        });
+        //Start Grid Markers
         if (this.markerType == 'grid') {
-         
+
           for (let p in data.gridList) {
             let school = data.gridList[p];
             let schoolcount = school.SchoolCount;
@@ -453,37 +455,35 @@ export class SchoolMapPage {
               this.setContentCount(school.GeocodeLat, school.GeocodeLng, school.SchoolCount, school.GridName, avgrating);
 
             }
-          }   
+          }
         } //End of City Markers
+        this.schoolList = data.SchoolList;
+        if ((this.markerType == 'school') && (this.schoolList.length > 0)) {
 
-          if (this.markerType == 'school') {
-            let schoolList: Array<String> = data.SchooList;
-            console.log(schoolList)
-            //let totalSchool = schoolList.length;  
+          this._zone.run(() => {
+            this.currentDiv = 'listButton';
+          });
 
-  						//console.log("Current:" + this.GeocodeLng + "Next:" + nextLng + "Total:" + totalhouse + "index:" + index + "Count:" + count);
-						//	 for (let index = 0, l = totalSchool; index < l; index++) {
-               for (let p in data.SchoolList) {
-             let school = data.SchoolList[p];
-              var name = school.School;
-							var rank = school.Paiming;
-							var rating = school.Pingfen;
-							var tlat = parseFloat(school.Lat);
-							var tlng = parseFloat(school.Lng);
+          for (let p in data.SchoolList) {
+            let school = data.SchoolList[p];
+            var name = school.School;
+            var rank = school.Paiming;
+            var rating = school.Pingfen;
+            var tlat = parseFloat(school.Lat);
+            var tlng = parseFloat(school.Lng);
 
-							//Generate single house popup view
-							var html = "<div class='school_info_popup'>"
-							+ "<div class='title'><a href='index.php?r=map&lat=" + tlat + "&lng=" + tlng + "&maptype=school&zoom=15'" +" data-ajax='false'>名称：" + school + "</a></div>"
-							+ "<div>年级：" + school.Grade + "</div>" 
-							+ "<div>地址：" + school.Address + "</div>" 
-							+ "<div>城市：" + school.City + " " + school.Province + " " + school.Zip + "</div>"
-							+ "<div>排名：" + rank + " 评分：" + rating + "</div></div>";
-							
-							this.setContent(tlat, tlng, html,rating);
-						
-            }
-          } //End of if HOUSE
-        });
+            //Generate single house popup view
+            var html = "<p text-left>名称：" + name + "</p>"
+              + "<p text-left>年级：" + school.Grade + "</p>"
+              + "<p text-left>地址：" + school.Address + "</p>"
+              + "<p text-left>城市：" + school.City + " " + school.Province + " " + school.Zip + "</p>"
+              + "<p text-left>排名：</ion-label><ion-badge>" + rank + "</ion-badge> 评分：<ion-badge>" + rating + "</ion-badge></p>";
+
+            this.setContent(tlat, tlng, html, rating);
+
+          }
+        } //End of if HOUSE
+      });
 
     //END of Data Subscribe
 

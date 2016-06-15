@@ -50,7 +50,7 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.mapleconf.load().then(data => {
-      console.log(data.projectRest);
+      
       //this.getProjects('index.php?r=ngget/getProjects');
       this.postListRest = data.postRest;
       this.getProjects(data.projectRest);
@@ -61,14 +61,14 @@ export class HomePage implements OnInit {
 
   getProjects(url) {
     this.mapleRestData.load(url, this.parms).subscribe(
-      data => { this.projects = data; console.log(this.projects); }
+      data => { this.projects = data;  }
     );
 
   }
 
   getPosts(url, catId) {
     this.mapleRestData.load(url, { id: catId }).subscribe(
-      data => { this.post1 = data.posts; console.log(this.post1); }
+      data => { this.post1 = data.posts;  }
     );
 
   }
