@@ -1,8 +1,3 @@
-<!--<ion-navbar *navbar>
-    <button name="close"></button>
-    <ion-title>搜索条件</ion-title>
-    <button name="close"></button>
-</ion-navbar>-->
 
 
 <ion-toolbar>
@@ -25,14 +20,14 @@
 
     <ion-row>
         <ion-col >
-            <ion-item>
+            <ion-item no-lines>
                 <ion-label>{{(selectOptions?.selectSR == true)? '出售':'出租'}}</ion-label>
                 <ion-toggle [(ngModel)]="selectOptions.selectSR"></ion-toggle>
             </ion-item>
         </ion-col>
 
         <ion-col >
-            <ion-item>
+            <ion-item no-lines>
                 <ion-label>单位({{(selectUnit == true)? '米':'尺'}})</ion-label>
                 <ion-toggle (ionChange)="onChange($event)" [(ngModel)]="selectUnit"></ion-toggle>
             </ion-item>
@@ -53,7 +48,7 @@
             </ion-select>
         </ion-item>
     </ion-list>
-    <ion-list>
+    <ion-list no-lines>
         <ion-range class='range-p' min="0" max="6" step="1" [(ngModel)]="selectOptions.selectBeds">
             <ion-label class='range-label' range-left>卧室</ion-label>
             <ion-badge  range-right>{{ (selectOptions.selectBeds > 0)? "至少" + selectOptions.selectBeds +"间" : "不限" }}</ion-badge>
@@ -67,7 +62,7 @@
         </ion-range>
         
      </ion-list>
-     <ion-list> 
+     <ion-list no-lines> 
         <ion-item>
            价格(万)<ion-badge item-right>{{selectOptions.selectPrice.lower}}-{{selectOptions.selectPrice.upper}}</ion-badge>
         </ion-item>
@@ -82,7 +77,7 @@
         </ion-range>
 
        
-        <ion-item>
+        <ion-item no-lines>
            土地面积({{(selectUnit == true)? '平方米':'平方尺'}})
                 <ion-badge item-right>{{selectOptions.selectLandsize.lower /unit }}-{{selectOptions.selectLandsize.upper /unit }}</ion-badge>
         </ion-item>

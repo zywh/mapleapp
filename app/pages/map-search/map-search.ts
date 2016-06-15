@@ -1,11 +1,12 @@
-import {Modal, Loading, Alert, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
+import {Modal, Loading, Events, Alert, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 //import {AngularRange} from 'angular-ranger';
 //import {RichMarker} from 'rich-marker'; It doesn't provide TS definition. Use ext URL to include in index.html
 import { NgZone, Component} from '@angular/core';;
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-import {McSearchOption} from './search-option';
+//import {Connectivity} from '../../providers/connectivity/connectivity';
+//import {McSearchOption} from './search-option';
 import {SelectOptionModal} from './map-option-modal';
 import {ConferenceData} from '../../providers/conference-data';
 declare var RichMarker: any;
@@ -28,20 +29,21 @@ interface selectOptionsObj {
 */
 @Component({
   templateUrl: 'build/pages/map-search/map-search.html',
-  directives: [McSearchOption]
+  //directives: [McSearchOption]
+  
 })
 
 
 export class MapSearchPage {
 
-  private searchQuery: String;
+  private searchQuery: String = '';
   private cityItems: any;
   private addressItems: any;
   private mlsItems: any;
   private parms: Object;
 
   private houselist: any;
-  public map;
+  private map = null;
   private center;
   private markerArray = [];
   private htmlArray = [];
@@ -62,7 +64,7 @@ export class MapSearchPage {
     selectType: ''
 
   }
-  
+
 
   private currentHouseList; //Hold list of all houses on current map
   private currentHouses; //Hold array of houses for single marker
@@ -74,16 +76,37 @@ export class MapSearchPage {
     private mapleRestData: MapleRestData,
     private menu: MenuController,
     private confData: ConferenceData,
+    private navparm: NavParams,
     private _zone: NgZone,
-    private viewCtrl: ViewController
+    private viewCtrl: ViewController,
+    private events: Events
   ) {
-    this.searchQuery = '';
+    //this.searchQuery = '';
     this.resetItems();
-
+    console.log(navparm.data);
+    this.listenEvents(); //listen School map event
+    this.loadRichMarker();
+    
   }
 
+  loadRichMarker(){
+     let script = document.createElement("script");
+      script.src = "extjs/richmarker.js";
+      document.body.appendChild(script);
+  }
 
-
+//change center if school is selected from school map page
+ listenEvents() {
+    this.events.subscribe('school:mappage', (data) => {
+     
+     console.log("Map get event triggered by school map click");   
+      let lat = data[0].lat;
+      let lng = data[0].lng;
+      let center = new google.maps.LatLng(lat, lng);
+      this.setLocation(center, 15);
+            
+    });
+ }
   optionChange(event) {
     this.currentDiv = '';
     this.selectOptions = event;
@@ -111,40 +134,50 @@ export class MapSearchPage {
     //ngOnInit() {
     let options = { timeout: 10000, enableHighAccuracy: true };
 
-    // navigator.geolocation.getCurrentPosition(
+    navigator.geolocation.getCurrentPosition(
 
-    //   (position) => {
+      (position) => {
 
-    //     //let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    //     let lat = position.coords.latitude;
-    //     let lng = position.coords.longitude;
+        //let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        let lat = position.coords.latitude;
+        let lng = position.coords.longitude;
 
-    //     if (lat > 20) {
-    //       this.loadMap(lat, lng, 16);
-    //     } else {
-    //       let lat: Number = 43.6532;
-    //       let lng: Number = -79.3832;
-    //       this.loadMap(lat, lng, 16);
-    //     }
+        if (lat > 20) {
+          this.loadMap(lat, lng, 16);
+        } else {
+          let lat: Number = 43.6532;
+          let lng: Number = -79.3832;
+          this.loadMap(lat, lng, 16);
+        }
 
-    //   },
+      },
 
-    //   (error) => {
-    //     let lat: Number = 43.6532;
-    //     let lng: Number = -79.3832;
-    //     this.loadMap(lat, lng, 16);
-    //     console.log(error);
-    //   }, options
+      (error) => {
+        let lat: Number = 43.6532;
+        let lng: Number = -79.3832;
+        this.loadMap(lat, lng, 16);
+        console.log(error);
+      }, options
 
-    // );
-    let lat: Number = 43.6532;
-    let lng: Number = -79.3832;
+    );
+    // let lat: Number = 43.6532;
+    // let lng: Number = -79.3832;
 
-    this.confData.getMap().then(mapData => {  //Need this for werid map issue. Menu page switch will make map blank
-      this.loadMap(lat, lng, 16);
-    })
+    // this.confData.getMap().then(mapData => {  //Need this for werid map issue. Menu page switch will make map blank
+    //   this.loadMap(lat, lng, 16);
+    // })
+   
   }
 
+  ionViewWillEnter() {
+    console.log("House Map View will enter");
+  }
+
+  ionViewDidEnter() {
+    console.log("House Map View did entered");
+    // this.changeMap();
+    //google.maps.event.trigger(this.map, 'resize');
+  }
   swiperOptions = {
     //loop: true,
     //pager: true,
@@ -344,21 +377,10 @@ export class MapSearchPage {
       flat: true
     });
     this.markerArray.push(marker);
-    // var contentString = "fsdafsadfsdafsda";
-    // var infowindow = new google.maps.InfoWindow({
-    //   content: contentString,
-    //   disableAutoPan: true
-
-    // });
+  
 
     marker.addListener('click', () => {
-      // let parms = {
-      //   houses: houses,
-      //   imgHost: this.imgHost
-      // };
-      // let modalHouseList = Modal.create(ModalHouseList, parms);
-      // this.nav.present(modalHouseList);
-      // console.log(houses);
+    
       let alert = Alert.create({
         //title: 'Confirm purchase',
         message: html,
@@ -367,15 +389,19 @@ export class MapSearchPage {
           {
             text: '取消',
             role: 'cancel',
-            handler: () => {
-              console.log('cancel clicked' + this.totalCount);
-            }
+
           },
           {
             text: '详情',
             handler: () => {
-              console.log('Agree clicked');
-              this.nav.push(HouseDetailPage);
+              let navTransition = alert.dismiss();
+              navTransition.then(() => {
+                this.nav.pop();
+                this.nav.push(HouseDetailPage);
+                
+               
+              });
+              return false;
             }
           }
         ]
@@ -470,6 +496,7 @@ export class MapSearchPage {
 
   changeMap() {
     console.log("Change Map: Button Show?" + this.isListShow);
+    google.maps.event.trigger(this.map, 'resize');
     this.currentDiv = ''; //reset all popup
 
     this.clearAll(); //clear marker

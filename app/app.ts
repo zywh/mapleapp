@@ -4,18 +4,21 @@ import {StatusBar, Splashscreen} from 'ionic-native';
 import {ConferenceData} from './providers/conference-data';
 import {UserData} from './providers/user-data';
 import {MapleRestData} from './providers/maple-rest-data/maple-rest-data';
+import {Connectivity} from './providers/connectivity/connectivity';
 import {AccountPage} from './pages/account/account';
 import {TabsPage} from './pages/tabs/tabs';
 import {LoginPage} from './pages/login/login';
 import {SignupPage} from './pages/signup/signup';
 import {TutorialPage} from './pages/tutorial/tutorial';
-import {MapSearchPage} from './pages/map-search/map-search';
-import {ProjectsPage} from './pages/projects/projects';
-import {SchoolSearchPage} from './pages/school-search/school-search';
-import {StatsPage} from './pages/stats/stats';
-import {AboutPage} from './pages/about/about';
-import {PostPage} from './pages/post/post';
-import {HomePage} from './pages/home/home';
+import {NetworkErrorPage} from './pages/network-error/network-error';
+// import {MapSearchPage} from './pages/map-search/map-search';
+// import {ProjectsPage} from './pages/projects/projects';
+// import {SchoolSearchPage} from './pages/school-search/school-search';
+// import {SchoolMapPage} from './pages/school-map/school-map';
+// import {StatsPage} from './pages/stats/stats';
+// import {AboutPage} from './pages/about/about';
+// import {PostPage} from './pages/post/post';
+// import {HomePage} from './pages/home/home';
 import {MapleConf} from './providers/maple-rest-data/maple-config';
 
 interface PageObj {
@@ -27,7 +30,7 @@ interface PageObj {
 
 @Component({
   templateUrl: 'build/app.html',
- 
+
 })
 
 class MapleApp {
@@ -52,7 +55,7 @@ class MapleApp {
     { title: '项目推荐', component: TabsPage, index: 3, icon: 'thumbs-up' },
     { title: '房源统计', component: TabsPage, index: 4, icon: 'stats' },
     { title: '关于我们', component: TabsPage, index: 5, icon: 'information-circle' },
-     { title: 'Post', component: PostPage, icon: 'information-circle' }
+
   ];
 
   loggedInPages: PageObj[] = [
@@ -66,13 +69,15 @@ class MapleApp {
   //rootPage: any = TutorialPage;
   // rootPage: any = ProjectsPage;
   //rootPage: any = HomePage;
-  rootPage: any = TabsPage;
+  //rootPage: any = TabsPage;
+  rootPage: any;
   constructor(
     private events: Events,
     private userData: UserData,
     private menu: MenuController,
     platform: Platform,
-    mapleconf: MapleConf
+    mapleconf: MapleConf,
+    private connectivity: Connectivity
     //confData: ConferenceData
   ) {
     // Call any initial plugins when ready
@@ -90,6 +95,7 @@ class MapleApp {
     });
 
     this.listenToLoginEvents();
+    this.checkConnectivity();
   }
 
   openPage(page: PageObj) {
@@ -98,6 +104,7 @@ class MapleApp {
     // we wouldn't want the back button to show in this scenario
     if (page.index) {
       this.nav.setRoot(page.component, { tabIndex: page.index });
+
 
     } else {
       this.nav.setRoot(page.component);
@@ -129,19 +136,41 @@ class MapleApp {
     this.menu.enable(loggedIn, "loggedInMenu");
     this.menu.enable(!loggedIn, "loggedOutMenu");
   }
+  checkConnectivity() {
+    //this.addConnectivityListeners();
+    console.log("Google maps JavaScript needs to be loaded.");
+    if (this.connectivity.isOnline()) {
+      console.log("online, loading map");
+      let script = document.createElement("script");
+      script.id = "googleMaps";
+      script.src = "http://ditu.google.cn/maps/api/js?&amp;libraries=places&amp;language=zh-cn";
+      document.body.appendChild(script);
+      // let script1 = document.createElement("script");
+      // script1.src = "extjs/richmarker.js";
+      // document.body.appendChild(script1);
+      this.rootPage = TabsPage;
+      // this.rootPage = NetworkErrorPage;
+    } else {
+      console.log("Network Offline: load error page")
+      this.rootPage = NetworkErrorPage;
+    }
+  }
+ 
 }
 
 ionicBootstrap(
   MapleApp,
-  [ConferenceData, UserData, MapleRestData, MapleConf],
+  [ConferenceData, UserData, MapleRestData, MapleConf, Connectivity],
   {
     tabbarPlacement: "bottom",
     backButtonText: "返回",
+    tabSubPages: false, //android house detail no two header bar
+    //mode: 'ios',
     //temp padding to fix ionic view status bar overlapping
-    platforms: {
-      ios: {
-        statusbarPadding: true
-      },
-    }
+    // platforms: {
+    //   ios: {
+    //     statusbarPadding: true
+    //   },
+    // }
   }
 );

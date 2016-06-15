@@ -1,0 +1,59 @@
+<!--<ion-navbar *navbar>
+    <button name="close"></button>
+    <ion-title>搜索条件</ion-title>
+    <button name="close"></button>
+</ion-navbar>-->
+
+
+<ion-toolbar>
+    <ion-buttons start>
+        <button (click)="resetSelections()"> 复位</button>
+    </ion-buttons>
+
+    <ion-title>搜索条件</ion-title>
+
+    <ion-buttons end>
+        <button (click)="dismiss()">确认</button>
+    </ion-buttons>
+</ion-toolbar>
+
+
+
+
+<ion-content class="map-option-modal">
+
+
+
+    <ion-item no-lines>
+        <ion-label>{{(selectOptions?.selectType == true)? '中学':'小学'}}</ion-label>
+        <ion-toggle [(ngModel)]="selectOptions.selectType"></ion-toggle>
+    </ion-item>
+
+    <ion-list>
+        <ion-item>
+            <ion-label>性质</ion-label>
+            <ion-select [(ngModel)]="selectOptions.selectXingzhi" okText="确认" cancelText="取消">
+                <ion-option value="Public">公立</ion-option>
+                <ion-option value="Catholic">天主教</ion-option>
+                <ion-option value="Private">私立</ion-option>
+            </ion-select>
+        </ion-item>
+    </ion-list>
+    <ion-list no-lines>
+        <ion-range class='range-p' min="0" max="10" step="1"  [(ngModel)]="selectOptions.selectPingfen">
+            <ion-label class='range-label' range-left>评分</ion-label>
+            <ion-badge range-right>{{ (selectOptions.selectPingfen > 0)? "高于" + selectOptions.selectPingfen : "不限" }}</ion-badge>
+
+        </ion-range>
+
+
+        <ion-range class='range-p' min="0" max="100" step="1"  [(ngModel)]="selectOptions.selectRank">
+            <ion-label class='range-label' range-left> 排名</ion-label>
+            <ion-badge range-right>{{ (selectOptions.selectRank > 0)? "前" + selectOptions.selectRank +"名" : "不限" }}</ion-badge>
+        </ion-range>
+
+    </ion-list>
+
+
+
+</ion-content>
