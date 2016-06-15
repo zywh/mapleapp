@@ -18,7 +18,7 @@ export class NetworkErrorPage {
   }
 
  refresh() {
-    //this.addConnectivityListeners();
+    this.addConnectivityListeners();
     console.log("Google maps JavaScript needs to be loaded.");
     if (this.connectivity.isOnline()) {
       console.log("online, loading map");
@@ -46,7 +46,7 @@ export class NetworkErrorPage {
           document.body.appendChild(script);
 
         } else {
-          //this.nav.setRoot(TabsPage);
+          this.nav.setRoot(TabsPage);
         }
       }, 2000);
     };

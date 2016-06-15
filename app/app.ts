@@ -149,6 +149,7 @@ class MapleApp {
       // script1.src = "extjs/richmarker.js";
       // document.body.appendChild(script1);
       this.rootPage = TabsPage;
+      // this.rootPage = NetworkErrorPage;
     } else {
       console.log("Network Offline: load error page")
       this.rootPage = NetworkErrorPage;

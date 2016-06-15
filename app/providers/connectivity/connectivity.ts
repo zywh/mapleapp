@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 //import {Http} from '@angular/http';
 import {Platform} from 'ionic-angular';
+import {Connection} from 'ionic-native';
 import 'rxjs/add/operator/map';
 
 /*
@@ -19,11 +20,9 @@ export class Connectivity {
   }
 
   isOnline() {
-    if (this.onDevice && navigator.connection) {
-
+    if (this.onDevice  && navigator.connection) {
+      
       let networkState = navigator.connection.type;
-     
-
       return networkState !== Connection.NONE;
 
     } else {
@@ -37,6 +36,7 @@ export class Connectivity {
     if(this.onDevice && navigator.connection){
  
       let networkState = navigator.connection.type;
+      
  
       return networkState === Connection.NONE;
  
