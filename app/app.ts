@@ -164,6 +164,7 @@ ionicBootstrap(
   {
     tabbarPlacement: "bottom",
     backButtonText: "返回",
+    prodMode: true,
     tabSubPages: false, //android house detail no two header bar
     //mode: 'ios',
     //temp padding to fix ionic view status bar overlapping

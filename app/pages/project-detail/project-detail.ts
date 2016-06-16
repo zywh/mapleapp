@@ -105,6 +105,18 @@ export class ProjectDetailPage implements OnInit {
     }
   }
 
+  share2() {
+
+   
+      // this.platform.ready().then(() => {
+      //window.plugins.socialsharing.share(message, subject, file, link);
+      //console.log(this.project.room_type_image + ":" + this.project.name)
+      let link = "http://m.maplecity.com.cn/index.php?r=projects/more&id=" + this.project.id;
+      let img = this.project.room_type_image.replace('uploads', this.project.replaceurl);
+      //let link = "http://m.maplecity.com.cn/index.php?r=projects/more&id=" + this.project.id;
+      SocialSharing.share(this.project.summary, this.project.name, img, link);
+     
+  }
 
 
 
