@@ -64,14 +64,14 @@
      </ion-list>
      <ion-list no-lines> 
         <ion-item>
-           价格(万)<ion-badge item-right>{{selectOptions.selectPrice.lower}}-{{selectOptions.selectPrice.upper}}</ion-badge>
+           价格(万)<ion-badge item-right>{{selectOptions.selectPrice.lower}}-{{(selectOptions.selectPrice.upper == 600)? "不限" : selectOptions.selectPrice.upper}}</ion-badge>
         </ion-item>
          <ion-range class='range-s' dualKnobs="true" min="0" max="600" step="10" [(ngModel)]="selectOptions.selectPrice">
         </ion-range>
         
         <ion-item>
             房屋面积({{(selectUnit == true)? '平方米':'平方尺'}})
-                <ion-badge item-right>{{selectOptions.selectHousesize.lower / unit }}-{{selectOptions.selectHousesize.upper / unit }}</ion-badge>
+                <ion-badge item-right>{{selectOptions.selectHousesize.lower / unit}}-{{(selectOptions.selectHousesize.upper == 4000)? "不限" :selectOptions.selectHousesize.upper / unit }}</ion-badge>
         </ion-item>
         <ion-range class='range-s' dualKnobs="true" min="0" max="4000" step="100" [(ngModel)]="selectOptions.selectHousesize">
         </ion-range>
@@ -79,7 +79,7 @@
        
         <ion-item no-lines>
            土地面积({{(selectUnit == true)? '平方米':'平方尺'}})
-                <ion-badge item-right>{{selectOptions.selectLandsize.lower /unit }}-{{selectOptions.selectLandsize.upper /unit }}</ion-badge>
+                <ion-badge item-right>{{selectOptions.selectLandsize.lower /unit}}-{{(selectOptions.selectLandsize.upper == 43560)? "不限" :selectOptions.selectLandsize.upper /unit}}</ion-badge>
         </ion-item>
         <ion-range class='range-s' dualKnobs="true" min="0" max="43560" step="1000" [(ngModel)]="selectOptions.selectLandsize">
         </ion-range>

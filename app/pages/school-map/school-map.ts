@@ -7,6 +7,7 @@ import {MapSearchPage} from '../map-search/map-search';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 
 import {SelectOptionModal} from './schoolmap-option-modal';
+import {SchoolListModal} from './school-list-modal';
 import {ConferenceData} from '../../providers/conference-data';
 import {TabsPage} from '../tabs/tabs';
 declare var RichMarker: any;
@@ -146,14 +147,16 @@ export class SchoolMapPage {
    //google.maps.event.trigger(this.map, 'resize');
   }
 
-  gotoHouseMap(lat, lng) {
-    let center = { lat: lat, lng: lng }
-    this.nav.push(MapSearchPage, center);
-  }
-
+ 
   openSchoolList() {
-    console.log()
+    console.log(this.schoolList);
 
+    let modal = Modal.create(SchoolListModal, {data: this.schoolList});
+    modal.onDismiss(data => {
+      //this.selectSchool = data;
+      
+    });
+    this.nav.present(modal);
 
   }
 
@@ -484,7 +487,7 @@ export class SchoolMapPage {
               + "<p text-left>年级：" + school.Grade + "</p>"
               + "<p text-left>地址：" + school.Address + "</p>"
               + "<p text-left>城市：" + school.City + " " + school.Province + " " + school.Zip + "</p>"
-              + "<p text-left>排名：</ion-label><ion-badge>" + rank + "</ion-badge> 评分：<ion-badge>" + rating + "</ion-badge></p>";
+              + "<p text-left>排名：<ion-badge>" + rank + "</ion-badge> 评分：<ion-badge>" + rating + "</ion-badge></p>";
 
             this.setContent(tlat, tlng, html, rating);
 

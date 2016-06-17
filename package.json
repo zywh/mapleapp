@@ -60,14 +60,14 @@
     },
     "cordova-plugin-geolocation",
     "cordova-plugin-x-socialsharing",
+    "cordova-plugin-network-information",
     {
       "variables": {
-        "wechatappid": "wx223b36a9265ba2d5"
+        "APP_ID": "wx223b36a9265ba2d5"
       },
-      "locator": "cordova-plugin-wechat",
-      "id": "cordova-plugin-wechat"
-    },
-    "cordova-plugin-network-information"
+      "locator": "cordova-plugin-tx-wechat",
+      "id": "cordova-plugin-tx-wechat"
+    }
   ],
   "cordovaPlatforms": [
     "ios",

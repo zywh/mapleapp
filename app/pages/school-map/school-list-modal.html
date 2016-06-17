@@ -1,0 +1,20 @@
+
+<ion-toolbar>
+    
+    <ion-title>学校列表</ion-title>
+
+    <ion-buttons end>
+        <button (click)="dismiss()">关闭</button>
+    </ion-buttons>
+</ion-toolbar>
+
+<ion-content padding>
+    <ion-list>
+        <ion-item *ngFor="let school of schoolList" (click)="schoolClick(school.Lat,school.Lng)">
+             <h2>{{school.School}} </h2> 
+             <p><ion-badge> 排名:{{school.Paiming}}</ion-badge>
+             <ion-badge> 评分:{{school.Pingfen}} </ion-badge>
+             </p>
+        </ion-item> 
+    </ion-list>    
+</ion-content>    
