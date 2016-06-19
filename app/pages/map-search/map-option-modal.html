@@ -60,13 +60,17 @@
              <ion-label class='range-label' range-left> 洗手间</ion-label>
             <ion-badge range-right>{{ (selectOptions.selectBaths > 0)? "至少" + selectOptions.selectBaths +"间" : "不限" }}</ion-badge>
         </ion-range>
+        <ion-range class='range-p' min="0" max="90" step="5" [(ngModel)]="selectOptions.selectDate">
+            <ion-label class='range-label' range-left> 上市</ion-label>
+        <ion-badge range-right>{{ (selectOptions.selectDate > 0)? "最近" + selectOptions.selectDate +"天" : "不限" }}</ion-badge>
+        </ion-range>
         
      </ion-list>
      <ion-list no-lines> 
         <ion-item>
-           价格(万)<ion-badge item-right>{{selectOptions.selectPrice.lower}}-{{(selectOptions.selectPrice.upper == 600)? "不限" : selectOptions.selectPrice.upper}}</ion-badge>
+           价格{{(selectOptions.selectSR == false)? "(/月)":"(万)"}}<ion-badge item-right>{{selectOptions.selectPrice.lower}}-{{(selectOptions.selectPrice.upper == 600)? "不限" : selectOptions.selectPrice.upper}}</ion-badge>
         </ion-item>
-         <ion-range class='range-s' dualKnobs="true" min="0" max="600" step="10" [(ngModel)]="selectOptions.selectPrice">
+         <ion-range class='range-s' dualKnobs="true" min="0" [max]="(selectOptions?.selectSR == false)?8000:600" step="10" [(ngModel)]="selectOptions.selectPrice">
         </ion-range>
         
         <ion-item>

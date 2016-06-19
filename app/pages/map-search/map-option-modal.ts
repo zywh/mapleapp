@@ -11,7 +11,8 @@ interface selectOptionsObj {
     selectBaths?: Number,
     selectSR?: Boolean,
     selectHousesize?: String,
-    selectLandsize?: String
+    selectLandsize?: String,
+    selectDate?: Number
 }
 
 @Component({
@@ -55,7 +56,8 @@ export class SelectOptionModal {
             selectHousesize: { lower: 0, upper: 4000 },
             selectLandsize: { lower: 0, upper: 43560 },
             selectPrice: { lower: 0, upper: 600 },
-            selectType: ''
+            selectType: '',
+            selectDate: 0
 
         }
     }

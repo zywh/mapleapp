@@ -18,7 +18,8 @@ interface selectOptionsObj {
   selectBaths?: Number,
   selectSR?: Boolean,
   selectHousesize?: String,
-  selectLandsize?: String
+  selectLandsize?: String,
+  selectDate?: Number
 }
 
 /*
@@ -61,7 +62,8 @@ export class MapSearchPage {
     selectHousesize: { lower: 0, upper: 4000 },
     selectLandsize: { lower: 0, upper: 43560 },
     selectPrice: { lower: 0, upper: 600 },
-    selectType: ''
+    selectType: '',
+    selectDate: 0
 
   }
 
@@ -530,7 +532,8 @@ export class MapSearchPage {
       houseprice: this.selectOptions.selectPrice,
       houseroom: this.selectOptions.selectBeds,
       housearea: this.selectOptions.selectHousesize,
-      houseground: this.selectOptions.selectLandsize
+      houseground: this.selectOptions.selectLandsize,
+      housedate: this.selectOptions.selectDate
 
 				};
     //console.log("Map House Search Parms:" + mapParms);
