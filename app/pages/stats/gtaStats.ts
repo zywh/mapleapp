@@ -35,6 +35,7 @@ export class gtaStats {
     ionViewLoaded() {
         console.log(this.options);
         this.chart = new Highcharts.StockChart(this.options);
+        
 
     }
 
