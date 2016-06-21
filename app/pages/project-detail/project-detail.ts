@@ -54,9 +54,9 @@ export class ProjectDetailPage implements OnInit {
     this.mapleRestData.load(url, this.parms).subscribe(
       data => {
         this.project = data;
-        let link = "http://m.maplecity.com.cn/index.php?r=projects/more&id=" + this.project.id;
-        let img = this.project.room_type_image.replace('uploads', this.project.replaceurl);
-        console.log(img + ":" + this.project.name + ":" + link);
+        // let link = "http://m.maplecity.com.cn/index.php?r=projects/more&id=" + this.project.id;
+        // let img = this.project.room_type_image.replace('uploads', this.project.replaceurl);
+        // console.log(img + ":" + this.project.name + ":" + link);
       }
 
     )

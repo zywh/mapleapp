@@ -1,16 +1,17 @@
-import {Page, NavController} from 'ionic-angular';
+import {Page, NavController,Modal} from 'ionic-angular';
 //import {OnInit, NgZone} from 'angular2/core';
 //import {mcHistChart} from './mcHistChart';
 import {OnInit, Component} from '@angular/core';;
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
-import {SimpleChartExample} from './simpleChartExample';
-import {McStockChart} from './mcStockChart';
+//import {SimpleChartExample} from './simpleChartExample';
+//import {McStockChart} from './mcStockChart';
 
 //import { Component } from '@angular/core';
-import { CHART_DIRECTIVES, Highcharts } from 'angular2-highcharts';
+import {gtaStats} from './gtaStats';
+//import { CHART_DIRECTIVES, Highcharts } from 'angular2-highcharts';
 
-//declare var Highcharts: any;
+declare var Highcharts: any;
 
 
 
@@ -23,7 +24,7 @@ import { CHART_DIRECTIVES, Highcharts } from 'angular2-highcharts';
 */
 @Component({
     templateUrl: 'build/pages/stats/stats.html',
-    directives: [[CHART_DIRECTIVES]]
+    //directives: [[CHART_DIRECTIVES]]
 
 })
 
@@ -37,10 +38,14 @@ export class StatsPage {
     //private ctype = "Chart";
     private ctype = "StockChart";
     private options: HighstockOptions = {
-        //renderTo: 'chartcontainer',
-
+   // private options: Object = {
+      
         credits: { enabled: false },
-        chart: { zoomType: 'x' },
+        chart: { 
+            zoomType: 'x' ,
+            renderTo: 'chartmls'
+           
+        },
         rangeSelector: { inputEnabled: false },
         legend: { enabled: true },
         navigator: { enabled: false },
@@ -108,10 +113,10 @@ export class StatsPage {
 
     constructor(
         private mapleRestData: MapleRestData,
-        private mapleconf: MapleConf
-    ) {
+        private mapleconf: MapleConf,
+        private nav: NavController
+    ) {}
 
-    }
     saveInstance(chartInstance) {
         this.chart = chartInstance;
     }
@@ -172,21 +177,15 @@ export class StatsPage {
 
                 console.log(viewHeight + ":" + viewWidth);
 
-                this.chart.addSeries(this.seriesOptions["all_avgprice"]);
-                this.chart.addSeries(this.seriesOptions["condo_avgprice"]);
-                //console.log(this.seriesOptions["condo_avgprice"]);
-                this.chart.addSeries(this.seriesOptions["detach_avgprice"]);
-                this.chart.series[0].remove();
-                this.chart.setSize(viewWidth, viewHeight);
-                this.chart.reflow();
+                // this.chart.addSeries(this.seriesOptions["all_avgprice"]);
+                // this.chart.addSeries(this.seriesOptions["condo_avgprice"]);
+                // //console.log(this.seriesOptions["condo_avgprice"]);
+                // this.chart.addSeries(this.seriesOptions["detach_avgprice"]);
+                // this.chart.series[0].remove();
+                // this.chart.setSize(viewWidth, viewHeight);
+                // this.chart.reflow();
 
-                //      this.chart1.addSeries(this.seriesOptions["all_avgdom"]);
-
-                //     this.chart1.series[0].remove();
-                //     this.chart1.setSize(viewWidth, viewHeight);
-                //    // this.chart1.redraw();
-
-
+          
 
             });
     }
@@ -204,10 +203,29 @@ export class StatsPage {
     onChange(e) {
         console.log(e.value);
         this.chart.series[0].update(this.seriesOptions["all_avgdom"]);
-        this.chart.series[1].remove();
-        this.chart.series[1].remove();
+        // this.options.series = [this.seriesOptions["all_avgdom"],
 
+
+        // ]
+        this.chart.series[1].remove();
+      
         console.log(e);
+    }
+
+    gtaStats(c){
+        console.log("Chart Name:" + c);
+        this.options.series[0] = this.seriesOptions["all_avgdom"];
+        console.log(this.seriesOptions["all_avgdom"]);
+       // this.nav.push(gtaStats,this.options);
+        console.log(this.options);
+
+
+         let modal = Modal.create(gtaStats,this.options );
+         modal.onDismiss(data => {
+
+         });
+        this.nav.present(modal);
+
     }
 
 

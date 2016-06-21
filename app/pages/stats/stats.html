@@ -19,7 +19,7 @@
   
   
   <ion-toolbar [attr.primary]="isAndroid ? '' : null">
-    <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null" (ionChange)="onChange($event)">
+    <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null" >
       <ion-segment-button value="canada">
        全国统计
       </ion-segment-button>
@@ -34,8 +34,9 @@
     </ion-segment>
   </ion-toolbar>
   <div class="spacer" style="width: 284.545px; height: 17.9886px;"></div>
+  <button (click)="gtaStats('avgdom')" full> Test</button> 
   
-       <chart  [options]="options" [type]="ctype" (load)="saveInstance($event.context)"></chart>
+       <!--<chart  [options]="options" [type]="ctype" (load)="saveInstance($event.context)"></chart>-->
    
   
     
