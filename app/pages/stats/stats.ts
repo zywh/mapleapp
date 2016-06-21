@@ -37,29 +37,7 @@ export class StatsPage {
     private isAndroid: boolean = false;
     //private ctype = "Chart";
     private ctype = "StockChart";
-    private options: HighstockOptions = {
-   // private options: Object = {
-      
-        credits: { enabled: false },
-        chart: { 
-            zoomType: 'x' ,
-            renderTo: 'chartmls'
-           
-        },
-        rangeSelector: { inputEnabled: false },
-        legend: { enabled: true },
-        navigator: { enabled: false },
-        scrollbar: { enabled: false },
-        title: {
-            text: '平均价格（万）'
-        },
-        series: [{
-            name: 'init',
-
-        }]
-
-
-    };
+ 
  
     private chart: HighchartsChartObject;
  
@@ -214,17 +192,40 @@ export class StatsPage {
 
     gtaStats(c){
         console.log("Chart Name:" + c);
-        this.options.series[0] = this.seriesOptions["all_avgdom"];
-        console.log(this.seriesOptions["all_avgdom"]);
-       // this.nav.push(gtaStats,this.options);
-        console.log(this.options);
+         let options: HighstockOptions = {
+   // private options: Object = {
+      
+        credits: { enabled: false },
+        chart: { 
+            zoomType: 'x' ,
+            renderTo: 'chartmls'
+           
+        },
+        rangeSelector: { inputEnabled: false },
+        legend: { enabled: true },
+        navigator: { enabled: false },
+        scrollbar: { enabled: false },
+        title: {
+            text: '平均价格（万）'
+        },
+        series: [{
+           // name: 'init',
+
+        }]
 
 
-         let modal = Modal.create(gtaStats,this.options );
-         modal.onDismiss(data => {
+    };
+        options.series[0] = this.seriesOptions["all_avgdom"];
+        //console.log(this.seriesOptions["all_avgdom"]);
+        this.nav.push(gtaStats,options);
+       // console.log(options);
 
-         });
-        this.nav.present(modal);
+
+        //  let modal = Modal.create(gtaStats,options );
+        //  modal.onDismiss(data => {
+
+        //  });
+        // this.nav.present(modal);
 
     }
 
