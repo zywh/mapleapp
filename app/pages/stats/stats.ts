@@ -1,4 +1,4 @@
-import {Page, NavController,Modal} from 'ionic-angular';
+import {Page, NavController, Modal} from 'ionic-angular';
 //import {OnInit, NgZone} from 'angular2/core';
 //import {mcHistChart} from './mcHistChart';
 import {OnInit, Component} from '@angular/core';;
@@ -37,10 +37,10 @@ export class StatsPage {
     private isAndroid: boolean = false;
     //private ctype = "Chart";
     private ctype = "StockChart";
- 
- 
+
+
     private chart: HighchartsChartObject;
- 
+
     private mlsdata;
     private seriesOptions = [];
     private cnnames = {
@@ -93,17 +93,17 @@ export class StatsPage {
         private mapleRestData: MapleRestData,
         private mapleconf: MapleConf,
         private nav: NavController
-    ) {}
+    ) { }
 
     saveInstance(chartInstance) {
         this.chart = chartInstance;
     }
-  
+
 
     // ngOnInit() {
     ionViewLoaded() {
         this.mapleconf.load().then(data => {
-            console.log(data.getMlsDataRest);
+            //console.log(data.getMlsDataRest);
             this.getResult(data.getMlsDataRest);
         })
     }
@@ -153,7 +153,7 @@ export class StatsPage {
                 let viewHeight = window.innerHeight;
                 let viewWidth = window.innerWidth;
 
-                console.log(viewHeight + ":" + viewWidth);
+                //console.log(viewHeight + ":" + viewWidth);
 
                 // this.chart.addSeries(this.seriesOptions["all_avgprice"]);
                 // this.chart.addSeries(this.seriesOptions["condo_avgprice"]);
@@ -163,7 +163,7 @@ export class StatsPage {
                 // this.chart.setSize(viewWidth, viewHeight);
                 // this.chart.reflow();
 
-          
+
 
             });
     }
@@ -178,47 +178,50 @@ export class StatsPage {
 
     // }
 
-    onChange(e) {
-        console.log(e.value);
-        this.chart.series[0].update(this.seriesOptions["all_avgdom"]);
-        // this.options.series = [this.seriesOptions["all_avgdom"],
+    // onChange(e) {
+    //     console.log(e.value);
+    //     this.chart.series[0].update(this.seriesOptions["all_avgdom"]);
+    //     // this.options.series = [this.seriesOptions["all_avgdom"],
 
 
-        // ]
-        this.chart.series[1].remove();
-      
-        console.log(e);
-    }
+    //     // ]
+    //     this.chart.series[1].remove();
 
-    gtaStats(c){
+    //     console.log(e);
+    // }
+
+    gtaStats(c,t) {
         console.log("Chart Name:" + c);
-         let options: HighstockOptions = {
-   // private options: Object = {
-      
-        credits: { enabled: false },
-        chart: { 
-            zoomType: 'x' ,
-            renderTo: 'chartmls'
-           
-        },
-        rangeSelector: { inputEnabled: false },
-        legend: { enabled: true },
-        navigator: { enabled: false },
-        scrollbar: { enabled: false },
-        title: {
-            text: '平均价格（万）'
-        },
-        series: [{
-           // name: 'init',
+        let options: HighstockOptions = {
+           // let options: Object = {
 
-        }]
+            credits: { enabled: false },
+            chart: {
+                zoomType: 'x',
+                renderTo: 'chartmls'
+
+            },
+            rangeSelector: { inputEnabled: false },
+            legend: { enabled: true },
+            navigator: { enabled: false },
+            scrollbar: { enabled: false },
+            title: {
+                text: '平均价格（万）'
+            },
+            series: [{
+                // name: 'init',
+
+            }]
 
 
-    };
-        options.series[0] = this.seriesOptions["all_avgdom"];
+        };
+        options.series[0] = this.seriesOptions["all_" + c];
+        options.series[1] = this.seriesOptions["detach_" + c];
+        options.series[2] = this.seriesOptions["condo_" + c];
+        //options.title.text = t;
         //console.log(this.seriesOptions["all_avgdom"]);
-        this.nav.push(gtaStats,options);
-       // console.log(options);
+        this.nav.push(gtaStats, options);
+        console.log(this.seriesOptions["condo_" + c]);
 
 
         //  let modal = Modal.create(gtaStats,options );

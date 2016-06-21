@@ -5,39 +5,52 @@
   Ionic pages and navigation.
 -->
 <ion-navbar *navbar>
-    <button menuToggle>
+  <button menuToggle>
     <ion-icon name="menu"></ion-icon>
   </button>
   <ion-title>房源统计</ion-title>
 </ion-navbar>
 
 <ion-content padding class="stats">
-  <!--<mc-hist-chart [id]="chartDiv"  [chartOptions]="options" ></mc-hist-chart>
-   
-    <mc-hist-chart [id]="chartDiv2" [chartOptions]="options1" ></mc-hist-chart>
-   -->
-  
-  
+
+
+
   <ion-toolbar [attr.primary]="isAndroid ? '' : null">
-    <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null" >
+    <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
       <ion-segment-button value="canada">
-       全国统计
+        全国统计
       </ion-segment-button>
       <ion-segment-button value="toronto">
         多伦多统计
       </ion-segment-button>
-     
+
       <ion-segment-button value="house">
-      房源统计
+        房源统计
       </ion-segment-button>
-      
+
     </ion-segment>
   </ion-toolbar>
   <div class="spacer" style="width: 284.545px; height: 17.9886px;"></div>
-  <button (click)="gtaStats('avgdom')" full> Test</button> 
-  
-       <!--<chart  [options]="options" [type]="ctype" (load)="saveInstance($event.context)"></chart>-->
-   
-  
-    
+
+  <button (click)="gtaStats('avgdom')" full> Test</button>
+
+  <ion-list>
+    <ion-list-header> GTA 地产 Stats</ion-list-header>
+    <a ion-item (click)="gtaStats('avgdom','平均售出日')"> 平均售出日</a>
+    <a ion-item (click)="gtaStats('avgprice')"> 平均房价 </a>
+    <a ion-item (click)="gtaStats('moi')"> 存量月份 </a>
+    <a ion-item (click)="gtaStats('avgsplp')"> 成交价/挂盘价比 </a>
+    <a ion-item (click)="gtaStats('active')"> 在售房源 </a>
+    <a ion-item (click)="gtaStats('sales')"> 月销售房源 </a>
+    <a ion-item (click)="gtaStats('newlist')"> 月新增房源 </a>
+    <a ion-item (click)="gtaStats('snlr')"> 售出/新盘比 </a>
+
+
+
+  </ion-list>
+
+  <!--<chart  [options]="options" [type]="ctype" (load)="saveInstance($event.context)"></chart>-->
+
+
+
 </ion-content>
