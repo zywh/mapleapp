@@ -1,48 +1,35 @@
 import {Page, NavController, Modal} from 'ionic-angular';
-//import {OnInit, NgZone} from 'angular2/core';
-//import {mcHistChart} from './mcHistChart';
 import {OnInit, Component} from '@angular/core';;
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
-//import {SimpleChartExample} from './simpleChartExample';
-//import {McStockChart} from './mcStockChart';
+//import {gtaStats} from './gtaStats';
+import {chartStats} from './chartStats';
+import {Highcharts} from 'angular2-highcharts';
 
-//import { Component } from '@angular/core';
-import {gtaStats} from './gtaStats';
-//import { CHART_DIRECTIVES, Highcharts } from 'angular2-highcharts';
-
-declare var Highcharts: any;
+//declare var Highcharts: any;
 
 
-
-
-/*
-  Generated class for the StatsPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
     templateUrl: 'build/pages/stats/stats.html',
-    //directives: [[CHART_DIRECTIVES]]
 
 })
 
 
 export class StatsPage {
-    // static get parameters() {
-    //     return [[MapleRestData], [MapleConf]];
-    // }
+
     private section: string = "canada";
     private isAndroid: boolean = false;
-    //private ctype = "Chart";
-    private ctype = "StockChart";
-
-
     private chart: HighchartsChartObject;
-
     private mlsdata;
+    private hpiData;
     private seriesOptions = [];
+    private city;
+    private province;
+    private property_type;
+    private price;
+    private housearea;
+    private landarea;
+    //private today;
     private cnnames = {
         'all_avgprice': '所有房源：平均房价',
         'condo_avgprice': '楼房：平均房价',
@@ -98,17 +85,24 @@ export class StatsPage {
     saveInstance(chartInstance) {
         this.chart = chartInstance;
     }
-
+    date2str() {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        return yyyy + "-" + mm + "-" + dd;
+    }
 
     // ngOnInit() {
     ionViewLoaded() {
         this.mapleconf.load().then(data => {
             //console.log(data.getMlsDataRest);
-            this.getResult(data.getMlsDataRest);
+            this.getMlsResult(data.getMlsDataRest);
+            this.getHouseStats(data.getHouseStatsRest);
         })
     }
 
-    getResult(url) {
+    getMlsResult(url) {
         this.mapleRestData.load(url, { id: 0 }).subscribe(
             data => {
 
@@ -153,84 +147,108 @@ export class StatsPage {
                 let viewHeight = window.innerHeight;
                 let viewWidth = window.innerWidth;
 
-                //console.log(viewHeight + ":" + viewWidth);
-
-                // this.chart.addSeries(this.seriesOptions["all_avgprice"]);
-                // this.chart.addSeries(this.seriesOptions["condo_avgprice"]);
-                // //console.log(this.seriesOptions["condo_avgprice"]);
-                // this.chart.addSeries(this.seriesOptions["detach_avgprice"]);
-                // this.chart.series[0].remove();
-                // this.chart.setSize(viewWidth, viewHeight);
-                // this.chart.reflow();
-
-
 
             });
     }
-    // ngAfterViewInit() {
+
+    getHouseStats(url) {
+        this.mapleRestData.load(url, { id: 0 }).subscribe(
+            data => {
+                this.city = data.city;
+                this.province = data.province;
+                this.property_type = data.property_type;
+                this.price = data.price;
+                this.housearea = data.housearea;
+                this.landarea = data.landarea;
+                //console.log(landarea);
 
 
-    //     console.log("ngAfterViewInit")
+            });
 
-    // }
-    // ionViewWillEnter() {
-    //     console.log("view loaded")
-
-    // }
-
-    // onChange(e) {
-    //     console.log(e.value);
-    //     this.chart.series[0].update(this.seriesOptions["all_avgdom"]);
-    //     // this.options.series = [this.seriesOptions["all_avgdom"],
+    }
 
 
-    //     // ]
-    //     this.chart.series[1].remove();
+    gtaStats(c, t) {
 
-    //     console.log(e);
-    // }
-
-    gtaStats(c,t) {
-        console.log("Chart Name:" + c);
         let options: HighstockOptions = {
-           // let options: Object = {
-
             credits: { enabled: false },
             chart: {
                 zoomType: 'x',
-                renderTo: 'chartmls'
-
+                renderTo: 'chart'
             },
             rangeSelector: { inputEnabled: false },
             legend: { enabled: true },
             navigator: { enabled: false },
             scrollbar: { enabled: false },
-            title: {
-                text: '平均价格（万）'
-            },
-            series: [{
-                // name: 'init',
-
-            }]
-
+            title: { text: t },
+            //series: [{}]
+            series: [
+                this.seriesOptions["all_" + c],
+                this.seriesOptions["detach_" + c],
+                this.seriesOptions["condo_" + c]
+            ]
 
         };
-        options.series[0] = this.seriesOptions["all_" + c];
-        options.series[1] = this.seriesOptions["detach_" + c];
-        options.series[2] = this.seriesOptions["condo_" + c];
-        //options.title.text = t;
-        //console.log(this.seriesOptions["all_avgdom"]);
-        this.nav.push(gtaStats, options);
-        console.log(this.seriesOptions["condo_" + c]);
 
+        this.nav.push(chartStats, { type: 1, options: options });
 
-        //  let modal = Modal.create(gtaStats,options );
-        //  modal.onDismiss(data => {
-
-        //  });
-        // this.nav.present(modal);
 
     }
 
+    houseStats(name, type, title) {
+        let options: HighchartsOptions = {
+            credits: { enabled: false },
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                renderTo: 'chart',
+                type: type
+            },
+
+            title: { text: title },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                name: 'Brands',
+                data: [{
+                    name: 'Microsoft Internet Explorer',
+                    y: 56.33
+                }, {
+                    name: 'Chrome',
+                    y: 24.03,
+                    sliced: true,
+                    selected: true
+                }, {
+                    name: 'Firefox',
+                    y: 10.38
+                }, {
+                    name: 'Safari',
+                    y: 4.77
+                }, {
+                    name: 'Opera',
+                    y: 0.91
+                }, {
+                    name: 'Proprietary or Undetectable',
+                    y: 0.2
+                }]
+            }]
+       
+
+
+        };
+        this.nav.push(chartStats, { type: 0, options: options });
+    }
 
 }
