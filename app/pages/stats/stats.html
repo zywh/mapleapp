@@ -8,10 +8,10 @@
   <button menuToggle>
     <ion-icon name="menu"></ion-icon>
   </button>
-  <ion-title>房源统计</ion-title>
+  <ion-title>房源数据统计</ion-title>
 </ion-navbar>
 
-<ion-content padding class="stats">
+<ion-content class="stats">
 
 
 
@@ -21,7 +21,7 @@
         全国统计
       </ion-segment-button>
       <ion-segment-button value="toronto">
-        多伦多统计
+        大多统计
       </ion-segment-button>
 
       <ion-segment-button value="house">
@@ -32,25 +32,78 @@
   </ion-toolbar>
   <div class="spacer" style="width: 284.545px; height: 17.9886px;"></div>
 
-  <button (click)="gtaStats('avgdom')" full> Test</button>
+  <div [ngSwitch]="section">
+    <div *ngSwitchWhen="'toronto'">
+      <ion-list>
+        <ion-list-header text-center> 大多伦多地产历史统计</ion-list-header>
+        <ion-item detail-push (click)="gtaStats('avgdom','平均售出日')">
+          <ion-icon name="stats" item-left></ion-icon>
+          平均售出日
+        </ion-item>
+        <a ion-item detail-push (click)="gtaStats('avgprice','平均房价')">
+          <ion-icon name="stats" item-left></ion-icon>
+          平均房价 </a>
+        <a ion-item (click)="gtaStats('moi','存量月份')"> 存量月份  <ion-icon name="stats" item-left></ion-icon></a>
+        <a ion-item (click)="gtaStats('avgsplp','成交价/挂盘价比')"> 成交价/挂盘价比 <ion-icon name="stats" item-left></ion-icon> </a>
+        <a ion-item (click)="gtaStats('active','在售房源')"> 在售房源  <ion-icon name="stats" item-left></ion-icon></a>
+        <a ion-item (click)="gtaStats('sales','月销售房源')"> 月销售房源 <ion-icon name="stats" item-left></ion-icon> </a>
+        <a ion-item (click)="gtaStats('newlist','月新增房源')"> 月新增房源  <ion-icon name="stats" item-left></ion-icon></a>
+        <a ion-item (click)="gtaStats('snlr','售出/新盘比')"> 售出/新盘比  <ion-icon name="stats" item-left></ion-icon></a>
+      </ion-list>
+   </div>
 
-  <ion-list>
-    <ion-list-header> GTA 地产 Stats</ion-list-header>
-    <a ion-item (click)="gtaStats('avgdom','平均售出日')"> 平均售出日</a>
-    <a ion-item (click)="gtaStats('avgprice')"> 平均房价 </a>
-    <a ion-item (click)="gtaStats('moi')"> 存量月份 </a>
-    <a ion-item (click)="gtaStats('avgsplp')"> 成交价/挂盘价比 </a>
-    <a ion-item (click)="gtaStats('active')"> 在售房源 </a>
-    <a ion-item (click)="gtaStats('sales')"> 月销售房源 </a>
-    <a ion-item (click)="gtaStats('newlist')"> 月新增房源 </a>
-    <a ion-item (click)="gtaStats('snlr')"> 售出/新盘比 </a>
+    <div *ngSwitchWhen="'house'">
+      
+      <h2 text-center> 今日房源实时统计 </h2> 
+      <ion-label text-center> {{date2str()}}</ion-label>
+      <ion-list>
+        <ion-item detail-push (click)="houseStatsColumn('price','价格','价格分布图')">
+          <ion-icon name="stats" item-left></ion-icon>
+          价格分布图
+        </ion-item>
+        <ion-item detail-push (click)="houseStatsPie('property_type','房型','房型分布饼图')">
+          <ion-icon name="stats" item-left></ion-icon>
+          房型分布饼图
+        </ion-item>
+        <ion-item detail-push (click)="houseStatsColumn('housearea','房屋面积','房屋面积分布图')">
+          <ion-icon name="stats" item-left></ion-icon>
+          房屋面积分布图
+        </ion-item>
+        <ion-item detail-push (click)="houseStatsColumn('landarea','土地面积','土地面积分布图')">
+          <ion-icon name="stats" item-left></ion-icon>
+         土地面积分布图
+        </ion-item>
+        <ion-item detail-push (click)="houseStatsColumn('city','城市房源','城市房源分布图')">
+          <ion-icon name="stats" item-left></ion-icon>
+          城市房源分布图
+        </ion-item>
+        <ion-item detail-push (click)="houseStatsColumn('province','省房源','省房源分布图')">
+          <ion-icon name="stats" item-left></ion-icon>
+          省房源分布图
+        </ion-item>
+      
 
+      </ion-list>
+    </div>
 
+    <div *ngSwitchWhen="'canada'">
 
-  </ion-list>
-
-  <!--<chart  [options]="options" [type]="ctype" (load)="saveInstance($event.context)"></chart>-->
-
-
-
+        <ion-list>
+          <ion-list-header text-center> 大多伦多地产历史统计</ion-list-header>
+          <ion-item detail-push (click)="gtaStats('avgdom','平均售出日')">
+            <ion-icon name="stats" item-left></ion-icon>
+            平均售出日
+          </ion-item>
+          <a ion-item detail-push (click)="gtaStats('avgprice','平均房价')">
+            <ion-icon name="stats" item-left></ion-icon>
+            平均房价 </a>
+          <a ion-item (click)="gtaStats('moi','存量月份')"> 存量月份  <ion-icon name="stats" item-left></ion-icon></a>
+          <a ion-item (click)="gtaStats('avgsplp','成交价/挂盘价比')"> 成交价/挂盘价比 <ion-icon name="stats" item-left></ion-icon> </a>
+          <a ion-item (click)="gtaStats('active','在售房源')"> 在售房源  <ion-icon name="stats" item-left></ion-icon></a>
+          <a ion-item (click)="gtaStats('sales','月销售房源')"> 月销售房源 <ion-icon name="stats" item-left></ion-icon> </a>
+          <a ion-item (click)="gtaStats('newlist','月新增房源')"> 月新增房源  <ion-icon name="stats" item-left></ion-icon></a>
+          <a ion-item (click)="gtaStats('snlr','售出/新盘比')"> 售出/新盘比  <ion-icon name="stats" item-left></ion-icon></a>
+        </ion-list>
+    </div>
+  </div>
 </ion-content>

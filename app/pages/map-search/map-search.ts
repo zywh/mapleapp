@@ -31,7 +31,7 @@ interface selectOptionsObj {
 @Component({
   templateUrl: 'build/pages/map-search/map-search.html',
   //directives: [McSearchOption]
-  
+
 })
 
 
@@ -42,7 +42,7 @@ export class MapSearchPage {
   private addressItems: any;
   private mlsItems: any;
   private parms: Object;
-
+  private defaultcenter = new google.maps.LatLng(43.6532, -79.3832);
   private houselist: any;
   private map = null;
   private center;
@@ -88,27 +88,27 @@ export class MapSearchPage {
     console.log(navparm.data);
     this.listenEvents(); //listen School map event
     this.loadRichMarker();
-    
+
   }
 
-  loadRichMarker(){
-     let script = document.createElement("script");
-      script.src = "extjs/richmarker.js";
-      document.body.appendChild(script);
+  loadRichMarker() {
+    let script = document.createElement("script");
+    script.src = "extjs/richmarker.js";
+    document.body.appendChild(script);
   }
 
-//change center if school is selected from school map page
- listenEvents() {
+  //change center if school is selected from school map page
+  listenEvents() {
     this.events.subscribe('school:mappage', (data) => {
-     
-     console.log("Map get event triggered by school map click");   
+
+      console.log("Map get event triggered by school map click");
       let lat = data[0].lat;
       let lng = data[0].lng;
       let center = new google.maps.LatLng(lat, lng);
       this.setLocation(center, 15);
-            
+
     });
- }
+  }
   optionChange(event) {
     this.currentDiv = '';
     this.selectOptions = event;
@@ -132,6 +132,7 @@ export class MapSearchPage {
     )
   }
 
+
   ionViewLoaded() {
     //ngOnInit() {
     let options = { timeout: 10000, enableHighAccuracy: true };
@@ -140,46 +141,41 @@ export class MapSearchPage {
 
       (position) => {
 
-        //let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         let lat = position.coords.latitude;
-        let lng = position.coords.longitude;
+        //let lng = position.coords.longitude;
 
         if (lat > 20) {
-          this.loadMap(lat, lng, 16);
+          this.loadMap(latLng, 16);
         } else {
-          let lat: Number = 43.6532;
-          let lng: Number = -79.3832;
-          this.loadMap(lat, lng, 16);
+          // let lat: Number = 43.6532;
+          // let lng: Number = -79.3832;
+         // this.loadMap(lat, lng, 16);
+         this.loadMap(this.defaultcenter,16);
         }
 
       },
 
-      (error) => {
-        let lat: Number = 43.6532;
-        let lng: Number = -79.3832;
-        this.loadMap(lat, lng, 16);
-        console.log(error);
-      }, options
+      (error) => {   this.loadMap(this.defaultcenter,16);}, options
 
     );
-    // let lat: Number = 43.6532;
-    // let lng: Number = -79.3832;
+  
 
     // this.confData.getMap().then(mapData => {  //Need this for werid map issue. Menu page switch will make map blank
     //   this.loadMap(lat, lng, 16);
     // })
-   
+
   }
 
-  ionViewWillEnter() {
-    console.log("House Map View will enter");
-  }
+  // ionViewWillEnter() {
+  //   console.log("House Map View will enter");
+  // }
 
-  ionViewDidEnter() {
-    console.log("House Map View did entered");
-    // this.changeMap();
-    //google.maps.event.trigger(this.map, 'resize');
-  }
+  // ionViewDidEnter() {
+  //   console.log("House Map View did entered");
+  //   // this.changeMap();
+  //   //google.maps.event.trigger(this.map, 'resize');
+  // }
   swiperOptions = {
     //loop: true,
     //pager: true,
@@ -234,17 +230,14 @@ export class MapSearchPage {
 
     }
   }
-  loadMap(lat, lng, zoom) {
-
-    this.center = new google.maps.LatLng(lat, lng);
-    //  let latLng = new google.maps.LatLng(-34.9290, 138.6010);
-    //let latLng = new google.maps.LatLng(-34.9290, 138.6010);
-    //this.confData.getMap().then(mapData => {
+  //loadMap(lat, lng, zoom) {
+   loadMap(pos, zoom) {
+  
     let mapEle = document.getElementById('map');
 
     this.map = new google.maps.Map(mapEle, {
-      //center: mapData.find(d => d.center),
-      center: this.center,
+     
+      center: pos,
       minZoom: 4,
       mapTypeControl: true,
       mapTypeControlOptions: {
@@ -352,23 +345,42 @@ export class MapSearchPage {
       //this.items = ["city", "address", "MLS"];
     }
   }
-  //SetCenter and Zoom
+  
+  //SetCenter and Zoom if location button is clicked
+  setCenter() {
+
+    let options = { timeout: 10000, enableHighAccuracy: true };
+
+    navigator.geolocation.getCurrentPosition(
+
+      (position) => {
+        let lat = position.coords.latitude;
+        let lng = position.coords.longitude;
+        if (lat > 20) {
+          let center = new google.maps.LatLng(lat, lng);
+          this.setLocation(center, 16);
+
+        } else {this.setLocation(this.defaultcenter, 16); }
+
+      },
+      (error) => {this.setLocation(this.defaultcenter, 16); }, options
+    );
+
+  }
+
+  //Move to center and creata a marker
   setLocation(center, zoom) {
     this.map.setCenter(center);
-
     this.map.setZoom(zoom);
     let marker = new google.maps.Marker({
       position: center,
       map: this.map,
       draggable: false,
-
     });
   }
 
 
-  //set house marker
-  // setContent(lat, lng, count, houses, price) {
-  setContent(lat, lng, count, html, price) {
+  setContent(lat, lng, count, html, price,mls) {
     let point = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
     let content = this.setMarkerCss(count, price);
 	   let marker = new RichMarker({
@@ -379,10 +391,10 @@ export class MapSearchPage {
       flat: true
     });
     this.markerArray.push(marker);
-  
+
 
     marker.addListener('click', () => {
-    
+
       let alert = Alert.create({
         //title: 'Confirm purchase',
         message: html,
@@ -399,9 +411,7 @@ export class MapSearchPage {
               let navTransition = alert.dismiss();
               navTransition.then(() => {
                 this.nav.pop();
-                this.nav.push(HouseDetailPage);
-                
-               
+                this.nav.push(HouseDetailPage,mls);
               });
               return false;
             }
@@ -632,7 +642,7 @@ export class MapSearchPage {
 
                 houses.push(house);
                 //this.setContent(tlat, tlng, 1, houses, markerprice);
-                this.setContent(tlat, tlng, 1, li, markerprice);
+                this.setContent(tlat, tlng, 1, li, markerprice,house.MLS);
                 houses = [];
                 totalprice = 0;
                 panelhtml = '';
@@ -643,7 +653,7 @@ export class MapSearchPage {
                 panelhtml = panelhtml + li;
                 let price = (totalprice + markerprice) / count;
                 //this.setContent(tlat, tlng, count, houses, price);
-                this.setContent(tlat, tlng, count, panelhtml, price);
+                this.setContent(tlat, tlng, count, panelhtml, price,house.MLS);
                 count = 1;
                 totalprice = 0;
                 houses = [];
