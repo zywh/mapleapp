@@ -29,7 +29,7 @@ export class chartStats {
     constructor(private parm: NavParams, private view: ViewController) {
         this.type = this.parm.data.type;
         this.options = this.parm.data.options;
-       
+        console.log(this.options);
         // this.pagetitle = this.options["title"]["text"];
         // console.log(this.pagetitle);
         

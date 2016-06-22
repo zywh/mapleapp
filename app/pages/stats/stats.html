@@ -57,12 +57,33 @@
       <h2 text-center> 今日房源实时统计 </h2> 
       <ion-label text-center> {{date2str()}}</ion-label>
       <ion-list>
-        <ion-item detail-push (click)="houseStats('property_type','pie','平均售出日')">
-        <ion-icon name="stats" item-left></ion-icon>
-          房屋类型统计
-      </ion-item>
+        <ion-item detail-push (click)="houseStatsColumn('price','价格','价格分布图')">
+          <ion-icon name="stats" item-left></ion-icon>
+          价格分布图
+        </ion-item>
+        <ion-item detail-push (click)="houseStatsPie('property_type','房型','房型分布饼图')">
+          <ion-icon name="stats" item-left></ion-icon>
+          房型分布饼图
+        </ion-item>
+        <ion-item detail-push (click)="houseStatsColumn('housearea','房屋面积','房屋面积分布图')">
+          <ion-icon name="stats" item-left></ion-icon>
+          房屋面积分布图
+        </ion-item>
+        <ion-item detail-push (click)="houseStatsColumn('landarea','土地面积','土地面积分布图')">
+          <ion-icon name="stats" item-left></ion-icon>
+         土地面积分布图
+        </ion-item>
+        <ion-item detail-push (click)="houseStatsColumn('city','城市房源','城市房源分布图')">
+          <ion-icon name="stats" item-left></ion-icon>
+          城市房源分布图
+        </ion-item>
+        <ion-item detail-push (click)="houseStatsColumn('province','省房源','省房源分布图')">
+          <ion-icon name="stats" item-left></ion-icon>
+          省房源分布图
+        </ion-item>
       
-    </ion-list>
+
+      </ion-list>
     </div>
 
     <div *ngSwitchWhen="'canada'">

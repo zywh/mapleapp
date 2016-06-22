@@ -195,7 +195,7 @@ export class StatsPage {
 
     }
 
-    houseStats(name, type, title) {
+    houseStatsPie(name, tname, title) {
         let options: HighchartsOptions = {
             credits: { enabled: false },
             chart: {
@@ -203,7 +203,7 @@ export class StatsPage {
                 plotBorderWidth: null,
                 plotShadow: false,
                 renderTo: 'chart',
-                type: type
+                type: 'pie'
             },
 
             title: { text: title },
@@ -221,34 +221,63 @@ export class StatsPage {
                 }
             },
             series: [{
-                name: 'Brands',
-                data: [{
-                    name: 'Microsoft Internet Explorer',
-                    y: 56.33
-                }, {
-                    name: 'Chrome',
-                    y: 24.03,
-                    sliced: true,
-                    selected: true
-                }, {
-                    name: 'Firefox',
-                    y: 10.38
-                }, {
-                    name: 'Safari',
-                    y: 4.77
-                }, {
-                    name: 'Opera',
-                    y: 0.91
-                }, {
-                    name: 'Proprietary or Undetectable',
-                    y: 0.2
-                }]
+                name: tname,
+                data: eval("this." + name)
             }]
-       
+
 
 
         };
         this.nav.push(chartStats, { type: 0, options: options });
     }
+
+    houseStatsColumn(name, tname, title) {
+        let options: HighchartsOptions = {
+            credits: { enabled: false },
+            chart: {
+                renderTo: 'chart',
+                type: 'column'
+            },
+
+            title: { text: title },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {
+                title: {
+                    text: '房源数量（套）'
+                }
+
+            },
+            legend: {
+                enabled: false
+            },
+            // plotOptions: {
+            //     series: {
+            //         //borderWidth: 0,
+            //         dataLabels: {
+            //             enabled: true,
+            //             format: '{point.y:.1f}%'
+            //         }
+            //     }
+            // },
+
+            tooltip: {
+                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}套<br/>'
+            },
+
+
+            series: [{
+                name: tname,
+                data: eval("this." + name)
+            }]
+
+
+
+        };
+        this.nav.push(chartStats, { type: 0, options: options });
+    }
+
 
 }
