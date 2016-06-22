@@ -17,7 +17,7 @@
 
   <ion-slides [options]="swiperOptions" class="swiper-container">
     <ion-slide *ngFor="let photo of photos">
-      <img [src]="photo" class="slide-image" />
+      <img [src]="photoUrl(photo)" class="slide-image" />
     </ion-slide>
   </ion-slides>
   
@@ -31,9 +31,7 @@
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
-  <div class="spacer" style="width: 284.545px; height: 17.9886px;"></div>
   <div [ngSwitch]="section">
-     <button full outline (click)="share('Hello World', 'Attention', null, 'https://www.thepolyglotdeveloper.com')">Share</button>
     <div *ngSwitchWhen="'school'">
       <p>{{house.school}}</p>
     </div>
@@ -41,27 +39,27 @@
       <p> {{house.video}} </p>
     </div>
   </div>
- <ion-card class="fyxqupright_cont ui-body ui-body-a">
+ <ion-card class="fyxqupright_cont">
 	<div class="fyxq_ptss">
 		<div class="fyxq_ptssleft">价格：</div>
-		<div class="fyxq_ptssright">{{getPriceTxt()}}<div *ngIf="!exchangeRate"> &nbsp;
-			<span>(约<i>{{getPriceRMB()}}</i>万人民币）</span></div>
+		<div class="fyxq_ptssright">{{getPriceTxt()}}
+			<span *ngIf="exchangeRate">&nbsp;（约<i>{{getPriceRMB()}}</i>万人民币）</span>
 		</div>
 		<div class="cl"></div>
 	</div>
 	<div class="fyxq_ptss">
 		<div class="fyxq_ptssleft">地址：</div>
-		<div class="fyxq_ptssright">{{house.addr}}&nbsp{{house.municipality}}</div>
+		<div class="fyxq_ptssright">{{house.addr}}&nbsp;{{house.municipality}}</div>
 		<div class="cl"></div>
 	</div>
 	<div class="fyxq_ptss">
-		<div class="fyxq_ptssleft">{{(house.investType_id == 1)?"学区":"城市"}}</div>
+		<div class="fyxq_ptssleft">{{(house.investType_id == 1)?"学区":"城市"}}:</div>
 		<div class="fyxq_ptssright">{{house_mname?.municipality_cname}}</div>
 		<div class="cl"></div>
 	</div>
 	<div class="fyxq_ptss">
 		<div class="fyxq_ptssleft">户型：</div>
-		<div class="fyxq_ptssright"><img src="img/maple/1s.jpg" style="width:auto"/>&nbsp;&nbsp;{{house.br}}&nbsp;&nbsp;<img src="img/maple/1t.jpg" style="width:auto"/>&nbsp;&nbsp;{{house.bath_tot}}</div>
+		<div class="fyxq_ptssright"><img src="img/maple/1s.jpg"/>&nbsp;&nbsp;{{house.br}}&nbsp;&nbsp;<img src="img/maple/1t.jpg"/>&nbsp;&nbsp;{{house.bath_tot}}</div>
 		<div class="cl"></div>
 	</div>
 	<div class="fyxq_ptss">
@@ -97,7 +95,7 @@
 			</div>
 			<div class="cl"></div>
 		<div class="fyxq_rx">服务热线：
-			<img src="new/images/plat.jpg" width="23" height="15" /><a href="tel:400-9900-393"><span>400-870-1029</span></a>
+			<img src="img/maple/plat.jpg"/><a href="tel:400-9900-393"><span>400-870-1029</span></a>
 		</div>
 		<div class="cl"></div>
 	</div>
@@ -143,27 +141,25 @@
 
 		<ion-item-divider id="housedivider" divider>房屋布局</ion-item-divider>
 		<ion-item>
-			<div id="fwbj" class="fwbjtable table-stroke">
-			<table class="ui-responsive">
+			<div id="fwbj" class="fwbjtable">
+			<table>
 			<thead><tr>
-				<th width="12%" data-priority="1" style="border-bottom: 1px solid #CCCCCC;">楼层</th>
-				<th width="12%" data-priority="2" style="border-bottom: 1px solid #CCCCCC;">房间</th>
-				<th width="20%" data-priority="3" style="border-bottom: 1px solid #CCCCCC;">长(M)</th>
-				<th width="20%" data-priority="4" style="border-bottom: 1px solid #CCCCCC;">宽(M)</th>
-				<th width="17%" data-priority="5" style="border-bottom: 1px solid #CCCCCC;">面积(M2)</th>
-				<th width="21%" data-priority="6" style="border-bottom: 1px solid #CCCCCC;">说明</th>
+				<th width="12%" style="border-bottom: 1px solid #CCCCCC;">楼层</th>
+				<th width="12%" style="border-bottom: 1px solid #CCCCCC;">房间</th>
+				<th width="20%" style="border-bottom: 1px solid #CCCCCC;">长(M)</th>
+				<th width="20%" style="border-bottom: 1px solid #CCCCCC;">宽(M)</th>
+				<th width="17%" style="border-bottom: 1px solid #CCCCCC;">面积(M2)</th>
+				<th width="21%" style="border-bottom: 1px solid #CCCCCC;">说明</th>
 			</tr></thead>
-			<tbody>
-			<tr *ngFor="let room of rooms">
-				<div *ngIf="room.level!='' || room.out!=''">
+			<tbody *ngFor="let room of rooms">
+				<tr *ngIf="room.level !='' || room.out !=''">
 					<td style="border-bottom: 1px solid #CCCCCC;">{{room.level}}</td>
 					<td style="border-bottom: 1px solid #CCCCCC;">{{room.out}}</td>
 					<td style="border-bottom: 1px solid #CCCCCC;">{{room.len}}</td>
 					<td style="border-bottom: 1px solid #CCCCCC;">{{room.wth}}</td>
 					<td style="border-bottom: 1px solid #CCCCCC;">{{room.area}}</td>
 					<td style="border-bottom: 1px solid #CCCCCC;">{{room.desc}}</td>
-				</div>
-			</tr>
+				</tr>
 			</tbody></table>
 			</div>
 		</ion-item>

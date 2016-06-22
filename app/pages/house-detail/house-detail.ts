@@ -3,6 +3,7 @@ import {OnInit,Component} from '@angular/core';;
 //import {Geolocation} from 'ionic-native';
 import {SocialSharing} from 'ionic-native';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
+import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {SchoolSearchPage} from '../../pages/school-search/school-search';
 
 /*
@@ -218,10 +219,11 @@ export class HouseDetailPage implements OnInit {
 
 
   static get parameters() {
-    return [[NavController], [NavParams], [MapleRestData]];
+    return [[NavController], [NavParams], [MapleRestData], [MapleConf]];
   }
 
-  constructor(nav, private navParams: NavParams, private mapleRestData: MapleRestData,private platform: Platform) {
+  constructor(nav, private navParams: NavParams, private mapleRestData: MapleRestData, private mapleConf: MapleConf, 
+	private platform: Platform) {
     this.nav = nav;
     this.parms = { 'id': navParams.data };
      //this.isAndroid = platform.is('android');
@@ -239,7 +241,10 @@ export class HouseDetailPage implements OnInit {
 	private F2M = {feet:"英尺", meter:"米"};
 
   ngOnInit() {
-    this.getResult('index.php?r=ngget/getHouseDetail');
+this.mapleConf.load().then(data => {
+    //this.getResult('index.php?r=ngget/getHouseDetail');
+		this.getResult(data.houseDetailRest);
+    })		
   }
 
   getResult(url) {
@@ -276,11 +281,11 @@ export class HouseDetailPage implements OnInit {
 
   getPriceTxt() {
     let priceTxt;
-    if ( this.house.s_r == "Sale")
-      priceTxt= Number(this.house.lp_dol)/10000,0 + "万加币";
+		if ( this.house.s_r == "Sale")
+      priceTxt = Number(this.house.lp_dol)/10000 + "万加币";
     else
       priceTxt = this.house.lp_dol + "加元/月";
-    return priceTxt;
+		return priceTxt;
   }
 
 	getPriceRMB() {
@@ -310,7 +315,6 @@ export class HouseDetailPage implements OnInit {
       if ( dc2 ) roomDesc = roomDesc + " , " + dc2;
       if ( dc3)  roomDesc = roomDesc + " , " + dc3;
      
-		 console.log(roomDesc);
       return roomDesc;
    }
 
@@ -325,6 +329,10 @@ export class HouseDetailPage implements OnInit {
   gotoVideo() {
     window.open(this.house.video_url);
   }
+
+	photoUrl(photo) {
+		return this.mapleConf.data.picHost + photo;
+	}
 
 
    share(message, subject, file, link) {
