@@ -30,6 +30,21 @@ export class StatsPage {
     private housearea;
     private landarea;
     //private today;
+    private locationName = {
+        "Composite6": '全国综合指数6',
+        "Composite11": '全国综合指数11',
+        "Victoria": '维多利亚',
+        "Vancouver": '温哥华',
+        "Calgary": '卡尔加里',
+        "Edmonton": '埃德蒙顿',
+        "Hamilton": '哈密尔顿',
+        "Toronto": '多伦多',
+        "Ottawa": '渥太华',
+        "Montreal": '蒙特利尔',
+        "Quebec": '魁北克',
+        "Halifax": '哈利法克斯',
+
+    }
     private cnnames = {
         'all_avgprice': '所有房源：平均房价',
         'condo_avgprice': '楼房：平均房价',
@@ -57,6 +72,41 @@ export class StatsPage {
         'detach_snlr': '独立房：售出/新盘比'
 
     };
+    private mlsChartList = [
+        { data: 'price', tip: '价格', title: '价格分布图' },
+        //{ data: 'property_type', tip: '房型', title: '房型分布饼图' },
+        { data: 'housearea', tip: '房屋面积', title: '房屋面积分布图' },
+        { data: 'landarea', tip: '土地面积', title: '土地面积分布图' },
+        { data: 'city', tip: '城市房源', title: '城市房源分布图' },
+        { data: 'province', tip: '省房源', title: '省房源分布图' }
+
+    ];
+    private gtaChartList = [
+        { data: 'avgdom', title: '平均售出日' },
+        { data: 'avgmoi', title: '存量月份' },
+        { data: 'avgprice', title: '平均房价' },
+        { data: 'avgsplp', title: '成交价/挂盘价比' },
+        { data: 'active', title: '在售房源' },
+        { data: 'sales', title: '月销售房源' },
+        { data: 'newlist', title: '月新增房源' },
+        { data: 'snlr', title: ' 售出/新盘比' },
+    ]
+
+
+
+    private hpiChartList = [
+        { location: "Composite11", title: "全国综合指数11" },
+        { location: "Toronto", title: "多伦多房屋指数图表" },
+        { location: "Vancouver", title: "温哥华房屋指数图表" },
+        { location: "Calgary", title: "卡尔加里房屋指数图表" },
+        { location: "Victoria", title: "维多利亚房屋指数图表" },
+        { location: "Edmonton", title: "埃德蒙顿房屋指数图表" },
+        { location: "Ottawa", title: "渥太华房屋指数图表" },
+        { location: "Montreal", title: "蒙特利尔房屋指数图表" },
+        { location: "Quebec", title: "魁北克房屋指数图表" },
+        { location: "Halifax", title: "哈利法克斯房屋指数图表" },
+        { location: "Hamilton", title: "哈密尔顿房屋指数图表" },
+    ]
 
     private highchartsOptions = Highcharts.setOptions({
         lang: {
@@ -99,6 +149,7 @@ export class StatsPage {
             //console.log(data.getMlsDataRest);
             this.getMlsResult(data.getMlsDataRest);
             this.getHouseStats(data.getHouseStatsRest);
+            this.getHpiStats(data.hpiStatsRest);
         })
     }
 
@@ -151,6 +202,44 @@ export class StatsPage {
             });
     }
 
+
+    getHpiStats(url) {
+        this.mapleRestData.load(url, { id: 0 }).subscribe(
+            data => {
+
+                for (let location in data) {
+                    let value = data[location]; // Hamilton,Vancouver etc
+                    console.log(location);
+                    let chartdata = [];
+                    //Loop through each month
+                    //console.log(value);
+                    for (let v in value) {
+                        chartdata.push([Number(value[v]["date"]), Number(value[v]["hpi"])]);
+                    }
+
+
+                    this.seriesOptions[location] = {
+                        type: 'line',
+                        name: this.locationName[location],
+                        data: chartdata,
+                        tooltip: {
+                            valueDecimals: 0,
+                            dateTimeLabelFormats: {
+                                minute: "%A, %b %e, %Y",
+                                hour: "%Y/%b",
+                                day: "%Y/%b",
+
+                            }
+
+                        }
+                    };
+                    console.log(this.seriesOptions[location]);
+                }
+
+
+            });
+    }
+
     getHouseStats(url) {
         this.mapleRestData.load(url, { id: 0 }).subscribe(
             data => {
@@ -167,6 +256,30 @@ export class StatsPage {
 
     }
 
+    hpiStats(location, t) {
+
+        let options: HighstockOptions = {
+            credits: { enabled: false },
+            chart: {
+                zoomType: 'x',
+                renderTo: 'chart'
+            },
+            rangeSelector: { inputEnabled: false },
+            legend: { enabled: true },
+            navigator: { enabled: false },
+            scrollbar: { enabled: false },
+            title: { text: t },
+            series: [
+                this.seriesOptions[location],
+
+            ]
+
+        };
+
+        this.nav.push(chartStats, { type: 1, options: options });
+
+
+    }
 
     gtaStats(c, t) {
 
