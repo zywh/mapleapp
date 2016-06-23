@@ -1,9 +1,8 @@
-import {Page, NavController, NavParams, Platform} from 'ionic-angular';
+import {NavController, NavParams, Platform} from 'ionic-angular';
 import {OnInit, Component} from '@angular/core';;
-//import {Geolocation} from 'ionic-native';
 import {SocialSharing} from 'ionic-native';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-//import {MAPLECONF} from '../../providers/maple-rest-data/maple-config';
+import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 // declare var WeChat: any;
 // declare var Wechat: any; //tx-wechat
 
@@ -11,7 +10,7 @@ import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
   templateUrl: 'build/pages/project-detail/project-detail.html'
 })
 export class ProjectDetailPage implements OnInit {
-  private nav;
+
   private parms: Object;
   private section: string = "summary";
   private isAndroid: boolean = false;
@@ -29,12 +28,17 @@ export class ProjectDetailPage implements OnInit {
     replaceurl: ''
   };
 
-  static get parameters() {
-    return [[NavController], [NavParams], [MapleRestData]];
-  }
+  // static get parameters() {
+  //   return [[NavController], [NavParams], [MapleRestData]];
+  // }
 
-  constructor(nav, private navParams: NavParams, private mapleRestData: MapleRestData, private platform: Platform) {
-    this.nav = nav;
+  constructor(
+    private navParams: NavParams,
+    private mapleRestData: MapleRestData,
+    private mapleconf: MapleConf,
+    private platform: Platform
+  ) {
+
     this.parms = { 'id': navParams.data };
     //this.isAndroid = platform.is('android');
 
@@ -47,16 +51,18 @@ export class ProjectDetailPage implements OnInit {
   };
 
   ngOnInit() {
-    this.getResult('index.php?r=ngget/getProjects');
+   
+    this.mapleconf.load().then(data => {
+      this.getResult(data.projectRest);
+      
+    })
   }
 
   getResult(url) {
     this.mapleRestData.load(url, this.parms).subscribe(
       data => {
         this.project = data;
-        // let link = "http://m.maplecity.com.cn/index.php?r=projects/more&id=" + this.project.id;
-        // let img = this.project.room_type_image.replace('uploads', this.project.replaceurl);
-        // console.log(img + ":" + this.project.name + ":" + link);
+      
       }
 
     )
@@ -77,47 +83,47 @@ export class ProjectDetailPage implements OnInit {
     //   //alert("Wechat plugin is not installed.");
     //   return false;
     // } else {
-      // this.platform.ready().then(() => {
-      //window.plugins.socialsharing.share(message, subject, file, link);
-      //console.log(this.project.room_type_image + ":" + this.project.name)
-      let link = "http://m.maplecity.com.cn/index.php?r=projects/more&id=" + this.project.id;
-      let img = this.project.room_type_image.replace('uploads', this.project.replaceurl);
-      console.log(img);
-      //let link = "http://m.maplecity.com.cn/index.php?r=projects/more&id=" + this.project.id;
-      SocialSharing.share(this.project.summary, this.project.name, img, link);
-      // Wechat.share({
-      //   message: {
-      //     title: this.project.name,
-         
-      //     description: this.project.summary,
-      //     //mediaTagName: "Media Tag Name(optional)",
-      //     thumb: img,
-      //     media: {
-      //       type: Wechat.Type.WEBPAGE,   // webpage
-      //       webpageUrl: link    // webpage
-      //     }
-      //   },
-      //   scene: Wechat.Scene.TIMELINE   // share to Timeline
-      // }, function () {
-      //   alert("Success");
-      // }, function (reason) {
-      //   alert("Failed: " + reason);
-      // });
-      // WeChat.share({
-      //   type: WeChat.ShareType.webpage,
-      //   title:  this.project.name,
-      //   description: this.project.summary,
-      //   url: link,
-      //   thumbData: img
-      // }, WeChat.Scene.timeline, function () {
-      //   console.log('分享成功~');
-      // }, function (reason) {
-      //   // 分享失败
-      //   console.log(reason);
-      // });
+    // this.platform.ready().then(() => {
+    //window.plugins.socialsharing.share(message, subject, file, link);
+    //console.log(this.project.room_type_image + ":" + this.project.name)
+    let link = "http://m.maplecity.com.cn/index.php?r=projects/more&id=" + this.project.id;
+    let img = this.project.room_type_image.replace('uploads', this.project.replaceurl);
+    console.log(img);
+    //let link = "http://m.maplecity.com.cn/index.php?r=projects/more&id=" + this.project.id;
+    SocialSharing.share(this.project.summary, this.project.name, img, link);
+    // Wechat.share({
+    //   message: {
+    //     title: this.project.name,
 
-      //wx223b36a9265ba2d5
-      //(<any>window).Wechat.whatever();
+    //     description: this.project.summary,
+    //     //mediaTagName: "Media Tag Name(optional)",
+    //     thumb: img,
+    //     media: {
+    //       type: Wechat.Type.WEBPAGE,   // webpage
+    //       webpageUrl: link    // webpage
+    //     }
+    //   },
+    //   scene: Wechat.Scene.TIMELINE   // share to Timeline
+    // }, function () {
+    //   alert("Success");
+    // }, function (reason) {
+    //   alert("Failed: " + reason);
+    // });
+    // WeChat.share({
+    //   type: WeChat.ShareType.webpage,
+    //   title:  this.project.name,
+    //   description: this.project.summary,
+    //   url: link,
+    //   thumbData: img
+    // }, WeChat.Scene.timeline, function () {
+    //   console.log('分享成功~');
+    // }, function (reason) {
+    //   // 分享失败
+    //   console.log(reason);
+    // });
+
+    //wx223b36a9265ba2d5
+    //(<any>window).Wechat.whatever();
     //}
   }
 

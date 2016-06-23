@@ -26,10 +26,7 @@ export class HomePage implements OnInit {
   projects: Object;
   private postListRest;
   private post1;
-
-  static get parameters() {
-    return [[NavController], [NavParams], [MapleRestData], [MapleConf]];
-  }
+  
 
   constructor(
     private nav: NavController,
