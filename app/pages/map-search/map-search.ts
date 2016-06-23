@@ -1,12 +1,8 @@
 import {Modal, Loading, Events, Alert, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
-//import {AngularRange} from 'angular-ranger';
-//import {RichMarker} from 'rich-marker'; It doesn't provide TS definition. Use ext URL to include in index.html
 import { NgZone, Component} from '@angular/core';;
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-//import {Connectivity} from '../../providers/connectivity/connectivity';
-//import {McSearchOption} from './search-option';
 import {SelectOptionModal} from './map-option-modal';
 import {ConferenceData} from '../../providers/conference-data';
 declare var RichMarker: any;
@@ -30,8 +26,6 @@ interface selectOptionsObj {
 */
 @Component({
   templateUrl: 'build/pages/map-search/map-search.html',
-  //directives: [McSearchOption]
-
 })
 
 
@@ -148,9 +142,7 @@ export class MapSearchPage {
         if (lat > 20) {
           this.loadMap(latLng, 16);
         } else {
-          // let lat: Number = 43.6532;
-          // let lng: Number = -79.3832;
-         // this.loadMap(lat, lng, 16);
+        
          this.loadMap(this.defaultcenter,16);
         }
 
@@ -167,15 +159,7 @@ export class MapSearchPage {
 
   }
 
-  // ionViewWillEnter() {
-  //   console.log("House Map View will enter");
-  // }
-
-  // ionViewDidEnter() {
-  //   console.log("House Map View did entered");
-  //   // this.changeMap();
-  //   //google.maps.event.trigger(this.map, 'resize');
-  // }
+ 
   swiperOptions = {
     //loop: true,
     //pager: true,
@@ -607,19 +591,7 @@ export class MapSearchPage {
 
             let tlat = parseFloat(house.GeocodeLat);
             let tlng = parseFloat(house.GeocodeLng);
-            // let li = "<li class='panel_house_view' >"
-
-            //   + house.MLS
-            //   + "<img src=' " + imgurltn + "'>"
-            //   + " <div class='panel_house_text'>"
-            //   + "<div>" + house.Address + "</div>"
-            //   + "<div >" + house.MunicipalityName + " " + house.ProvinceCname + "</div>"
-            //   + "<div >" + house.HouseType + ":" + house.Beds + "卧" + house.Baths + "卫" + house.Kitchen + "厨" + "</div>"
-            //   + "<div>价钱:" + hprice + "</div> </div>"
-            //   + "</a>"
-
-            //   + "</li>";
-
+           
 
             let li = ' <ion-card>'
               + '<img src="' + this.imgHost + house.CoverImg + '" />'

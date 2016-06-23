@@ -1,8 +1,5 @@
 import {Modal, Range, NavParams, Page, ViewController} from 'ionic-angular';
 import {Component} from '@angular/core';;
-//import {HouseDetailPage} from '../house-detail/house-detail';
-//import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-//import {McSearchOption} from './search-option';
 
 interface selectOptionsObj {
     selectPrice?: String,
@@ -36,11 +33,7 @@ export class SelectOptionModal {
 
     }
 
-    // brightness: number = 20;
-    // saturation: number = 0;
-    // warmth: number = 1300;
-
-    // structure: any = { lower: 33, upper: 60 };
+   
     onChange(ev) {
         console.log("Changed", ev);
         this.unit = (this.selectUnit == true)? 10: 1;

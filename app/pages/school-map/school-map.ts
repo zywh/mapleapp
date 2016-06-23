@@ -1,7 +1,5 @@
 import {Modal, Loading,Tabs, Alert, ActionSheet, Events, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
-//import {AngularRange} from 'angular-ranger';
-//import {RichMarker} from 'rich-marker'; It doesn't provide TS definition. Use ext URL to include in index.html
 import { NgZone, Component, ViewChild} from '@angular/core';;
 import {MapSearchPage} from '../map-search/map-search';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
@@ -19,15 +17,9 @@ interface schoolSelectOptionsObj {
   selectXingzhi?: String
 }
 
-/*
-  Generated class for the MapSearchPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   templateUrl: 'build/pages/school-map/school-map.html',
-  //directives: [McSearchOption]
+  
 })
 
 
@@ -42,9 +34,8 @@ export class SchoolMapPage {
   private markerArray = [];
   //private htmlArray = [];
   private htmlArrayPosition = 0;
-  private totalCount: Number; //Returned House
-  // private listAllHtml = ''; //hold houses on current map
-  // public isListShow: boolean = false;
+  //private totalCount: Number; //Returned House
+  
   private schoolList: Array<any>;
   private markerType;
 
@@ -75,9 +66,12 @@ export class SchoolMapPage {
 
 
   loadRichMarker(){
+
+    
      let script = document.createElement("script");
       script.src = "extjs/richmarker.js";
       document.body.appendChild(script);
+  
   }
 
 
