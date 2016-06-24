@@ -30,6 +30,7 @@ export class TabsPage {
   about: any = AboutPage;
   mySelectedIndex: number;
   mapParms: MapParmObj ;
+  private preload: Boolean = true;
 
 
 

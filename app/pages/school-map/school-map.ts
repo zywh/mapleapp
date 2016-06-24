@@ -1,4 +1,4 @@
-import {Modal, Loading,Tabs, Alert, ActionSheet, Events, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
+import {Modal, Loading, Tabs, Alert, ActionSheet, Events, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 import { NgZone, Component, ViewChild} from '@angular/core';;
 import {MapSearchPage} from '../map-search/map-search';
@@ -19,7 +19,7 @@ interface schoolSelectOptionsObj {
 
 @Component({
   templateUrl: 'build/pages/school-map/school-map.html',
-  
+
 })
 
 
@@ -31,11 +31,14 @@ export class SchoolMapPage {
   private parms: Object;
   private map;
   private center;
+  private defaultcenter = new google.maps.LatLng(43.6532, -79.3832);
   private markerArray = [];
+  private sviewLoaded: Boolean = false;
+  private defaultZoom: Number = 13;
   //private htmlArray = [];
   private htmlArrayPosition = 0;
   //private totalCount: Number; //Returned House
-  
+
   private schoolList: Array<any>;
   private markerType;
 
@@ -65,13 +68,13 @@ export class SchoolMapPage {
   }
 
 
-  loadRichMarker(){
+  loadRichMarker() {
 
-    
-     let script = document.createElement("script");
-      script.src = "extjs/richmarker.js";
-      document.body.appendChild(script);
-  
+
+    let script = document.createElement("script");
+    script.src = "extjs/richmarker.js";
+    document.body.appendChild(script);
+
   }
 
 
@@ -100,24 +103,21 @@ export class SchoolMapPage {
 
       (position) => {
 
-        //let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        this.defaultcenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         let lat = position.coords.latitude;
-        let lng = position.coords.longitude;
 
         if (lat > 20) {
-          this.loadMap(lat, lng, 14);
+          this.loadMap(this.defaultcenter, 13);
         } else {
-          let lat: Number = 43.6532;
-          let lng: Number = -79.3832;
-          this.loadMap(lat, lng, 14);
+
+          this.loadMap(this.defaultcenter, 13);
         }
 
       },
 
       (error) => {
-        let lat: Number = 43.6532;
-        let lng: Number = -79.3832;
-        this.loadMap(lat, lng, 14);
+
+        this.loadMap(this.defaultcenter, 13);
         console.log(error);
       }, options
 
@@ -128,35 +128,60 @@ export class SchoolMapPage {
     // this.confData.getMap().then(mapData => {  //Need this for werid map issue. Menu page switch will make map blank
     //   this.loadMap(lat, lng, 14);
     // })
-    
+
   }
 
   ionViewWillEnter() {
     console.log("School Map View will enter");
+    //this.setLocation(this.defaultcenter,14);
   }
 
   ionViewDidEnter() {
     console.log("School Map View did entered");
-   // this.changeMap();
-   //google.maps.event.trigger(this.map, 'resize');
+    if (!this.sviewLoaded) {
+       this.map.setZoom(12);
+      console.log("First time view:" + this.sviewLoaded);
+      this.sviewLoaded = true;
+    }
+
   }
 
- 
+  setCenter() {
+    console.log("Set Center");
+
+    let options = { timeout: 10000, enableHighAccuracy: true };
+
+    navigator.geolocation.getCurrentPosition(
+
+      (position) => {
+        this.defaultcenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        let lat = position.coords.latitude;
+        if (lat > 20) {
+           this.setLocation(this.defaultcenter, this.defaultZoom);
+
+        } else { this.setLocation(this.defaultcenter, this.defaultZoom); }
+
+      },
+      (error) => { this.setLocation(this.defaultcenter, this.defaultZoom); }, options
+    );
+
+  }
+
   openSchoolList() {
     console.log(this.schoolList);
 
-    let modal = Modal.create(SchoolListModal, {data: this.schoolList});
+    let modal = Modal.create(SchoolListModal, { data: this.schoolList });
     modal.onDismiss(data => {
       //this.selectSchool = data;
-      
+
     });
     this.nav.present(modal);
 
   }
 
-  loadMap(lat, lng, zoom) {
+  loadMap(center, zoom) {
 
-    this.center = new google.maps.LatLng(lat, lng);
+    //this.center = new google.maps.LatLng(lat, lng);
     //  let latLng = new google.maps.LatLng(-34.9290, 138.6010);
     //let latLng = new google.maps.LatLng(-34.9290, 138.6010);
     //this.confData.getMap().then(mapData => {
@@ -164,7 +189,7 @@ export class SchoolMapPage {
 
     this.map = new google.maps.Map(mapEle, {
       //center: mapData.find(d => d.center),
-      center: this.center,
+      center: center,
       minZoom: 9,
       mapTypeControl: true,
       mapTypeControlOptions: {
@@ -222,24 +247,12 @@ export class SchoolMapPage {
 
 
   itemTapped(event, item, type) {
-    if (type == 1) { //CITY Action
-      let lat = item.lat;
-      let lng = item.lng;
-      let center = new google.maps.LatLng(lat, lng);
-      this.setLocation(center, 14);
-      this.resetItems();
-    }
 
-    if (type == 2) { //SCHOOL Action
-      let lat = item.lat;
-      let lng = item.lng;
-      this.nav.push(MapSearchPage, {
-        lat: lat,
-        lng: lng
-      });
-    }
-
-
+    let lat = item.lat;
+    let lng = item.lng;
+    let center = new google.maps.LatLng(lat, lng);
+    this.setLocation(center, 14);
+    this.resetItems();
 
   }
   //auto complete REST CAll
@@ -313,19 +326,10 @@ export class SchoolMapPage {
         title: '学校简介',
         message: html,
         cssClass: 'school_popup',
-        buttons: [
-          {
-            text: '取消',
-            role: 'cancel',
-           
-          },
+        buttons: [{ text: '取消', role: 'cancel' },
           {
             text: '周边房源',
-            handler: () => {
-           
-             this.events.publish('school:mappage',{lat: lat,lng: lng}); //public event and trigger tab select and map change
-            
-            }
+            handler: () => { this.events.publish('school:mappage', point); }
           }
         ]
       });
@@ -439,7 +443,7 @@ export class SchoolMapPage {
 
 
 				};
-    
+
     this.mapleRestData.load('index.php?r=ngget/getSchoolmap', mapParms).subscribe(
       data => {
 
