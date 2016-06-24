@@ -46,6 +46,7 @@ export class MapSearchPage {
   private htmlArrayPosition = 0;
   private totalCount: Number; //Returned House
   private listAllHtml = ''; //hold houses on current map
+  private currentMlsList = [];
   public isListShow: boolean = false;
   private markerType;
   private imgHost: String;
@@ -186,44 +187,45 @@ export class MapSearchPage {
 
   }
   gotoHouseDetail(mls) {
-    this.nav.push(HouseDetailPage, mls);
+    this.nav.push(HouseDetailPage, {id:mls,ids:this.currentMlsList});
   }
 
-  // openHouseList() {
-  //   if (this.markerType == 'house') {
-  //     this.currentDiv = (this.currentDiv == 'houselist') ? '' : 'houselist';
-  //     console.log("House list show");
-  //   } else {
-  //     console.log("house grid/city,show alert window");
-  //     let actionSheet = ActionSheet.create({
-  //       title: '当前房源' + this.totalCount + '套，选择查询参数或放大地图',
-  //       buttons: [
-  //         {
-  //           text: '查询参数',
-  //           role: 'destructive',
-  //           handler: () => {
-  //             this.currentDiv = 'mapoption';
-  //           }
-  //         }, {
-  //           text: '放大地图',
-  //           handler: () => {
+  openHouseList() {
+    console.log(this.currentMlsList);
+    if (this.markerType == 'house') {
+      this.currentDiv = (this.currentDiv == 'houselist') ? '' : 'houselist';
+      console.log("House list show");
+    } else {
+      console.log("house grid/city,show alert window");
+      let actionSheet = ActionSheet.create({
+        title: '当前房源' + this.totalCount + '套，选择查询参数或放大地图',
+        buttons: [
+          {
+            text: '查询参数',
+            role: 'destructive',
+            handler: () => {
+             this.openModal(this.selectOptions);
+            }
+          }, {
+            text: '放大地图',
+            handler: () => {
 
-  //             let currentzoom = this.map.getZoom();
-  //             this.map.setZoom(currentzoom + 2);
-  //           }
-  //         }, {
-  //           text: '取消',
-  //           role: 'cancel',
-  //           handler: () => {
-  //             console.log('Cancel clicked');
-  //           }
-  //         }
-  //       ]
-  //     });
-  //     this.nav.present(actionSheet);
+              let currentzoom = this.map.getZoom();
+              this.map.setZoom(currentzoom + 2);
+            }
+          }, {
+            text: '取消',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          }
+        ]
+      });
+      this.nav.present(actionSheet);
 
-  //   }
-  // }
+    }
+  }
   //loadMap(lat, lng, zoom) {
   loadMap(pos, zoom) {
 
@@ -404,7 +406,7 @@ export class MapSearchPage {
               let navTransition = alert.dismiss();
               navTransition.then(() => {
                 this.nav.pop();
-                this.nav.push(HouseDetailPage, mls);
+                this.nav.push(HouseDetailPage, {id:mls,ids:this.currentMlsList});
               });
               return false;
             }
@@ -523,6 +525,7 @@ export class MapSearchPage {
     let centerlat = (_ne.lat() + _sw.lat()) / 2;
     let centerlng = (_ne.lng() + _sw.lng()) / 2;
     let HouseArray = [];
+    this.currentMlsList = [];
     let marker;
     let _bounds = _sw.lat() + "," + _sw.lng() + "," + _ne.lat() + "," + _ne.lng();
 
@@ -564,7 +567,7 @@ export class MapSearchPage {
           }
         }   //End of City Markers
 
-
+     
         if (this.markerType == 'house') {
           this._zone.run(() => {
             this.isListShow = true;
@@ -573,7 +576,6 @@ export class MapSearchPage {
           let count = 1;
           let houses = [];
           let totalprice = 0;
-
           let totalhouse = data.Data.MapHouseList.length;
           this.imgHost = data.Data.imgHost;
           let nextLat;
@@ -586,7 +588,8 @@ export class MapSearchPage {
           // console.log('Image Host:' + this.imgHost);
           for (let index = 0, l = totalhouse; index < l; index++) {
             let house = data.Data.MapHouseList[index];
-
+            this.currentMlsList.push(house.MLS);
+           
             if (index < (totalhouse - 1)) {
               nextLat = data.Data.MapHouseList[index + 1].GeocodeLat;
               nextLng = data.Data.MapHouseList[index + 1].GeocodeLng;
