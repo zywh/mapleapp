@@ -6,7 +6,7 @@
 -->
 <ion-navbar *navbar class="map-search hide-border">
   
-  <ion-row center >
+  <!--<ion-row center >
     <ion-col width-10 no-padding>
       <button menuToggle>
         <ion-icon name="menu"></ion-icon>
@@ -26,8 +26,23 @@
       </button>
     </ion-col>
   </ion-row>  
-  
- 
+  -->
+  <ion-buttons start>
+    <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+  </ion-buttons>    
+    <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (ionFocus)="currentDiv='searchlist'" (ionInput)="getItems($event)" placeholder="城市/地址/MLS#"></ion-searchbar>
+   <ion-buttons end>
+   <button class="bar-button-default" (click)="openModal(selectOptions)">
+        <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
+   </button>
+   </ion-buttons>
+   <ion-buttons end>
+    <button class="bar-button-default" (click)="setCenter()">
+        <ion-icon ios="ios-locate-outline" md="md-locate"></ion-icon>
+    </button>
+   </ion-buttons>
 </ion-navbar>
 
 <ion-content class="map-search">

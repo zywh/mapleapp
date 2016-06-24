@@ -23,17 +23,32 @@
     
   </ion-slides> 
   <div >
-  <ion-item-divider  divider>推荐房源</ion-item-divider>
-  <ion-card>
-  </ion-card>
-
+    <ion-searchbar cancelButtonText="取消"  [(ngModel)]="hSearchQuery" (ionFocus)="currentDiv='hSearchlist'" (ionInput)="hGetItems($event)" placeholder="房源搜索：城市/地址/MLS#"></ion-searchbar>
+     <div class="search_list" *ngIf="currentDiv == 'searchlist'" >
+    <ion-item padding *ngFor="let item of cityItems" (click)="itemTapped($event, item,1)" >
+     <button light clear> <ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }}</span></button>
+       <ion-badge item-right>城市</ion-badge>
+    </ion-item>
+    <ion-item padding *ngFor="let item of mlsItems" (click)="itemTapped($event, item,2)">
+       <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }},{{item.city}}</span></button>
+       <ion-badge item-right>MLS</ion-badge>
+    </ion-item>
+    <ion-item padding *ngFor="let item of addressItems" (click)="itemTapped($event, item,3)">
+       <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }},{{item.city}}</span></button>
+       <ion-badge item-right>地址</ion-badge>
+    </ion-item>
+  </div>
+  
+  
+    <ion-searchbar cancelButtonText="取消" [(ngModel)]="sSearchQuery" (ionFocus)="currentDiv='sSearchlist'" (ionInput)="sGetItems($event)" placeholder="学校搜索：城市/学校"></ion-searchbar>
+  </div>
+  <div>
+   <h2 padding-left> 地产咨询</h2>
   <ion-list>
-    <ion-list-header> 地产咨询</ion-list-header>
-    <a ion-item *ngFor="let post of post1" (click)="goToPost(post.id)"> {{post?.title}} </a> 
+      <a ion-item *ngFor="let post of post1" (click)="goToPost(post.id)"> {{post?.title}} </a> 
   </ion-list>  
-  <ion-item-divider divider>加国信息</ion-item-divider>
-  <ion-card>
-  </ion-card>
+  
+  
   </div>
   
 </ion-content>

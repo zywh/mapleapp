@@ -406,7 +406,8 @@ export class MapSearchPage {
               let navTransition = alert.dismiss();
               navTransition.then(() => {
                 this.nav.pop();
-                this.nav.push(HouseDetailPage, {id:mls,ids:this.currentMlsList});
+                //this.nav.push(HouseDetailPage, {id:mls,ids:this.currentMlsList});
+                this.nav.push(HouseDetailPage, mls); 
               });
               return false;
             }
