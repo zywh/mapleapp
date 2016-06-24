@@ -24,6 +24,7 @@ export class AboutPage implements OnInit {
   private postAdvantage: Post;
   private postContact: Post;
   private postHire: Post;
+  private imgHost;
  // private postAbout: Post;
 
   static get parameters() {
@@ -38,6 +39,7 @@ export class AboutPage implements OnInit {
       this.mapleconf.load().then(data => {
       console.log(data.projectRest);
       this.getResult(data.aboutRest);
+      this.imgHost = data.postpicHost;
     })
     
     //this.getResult('index.php?r=ngget/getAbout');
@@ -45,7 +47,12 @@ export class AboutPage implements OnInit {
 
   getResult(url) {
     this.mapleRestData.load(url, { id: 27 }).subscribe(
-      data => { this.postAbout = data;  }
+      data => { 
+        this.postAbout = data;
+        //Change it before first tab is rendered
+        this.postAbout.content = this.changeImgPath(this.postAbout.content);
+        }
+       
     );
     this.mapleRestData.load(url, {id: 28}).subscribe(
       data => this.postAdvantage = data
@@ -56,6 +63,10 @@ export class AboutPage implements OnInit {
     this.mapleRestData.load(url, {id: 31}).subscribe(
        data => this.postHire = data
     );
+  }
+
+  changeImgPath(s){
+    return s.replace(/\/uploads/g, this.imgHost + 'uploads');
   }
 
 
