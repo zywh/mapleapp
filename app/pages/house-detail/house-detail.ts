@@ -17,7 +17,10 @@ import {SchoolSearchPage} from '../../pages/school-search/school-search';
 })
 export class HouseDetailPage implements OnInit {
   private nav;
-  private parms: Object;
+	private id: string;
+	private ids: Array<string>;
+  private prevHouse: string;
+	private nextHouse: string;
   private section: string = "summary";
   private isAndroid: boolean = false;
   private switchF2M: Boolean = true; //"英尺"
@@ -225,10 +228,12 @@ export class HouseDetailPage implements OnInit {
   constructor(nav, private navParams: NavParams, private mapleRestData: MapleRestData, private mapleConf: MapleConf, 
 	private platform: Platform) {
     this.nav = nav;
-    this.parms = { 'id': navParams.data };
+		console.log(navParams);
+    this.id = navParams.data.id;
+		this.ids = navParams.data.ids;
      //this.isAndroid = platform.is('android');
-
   }
+
   swiperOptions = {
     loop: true,
     //pager: true,
@@ -239,28 +244,40 @@ export class HouseDetailPage implements OnInit {
   private COMP_PTS = {"N":"北","S":"南","W":"西","E":"东"};
   private S_R = {"Sale":"出售","Lease":"出租"};
 	private F2M = {sfeet:"平方英尺", smeter:"平方米"};
-	private houseDetailRest: string;
 
   ngOnInit() {
-this.mapleConf.load().then(data => {
-    //this.getResult('index.php?r=ngget/getHouseDetail');
-		this.getResult(data.houseDetailRest);
+		this.mapleConf.load().then(data => {
+    	//this.getResult('index.php?r=ngget/getHouseDetail');
+			this.getResult(data.houseDetailRest, this.id);
     })		
   }
 
-  getResult(url) {
-    this.mapleRestData.load(url, this.parms).subscribe(
+  getResult(url,id) {
+    this.mapleRestData.load(url, {'id':id}).subscribe(
       data => { 
 				//console.log(data);
+				this.id = id;
 				this.house = data.house;
 				this.house_mname = data.house_mname; 
 				this.house_propertyType = data.house_propertyType; 
 				this.exchangeRate = data.exchangeRate; 
 				this.photos = data.photos; 
-				this.houseRooms(this.house);}
+				this.houseRooms(this.house);
+				this.setPrevNext();
+		}
     )
   }
   
+ setPrevNext() {
+	  let pos = this.ids.indexOf(this.id);
+		
+   	this.prevHouse = (pos > 0) ? this.ids[pos - 1]: null;
+		console.log("prevHouse" + this.prevHouse);
+
+   	this.nextHouse = (pos < this.ids.length - 1) ? this.ids[pos + 1]: null;
+		console.log("nextHouse" + this.nextHouse);
+}
+
 	round1(num) {    
     return +(Math.round(+(num + "e+1"))  + "e-1");
 }
@@ -338,14 +355,14 @@ this.mapleConf.load().then(data => {
 		return this.mapleConf.data.picHost + photo;
 	}
 
-  go2PreHouse() {
-    //console.log("PreHouse" + this.preHouse);
-    //this.getResult(this.mapleConf.data.houseDetailRest, this.preHouse);
-  }
+  go2PrevHouse() {
+		if (this.prevHouse)
+    	this.getResult(this.mapleConf.data.houseDetailRest, this.prevHouse);
+	}
 
   go2NextHouse() {
-    //console.log("NextHouse" + this.nextHouse);
-    //this.getResult(this.mapleConf.data.houseDetailRest, this.nextHouse)
+		if (this.nextHouse) 
+    	this.getResult(this.mapleConf.data.houseDetailRest, this.nextHouse);
   }
 
    share(message, subject, file, link) {
