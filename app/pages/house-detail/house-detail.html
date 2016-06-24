@@ -16,8 +16,9 @@
 <ion-content class="house-detail">
 
   <ion-slides [options]="swiperOptions" class="swiper-container">
-    <ion-slide *ngFor="let photo of photos">
-      <img [src]="photoUrl(photo)" class="slide-image" />
+	<div id="dummy"></div>
+	<ion-slide *ngFor="let photo of photos">
+      <img [src]="photoUrl(photo)" class="slide-image"/>
     </ion-slide>
   </ion-slides>
   
@@ -26,7 +27,7 @@
       <ion-segment-button value="school" (ionSelect)="gotoSchool()">
         学校
       </ion-segment-button>
-      <ion-segment-button value="video" (ionSelect)="gotoVidoe()">
+      <ion-segment-button value="video" (ionSelect)="gotoVideo()">
         视频
       </ion-segment-button>
     </ion-segment>
@@ -99,7 +100,7 @@
 			<img src="img/maple/plat.jpg"/><a href="tel:400-9900-393"><span>400-870-1029</span></a>
 	</div>
 	</div>
-	</ion-card>	
+</ion-card>	
 
 <!--End-->
 
@@ -108,17 +109,17 @@
 	<ion-list class="xqlb_list">
 		<ion-item-divider id="housedivider" divider>
 			<ion-row>
-					<ion-col >
+					<ion-col>
 							<ion-item no-lines>
 									<ion-label>详情列表</ion-label>
 							</ion-item>
 					</ion-col>
-					<ion-col-40>
+					<ion-col>
 							<ion-item no-lines>
-									<ion-label>({{(switchF2M == true)? '尺':'米'}})</ion-label>
+									<ion-label class="switchF2M">{{(switchF2M == true)? F2M.feet: F2M.meter}}</ion-label>
 									<ion-toggle [(ngModel)]="switchF2M"></ion-toggle>
 							</ion-item>
-					</ion-col-40>
+					</ion-col>
 			</ion-row>
 		</ion-item-divider>
 		<ion-item><span class="xqlb_label">MLS编号：</span>{{house.ml_num}}</ion-item>
@@ -126,17 +127,17 @@
 		<ion-item><span class="xqlb_label">物业类别：</span>{{house_propertyType?.name}}</ion-item>
 		<ion-item><span class="xqlb_label">挂牌时间：</span>{{house.pix_updt}}</ion-item>
 		<ion-item><span class="xqlb_label">房屋层数：</span>{{house.style}}</ion-item>
-		<ion-item><span class="xqlb_label">土地面积：</span>{{getLandArea(switchF2M, house.land_area)}}</ion-item>
+		<ion-item><span class="xqlb_label">土地面积：</span>{{getLandArea()}}</ion-item>
 		<ion-item><span class="xqlb_label">房屋面积：</span>{{house.sqft}}</ion-item>
 		<ion-item><span class="xqlb_label">土地描述：</span>{{house.acres}}</ion-item>
-		<ion-item><span class="xqlb_label">房屋数量：</span>{{house.rms + house.rooms_plus}}</ion-item>
+		<ion-item><span class="xqlb_label">房屋数量：</span>{{add2(house.rms,house.rooms_plus)}}</ion-item>
 		<ion-item><span class="xqlb_label">地税/年份：</span>{{house.taxes}}/{{house.yr}} 年</ion-item>
-		<ion-item><span class="xqlb_label">卧房数量：</span>{{house.br + house.br_plus}}</ion-item>
+		<ion-item><span class="xqlb_label">卧房数量：</span>{{add2(house.br,house.br_plus)}}</ion-item>
 		<ion-item><span class="xqlb_label">物业管理费：</span>无</ion-item>
-		<ion-item><span class="xqlb_label">厨房数量：</span>{{house.num_kit + house.kit_plus}}</ion-item>
+		<ion-item><span class="xqlb_label">厨房数量：</span>{{add2(house.num_kit,house.kit_plus)}}</ion-item>
 		<ion-item><span class="xqlb_label">建造年份：</span>{{house.yr_built}}年</ion-item>
 		<ion-item><span class="xqlb_label">卫生间数量：</span>{{house.bath_tot}}</ion-item>
-		<ion-item><span class="xqlb_label">地下室：</span>{{house.bsmt1_out}}　{{house.bsmt2_out}}</ion-item>
+		<ion-item><span class="xqlb_label">地下室：</span>{{house.bsmt1_out}}&nbsp;{{house.bsmt2_out}}</ion-item>
 		<ion-item><span class="xqlb_label">车库数量：</span>{{house.gar_space}}</ion-item>
 		<ion-item><span class="xqlb_label">暖气：</span>{{house.heating}}</ion-item>
 		<ion-item><span class="xqlb_label">大门朝向：</span>{{COMP_PTS[house.comp_pts]}}</ion-item>
@@ -152,21 +153,21 @@
 			<div class="fwbj_table">
 			<table>
 			<thead><tr>
-				<th width="12%" style="border-bottom: 1px solid #CCCCCC;">楼层</th>
-				<th width="12%" style="border-bottom: 1px solid #CCCCCC;">房间</th>
-				<th width="20%" style="border-bottom: 1px solid #CCCCCC;">长(M)</th>
-				<th width="20%" style="border-bottom: 1px solid #CCCCCC;">宽(M)</th>
-				<th width="17%" style="border-bottom: 1px solid #CCCCCC;">面积(M2)</th>
-				<th width="21%" style="border-bottom: 1px solid #CCCCCC;">说明</th>
+				<th width="12%">楼层</th>
+				<th width="12%">房间</th>
+				<th width="20%">长(M)</th>
+				<th width="20%">宽(M)</th>
+				<th width="17%">面积(M2)</th>
+				<th width="21%">说明</th>
 			</tr></thead>
 			<tbody *ngFor="let room of rooms">
 				<tr *ngIf="room.level !='' || room.out !=''">
-					<td style="border-bottom: 1px solid #CCCCCC;">{{room.level}}</td>
-					<td style="border-bottom: 1px solid #CCCCCC;">{{room.out}}</td>
-					<td style="border-bottom: 1px solid #CCCCCC;">{{room.len}}</td>
-					<td style="border-bottom: 1px solid #CCCCCC;">{{room.wth}}</td>
-					<td style="border-bottom: 1px solid #CCCCCC;">{{room.area}}</td>
-					<td style="border-bottom: 1px solid #CCCCCC;">{{room.desc}}</td>
+					<td>{{room.level}}</td>
+					<td>{{room.out}}</td>
+					<td>{{room.len}}</td>
+					<td>{{room.wth}}</td>
+					<td>{{room.area}}</td>
+					<td>{{room.desc}}</td>
 				</tr>
 			</tbody></table>
 			</div>
