@@ -291,8 +291,8 @@ export class StatsPage {
             },
             rangeSelector: { inputEnabled: false },
             legend: { enabled: true },
-            navigator: { enabled: false },
-            scrollbar: { enabled: false },
+            navigator: { enabled: true },
+            scrollbar: { enabled: true },
             title: { text: t },
             //series: [{}]
             series: [
@@ -302,7 +302,8 @@ export class StatsPage {
             ]
 
         };
-
+        console.log(c);
+        console.log(options);    
         this.nav.push(chartStats, { type: 1, options: options });
 
 

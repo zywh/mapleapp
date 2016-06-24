@@ -23,9 +23,14 @@ import {MapleFooter} from '../maple-footer/maple-footer';
 export class HomePage implements OnInit {
   //private nav;
   // private parms = {};
-  projects: Object;
+  private projects: Object;
   private postListRest;
   private post1;
+  private searchQuery: String = '';
+  private cityItems: any;
+  private addressItems: any;
+  private mlsItems: any;
+  private currentDiv;
   
 
   constructor(
@@ -76,6 +81,73 @@ export class HomePage implements OnInit {
   goToPost(id) {
     this.nav.push(PostPage, id);
   }
+
+   resetItems() {
+    this.cityItems = [];
+    this.addressItems = [];
+    this.mlsItems = [];
+    //this.searchQuery = '';
+  }
+
+
+  itemTapped(event, item, type) {
+    if (type == 1) { //CITY Action
+      let lat = item.lat;
+      let lng = item.lng;
+      let center = new google.maps.LatLng(lat, lng);
+      //this.setLocation(center, 14);
+      this.resetItems();
+    }
+
+    if (type == 2) { //MLS Action
+      // this.nav.push(HouseDetailPage, {
+      //   item: item.id //pass MLS# to house detail
+      // });
+    }
+
+    if (type == 3) { //Address Action
+      // this.nav.push(HouseDetailPage, {
+      //   item: item.id //pass MLS# to house detail
+      // });
+    }
+
+  }
+  //auto complete REST CAll
+  hGetItems(searchbar) {
+
+    this.resetItems();
+    this.currentDiv = 'searchlist';
+
+    // set q to the value of the searchbar
+    let q = searchbar.value;
+
+    // if the value is an empty string don't filter the items
+    if (q.trim() == '') {
+      return;
+    } else {
+      let parm = { term: q.trim() };
+      //Call REST and generate item object
+      this.mapleRestData.load('index.php?r=ngget/getCityList', parm).subscribe(
+        data => {
+          if (data.hasOwnProperty("CITY")) {
+            this.cityItems = data.CITY;
+            console.log("CITY Autocomplete:" + this.cityItems);
+          };
+
+          if (data.hasOwnProperty("MLS")) {
+            this.mlsItems = data.MLS;
+            console.log("MLS Autocomplete:" + this.mlsItems);
+          }
+          if (data.hasOwnProperty("ADDRESS")) {
+            this.addressItems = data.ADDRESS;
+            console.log("ADDRESS Autocomplete:" + this.addressItems);
+          }
+          console.log(data);
+        }); //end of callback
+      //this.items = ["city", "address", "MLS"];
+    }
+  }
+
 
 }
 
