@@ -39,11 +39,11 @@
       <p> {{house.video}} </p>
     </div>
   </div>
- <ion-card class="fyxqupright_cont">
+ <ion-card class="fyxq_cont">
 	<div class="fyxq_ptss">
 		<div class="fyxq_ptssleft">价格：</div>
 		<div class="fyxq_ptssright">{{getPriceTxt()}}
-			<span *ngIf="exchangeRate">&nbsp;（约<i>{{getPriceRMB()}}</i>万人民币）</span>
+			<span *ngIf="exchangeRate">&nbsp;(约<i>{{getPriceRMB()}}</i>万人民币)</span>
 		</div>
 		<div class="cl"></div>
 	</div>
@@ -53,7 +53,7 @@
 		<div class="cl"></div>
 	</div>
 	<div class="fyxq_ptss">
-		<div class="fyxq_ptssleft">{{(house.investType_id == 1)?"学区":"城市"}}:</div>
+		<div class="fyxq_ptssleft">{{(house.investType_id == 1)?"学区":"城市"}}：</div>
 		<div class="fyxq_ptssright">{{house_mname?.municipality_cname}}</div>
 		<div class="cl"></div>
 	</div>
@@ -95,7 +95,7 @@
 			</div>
 		<div class="cl"></div>
 	</div>
-		<div class="fyxq_rx">服务热线：
+	<div class="fyxq_rx">服务热线：
 			<img src="img/maple/plat.jpg"/><a href="tel:400-9900-393"><span>400-870-1029</span></a>
 	</div>
 	</div>
@@ -104,22 +104,31 @@
 <!--End-->
 
 <!--START-->			
-<ion-card class="fyxqdown_left_cont ui-bar">
+<ion-card class="fyxqlb_cont">
 	<ion-list class="xqlb_list">
 		<ion-item-divider id="housedivider" divider>
-			<span>详情列表
-			<!--<ion-label [(ngModel)]="labelF2M"></ion-label>-->
-    		<ion-toggle (change)="toggleF2M"></ion-toggle>
-			</span>
+			<ion-row>
+					<ion-col >
+							<ion-item no-lines>
+									<ion-label>详情列表</ion-label>
+							</ion-item>
+					</ion-col>
+					<ion-col-30>
+							<ion-item no-lines>
+									<ion-label>({{(switchF2M == true)? '尺':'米'}})</ion-label>
+									<ion-toggle [(ngModel)]="switchF2M"></ion-toggle>
+							</ion-item>
+					</ion-col-30>
+			</ion-row>
 		</ion-item-divider>
 		<ion-item><span class="xqlb_label">MLS编号：</span>{{house.ml_num}}</ion-item>
 		<ion-item><span class="xqlb_label">交叉路口：</span>{{house.cross_st}}</ion-item>
 		<ion-item><span class="xqlb_label">物业类别：</span>{{house_propertyType?.name}}</ion-item>
 		<ion-item><span class="xqlb_label">挂牌时间：</span>{{house.pix_updt}}</ion-item>
 		<ion-item><span class="xqlb_label">房屋层数：</span>{{house.style}}</ion-item>
-		<ion-item><span class="xqlb_label">土地面积：</span><span class="s1">{{house.land_area}}</span><span class="c1">平方英尺</span></ion-item>
-		<ion-item><span class="xqlb_label">房屋面积：</span><span class="s2">{{house.sqft}}</span><span class="c2">平方英尺</span></ion-item>
-		<ion-item><span class="xqlb_label">土地描述：</span><span class="s3"></span><span class="c3">{{house.acres}}</span></ion-item>
+		<ion-item><span class="xqlb_label">土地面积：</span>{{getLandArea(switchF2M, house.land_area)}}</ion-item>
+		<ion-item><span class="xqlb_label">房屋面积：</span>{{house.sqft}}</ion-item>
+		<ion-item><span class="xqlb_label">土地描述：</span>{{house.acres}}</ion-item>
 		<ion-item><span class="xqlb_label">房屋数量：</span>{{house.rms + house.rooms_plus}}</ion-item>
 		<ion-item><span class="xqlb_label">地税/年份：</span>{{house.taxes}}/{{house.yr}} 年</ion-item>
 		<ion-item><span class="xqlb_label">卧房数量：</span>{{house.br + house.br_plus}}</ion-item>
@@ -140,7 +149,7 @@
 
 		<ion-item-divider id="housedivider" divider>房屋布局</ion-item-divider>
 		<ion-item>
-			<div id="fwbj" class="fwbjtable">
+			<div class="fwbj_table">
 			<table>
 			<thead><tr>
 				<th width="12%" style="border-bottom: 1px solid #CCCCCC;">楼层</th>
@@ -164,9 +173,20 @@
 		</ion-item>
 		
 		<ion-item-divider id="housedivider" divider>房屋描述</ion-item-divider>
-		<div class="fwms_cont">{{house.ad_text}}<BR/><B>Extras:</B><BR/>{{house.extras}}</div>
+		<div class="fwms_item">{{house.ad_text}}<BR/><B>Extras:</B><BR/>{{house.extras}}</div>
 	</ion-list>
 </ion-card>
 <!--End-->
  
 </ion-content>
+
+<div *ngIf="preButton">
+	<button fab fab-bottom   fab-left (click)="go2PreHouse()" style="z-index:100;opacity:0.8;">
+		<ion-icon name="arrow-dropleft" is-active="true"></ion-icon>
+	</button>
+</div>
+<div *ngIf="nextButton">  
+		<button fab  fab-bottom fab-right (click)="go2NextHouse()" style="z-index:100;opacity:0.8;">
+		<ion-icon name="arrow-dropright" is-active="true"></ion-icon>
+	</button>
+</div> 

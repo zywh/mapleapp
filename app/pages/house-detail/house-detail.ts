@@ -20,7 +20,7 @@ export class HouseDetailPage implements OnInit {
   private parms: Object;
   private section: string = "summary";
   private isAndroid: boolean = false;
-	private labelF2M: string = "英尺";
+  private switchF2M: Boolean = true; //"英尺"
 	private rooms: Array<Object> = [];
 	private house_mname: any;
 	private house_propertyType: any;
@@ -238,7 +238,8 @@ export class HouseDetailPage implements OnInit {
 
   private COMP_PTS = {"N":"北","S":"南","W":"西","E":"东"};
   private S_R = {"Sale":"出售","Lease":"出租"};
-	private F2M = {feet:"英尺", meter:"米"};
+	private F2M = {sfeet:"平方英尺", smeter:"平方米"};
+	private houseDetailRest: string;
 
   ngOnInit() {
 this.mapleConf.load().then(data => {
@@ -250,13 +251,13 @@ this.mapleConf.load().then(data => {
   getResult(url) {
     this.mapleRestData.load(url, this.parms).subscribe(
       data => { 
-				console.log(data);
-				this.house = data.house; console.log(this.house);
-				this.house_mname = data.house_mname; console.log(this.house_mname);
-				this.house_propertyType = data.house_propertyType; console.log(this.house_propertyType);
-				this.exchangeRate = data.exchangeRate; console.log(this.exchangeRate);
-				this.photos = data.photos; console.log(this.photos);
-				this.houseRooms(this.house); console.log(this.rooms);}
+				//console.log(data);
+				this.house = data.house;
+				this.house_mname = data.house_mname; 
+				this.house_propertyType = data.house_propertyType; 
+				this.exchangeRate = data.exchangeRate; 
+				this.photos = data.photos; 
+				this.houseRooms(this.house);}
     )
   }
   
@@ -318,9 +319,12 @@ this.mapleConf.load().then(data => {
       return roomDesc;
    }
 
-	toggleF2M() {
-		this.labelF2M = (this.labelF2M = this.F2M.feet? this.F2M.meter: this.F2M.feet);	
-}
+	getLandArea(f2m, area) {
+			if (f2m)
+				return this.round1(parseFloat(this.house.land_area) * 0.09290304) + this.F2M.smeter;
+			else 
+				return this.house.land_area + this.F2M.sfeet;
+	}
 
   gotoSchool() {
     this.nav.push(SchoolSearchPage);
@@ -334,6 +338,15 @@ this.mapleConf.load().then(data => {
 		return this.mapleConf.data.picHost + photo;
 	}
 
+  go2PreHouse() {
+    //console.log("PreHouse" + this.preHouse);
+    //this.getResult(this.mapleConf.data.houseDetailRest, this.preHouse);
+  }
+
+  go2NextHouse() {
+    //console.log("NextHouse" + this.nextHouse);
+    //this.getResult(this.mapleConf.data.houseDetailRest, this.nextHouse)
+  }
 
    share(message, subject, file, link) {
        // this.platform.ready().then(() => {
