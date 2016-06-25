@@ -1,5 +1,5 @@
-import {Page, NavController, NavParams,Platform} from 'ionic-angular';
-import {OnInit,Component} from '@angular/core';;
+import {Page, NavController, NavParams, Platform, Slides} from 'ionic-angular';
+import {OnInit,Component,ViewChild} from '@angular/core';;
 //import {Geolocation} from 'ionic-native';
 import {SocialSharing} from 'ionic-native';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
@@ -17,7 +17,10 @@ import {SchoolSearchPage} from '../../pages/school-search/school-search';
 })
 export class HouseDetailPage implements OnInit {
   private nav;
-  private parms: Object;
+	private id: string;
+	private ids: Array<string> = [];
+  private prevHouse: string;
+	private nextHouse: string;
   private section: string = "summary";
   private isAndroid: boolean = false;
   private switchF2M: Boolean = true; //"英尺"
@@ -88,8 +91,8 @@ export class HouseDetailPage implements OnInit {
 			area_code: '', // => 'Area Code',
 			bsmt1_out: '', // => 'Bsmt1 Out',
 			bsmt2_out: '', // => 'Bsmt2 Out',
-			br: '', // => 'Br',
-			br_plus: '', // => 'Br Plus',
+			br: 0, // => 'Br',
+			br_plus: 0, // => 'Br Plus',
 			community_c: '', // => 'Community C',
 			cross_st: '', // => 'Cross St',
 			elevator: '', // => 'Elevator',
@@ -101,8 +104,8 @@ export class HouseDetailPage implements OnInit {
 			furnished: '', // => 'Furnished',
 			fuel: '', // => 'Fuel',
 			heating: '', // => 'Heating',
-			num_kit: '', // => 'Num Kit',
-			kit_plus: '', // => 'Kit Plus',
+			num_kit: 0, // => 'Num Kit',
+			kit_plus: 0, // => 'Kit Plus',
 			level1: '', // => 'Level1',
 			level10: '', // => 'Level10',
 			level11: '', // => 'Level11',
@@ -202,8 +205,8 @@ export class HouseDetailPage implements OnInit {
 			rm9_dc3_out: '', // => 'Rm9 Dc3 Out',
 			rm9_len: '', // => 'Rm9 Len',
 			rm9_wth: '', // => 'Rm9 Wth',
-			rms: '', // => 'Rms',
-			rooms_plus: '', // => 'Rooms Plus',
+			rms: 0, // => 'Rms',
+			rooms_plus: 0, // => 'Rooms Plus',
 			s_r: '', // => 'S R',
 			style: '', // => 'Style',
 			yr: '', // => 'Yr',
@@ -216,6 +219,8 @@ export class HouseDetailPage implements OnInit {
 			rm3_dc3_out: '', // => 'Rm3 Dc3 Out',
 			acres: '', // => 'Acres',
       };
+  
+	@ViewChild('photo_slider') slider : Slides;
 
 
   static get parameters() {
@@ -225,45 +230,75 @@ export class HouseDetailPage implements OnInit {
   constructor(nav, private navParams: NavParams, private mapleRestData: MapleRestData, private mapleConf: MapleConf, 
 	private platform: Platform) {
     this.nav = nav;
-    this.parms = { 'id': navParams.data };
+		console.log(navParams);
+    this.id = navParams.data.id;
+		this.ids = navParams.data.ids;
      //this.isAndroid = platform.is('android');
-
   }
+
   swiperOptions = {
-    loop: true,
-    //pager: true,
-    speed: 4000,
-    autoplay: 300
+    //loop: true,
+		autoHeight: true,
+    pager: true,
+    speed: 100,
+    autoplay: 3000
   };
 
   private COMP_PTS = {"N":"北","S":"南","W":"西","E":"东"};
   private S_R = {"Sale":"出售","Lease":"出租"};
-	private F2M = {sfeet:"平方英尺", smeter:"平方米"};
-	private houseDetailRest: string;
+	private F2M = {feet:"尺", meter:"米", sfeet:"平方英尺", smeter:"平方米"};
 
   ngOnInit() {
-this.mapleConf.load().then(data => {
-    //this.getResult('index.php?r=ngget/getHouseDetail');
-		this.getResult(data.houseDetailRest);
+		this.mapleConf.load().then(data => {
+    	//this.getResult('index.php?r=ngget/getHouseDetail');
+			this.getResult(data.houseDetailRest, this.id);
     })		
   }
 
-  getResult(url) {
-    this.mapleRestData.load(url, this.parms).subscribe(
+  getResult(url,id) {
+    this.mapleRestData.load(url, {'id':id}).subscribe(
       data => { 
 				//console.log(data);
+				this.id = id;
 				this.house = data.house;
 				this.house_mname = data.house_mname; 
 				this.house_propertyType = data.house_propertyType; 
 				this.exchangeRate = data.exchangeRate; 
 				this.photos = data.photos; 
-				this.houseRooms(this.house);}
+				this.houseRooms(this.house);
+				this.setPrevNext();
+				//console.log(this.slider); 
+				this.slider.slideTo(0);
+		}
     )
   }
   
+ setPrevNext() {
+	  if (!this.ids || ! this.id) {
+			this.prevHouse = null;
+			this.nextHouse = null;
+		}
+		else {
+			let pos = this.ids.indexOf(this.id);
+			
+			this.prevHouse = (pos > 0) ? this.ids[pos - 1]: null;
+			this.nextHouse = (pos < this.ids.length - 1) ? this.ids[pos + 1]: null;
+			console.log("prevHouse" + this.prevHouse);
+			console.log("nextHouse" + this.nextHouse);
+		}
+}
+
+	add2(int1, int2) {    
+		return parseInt(int1,10) + parseInt(int2,10);
+}
+	
 	round1(num) {    
     return +(Math.round(+(num + "e+1"))  + "e-1");
 }
+
+	round2(num) {    
+			return +(Math.round(+(num + "e+2"))  + "e-2");
+	}
 
 	houseRooms(h) {
 		this.rooms[0] = {level:h.level1, out:h.rm1_out, len:h.rm1_len, wth:h.rm1_wth, area:this.round1(h.rm1_len*h.rm1_wth), desc:this.getRoomDesc(h.rm1_dc1_out,h.rm1_dc2_out,h.rm1_dc3_out)};
@@ -290,7 +325,7 @@ this.mapleConf.load().then(data => {
   }
 
 	getPriceRMB() {
-		return parseFloat(this.house.lp_dol) * this.exchangeRate/10000;
+		return this.round2(parseFloat(this.house.lp_dol) * this.exchangeRate/10000);
 	}
 
   getPropertyTxt() {
@@ -319,9 +354,9 @@ this.mapleConf.load().then(data => {
       return roomDesc;
    }
 
-	getLandArea(f2m, area) {
-			if (f2m)
-				return this.round1(parseFloat(this.house.land_area) * 0.09290304) + this.F2M.smeter;
+	getLandArea() {
+			if (this.switchF2M)
+				return this.round2(parseFloat(this.house.land_area) * 0.09290304) + this.F2M.smeter;
 			else 
 				return this.house.land_area + this.F2M.sfeet;
 	}
@@ -338,14 +373,14 @@ this.mapleConf.load().then(data => {
 		return this.mapleConf.data.picHost + photo;
 	}
 
-  go2PreHouse() {
-    //console.log("PreHouse" + this.preHouse);
-    //this.getResult(this.mapleConf.data.houseDetailRest, this.preHouse);
-  }
+  go2PrevHouse() {
+		if (this.prevHouse)
+    	this.getResult(this.mapleConf.data.houseDetailRest, this.prevHouse);
+	}
 
   go2NextHouse() {
-    //console.log("NextHouse" + this.nextHouse);
-    //this.getResult(this.mapleConf.data.houseDetailRest, this.nextHouse)
+		if (this.nextHouse) 
+    	this.getResult(this.mapleConf.data.houseDetailRest, this.nextHouse);
   }
 
    share(message, subject, file, link) {

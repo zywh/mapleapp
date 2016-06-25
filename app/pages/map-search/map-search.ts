@@ -31,7 +31,7 @@ interface selectOptionsObj {
 
 export class MapSearchPage {
 
-  private searchQuery: String = '';
+  private queryText: String = '';
   private cityItems: any;
   private addressItems: any;
   private mlsItems: any;
@@ -95,14 +95,14 @@ export class MapSearchPage {
 
   //change center if school is selected from school map page
   listenEvents() {
-    this.events.subscribe('school:mappage', (data) => {
+    this.events.subscribe('map:center', (data) => {
       let center = data[0];
       let marker = new google.maps.Marker({
         position: center,
         map: this.map,
         draggable: false,
       });
-      this.setLocation(center, 15);
+      this.setLocation(center, 14);
 
     });
   }
@@ -263,7 +263,7 @@ export class MapSearchPage {
       //close all open POP UP options/list etc
       this._zone.run(() => {
         this.currentDiv = '';
-        this.searchQuery = '';
+        this.queryText = '';
         this.viewCtrl.dismiss();
         //this.nav.pop();
       });
@@ -285,25 +285,25 @@ export class MapSearchPage {
 
 
   itemTapped(event, item, type) {
-    if (type == 1) { //CITY Action
+   // if (type == 1) { //CITY Action
       let lat = item.lat;
       let lng = item.lng;
       let center = new google.maps.LatLng(lat, lng);
       this.setLocation(center, 14);
       this.resetItems();
-    }
+    //}
 
-    if (type == 2) { //MLS Action
-      this.nav.push(HouseDetailPage, {
-        item: item.id //pass MLS# to house detail
-      });
-    }
+    // if (type == 2) { //MLS Action
+    //   this.nav.push(HouseDetailPage, {
+    //     item: item.id //pass MLS# to house detail
+    //   });
+    // }
 
-    if (type == 3) { //Address Action
-      this.nav.push(HouseDetailPage, {
-        item: item.id //pass MLS# to house detail
-      });
-    }
+    // if (type == 3) { //Address Action
+    //   this.nav.push(HouseDetailPage, {
+    //     item: item.id //pass MLS# to house detail
+    //   });
+    // }
 
   }
   //auto complete REST CAll
@@ -311,15 +311,17 @@ export class MapSearchPage {
 
     this.resetItems();
     this.currentDiv = 'searchlist';
+    console.log(searchbar);
 
     // set q to the value of the searchbar
-    let q = searchbar.value;
+    let q:String = searchbar.value;
+        
 
     // if the value is an empty string don't filter the items
-    if (q.trim() == '') {
+    if (this.queryText  == '') {
       return;
     } else {
-      let parm = { term: q.trim() };
+      let parm = { term: this.queryText };
       //Call REST and generate item object
       this.mapleRestData.load('index.php?r=ngget/getCityList', parm).subscribe(
         data => {
@@ -365,8 +367,9 @@ export class MapSearchPage {
 
   //Move to center and creata a marker
   setLocation(center, zoom) {
-    this.map.setCenter(center);
+    
     this.map.setZoom(zoom);
+    this.map.setCenter(center);
     let marker = new google.maps.Marker({
       position: center,
       map: this.map,
@@ -407,6 +410,7 @@ export class MapSearchPage {
               navTransition.then(() => {
                 this.nav.pop();
                 this.nav.push(HouseDetailPage, {id:mls,ids:this.currentMlsList});
+                //this.nav.push(HouseDetailPage, mls); 
               });
               return false;
             }

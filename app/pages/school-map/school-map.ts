@@ -64,6 +64,7 @@ export class SchoolMapPage {
 
     this.resetItems();
     this.loadRichMarker(); //Load richmarker after googlemap. Check network connection to avoid blank page
+    this.listenEvents();
 
   }
 
@@ -133,22 +134,31 @@ export class SchoolMapPage {
 
   ionViewWillEnter() {
     console.log("School Map View will enter");
-    //this.setLocation(this.defaultcenter,14);
+
   }
 
   ionViewDidEnter() {
     console.log("School Map View did entered");
     if (!this.sviewLoaded) {
-       this.map.setZoom(12);
-      console.log("First time view:" + this.sviewLoaded);
+      this.map.setZoom(12);
       this.sviewLoaded = true;
     }
 
   }
+  listenEvents() {
+    this.events.subscribe('schoolmap:center', (data) => {
+      let marker = new google.maps.Marker({
+        position: data[0],
+        map: this.map,
+        draggable: false,
+      });
+      this.setLocation(data[0], 13);
+
+    });
+  }
 
   setCenter() {
-    console.log("Set Center");
-
+  
     let options = { timeout: 10000, enableHighAccuracy: true };
 
     navigator.geolocation.getCurrentPosition(
@@ -157,7 +167,7 @@ export class SchoolMapPage {
         this.defaultcenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         let lat = position.coords.latitude;
         if (lat > 20) {
-           this.setLocation(this.defaultcenter, this.defaultZoom);
+          this.setLocation(this.defaultcenter, this.defaultZoom);
 
         } else { this.setLocation(this.defaultcenter, this.defaultZoom); }
 
@@ -181,10 +191,6 @@ export class SchoolMapPage {
 
   loadMap(center, zoom) {
 
-    //this.center = new google.maps.LatLng(lat, lng);
-    //  let latLng = new google.maps.LatLng(-34.9290, 138.6010);
-    //let latLng = new google.maps.LatLng(-34.9290, 138.6010);
-    //this.confData.getMap().then(mapData => {
     let mapEle = document.getElementById('schoolmap');
 
     this.map = new google.maps.Map(mapEle, {
@@ -261,14 +267,10 @@ export class SchoolMapPage {
     this.resetItems();
     this.currentDiv = 'searchlist';
 
-    // set q to the value of the searchbar
-    let q = searchbar.value;
-
-    // if the value is an empty string don't filter the items
-    if (q.trim() == '') {
+    if (this.searchQuery == '') {
       return;
     } else {
-      let parm = { term: q.trim() };
+      let parm = { term: this.searchQuery };
       //Call REST and generate item object
       this.mapleRestData.load('index.php?r=ngget/getSchoolAutoComplete', parm).subscribe(
         data => {
@@ -329,7 +331,7 @@ export class SchoolMapPage {
         buttons: [{ text: '取消', role: 'cancel' },
           {
             text: '周边房源',
-            handler: () => { this.events.publish('school:mappage', point); }
+            handler: () => { this.events.publish('map:center', point); }
           }
         ]
       });

@@ -145,12 +145,33 @@ export class StatsPage {
 
     // ngOnInit() {
     ionViewLoaded() {
-        this.mapleconf.load().then(data => {
+      
+    }
+
+    ionViewWillEnter(){
+        console.log("Stats Page will enter");
+          this.mapleconf.load().then(data => {
             //console.log(data.getMlsDataRest);
             this.getMlsResult(data.getMlsDataRest);
             this.getHouseStats(data.getHouseStatsRest);
             this.getHpiStats(data.hpiStatsRest);
         })
+    }
+
+    ionViewDidEnter(){
+         console.log("Stats Page will enter");
+    }
+
+     ionViewDidLeave(){
+         console.log("Stats Page Did Leave");
+    }
+
+     ionViewWillLeave(){
+         console.log("Stats Page will Leave");
+    }
+
+     ionViewWillUnload(){
+         console.log("Stats Page will Unload");
     }
 
     getMlsResult(url) {
@@ -291,8 +312,8 @@ export class StatsPage {
             },
             rangeSelector: { inputEnabled: false },
             legend: { enabled: true },
-            navigator: { enabled: false },
-            scrollbar: { enabled: false },
+            navigator: { enabled: true },
+            scrollbar: { enabled: true },
             title: { text: t },
             //series: [{}]
             series: [
@@ -302,7 +323,8 @@ export class StatsPage {
             ]
 
         };
-
+        console.log(c);
+        console.log(options);    
         this.nav.push(chartStats, { type: 1, options: options });
 
 
