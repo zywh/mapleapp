@@ -26,7 +26,8 @@ export class HomePage implements OnInit {
   private projects: Object;
   private postListRest;
   private post1;
-  private searchQuery: String = '';
+  private hQueryText: String = '';
+  private sQueryText: String = '';
   private cityItems: any;
   private addressItems: any;
   private mlsItems: any;
@@ -116,16 +117,13 @@ export class HomePage implements OnInit {
   hGetItems(searchbar) {
 
     this.resetItems();
-    this.currentDiv = 'searchlist';
+    this.currentDiv = 'hSearchlist';
 
-    // set q to the value of the searchbar
-    let q = searchbar.value;
-
-    // if the value is an empty string don't filter the items
-    if (q.trim() == '') {
+   
+    if (this.hQueryText == '') {
       return;
     } else {
-      let parm = { term: q.trim() };
+      let parm = { term: this.hQueryText };
       //Call REST and generate item object
       this.mapleRestData.load('index.php?r=ngget/getCityList', parm).subscribe(
         data => {

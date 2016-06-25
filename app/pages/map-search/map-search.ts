@@ -31,7 +31,7 @@ interface selectOptionsObj {
 
 export class MapSearchPage {
 
-  private searchQuery: String = '';
+  private queryText: String = '';
   private cityItems: any;
   private addressItems: any;
   private mlsItems: any;
@@ -263,7 +263,7 @@ export class MapSearchPage {
       //close all open POP UP options/list etc
       this._zone.run(() => {
         this.currentDiv = '';
-        this.searchQuery = '';
+        this.queryText = '';
         this.viewCtrl.dismiss();
         //this.nav.pop();
       });
@@ -311,15 +311,17 @@ export class MapSearchPage {
 
     this.resetItems();
     this.currentDiv = 'searchlist';
+    console.log(searchbar);
 
     // set q to the value of the searchbar
-    let q = searchbar.value;
+    let q:String = searchbar.value;
+        
 
     // if the value is an empty string don't filter the items
-    if (q.trim() == '') {
+    if (this.queryText  == '') {
       return;
     } else {
-      let parm = { term: q.trim() };
+      let parm = { term: this.queryText };
       //Call REST and generate item object
       this.mapleRestData.load('index.php?r=ngget/getCityList', parm).subscribe(
         data => {

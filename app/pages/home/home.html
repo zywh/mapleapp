@@ -23,8 +23,8 @@
     
   </ion-slides> 
   <div >
-    <ion-searchbar cancelButtonText="取消"  [(ngModel)]="hSearchQuery" (ionFocus)="currentDiv='hSearchlist'" (ionInput)="hGetItems($event)" placeholder="房源搜索：城市/地址/MLS#"></ion-searchbar>
-     <div class="search_list" *ngIf="currentDiv == 'searchlist'" >
+    <ion-searchbar cancelButtonText="取消"  [(ngModel)]="hQueryText" (ionFocus)="currentDiv='hSearchlist'" (ionInput)="hGetItems($event)" placeholder="房源搜索：城市/地址/MLS#"></ion-searchbar>
+     <div class="search_list" *ngIf="currentDiv == 'hSearchlist'" >
     <ion-item padding *ngFor="let item of cityItems" (click)="itemTapped($event, item,1)" >
      <button light clear> <ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }}</span></button>
        <ion-badge item-right>城市</ion-badge>
@@ -40,7 +40,7 @@
   </div>
   
   
-    <ion-searchbar cancelButtonText="取消" [(ngModel)]="sSearchQuery" (ionFocus)="currentDiv='sSearchlist'" (ionInput)="sGetItems($event)" placeholder="学校搜索：城市/学校"></ion-searchbar>
+    <ion-searchbar cancelButtonText="取消" [(ngModel)]="sQueryText" (ionFocus)="currentDiv='sSearchlist'" (ionInput)="sGetItems($event)" placeholder="学校搜索：城市/学校"></ion-searchbar>
   </div>
   <div>
    <h2 padding-left> 地产咨询</h2>
