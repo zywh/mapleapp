@@ -1,5 +1,5 @@
-import {Page, NavController, NavParams,Platform} from 'ionic-angular';
-import {OnInit,Component} from '@angular/core';;
+import {Page, NavController, NavParams, Platform, Slides} from 'ionic-angular';
+import {OnInit,Component,ViewChild} from '@angular/core';;
 //import {Geolocation} from 'ionic-native';
 import {SocialSharing} from 'ionic-native';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
@@ -219,6 +219,8 @@ export class HouseDetailPage implements OnInit {
 			rm3_dc3_out: '', // => 'Rm3 Dc3 Out',
 			acres: '', // => 'Acres',
       };
+  
+	@ViewChild('photo_slider') slider : Slides;
 
 
   static get parameters() {
@@ -235,11 +237,11 @@ export class HouseDetailPage implements OnInit {
   }
 
   swiperOptions = {
-    loop: true,
+    //loop: true,
 		autoHeight: true,
     pager: true,
     speed: 100,
-    autoplay: 100
+    autoplay: 3000
   };
 
   private COMP_PTS = {"N":"北","S":"南","W":"西","E":"东"};
@@ -265,6 +267,8 @@ export class HouseDetailPage implements OnInit {
 				this.photos = data.photos; 
 				this.houseRooms(this.house);
 				this.setPrevNext();
+				//console.log(this.slider); 
+				this.slider.slideTo(0);
 		}
     )
   }
