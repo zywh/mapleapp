@@ -121,11 +121,34 @@ export class MapSearchPage {
     this.nav.present(modal);
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     console.log("Map View did entered");
     if (!this.mviewLoaded) {
-      this.setLocation(this.defaultcenter, 14);
+
       this.mviewLoaded = true;
+      let options = { timeout: 10000, enableHighAccuracy: true };
+
+      navigator.geolocation.getCurrentPosition(
+
+        (position) => {
+
+          this.defaultcenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+          let lat = position.coords.latitude;
+
+          //let lng = position.coords.longitude;
+
+          if (lat > 20) {
+            this.loadMap(this.defaultcenter, 14);
+           
+          } else {
+            this.loadMap(this.defaultcenter, 14);
+          }
+
+        },
+
+        (error) => { this.loadMap(this.defaultcenter, 14); }, options
+
+      );
     }
 
   }
@@ -139,29 +162,29 @@ export class MapSearchPage {
 
 
   ionViewLoaded() {
-    //ngOnInit() {
-    let options = { timeout: 10000, enableHighAccuracy: true };
+    let mapEle = document.getElementById('map');
 
-    navigator.geolocation.getCurrentPosition(
+    this.map = new google.maps.Map(mapEle, {
 
-      (position) => {
-
-        this.defaultcenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        let lat = position.coords.latitude;
-        //let lng = position.coords.longitude;
-
-        if (lat > 20) {
-          this.loadMap(this.defaultcenter, 16);
-        } else {
-
-          this.loadMap(this.defaultcenter, 16);
-        }
-
+      center: this.defaultcenter,
+      minZoom: 4,
+      mapTypeControl: true,
+      mapTypeControlOptions: {
+        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+        position: google.maps.ControlPosition.TOP_LEFT
       },
+      zoomControl: true,
+      zoomControlOptions: {
+        position: google.maps.ControlPosition.RIGHT_TOP
+      },
+      scaleControl: true,
+      streetViewControl: true,
+      streetViewControlOptions: {
+        position: google.maps.ControlPosition.TOP_RIGHT
+      },
+      zoom: 13
+    });
 
-      (error) => { this.loadMap(this.defaultcenter, 16); }, options
-
-    );
 
 
     // this.confData.getMap().then(mapData => {  //Need this for werid map issue. Menu page switch will make map blank
@@ -187,7 +210,7 @@ export class MapSearchPage {
 
   }
   gotoHouseDetail(mls) {
-    this.nav.push(HouseDetailPage, { id: mls, ids: this.currentHouseList , list: this.currentHouseList});
+    this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList });
   }
 
   openHouseList() {
@@ -229,35 +252,7 @@ export class MapSearchPage {
   //loadMap(lat, lng, zoom) {
   loadMap(pos, zoom) {
 
-    let mapEle = document.getElementById('map');
-
-    this.map = new google.maps.Map(mapEle, {
-
-      center: pos,
-      minZoom: 4,
-      mapTypeControl: true,
-      mapTypeControlOptions: {
-        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-        position: google.maps.ControlPosition.TOP_LEFT
-      },
-      zoomControl: true,
-      zoomControlOptions: {
-        position: google.maps.ControlPosition.RIGHT_TOP
-      },
-      scaleControl: true,
-      streetViewControl: true,
-      streetViewControlOptions: {
-        position: google.maps.ControlPosition.TOP_RIGHT
-      },
-      zoom: zoom
-    });
-
-
-    google.maps.event.addListener(this.map, 'idle', () => {
-
-      this.changeMap();
-
-    });
+    google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(); });
 
     google.maps.event.addListener(this.map, 'click', () => {
       //close all open POP UP options/list etc
@@ -267,10 +262,9 @@ export class MapSearchPage {
         this.viewCtrl.dismiss();
         //this.nav.pop();
       });
-
-
+     
     });
-
+    this.setLocation(pos, zoom);
 
 
     //});
@@ -393,32 +387,32 @@ export class MapSearchPage {
 
     marker.addListener('click', () => {
 
-        let alert = Alert.create({
-          //title: 'Confirm purchase',
-          message: html,
-          cssClass: 'house_popup',
-          buttons: [
-            {
-              text: '取消',
-              role: 'cancel',
+      let alert = Alert.create({
+        //title: 'Confirm purchase',
+        message: html,
+        cssClass: 'house_popup',
+        buttons: [
+          {
+            text: '取消',
+            role: 'cancel',
 
-            },
-            {
-              text: '详情',
-              handler: () => {
-                let navTransition = alert.dismiss();
-                navTransition.then(() => {
-                  this.nav.pop();
-                  this.nav.push(HouseDetailPage, {id:mls,ids:this.currentHouseList,list: this.currentHouseList});
-                  //this.nav.push(HouseDetailPage, mls); 
-                });
-                return false;
-              }
+          },
+          {
+            text: '详情',
+            handler: () => {
+              let navTransition = alert.dismiss();
+              navTransition.then(() => {
+                this.nav.pop();
+                this.nav.push(HouseDetailPage, { id: mls, ids: this.currentHouseList, list: this.currentHouseList });
+                //this.nav.push(HouseDetailPage, mls); 
+              });
+              return false;
             }
-          ]
-        });
-        this.nav.present(alert);
-        //   //infowindow.open(this.map, marker);
+          }
+        ]
+      });
+      this.nav.present(alert);
+      //   //infowindow.open(this.map, marker);
 
       // let popover = Popover.create(HousePopup)
       // this.nav.present(popover, {
