@@ -18,7 +18,7 @@ import {SchoolSearchPage} from '../../pages/school-search/school-search';
 export class HouseDetailPage implements OnInit {
   private nav;
 	private id: string;
-	private ids: Array<string>;
+	private ids: Array<string> = [];
   private prevHouse: string;
 	private nextHouse: string;
   private section: string = "summary";
@@ -91,8 +91,8 @@ export class HouseDetailPage implements OnInit {
 			area_code: '', // => 'Area Code',
 			bsmt1_out: '', // => 'Bsmt1 Out',
 			bsmt2_out: '', // => 'Bsmt2 Out',
-			br: '', // => 'Br',
-			br_plus: '', // => 'Br Plus',
+			br: 0, // => 'Br',
+			br_plus: 0, // => 'Br Plus',
 			community_c: '', // => 'Community C',
 			cross_st: '', // => 'Cross St',
 			elevator: '', // => 'Elevator',
@@ -104,8 +104,8 @@ export class HouseDetailPage implements OnInit {
 			furnished: '', // => 'Furnished',
 			fuel: '', // => 'Fuel',
 			heating: '', // => 'Heating',
-			num_kit: '', // => 'Num Kit',
-			kit_plus: '', // => 'Kit Plus',
+			num_kit: 0, // => 'Num Kit',
+			kit_plus: 0, // => 'Kit Plus',
 			level1: '', // => 'Level1',
 			level10: '', // => 'Level10',
 			level11: '', // => 'Level11',
@@ -205,8 +205,8 @@ export class HouseDetailPage implements OnInit {
 			rm9_dc3_out: '', // => 'Rm9 Dc3 Out',
 			rm9_len: '', // => 'Rm9 Len',
 			rm9_wth: '', // => 'Rm9 Wth',
-			rms: '', // => 'Rms',
-			rooms_plus: '', // => 'Rooms Plus',
+			rms: 0, // => 'Rms',
+			rooms_plus: 0, // => 'Rooms Plus',
 			s_r: '', // => 'S R',
 			style: '', // => 'Style',
 			yr: '', // => 'Yr',
@@ -236,14 +236,15 @@ export class HouseDetailPage implements OnInit {
 
   swiperOptions = {
     loop: true,
-    //pager: true,
-    speed: 4000,
-    autoplay: 300
+		autoHeight: true,
+    pager: true,
+    speed: 100,
+    autoplay: 100
   };
 
   private COMP_PTS = {"N":"北","S":"南","W":"西","E":"东"};
   private S_R = {"Sale":"出售","Lease":"出租"};
-	private F2M = {sfeet:"平方英尺", smeter:"平方米"};
+	private F2M = {feet:"尺", meter:"米", sfeet:"平方英尺", smeter:"平方米"};
 
   ngOnInit() {
 		this.mapleConf.load().then(data => {
@@ -269,18 +270,31 @@ export class HouseDetailPage implements OnInit {
   }
   
  setPrevNext() {
-	  let pos = this.ids.indexOf(this.id);
-		
-   	this.prevHouse = (pos > 0) ? this.ids[pos - 1]: null;
-		console.log("prevHouse" + this.prevHouse);
-
-   	this.nextHouse = (pos < this.ids.length - 1) ? this.ids[pos + 1]: null;
-		console.log("nextHouse" + this.nextHouse);
+	  if (!this.ids || ! this.id) {
+			this.prevHouse = null;
+			this.nextHouse = null;
+		}
+		else {
+			let pos = this.ids.indexOf(this.id);
+			
+			this.prevHouse = (pos > 0) ? this.ids[pos - 1]: null;
+			this.nextHouse = (pos < this.ids.length - 1) ? this.ids[pos + 1]: null;
+			console.log("prevHouse" + this.prevHouse);
+			console.log("nextHouse" + this.nextHouse);
+		}
 }
 
+	add2(int1, int2) {    
+		return parseInt(int1,10) + parseInt(int2,10);
+}
+	
 	round1(num) {    
     return +(Math.round(+(num + "e+1"))  + "e-1");
 }
+
+	round2(num) {    
+			return +(Math.round(+(num + "e+2"))  + "e-2");
+	}
 
 	houseRooms(h) {
 		this.rooms[0] = {level:h.level1, out:h.rm1_out, len:h.rm1_len, wth:h.rm1_wth, area:this.round1(h.rm1_len*h.rm1_wth), desc:this.getRoomDesc(h.rm1_dc1_out,h.rm1_dc2_out,h.rm1_dc3_out)};
@@ -307,7 +321,7 @@ export class HouseDetailPage implements OnInit {
   }
 
 	getPriceRMB() {
-		return parseFloat(this.house.lp_dol) * this.exchangeRate/10000;
+		return this.round2(parseFloat(this.house.lp_dol) * this.exchangeRate/10000);
 	}
 
   getPropertyTxt() {
@@ -336,9 +350,9 @@ export class HouseDetailPage implements OnInit {
       return roomDesc;
    }
 
-	getLandArea(f2m, area) {
-			if (f2m)
-				return this.round1(parseFloat(this.house.land_area) * 0.09290304) + this.F2M.smeter;
+	getLandArea() {
+			if (this.switchF2M)
+				return this.round2(parseFloat(this.house.land_area) * 0.09290304) + this.F2M.smeter;
 			else 
 				return this.house.land_area + this.F2M.sfeet;
 	}

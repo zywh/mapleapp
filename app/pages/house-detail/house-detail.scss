@@ -1,12 +1,16 @@
 .house-detail {
-.swiper-container {
-    //height: 180px;
-    width: 100%;
-    margin-bottom: -38%;
- }
-.swiper-slide {
-    display: block;
-} 
+    .swiper-container {
+        width: 100%;
+        height: auto; //66.8vw;
+        display: block;
+        .swiper-wrapper {
+            height: auto;
+            .swiper-slide {
+                height: auto;
+                *margin-top : -38%;
+            }
+        }
+    }
 }
 
 .fyxq_cont { 
@@ -24,7 +28,6 @@
             font-weight:bold;
         }
         .fyxq_ptssright { 
-            /*float:left; width:268px;*/ 
             font-size:16px;
             text-overflow: ellipsis;
             overflow: hidden;
@@ -36,7 +39,6 @@
                     display:block; 
                     margin-left:5px; margin-right:10px; /* margin-bottom:10px; */margin-top:3px;  
                     white-space:nowrap; 
-                    background:url(../images/house/wu.jpg) left center  no-repeat; 
                     color:#999999; 
                     float:left; height:20px;
                 }
@@ -71,6 +73,9 @@
     ion-item-divider#housedivider { 
         font-size: 18px;
         padding: 5px 0;
+        ion-label.switchF2M {
+            text-align: right;
+        }
     }
     .xqlb_list {
         ion-item { 
@@ -82,6 +87,9 @@
     .fwbj_table {
         overflow: auto;
         -webkit-overflow-scrolling: touch;
+        tr, td {
+            border-bottom: 1px solid #CCCCCC;
+        }
     }
     .fwms_item {
         line-height: 22px;
