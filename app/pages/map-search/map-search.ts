@@ -1,4 +1,4 @@
-import {Modal, Loading, Events, Alert, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
+import {Modal, Loading, Events, Alert, Popover, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 import { NgZone, Component} from '@angular/core';;
 import {HouseDetailPage} from '../house-detail/house-detail';
@@ -46,7 +46,7 @@ export class MapSearchPage {
   private htmlArrayPosition = 0;
   private totalCount: Number; //Returned House
   private listAllHtml = ''; //hold houses on current map
-  //private currentMlsList = [];
+  private currentMlsList = [];
   public isListShow: boolean = false;
   private markerType;
   private imgHost: String;
@@ -187,11 +187,11 @@ export class MapSearchPage {
 
   }
   gotoHouseDetail(mls) {
-    this.nav.push(HouseDetailPage, {id:mls,ids:this.currentHouseList});
+    this.nav.push(HouseDetailPage, { id: mls, ids: this.currentHouseList , list: this.currentHouseList});
   }
 
   openHouseList() {
-    
+
     if (this.markerType == 'house') {
       this.currentDiv = (this.currentDiv == 'houselist') ? '' : 'houselist';
       console.log("House list show");
@@ -204,7 +204,7 @@ export class MapSearchPage {
             text: '查询参数',
             role: 'destructive',
             handler: () => {
-             this.openModal(this.selectOptions);
+              this.openModal(this.selectOptions);
             }
           }, {
             text: '放大地图',
@@ -285,12 +285,12 @@ export class MapSearchPage {
 
 
   itemTapped(event, item, type) {
-   // if (type == 1) { //CITY Action
-      let lat = item.lat;
-      let lng = item.lng;
-      let center = new google.maps.LatLng(lat, lng);
-      this.setLocation(center, 14);
-      this.resetItems();
+    // if (type == 1) { //CITY Action
+    let lat = item.lat;
+    let lng = item.lng;
+    let center = new google.maps.LatLng(lat, lng);
+    this.setLocation(center, 14);
+    this.resetItems();
     //}
 
     // if (type == 2) { //MLS Action
@@ -314,11 +314,11 @@ export class MapSearchPage {
     console.log(searchbar);
 
     // set q to the value of the searchbar
-    let q:String = searchbar.value;
-        
+    let q: String = searchbar.value;
+
 
     // if the value is an empty string don't filter the items
-    if (this.queryText  == '') {
+    if (this.queryText == '') {
       return;
     } else {
       let parm = { term: this.queryText };
@@ -355,7 +355,7 @@ export class MapSearchPage {
         this.defaultcenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         let lat = position.coords.latitude;
         if (lat > 20) {
-           this.setLocation(this.defaultcenter, 16);
+          this.setLocation(this.defaultcenter, 16);
 
         } else { this.setLocation(this.defaultcenter, 16); }
 
@@ -367,7 +367,7 @@ export class MapSearchPage {
 
   //Move to center and creata a marker
   setLocation(center, zoom) {
-    
+
     this.map.setZoom(zoom);
     this.map.setCenter(center);
     let marker = new google.maps.Marker({
@@ -393,32 +393,38 @@ export class MapSearchPage {
 
     marker.addListener('click', () => {
 
-      let alert = Alert.create({
-        //title: 'Confirm purchase',
-        message: html,
-        cssClass: 'house_popup',
-        buttons: [
-          {
-            text: '取消',
-            role: 'cancel',
+        let alert = Alert.create({
+          //title: 'Confirm purchase',
+          message: html,
+          cssClass: 'house_popup',
+          buttons: [
+            {
+              text: '取消',
+              role: 'cancel',
 
-          },
-          {
-            text: '详情',
-            handler: () => {
-              let navTransition = alert.dismiss();
-              navTransition.then(() => {
-                this.nav.pop();
-                this.nav.push(HouseDetailPage, {id:mls,ids:this.currentHouseList});
-                //this.nav.push(HouseDetailPage, mls); 
-              });
-              return false;
+            },
+            {
+              text: '详情',
+              handler: () => {
+                let navTransition = alert.dismiss();
+                navTransition.then(() => {
+                  this.nav.pop();
+                  this.nav.push(HouseDetailPage, {id:mls,ids:this.currentHouseList,list: this.currentHouseList});
+                  //this.nav.push(HouseDetailPage, mls); 
+                });
+                return false;
+              }
             }
-          }
-        ]
-      });
-      this.nav.present(alert);
-      //   //infowindow.open(this.map, marker);
+          ]
+        });
+        this.nav.present(alert);
+        //   //infowindow.open(this.map, marker);
+
+      // let popover = Popover.create(HousePopup)
+      // this.nav.present(popover, {
+      //   ev: html
+      // })
+
     });
 
 
@@ -529,7 +535,7 @@ export class MapSearchPage {
     let centerlat = (_ne.lat() + _sw.lat()) / 2;
     let centerlng = (_ne.lng() + _sw.lng()) / 2;
     let HouseArray = [];
-    //this.currentMlsList = [];
+    this.currentMlsList = [];
     let marker;
     let _bounds = _sw.lat() + "," + _sw.lng() + "," + _ne.lat() + "," + _ne.lng();
 
@@ -571,7 +577,7 @@ export class MapSearchPage {
           }
         }   //End of City Markers
 
-     
+
         if (this.markerType == 'house') {
           this._zone.run(() => {
             this.isListShow = true;
@@ -592,8 +598,8 @@ export class MapSearchPage {
           // console.log('Image Host:' + this.imgHost);
           for (let index = 0, l = totalhouse; index < l; index++) {
             let house = data.Data.MapHouseList[index];
-            //this.currentMlsList.push(house.MLS);
-           
+            this.currentMlsList.push(house.MLS);
+
             if (index < (totalhouse - 1)) {
               nextLat = data.Data.MapHouseList[index + 1].GeocodeLat;
               nextLng = data.Data.MapHouseList[index + 1].GeocodeLng;
@@ -669,4 +675,10 @@ export class MapSearchPage {
   //End of MAP import function
 
 }
+
+@Component({
+  template: `This is a popover`
+})
+
+export class HousePopup { }
 
