@@ -236,9 +236,10 @@ export class HouseDetailPage implements OnInit {
 
   swiperOptions = {
     loop: true,
-    //pager: true,
-    speed: 4000,
-    autoplay: 300
+		autoHeight: true,
+    pager: true,
+    speed: 100,
+    autoplay: 100
   };
 
   private COMP_PTS = {"N":"北","S":"南","W":"西","E":"东"};
@@ -291,6 +292,10 @@ export class HouseDetailPage implements OnInit {
     return +(Math.round(+(num + "e+1"))  + "e-1");
 }
 
+	round2(num) {    
+			return +(Math.round(+(num + "e+2"))  + "e-2");
+	}
+
 	houseRooms(h) {
 		this.rooms[0] = {level:h.level1, out:h.rm1_out, len:h.rm1_len, wth:h.rm1_wth, area:this.round1(h.rm1_len*h.rm1_wth), desc:this.getRoomDesc(h.rm1_dc1_out,h.rm1_dc2_out,h.rm1_dc3_out)};
 		this.rooms[1] = {level:h.level2, out:h.rm2_out, len:h.rm2_len, wth:h.rm2_wth, area:this.round1(h.rm2_len*h.rm2_wth), desc:this.getRoomDesc(h.rm2_dc1_out,h.rm2_dc2_out,h.rm2_dc3_out)};
@@ -316,7 +321,7 @@ export class HouseDetailPage implements OnInit {
   }
 
 	getPriceRMB() {
-		return parseFloat(this.house.lp_dol) * this.exchangeRate/10000;
+		return this.round2(parseFloat(this.house.lp_dol) * this.exchangeRate/10000);
 	}
 
   getPropertyTxt() {
@@ -347,7 +352,7 @@ export class HouseDetailPage implements OnInit {
 
 	getLandArea() {
 			if (this.switchF2M)
-				return this.round1(parseFloat(this.house.land_area) * 0.09290304) + this.F2M.smeter;
+				return this.round2(parseFloat(this.house.land_area) * 0.09290304) + this.F2M.smeter;
 			else 
 				return this.house.land_area + this.F2M.sfeet;
 	}

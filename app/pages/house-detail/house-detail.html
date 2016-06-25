@@ -16,7 +16,6 @@
 <ion-content class="house-detail">
 
   <ion-slides [options]="swiperOptions" class="swiper-container">
-	<div id="dummy"></div>
 	<ion-slide *ngFor="let photo of photos">
       <img [src]="photoUrl(photo)" class="slide-image"/>
     </ion-slide>
