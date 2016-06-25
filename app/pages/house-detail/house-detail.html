@@ -5,8 +5,12 @@
   Ionic pages and navigation.
 -->
 <ion-navbar *navbar>
-  <ion-title>房屋详情</ion-title>
-  <ion-buttons end>
+  <ion-title>房屋详情{{" MLS：" + parms.id}}</ion-title>
+	<ion-buttons end>
+<!--
+  									<ion-label class="switchF2M">{{(switchF2M == true)? F2M.feet: F2M.meter}}</ion-label>
+									<ion-toggle [(ngModel)]="switchF2M"></ion-toggle>
+-->										
   <button  (click)="share('House Title', 'House Detail', null, 'https://m.maplecity.com.cn')">
   <ion-icon isActive="false" name="share" ></ion-icon>
   </button>
@@ -43,7 +47,7 @@
 	<div class="fyxq_ptss">
 		<div class="fyxq_ptssleft">价格：</div>
 		<div class="fyxq_ptssright">{{getPriceTxt()}}
-			<span *ngIf="exchangeRate">&nbsp;(约<i>{{getPriceRMB()}}</i>万人民币)</span>
+			<span *ngIf="exchangeRate">&nbsp;（约<i>{{getPriceRMB()}}</i>万人民币）</span>
 		</div>
 		<div class="cl"></div>
 	</div>
@@ -180,13 +184,45 @@
  
 </ion-content>
 
-<div *ngIf="prevHouse">
-	<button fab fab-bottom   fab-left (click)="go2PrevHouse()" style="z-index:100;opacity:0.8;">
+<div id="houstList_control">
+<div *ngIf="houseList.prev">
+	<button fab fab-bottom  fab-left (click)="go2PrevHouse()" style="z-index: 100;opacity: 0.8;">
 		<ion-icon name="arrow-dropleft" is-active="true"></ion-icon>
 	</button>
 </div>
-<div *ngIf="nextHouse">  
-		<button fab  fab-bottom fab-right (click)="go2NextHouse()" style="z-index:100;opacity:0.8;">
+<div *ngIf="houseList.total > 1">
+<button fab fab-bottom fab-center (click)="openHouseList()" style="z-index: 100;opacity:0.8;font-size:10px;">
+	<ion-icon is-active="true">{{houseList.index + 1}}/{{houseList.total}}</ion-icon>
+</button>
+</div>
+<div *ngIf="houseList.next">  
+		<button fab  fab-bottom fab-right (click)="go2NextHouse()" style="z-index: 100;opacity: 0.8;">
 		<ion-icon name="arrow-dropright" is-active="true"></ion-icon>
 	</button>
 </div> 
+</div>
+<!--
+<div class="house_list" *ngIf="false">
+	<ion-slides [options]="swiperOptions" class="swiper-container">
+		<ion-slide *ngFor="let house of this.parms.list" class="swiper-slide" (click)="go2House(house.MLS)">
+			<ion-card class="house_card">
+				<img [src]="imgHost + house.CoverImg" />
+				<div class="house_desc" text-left text-nowrap>
+				
+					<ion-item>    
+						<ion-badge item-left>MLS:{{house.MLS}}</ion-badge>
+						<ion-badge item-right><i class="fa fa-usd" aria-hidden="true"></i>{{house.Price}}万</ion-badge>
+					</ion-item>
+				
+						<div class="card-subtitle" text-left>
+						<div><i padding-right secondary class="fa fa-building" aria-hidden="true"></i><span padding-right>{{house.HouseType}}</span>{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨</div>
+						<div> <ion-icon padding-right secondary name="navigate"></ion-icon><span padding-right>{{house.Address}}</span>{{house.MunicipalityName}}</div>
+						</div>
+				</div>
+			</ion-card>
+		</ion-slide>
+
+	</ion-slides>
+</div>
+-->
+

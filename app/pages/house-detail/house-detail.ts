@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams, Platform, Slides} from 'ionic-angular';
+import {Page, NavController, NavParams, Platform, Slides, Events} from 'ionic-angular';
 import {OnInit,Component,ViewChild} from '@angular/core';;
 //import {Geolocation} from 'ionic-native';
 import {SocialSharing} from 'ionic-native';
@@ -17,11 +17,9 @@ import {SchoolSearchPage} from '../../pages/school-search/school-search';
 })
 export class HouseDetailPage implements OnInit {
   private nav;
-	private id: string;
-	private ids: Array<string> = [];
-  private prevHouse: string;
-	private nextHouse: string;
-  private section: string = "summary";
+	private parms = {id: '', list: []};
+	private houseList = {prev: '', next: '', index: 0, total: 0};
+	private section: string = "summary";
   private isAndroid: boolean = false;
   private switchF2M: Boolean = true; //"英尺"
 	private rooms: Array<Object> = [];
@@ -224,16 +222,15 @@ export class HouseDetailPage implements OnInit {
 
 
   static get parameters() {
-    return [[NavController], [NavParams], [MapleRestData], [MapleConf]];
+    return [[NavController], [NavParams], [MapleRestData], [MapleConf], [Events]];
   }
 
   constructor(nav, private navParams: NavParams, private mapleRestData: MapleRestData, private mapleConf: MapleConf, 
-	private platform: Platform) {
+	private platform: Platform, private events: Events) {
     this.nav = nav;
 		console.log(navParams);
-    this.id = navParams.data.id;
-		this.ids = navParams.data.ids;
-     //this.isAndroid = platform.is('android');
+    this.parms = navParams.data;
+		//this.isAndroid = platform.is('android');
   }
 
   swiperOptions = {
@@ -251,40 +248,39 @@ export class HouseDetailPage implements OnInit {
   ngOnInit() {
 		this.mapleConf.load().then(data => {
     	//this.getResult('index.php?r=ngget/getHouseDetail');
-			this.getResult(data.houseDetailRest, this.id);
+			this.getResult(data.houseDetailRest, this.parms.id);
     })		
   }
 
   getResult(url,id) {
+		this.parms.id = id;
     this.mapleRestData.load(url, {'id':id}).subscribe(
       data => { 
 				//console.log(data);
-				this.id = id;
 				this.house = data.house;
 				this.house_mname = data.house_mname; 
 				this.house_propertyType = data.house_propertyType; 
 				this.exchangeRate = data.exchangeRate; 
 				this.photos = data.photos; 
 				this.houseRooms(this.house);
-				this.setPrevNext();
+				this.setHouseList();
 				//console.log(this.slider); 
 				this.slider.slideTo(0);
 		}
     )
   }
   
- setPrevNext() {
-	  if (!this.ids || ! this.id) {
-			this.prevHouse = null;
-			this.nextHouse = null;
-		}
-		else {
-			let pos = this.ids.indexOf(this.id);
+ setHouseList() {
+		this.houseList = {prev: null, next: null, index: 0, total: 0};
+		if (this.parms.list) {
+			let ids = this.parms.list.map(e => e.MLS);
+			let pos = ids.indexOf(this.parms.id);
 			
-			this.prevHouse = (pos > 0) ? this.ids[pos - 1]: null;
-			this.nextHouse = (pos < this.ids.length - 1) ? this.ids[pos + 1]: null;
-			console.log("prevHouse" + this.prevHouse);
-			console.log("nextHouse" + this.nextHouse);
+			this.houseList.index = pos;
+			this.houseList.prev = (pos > 0) ? ids[pos - 1]: null;
+			this.houseList.next = (pos < ids.length - 1) ? ids[pos + 1]: null;
+			this.houseList.total = ids.length;
+			console.log(this.houseList);
 		}
 }
 
@@ -362,7 +358,9 @@ export class HouseDetailPage implements OnInit {
 	}
 
   gotoSchool() {
-    this.nav.push(SchoolSearchPage);
+    //this.nav.push(SchoolSearchPage);
+ 		let center = new google.maps.LatLng(this.house.lat, this.house.lng);
+		this.events.publish('schoolmap:center', center);
   }
 
   gotoVideo() {
@@ -374,14 +372,18 @@ export class HouseDetailPage implements OnInit {
 	}
 
   go2PrevHouse() {
-		if (this.prevHouse)
-    	this.getResult(this.mapleConf.data.houseDetailRest, this.prevHouse);
+		if (this.houseList.prev)
+    	this.getResult(this.mapleConf.data.houseDetailRest, this.houseList.prev);
 	}
 
   go2NextHouse() {
-		if (this.nextHouse) 
-    	this.getResult(this.mapleConf.data.houseDetailRest, this.nextHouse);
+		if (this.houseList.next) 
+    	this.getResult(this.mapleConf.data.houseDetailRest, this.houseList.next);
   }
+
+
+  openHouseList() {
+	}
 
    share(message, subject, file, link) {
        // this.platform.ready().then(() => {
