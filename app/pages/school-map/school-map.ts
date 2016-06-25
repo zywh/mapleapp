@@ -24,7 +24,7 @@ interface schoolSelectOptionsObj {
 
 
 export class SchoolMapPage {
-  @ViewChild('mcTabs') tabRef: Tabs;
+  
   private searchQuery: String = '';
   private cityItems: any;
   private schoolItems: any;

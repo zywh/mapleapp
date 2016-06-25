@@ -46,7 +46,7 @@ export class MapSearchPage {
   private htmlArrayPosition = 0;
   private totalCount: Number; //Returned House
   private listAllHtml = ''; //hold houses on current map
-  private currentMlsList = [];
+  //private currentMlsList = [];
   public isListShow: boolean = false;
   private markerType;
   private imgHost: String;
@@ -187,11 +187,11 @@ export class MapSearchPage {
 
   }
   gotoHouseDetail(mls) {
-    this.nav.push(HouseDetailPage, {id:mls,ids:this.currentMlsList});
+    this.nav.push(HouseDetailPage, {id:mls,ids:this.currentHouseList});
   }
 
   openHouseList() {
-    console.log(this.currentMlsList);
+    
     if (this.markerType == 'house') {
       this.currentDiv = (this.currentDiv == 'houselist') ? '' : 'houselist';
       console.log("House list show");
@@ -409,7 +409,7 @@ export class MapSearchPage {
               let navTransition = alert.dismiss();
               navTransition.then(() => {
                 this.nav.pop();
-                this.nav.push(HouseDetailPage, {id:mls,ids:this.currentMlsList});
+                this.nav.push(HouseDetailPage, {id:mls,ids:this.currentHouseList});
                 //this.nav.push(HouseDetailPage, mls); 
               });
               return false;
@@ -529,7 +529,7 @@ export class MapSearchPage {
     let centerlat = (_ne.lat() + _sw.lat()) / 2;
     let centerlng = (_ne.lng() + _sw.lng()) / 2;
     let HouseArray = [];
-    this.currentMlsList = [];
+    //this.currentMlsList = [];
     let marker;
     let _bounds = _sw.lat() + "," + _sw.lng() + "," + _ne.lat() + "," + _ne.lng();
 
@@ -592,7 +592,7 @@ export class MapSearchPage {
           // console.log('Image Host:' + this.imgHost);
           for (let index = 0, l = totalhouse; index < l; index++) {
             let house = data.Data.MapHouseList[index];
-            this.currentMlsList.push(house.MLS);
+            //this.currentMlsList.push(house.MLS);
            
             if (index < (totalhouse - 1)) {
               nextLat = data.Data.MapHouseList[index + 1].GeocodeLat;
