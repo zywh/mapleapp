@@ -95,14 +95,14 @@ export class MapSearchPage {
 
   //change center if school is selected from school map page
   listenEvents() {
-    this.events.subscribe('school:mappage', (data) => {
+    this.events.subscribe('map:center', (data) => {
       let center = data[0];
       let marker = new google.maps.Marker({
         position: center,
         map: this.map,
         draggable: false,
       });
-      this.setLocation(center, 15);
+      this.setLocation(center, 14);
 
     });
   }
@@ -367,8 +367,9 @@ export class MapSearchPage {
 
   //Move to center and creata a marker
   setLocation(center, zoom) {
-    this.map.setCenter(center);
+    
     this.map.setZoom(zoom);
+    this.map.setCenter(center);
     let marker = new google.maps.Marker({
       position: center,
       map: this.map,

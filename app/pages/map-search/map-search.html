@@ -33,11 +33,11 @@
     </ion-item>
     <ion-item padding *ngFor="let item of mlsItems" (click)="itemTapped($event, item,2)">
        <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }},{{item.city}}</span></button>
-       <ion-badge item-right>MLS</ion-badge>
+       <ion-badge item-right>MLS{{item.price}}万</ion-badge>
     </ion-item>
     <ion-item padding *ngFor="let item of addressItems" (click)="itemTapped($event, item,3)">
        <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }},{{item.city}}</span></button>
-       <ion-badge item-right>地址</ion-badge>
+       <ion-badge item-right>地址{{item.price}}万</ion-badge>
     </ion-item>
   </div>
   

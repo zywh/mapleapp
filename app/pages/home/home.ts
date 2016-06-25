@@ -1,10 +1,12 @@
 //import {Page, NavController} from 'ionic-angular';
-import {Page, NavController, NavParams} from 'ionic-angular';
+import {Page, NavController, NavParams,Events} from 'ionic-angular';
 import {OnInit, Component} from '@angular/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {Http, Headers, RequestOptions} from '@angular/http';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {ProjectDetailPage} from '../project-detail/project-detail';
+// import {MapSearchPage} from '../map-search/map-search';
+// import {SchoolMapPage} from '../school-map/school-map';
 import {PostPage} from '../post/post';
 import {MapleFooter} from '../maple-footer/maple-footer';
 //import {RangeKnob,Range} from '../ion-range/range';
@@ -21,8 +23,6 @@ import {MapleFooter} from '../maple-footer/maple-footer';
   // directives: [MapleFooter]
 })
 export class HomePage implements OnInit {
-  //private nav;
-  // private parms = {};
   private projects: Object;
   private postListRest;
   private post1;
@@ -32,17 +32,17 @@ export class HomePage implements OnInit {
   private addressItems: any;
   private mlsItems: any;
   private currentDiv;
-  
+  private scityItems;
+  private schoolItems;
+
 
   constructor(
     private nav: NavController,
     private parms: NavParams,
     private mapleRestData: MapleRestData,
-    private mapleconf: MapleConf
-  ) {
-    //this.nav = nav;
-
-  }
+    private mapleconf: MapleConf,
+    private events: Events
+  ) {}
 
   projectSwiperOptions = {
     loop: true,
@@ -53,25 +53,25 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.mapleconf.load().then(data => {
-      
+
       //this.getProjects('index.php?r=ngget/getProjects');
       this.postListRest = data.postRest;
       this.getProjects(data.projectRest);
       this.getPosts(data.postListRest, 12);
-     
+
     })
   }
 
   getProjects(url) {
     this.mapleRestData.load(url, this.parms).subscribe(
-      data => { this.projects = data;  }
+      data => { this.projects = data; }
     );
 
   }
 
   getPosts(url, catId) {
     this.mapleRestData.load(url, { id: catId }).subscribe(
-      data => { this.post1 = data.posts;  }
+      data => { this.post1 = data.posts; }
     );
 
   }
@@ -83,34 +83,56 @@ export class HomePage implements OnInit {
     this.nav.push(PostPage, id);
   }
 
-   resetItems() {
+  resetItems() {
     this.cityItems = [];
     this.addressItems = [];
     this.mlsItems = [];
+    this.scityItems = [];
+    this.schoolItems= [];
     //this.searchQuery = '';
   }
 
+  sGetItems(searchbar) {
 
-  itemTapped(event, item, type) {
-    if (type == 1) { //CITY Action
-      let lat = item.lat;
-      let lng = item.lng;
-      let center = new google.maps.LatLng(lat, lng);
-      //this.setLocation(center, 14);
-      this.resetItems();
-    }
+    this.resetItems();
+    this.currentDiv = 'sSearchlist';
 
-    if (type == 2) { //MLS Action
-      // this.nav.push(HouseDetailPage, {
-      //   item: item.id //pass MLS# to house detail
-      // });
-    }
+    if (this.sQueryText == '') {
+      return;
+    } else {
+      let parm = { term: this.sQueryText };
+      //Call REST and generate item object
+      this.mapleRestData.load('index.php?r=ngget/getSchoolAutoComplete', parm).subscribe(
+        data => {
+          if (data.hasOwnProperty("CITY")) {
+            this.scityItems = data.CITY;
 
-    if (type == 3) { //Address Action
-      // this.nav.push(HouseDetailPage, {
-      //   item: item.id //pass MLS# to house detail
-      // });
+          };
+
+          if (data.hasOwnProperty("SCHOOL")) {
+            this.schoolItems = data.SCHOOL;
+
+          }
+
+        }); //end of callback
+      //this.items = ["city", "address", "MLS"];
     }
+  }
+
+  itemTapped(item, type) {
+
+    let center = new google.maps.LatLng(item.lat, item.lng);
+    if ( type == 1){
+       this.events.publish('map:center', center);
+       
+    }
+    if ( type == 2){
+       this.events.publish('schoolmap:center', center);
+       console.log(item.lat + ":"+ item.lng)
+    }
+  
+    this.resetItems();
+
 
   }
   //auto complete REST CAll
@@ -119,7 +141,7 @@ export class HomePage implements OnInit {
     this.resetItems();
     this.currentDiv = 'hSearchlist';
 
-   
+
     if (this.hQueryText == '') {
       return;
     } else {
