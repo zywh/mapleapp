@@ -285,25 +285,25 @@ export class MapSearchPage {
 
 
   itemTapped(event, item, type) {
-    if (type == 1) { //CITY Action
+   // if (type == 1) { //CITY Action
       let lat = item.lat;
       let lng = item.lng;
       let center = new google.maps.LatLng(lat, lng);
       this.setLocation(center, 14);
       this.resetItems();
-    }
+    //}
 
-    if (type == 2) { //MLS Action
-      this.nav.push(HouseDetailPage, {
-        item: item.id //pass MLS# to house detail
-      });
-    }
+    // if (type == 2) { //MLS Action
+    //   this.nav.push(HouseDetailPage, {
+    //     item: item.id //pass MLS# to house detail
+    //   });
+    // }
 
-    if (type == 3) { //Address Action
-      this.nav.push(HouseDetailPage, {
-        item: item.id //pass MLS# to house detail
-      });
-    }
+    // if (type == 3) { //Address Action
+    //   this.nav.push(HouseDetailPage, {
+    //     item: item.id //pass MLS# to house detail
+    //   });
+    // }
 
   }
   //auto complete REST CAll
@@ -406,8 +406,8 @@ export class MapSearchPage {
               let navTransition = alert.dismiss();
               navTransition.then(() => {
                 this.nav.pop();
-                //this.nav.push(HouseDetailPage, {id:mls,ids:this.currentMlsList});
-                this.nav.push(HouseDetailPage, mls); 
+                this.nav.push(HouseDetailPage, {id:mls,ids:this.currentMlsList});
+                //this.nav.push(HouseDetailPage, mls); 
               });
               return false;
             }
