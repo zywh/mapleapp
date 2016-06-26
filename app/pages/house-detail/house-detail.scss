@@ -1,4 +1,5 @@
 .house-detail {
+    z-index: 11;
     .swiper-container {
         width: 100%;
         height: auto; //66.8vw;
@@ -12,8 +13,10 @@
     }
 }
 
-.fyxq_cont { 
-    padding-left:5px; 
+ion-card.fyxq_cont {
+    margin: 0px; 
+    padding-left:5px;
+    width: 100%; 
     .cl { clear: both;}
     img { 
         width: auto; 
@@ -67,8 +70,10 @@
     }     
 }
 
-.fyxqlb_cont { 
+ion-card.fyxqlb_cont { 
+    margin: 0;
     padding:0 5px; 
+    width: 100%;
     ion-item-divider#housedivider { 
         font-size: 18px;
         padding: 5px 0;
@@ -95,3 +100,10 @@
     }
 }
 
+#houseList_control {
+    //z-index: 100;
+    opacity: 0.8;
+    .button-fab {
+       font-size: 10px; 
+    }
+}
