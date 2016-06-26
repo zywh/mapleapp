@@ -359,13 +359,18 @@ export class HouseDetailPage implements OnInit {
 
   gotoSchool() {
     //this.nav.push(SchoolSearchPage);
- 		let center = new google.maps.LatLng(this.house.lat, this.house.lng);
+ 		let center = new google.maps.LatLng(this.house.latitude, this.house.longitude);
 		this.events.publish('schoolmap:center', center);
   }
 
   gotoVideo() {
-    window.open(this.house.video_url);
-  }
+      if (this.house.tour_url) window.open(this.house.tour_url, "_blank");
+  /*
+	    this.platform.ready().then(() => {
+            if (this.house.tour_url) cordova.InAppBrowser.open(this.house.tour_url, "_system", "location=true");
+				})
+  */
+}
 
 	photoUrl(photo) {
 		return this.mapleConf.data.picHost + photo;
