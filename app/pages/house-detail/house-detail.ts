@@ -222,11 +222,11 @@ export class HouseDetailPage implements OnInit {
 
 
   static get parameters() {
-    return [[NavController], [NavParams], [MapleRestData], [MapleConf], [Events]];
+    return [[NavController], [NavParams], [MapleRestData], [MapleConf], [Events], [Platform]];
   }
 
   constructor(nav, private navParams: NavParams, private mapleRestData: MapleRestData, private mapleConf: MapleConf, 
-	private platform: Platform, private events: Events) {
+	private events: Events, private platform: Platform) {
     this.nav = nav;
 		console.log(navParams);
     this.parms = navParams.data;
@@ -365,11 +365,9 @@ export class HouseDetailPage implements OnInit {
 
   gotoVideo() {
       if (this.house.tour_url) window.open(this.house.tour_url, "_blank");
-  /*
-	    this.platform.ready().then(() => {
+ 	    /*this.platform.ready().then(() => {
             if (this.house.tour_url) cordova.InAppBrowser.open(this.house.tour_url, "_system", "location=true");
-				})
-  */
+				})*/
 }
 
 	photoUrl(photo) {
