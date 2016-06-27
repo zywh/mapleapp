@@ -31,18 +31,20 @@
         学校
       </ion-segment-button>
       <ion-segment-button value="video" (ionSelect)="gotoVideo()">
-        视频
+        {{(house.tour_url)?"":"无"}}视频
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
-  <div [ngSwitch]="section">
+<!--  
+	<div [ngSwitch]="section">
     <div *ngSwitchWhen="'school'">
-      <p>{{house.school}}</p>
+      <p></p>
     </div>
     <div *ngSwitchWhen="'video'">
-      <p> {{house.video}} </p>
+      <p> </p>
     </div>
   </div>
+ -->
  <ion-card class="fyxq_cont">
 	<div class="fyxq_ptss">
 		<div class="fyxq_ptssleft">价格：</div>
