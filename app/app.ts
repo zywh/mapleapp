@@ -163,7 +163,8 @@ ionicBootstrap(
   [ConferenceData, UserData, MapleRestData, MapleConf, Connectivity],
   {
     tabbarPlacement: "bottom",
-    backButtonText: "返回",
+    //backButtonText: "返回",
+    backButtonText: "",
     prodMode: true,
     tabSubPages: false, //android house detail no two header bar
     //mode: 'ios',
