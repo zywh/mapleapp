@@ -31,8 +31,10 @@ export class SchoolMapPage {
     private parms: Object;
     private map;
     private center;
+    private schoolDropMarker;
     private defaultcenter = new google.maps.LatLng(43.6532, -79.3832);
     private markerArray = [];
+    private sMarkerArray = [];
     private sviewLoaded: Boolean = false;
     private defaultZoom: Number = 13;
     //private htmlArray = [];
@@ -95,89 +97,82 @@ export class SchoolMapPage {
     }
 
 
-
+    //init map. It only once 
     ionViewLoaded() {
-        let mapEle = document.getElementById('schoolmap');
 
-        this.map = new google.maps.Map(mapEle, {
-            //center: mapData.find(d => d.center),
-            center: this.defaultcenter,
-            minZoom: 9,
-            mapTypeControl: true,
-            mapTypeControlOptions: {
-                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-                position: google.maps.ControlPosition.TOP_LEFT
-            },
-            zoomControl: true,
-            zoomControlOptions: {
-                position: google.maps.ControlPosition.RIGHT_TOP
-            },
-            scaleControl: true,
-            streetViewControl: true,
-            streetViewControlOptions: {
-                position: google.maps.ControlPosition.TOP_RIGHT
-            },
-            zoom: 13
-        });
+        setTimeout(() => {
+            console.log("View Loaded init map")
+            let mapEle = document.getElementById('schoolmap');
+
+            this.map = new google.maps.Map(mapEle, {
+                //center: mapData.find(d => d.center),
+                center: this.defaultcenter,
+                minZoom: 9,
+                mapTypeControl: true,
+                mapTypeControlOptions: {
+                    style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                    position: google.maps.ControlPosition.TOP_LEFT
+                },
+                zoomControl: true,
+                zoomControlOptions: {
+                    position: google.maps.ControlPosition.RIGHT_TOP
+                },
+                scaleControl: true,
+                streetViewControl: true,
+                streetViewControlOptions: {
+                    position: google.maps.ControlPosition.TOP_RIGHT
+                },
+                zoom: 10
+            });
+
+        }, 100); //wait for switch to avoid blank map
+
     }
 
+    //load map listener if first time
     ionViewWillEnter() {
-        console.log("School Map View will enter");
-        //ngOnInit() {
+        
+        if (!this.sviewLoaded) {
+            console.log("School Map View will enter. Add school map Listener");
+            setTimeout(() => {
+                google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(); });
+                google.maps.event.addListener(this.map, 'click', () => {
+                    this._zone.run(() => {
+                        this.searchQuery = '';
+                        this.currentDiv = '';
+                    });
 
-        // let lat: Number = 43.6532;
-        // let lng: Number = -79.3832;
+                });
 
-        // this.confData.getMap().then(mapData => {  //Need this for werid map issue. Menu page switch will make map blank
-        //   this.loadMap(lat, lng, 14);
-        // })
-
-
+                this.sviewLoaded = true;
+            }, 200); //Set timeout to load it after mapinit
+        }
     }
 
+    //Add marker only if first time or marker
     ionViewDidEnter() {
         console.log("School Map View did entered");
-        if (!this.sviewLoaded) {
-            // this.map.setZoom(12);
-            this.sviewLoaded = true;
-
-            let options = { timeout: 10000, enableHighAccuracy: true };
-
-            navigator.geolocation.getCurrentPosition(
-
-                (position) => {
-
-                    this.defaultcenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                    let lat = position.coords.latitude;
-                    if (lat > 20) {
-                        this.loadMap(this.defaultcenter, 14);
-                    }
-
-                },
-
-                (error) => {
-                    console.log(error);
-                }, options
-
-            );
-
-
+        if ((this.markerArray.length == 0) && (!this.sviewLoaded)) {
+            setTimeout(() => {
+                console.log("School Map is entered No marker First Time. Zoom and center")
+                this.map.setZoom(13);
+                this.setCenter(false);
+            }, 400);
         }
 
     }
+
     listenEvents() {
         this.events.subscribe('schoolmap:center', (data) => {
-            let marker = new google.maps.Marker({
-                position: data[0],
-                map: this.map,
-                draggable: false,
-            });
-            this.setLocation(data[0], 13);
 
+            setTimeout(() => {
+                this.sviewLoaded = true
+                this.setLocation(data[0], this.defaultZoom,true);
+            }, 300);
         });
     }
 
-    setCenter() {
+    setCenter(isMarker) {
 
         let options = { timeout: 10000, enableHighAccuracy: true };
 
@@ -187,12 +182,13 @@ export class SchoolMapPage {
                 this.defaultcenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 let lat = position.coords.latitude;
                 if (lat > 20) {
-                    this.setLocation(this.defaultcenter, this.defaultZoom);
+                  
+                    this.setLocation(this.defaultcenter, this.defaultZoom,isMarker);
 
-                } else { this.setLocation(this.defaultcenter, this.defaultZoom); }
+                } else { this.setLocation(this.defaultcenter, this.defaultZoom,isMarker); }
 
             },
-            (error) => { this.setLocation(this.defaultcenter, this.defaultZoom); }, options
+            (error) => { this.setLocation(this.defaultcenter, this.defaultZoom,isMarker); }, options
         );
 
     }
@@ -209,21 +205,6 @@ export class SchoolMapPage {
 
     }
 
-    loadMap(center, zoom) {
-        //this.listenEvents();
-     
-        google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(); });
-        google.maps.event.addListener(this.map, 'click', () => {
-            this._zone.run(() => {
-                this.searchQuery = '';
-                this.currentDiv = '';
-            });
-
-
-        });
-        this.setLocation(center,zoom);
-    }
-
     resetItems() {
         this.cityItems = [];
         //this.addressItems = [];
@@ -233,10 +214,8 @@ export class SchoolMapPage {
 
     itemTapped(event, item, type) {
 
-        let lat = item.lat;
-        let lng = item.lng;
-        let center = new google.maps.LatLng(lat, lng);
-        this.setLocation(center, 14);
+        let center = new google.maps.LatLng(item.lat, item.lng);
+        this.setLocation(center, 14,true);
         this.resetItems();
 
     }
@@ -268,16 +247,20 @@ export class SchoolMapPage {
         }
     }
     //SetCenter and Zoom
-    setLocation(center, zoom) {
+    setLocation(center, zoom,isMarker) {
         this.map.setCenter(center);
-
         this.map.setZoom(zoom);
+        if (isMarker){
+        this.clearAll(this.sMarkerArray);
+        
         let marker = new google.maps.Marker({
             position: center,
             map: this.map,
             draggable: false,
 
         });
+        this.sMarkerArray.push(marker);
+        }
     }
 
 
@@ -294,12 +277,6 @@ export class SchoolMapPage {
             flat: true
         });
         this.markerArray.push(marker);
-        // var contentString = "fsdafsadfsdafsda";
-        // var infowindow = new google.maps.InfoWindow({
-        //   content: contentString,
-        //   disableAutoPan: true
-
-        // });
 
         marker.addListener('click', () => {
 
@@ -335,7 +312,7 @@ export class SchoolMapPage {
 
 
         this.markerArray.push(marker);
-        google.maps.event.addListener(marker, 'click', function() {
+        google.maps.event.addListener(marker, 'click', function () {
             this.map.setCenter(this.position);
             let currentzoom = this.map.getZoom();
             this.map.setZoom(currentzoom + 2);
@@ -344,17 +321,13 @@ export class SchoolMapPage {
 
     }
     //clear marker when map changed
-    clearAll() {
-        if (this.markerArray) {
-            for (let i in this.markerArray) {
-                this.markerArray[i].setMap(null);
+    clearAll(ma) {
+        if (ma.length > 0) {
+            for (let i in ma) {
+                ma[i].setMap(null);
             }
-            this.markerArray.length = 0;
+            ma.length = 0;
         }
-
-        //this.htmlArray = [];
-        //this.htmlArrayPosition = 0;
-
     }
 
     setMarkerCss(rating) {
@@ -391,7 +364,7 @@ export class SchoolMapPage {
         console.log("Change Map: ");
         google.maps.event.trigger(this.map, 'resize');
 
-        this.clearAll(); //clear marker
+        this.clearAll(this.markerArray); //clear marker
         // let loading = Loading.create({
         //   content: '加载房源...'
         // });

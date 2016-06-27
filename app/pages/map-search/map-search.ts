@@ -46,10 +46,10 @@ export class MapSearchPage {
   private htmlArrayPosition = 0;
   private totalCount: Number; //Returned House
   private listAllHtml = ''; //hold houses on current map
-  private currentMlsList = [];
   public isListShow: boolean = false;
   private markerType;
   private imgHost: String;
+  private defaultZoom: Number = 14;
 
   private selectOptions = {
     selectSR: true,
@@ -81,7 +81,6 @@ export class MapSearchPage {
   ) {
     //this.searchQuery = '';
     this.resetItems();
-    console.log(navparm.data);
     this.listenEvents(); //listen School map event
     this.loadRichMarker();
 
@@ -97,12 +96,13 @@ export class MapSearchPage {
   listenEvents() {
     this.events.subscribe('map:center', (data) => {
       let center = data[0];
+      this.nav.pop();
       let marker = new google.maps.Marker({
         position: center,
         map: this.map,
         draggable: false,
       });
-      this.setLocation(center, 14);
+      this.setLocation(center, this.defaultZoom,true);
 
     });
   }
@@ -121,34 +121,31 @@ export class MapSearchPage {
     this.nav.present(modal);
   }
 
+  //first time view is entered. Center the map and add listener
   ionViewWillEnter() {
+    setTimeout(() => {
+      google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(); });
+      google.maps.event.addListener(this.map, 'click', () => {
+        //close all open POP UP options/list etc
+        this._zone.run(() => {
+          this.currentDiv = '';
+          this.queryText = '';
+          this.viewCtrl.dismiss();
+          //this.nav.pop();
+        });
+
+      });
+    }, 200);
+  }
+  ionViewDidEnter() {
     console.log("Map View did entered");
     if (!this.mviewLoaded) {
-
+    
       this.mviewLoaded = true;
-      let options = { timeout: 10000, enableHighAccuracy: true };
-
-      navigator.geolocation.getCurrentPosition(
-
-        (position) => {
-
-          this.defaultcenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-          let lat = position.coords.latitude;
-
-          //let lng = position.coords.longitude;
-
-          if (lat > 20) {
-            this.loadMap(this.defaultcenter, 14);
-           
-          } else {
-            this.loadMap(this.defaultcenter, 14);
-          }
-
-        },
-
-        (error) => { this.loadMap(this.defaultcenter, 14); }, options
-
-      );
+      setTimeout(() => {
+        console.log("first time view is entered. Center map based on Geolocation")
+        this.setCenter(false); //no marker
+      }, 400);
     }
 
   }
@@ -160,31 +157,34 @@ export class MapSearchPage {
     )
   }
 
-
+  // initial view is loaded by tab page with 100ms delay
   ionViewLoaded() {
-    let mapEle = document.getElementById('map');
 
-    this.map = new google.maps.Map(mapEle, {
+    setTimeout(() => {
+      let mapEle = document.getElementById('map');
 
-      center: this.defaultcenter,
-      minZoom: 4,
-      mapTypeControl: true,
-      mapTypeControlOptions: {
-        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-        position: google.maps.ControlPosition.TOP_LEFT
-      },
-      zoomControl: true,
-      zoomControlOptions: {
-        position: google.maps.ControlPosition.RIGHT_TOP
-      },
-      scaleControl: true,
-      streetViewControl: true,
-      streetViewControlOptions: {
-        position: google.maps.ControlPosition.TOP_RIGHT
-      },
-      zoom: 13
-    });
+      this.map = new google.maps.Map(mapEle, {
 
+        center: this.defaultcenter,
+        minZoom: 4,
+        mapTypeControl: true,
+        mapTypeControlOptions: {
+          style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+          position: google.maps.ControlPosition.TOP_LEFT
+        },
+        zoomControl: true,
+        zoomControlOptions: {
+          position: google.maps.ControlPosition.RIGHT_TOP
+        },
+        scaleControl: true,
+        streetViewControl: true,
+        streetViewControlOptions: {
+          position: google.maps.ControlPosition.TOP_RIGHT
+        },
+        zoom: 12
+      });
+
+    }, 100); //wait for switch to avoid blank map
 
 
     // this.confData.getMap().then(mapData => {  //Need this for werid map issue. Menu page switch will make map blank
@@ -249,26 +249,7 @@ export class MapSearchPage {
 
     }
   }
-  //loadMap(lat, lng, zoom) {
-  loadMap(pos, zoom) {
-
-    google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(); });
-
-    google.maps.event.addListener(this.map, 'click', () => {
-      //close all open POP UP options/list etc
-      this._zone.run(() => {
-        this.currentDiv = '';
-        this.queryText = '';
-        this.viewCtrl.dismiss();
-        //this.nav.pop();
-      });
-     
-    });
-    this.setLocation(pos, zoom);
-
-
-    //});
-  }
+  
   //select autocomplete action
   resetItems() {
     this.cityItems = [];
@@ -279,25 +260,11 @@ export class MapSearchPage {
 
 
   itemTapped(event, item, type) {
-    // if (type == 1) { //CITY Action
-    let lat = item.lat;
-    let lng = item.lng;
-    let center = new google.maps.LatLng(lat, lng);
-    this.setLocation(center, 14);
+   
+    let center = new google.maps.LatLng(item.lat,item.lng);
+    this.setLocation(center, this.defaultZoom,true);
     this.resetItems();
-    //}
-
-    // if (type == 2) { //MLS Action
-    //   this.nav.push(HouseDetailPage, {
-    //     item: item.id //pass MLS# to house detail
-    //   });
-    // }
-
-    // if (type == 3) { //Address Action
-    //   this.nav.push(HouseDetailPage, {
-    //     item: item.id //pass MLS# to house detail
-    //   });
-    // }
+ 
 
   }
   //auto complete REST CAll
@@ -305,13 +272,6 @@ export class MapSearchPage {
 
     this.resetItems();
     this.currentDiv = 'searchlist';
-    console.log(searchbar);
-
-    // set q to the value of the searchbar
-    let q: String = searchbar.value;
-
-
-    // if the value is an empty string don't filter the items
     if (this.queryText == '') {
       return;
     } else {
@@ -334,12 +294,12 @@ export class MapSearchPage {
           }
           console.log(data);
         }); //end of callback
-      //this.items = ["city", "address", "MLS"];
+     
     }
   }
 
   //SetCenter and Zoom if location button is clicked
-  setCenter() {
+  setCenter(isMarker) {
 
     let options = { timeout: 10000, enableHighAccuracy: true };
 
@@ -349,26 +309,28 @@ export class MapSearchPage {
         this.defaultcenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         let lat = position.coords.latitude;
         if (lat > 20) {
-          this.setLocation(this.defaultcenter, 16);
+          this.setLocation(this.defaultcenter, this.defaultZoom,isMarker);
 
-        } else { this.setLocation(this.defaultcenter, 16); }
+        } else { this.setLocation(this.defaultcenter, this.defaultZoom,isMarker); }
 
       },
-      (error) => { this.setLocation(this.defaultcenter, 16); }, options
+      (error) => { this.setLocation(this.defaultcenter, this.defaultZoom,isMarker); }, options
     );
 
   }
 
   //Move to center and creata a marker
-  setLocation(center, zoom) {
+  setLocation(center, zoom,isMarker) {
 
     this.map.setZoom(zoom);
     this.map.setCenter(center);
+    if (isMarker){
     let marker = new google.maps.Marker({
       position: center,
       map: this.map,
       draggable: false,
     });
+    }
   }
 
 
@@ -403,7 +365,7 @@ export class MapSearchPage {
               let navTransition = alert.dismiss();
               navTransition.then(() => {
                 this.nav.pop();
-                this.nav.push(HouseDetailPage, { id: mls, ids: this.currentHouseList, list: this.currentHouseList });
+                this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList });
                 //this.nav.push(HouseDetailPage, mls); 
               });
               return false;
@@ -529,7 +491,7 @@ export class MapSearchPage {
     let centerlat = (_ne.lat() + _sw.lat()) / 2;
     let centerlng = (_ne.lng() + _sw.lng()) / 2;
     let HouseArray = [];
-    this.currentMlsList = [];
+
     let marker;
     let _bounds = _sw.lat() + "," + _sw.lng() + "," + _ne.lat() + "," + _ne.lng();
 
@@ -592,7 +554,7 @@ export class MapSearchPage {
           // console.log('Image Host:' + this.imgHost);
           for (let index = 0, l = totalhouse; index < l; index++) {
             let house = data.Data.MapHouseList[index];
-            this.currentMlsList.push(house.MLS);
+            
 
             if (index < (totalhouse - 1)) {
               nextLat = data.Data.MapHouseList[index + 1].GeocodeLat;
