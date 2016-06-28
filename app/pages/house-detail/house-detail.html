@@ -5,12 +5,8 @@
   Ionic pages and navigation.
 -->
 <ion-navbar *navbar>
-  <ion-title>房屋详情{{" MLS：" + parms.id}}</ion-title>
+  <ion-title>{{"MLS：" + parms.id}}</ion-title>
 	<ion-buttons end>
-<!--
-  									<ion-label class="switchF2M">{{(switchF2M == true)? F2M.feet: F2M.meter}}</ion-label>
-									<ion-toggle [(ngModel)]="switchF2M"></ion-toggle>
--->										
   <button  (click)="share('House Title', 'House Detail', null, 'https://m.maplecity.com.cn')">
   <ion-icon isActive="false" name="share" ></ion-icon>
   </button>
@@ -112,22 +108,36 @@
 <!--START-->			
 <ion-card class="fyxqlb_cont">
 	<ion-list class="xqlb_list">
-		<ion-item-divider id="housedivider" divider>
+		<ion-item-divider id="housedivider" divider primary>
+									详情列表
+<!--
 			<ion-row>
 					<ion-col>
 							<ion-item no-lines>
-									<ion-label>详情列表</ion-label>
+									<ion-label no-padding>详情列表</ion-label>
 							</ion-item>
 					</ion-col>
-					<ion-col>
+					<ion-col >
 							<ion-item no-lines>
 									<ion-label class="switchF2M">{{(switchF2M == true)? F2M.feet: F2M.meter}}</ion-label>
 									<ion-toggle [(ngModel)]="switchF2M"></ion-toggle>
 							</ion-item>
 					</ion-col>
 			</ion-row>
+-->			
 		</ion-item-divider>
-		<ion-item><span class="xqlb_label">MLS编号：</span>{{house.ml_num}}</ion-item>
+			<ion-row>
+					<ion-col no-padding>
+									<ion-item><span class="xqlb_label">MLS编号：</span>{{house.ml_num}}</ion-item>
+					</ion-col>
+					<ion-col no-padding>
+							<ion-item>
+									<ion-label class="switchF2M">{{(switchF2M == true)? F2M.feet: F2M.meter}}</ion-label>
+									<ion-toggle [(ngModel)]="switchF2M"></ion-toggle>
+							</ion-item>
+					</ion-col>
+			</ion-row>
+<!--		<ion-item><span class="xqlb_label">MLS编号：</span>{{house.ml_num}}</ion-item>-->
 		<ion-item><span class="xqlb_label">交叉路口：</span>{{house.cross_st}}</ion-item>
 		<ion-item><span class="xqlb_label">物业类别：</span>{{house_propertyType?.name}}</ion-item>
 		<ion-item><span class="xqlb_label">挂牌时间：</span>{{house.pix_updt}}</ion-item>
@@ -153,7 +163,7 @@
 		<ion-item><span class="xqlb_label">出售/出租：</span>{{S_R[house.s_r]}}</ion-item>
 		<ion-item><span class="xqlb_label">周边和配套：</span>{{propertyTxt}}</ion-item>
 
-		<ion-item-divider id="housedivider" divider>房屋布局</ion-item-divider>
+		<ion-item-divider id="housedivider" divider primary>房屋布局</ion-item-divider>
 		<ion-item>
 			<div class="fwbj_table">
 			<table>
@@ -178,7 +188,7 @@
 			</div>
 		</ion-item>
 		
-		<ion-item-divider id="housedivider" divider>房屋描述</ion-item-divider>
+		<ion-item-divider id="housedivider" divider primary>房屋描述</ion-item-divider>
 		<div class="fwms_item">{{house.ad_text}}<BR/><B>Extras:</B><BR/>{{house.extras}}</div>
 	</ion-list>
 </ion-card>
