@@ -12,6 +12,11 @@
             }
         }
     }
+    ion-toolbar {
+       ion-segment-button {
+           font-size: 18px;
+       }
+    }   
 }
 
 ion-card.fyxq_cont {
@@ -78,6 +83,7 @@ ion-card.fyxqlb_cont {
     ion-item-divider#housedivider { 
         font-size: 18px;
         padding: 5px 0;
+        color:color($colors, primary);
         ion-label.switchF2M {
             text-align: right;
         }
@@ -86,7 +92,18 @@ ion-card.fyxqlb_cont {
         ion-item { 
             padding: 0px; 
             white-space: normal;
+            min-height: 24px;
+            .switchF2M {
+                text-align: right;
+                padding-right: 6px;
+            }
+            ion-toggle {
+                padding: 0px;
+            }
             span.xqlb_label { width: 40px}
+        }
+        ion-label {
+            margin: 0px;
         }    
     }
     .fwbj_table {

@@ -16,7 +16,6 @@ import {SchoolSearchPage} from '../../pages/school-search/school-search';
   templateUrl: 'build/pages/house-detail/house-detail.html',
 })
 export class HouseDetailPage implements OnInit {
-  private nav;
 	private parms = {id: '', list: []};
 	private houseList = {prev: '', next: '', index: 0, total: 0};
 	private section: string = "summary";
@@ -220,13 +219,13 @@ export class HouseDetailPage implements OnInit {
   
 	@ViewChild('photo_slider') slider : Slides;
 
-
-  static get parameters() {
-    return [[NavController], [NavParams], [MapleRestData], [MapleConf], [Events], [Platform]];
-  }
-
-  constructor(nav, private navParams: NavParams, private mapleRestData: MapleRestData, private mapleConf: MapleConf, 
-	private events: Events, private platform: Platform) {
+  constructor(
+		private nav: NavController, 
+		private navParams: NavParams, 
+		private mapleRestData: MapleRestData, 
+		private mapleConf: MapleConf, 
+		private events: Events, 
+		private platform: Platform) {
     this.nav = nav;
 		console.log(navParams);
     this.parms = navParams.data;
