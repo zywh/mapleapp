@@ -48,7 +48,7 @@ export class SchoolMapPage {
     private selectSchool: schoolSelectOptionsObj = {
         selectPingfen: 0,
         selectRank: 0,
-        selectType: true,
+        selectType: false,
         selectXingzhi: ''
 
     }

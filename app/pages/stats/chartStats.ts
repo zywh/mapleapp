@@ -4,7 +4,7 @@ import {  Highcharts } from 'angular2-highcharts';
 //declare var Highcharts: any;
 
 @Component({
-   
+
     template: `
     <ion-navbar *navbar>
     <button menuToggle>
@@ -29,16 +29,17 @@ export class chartStats {
     constructor(private parm: NavParams, private view: ViewController) {
         this.type = this.parm.data.type;
         this.options = this.parm.data.options;
-        console.log(this.options);
-        // this.pagetitle = this.options["title"]["text"];
-        // console.log(this.pagetitle);
-        
+      
     }
 
-  
-    ionViewLoaded() {
-       if ( this.type == 0) {this.chart = new Highcharts.Chart(this.options);}
-       if ( this.type == 1) {this.chart = new Highcharts.StockChart(this.options);}
+
+    ionViewWillEnter() {
+        setTimeout(() => {
+            console.log("Start Chart");
+            if (this.type == 0) { this.chart = new Highcharts.Chart(this.options); }
+            if (this.type == 1) { this.chart = new Highcharts.StockChart(this.options); }
+        }, 100); //add timeout to avoid chart size is over screen size initially
+
     }
 
     dismiss() {

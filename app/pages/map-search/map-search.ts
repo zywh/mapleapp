@@ -4,7 +4,8 @@ import { NgZone, Component} from '@angular/core';;
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {SelectOptionModal} from './map-option-modal';
-import {ConferenceData} from '../../providers/conference-data';
+import {MapHouselist} from './map-houselist';
+//import {ConferenceData} from '../../providers/conference-data';
 declare var RichMarker: any;
 
 interface selectOptionsObj {
@@ -49,8 +50,17 @@ export class MapSearchPage {
   public isListShow: boolean = false;
   private markerType;
   private imgHost: String;
+  private listModal: ViewController;
   private defaultZoom: Number = 14;
-
+  private swiperOptions = {
+    //loop: true,
+    //pager: true,
+    //speed: 4000,
+    spaceBetween: 20,
+    slidesPerView: 'auto',
+    //loopedSlides: 10
+    autoplay: 3000
+  };
   private selectOptions = {
     selectSR: true,
     selectBaths: 0,
@@ -73,7 +83,7 @@ export class MapSearchPage {
     private nav: NavController,
     private mapleRestData: MapleRestData,
     private menu: MenuController,
-    private confData: ConferenceData,
+    //private confData: ConferenceData,
     private navparm: NavParams,
     private _zone: NgZone,
     private viewCtrl: ViewController,
@@ -95,16 +105,22 @@ export class MapSearchPage {
   //change center if school is selected from school map page
   listenEvents() {
     this.events.subscribe('map:center', (data) => {
+      this.mviewLoaded = true;
       let center = data[0];
-      this.nav.pop();
-      let marker = new google.maps.Marker({
-        position: center,
-        map: this.map,
-        draggable: false,
-      });
-      this.setLocation(center, this.defaultZoom,true);
+      setTimeout(() => {
+        console.log("Map Switch event is received");
+        console.log("Set Center to" + center);
+        this.nav.pop();//pop house detail page
+        let marker = new google.maps.Marker({
+          position: center,
+          map: this.map,
+          draggable: false,
+        });
+        this.setLocation(center, this.defaultZoom, true);
+      }, 600);
 
     });
+
   }
   optionChange(event) {
     this.currentDiv = '';
@@ -121,31 +137,35 @@ export class MapSearchPage {
     this.nav.present(modal);
   }
 
-  //first time view is entered. Center the map and add listener
+  //first time view is entered. add listener
   ionViewWillEnter() {
-    setTimeout(() => {
-      google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(); });
-      google.maps.event.addListener(this.map, 'click', () => {
-        //close all open POP UP options/list etc
-        this._zone.run(() => {
-          this.currentDiv = '';
-          this.queryText = '';
-          this.viewCtrl.dismiss();
-          //this.nav.pop();
-        });
+    if (!this.mviewLoaded) {
+      setTimeout(() => {
+        console.log("First Time Will enter view Add Google Map listener")
+        google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(); });
+        google.maps.event.addListener(this.map, 'click', () => {
+          //close all open POP UP options/list etc
+          this._zone.run(() => {
+            this.currentDiv = '';
+            this.queryText = '';
+            //this.viewCtrl.dismiss();
+          this.listModal.dismiss();
+            console.log("Map is clicked");
+          });
 
-      });
-    }, 200);
+        });
+      }, 200);
+    }
   }
   ionViewDidEnter() {
     console.log("Map View did entered");
     if (!this.mviewLoaded) {
-    
+
       this.mviewLoaded = true;
       setTimeout(() => {
         console.log("first time view is entered. Center map based on Geolocation")
         this.setCenter(false); //no marker
-      }, 400);
+      }, 300);
     }
 
   }
@@ -194,15 +214,7 @@ export class MapSearchPage {
   }
 
 
-  swiperOptions = {
-    //loop: true,
-    //pager: true,
-    //speed: 4000,
-    spaceBetween: 20,
-    slidesPerView: 'auto',
-    //loopedSlides: 10
-    autoplay: 3000
-  };
+
 
   listShow() {
     //Show House List
@@ -213,10 +225,15 @@ export class MapSearchPage {
     this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList });
   }
 
-  openHouseList() {
+  openHouseList(ev) {
 
-    if (this.markerType == 'house') {
-      this.currentDiv = (this.currentDiv == 'houselist') ? '' : 'houselist';
+    if ((this.markerType == 'house') && (this.totalCount > 0)) {
+      // this.currentDiv = (this.currentDiv == 'houselist') ? '' : 'houselist';
+      //let popover = Popover.create(MapHouselistPopover, {list: this.currentHouseList, imgHost: this.imgHost});
+      this.listModal = Modal.create(MapHouselist, {list: this.currentHouseList, imgHost: this.imgHost});
+      this.nav.present(this.listModal);
+      
+
       console.log("House list show");
     } else {
       console.log("house grid/city,show alert window");
@@ -249,7 +266,7 @@ export class MapSearchPage {
 
     }
   }
-  
+
   //select autocomplete action
   resetItems() {
     this.cityItems = [];
@@ -260,11 +277,11 @@ export class MapSearchPage {
 
 
   itemTapped(event, item, type) {
-   
-    let center = new google.maps.LatLng(item.lat,item.lng);
-    this.setLocation(center, this.defaultZoom,true);
+
+    let center = new google.maps.LatLng(item.lat, item.lng);
+    this.setLocation(center, this.defaultZoom, true);
     this.resetItems();
- 
+
 
   }
   //auto complete REST CAll
@@ -294,7 +311,7 @@ export class MapSearchPage {
           }
           console.log(data);
         }); //end of callback
-     
+
     }
   }
 
@@ -309,27 +326,27 @@ export class MapSearchPage {
         this.defaultcenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         let lat = position.coords.latitude;
         if (lat > 20) {
-          this.setLocation(this.defaultcenter, this.defaultZoom,isMarker);
+          this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
 
-        } else { this.setLocation(this.defaultcenter, this.defaultZoom,isMarker); }
+        } else { this.setLocation(this.defaultcenter, this.defaultZoom, isMarker); }
 
       },
-      (error) => { this.setLocation(this.defaultcenter, this.defaultZoom,isMarker); }, options
+      (error) => { this.setLocation(this.defaultcenter, this.defaultZoom, isMarker); }, options
     );
 
   }
 
   //Move to center and creata a marker
-  setLocation(center, zoom,isMarker) {
+  setLocation(center, zoom, isMarker) {
 
     this.map.setZoom(zoom);
     this.map.setCenter(center);
-    if (isMarker){
-    let marker = new google.maps.Marker({
-      position: center,
-      map: this.map,
-      draggable: false,
-    });
+    if (isMarker) {
+      let marker = new google.maps.Marker({
+        position: center,
+        map: this.map,
+        draggable: false,
+      });
     }
   }
 
@@ -554,7 +571,7 @@ export class MapSearchPage {
           // console.log('Image Host:' + this.imgHost);
           for (let index = 0, l = totalhouse; index < l; index++) {
             let house = data.Data.MapHouseList[index];
-            
+
 
             if (index < (totalhouse - 1)) {
               nextLat = data.Data.MapHouseList[index + 1].GeocodeLat;

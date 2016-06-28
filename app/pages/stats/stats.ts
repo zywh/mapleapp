@@ -83,7 +83,7 @@ export class StatsPage {
     ];
     private gtaChartList = [
         { data: 'avgdom', title: '平均售出日' },
-        { data: 'avgmoi', title: '存量月份' },
+        { data: 'moi', title: '存量月份' },
         { data: 'avgprice', title: '平均房价' },
         { data: 'avgsplp', title: '成交价/挂盘价比' },
         { data: 'active', title: '在售房源' },
@@ -254,7 +254,7 @@ export class StatsPage {
 
                         }
                     };
-                    console.log(this.seriesOptions[location]);
+                  
                 }
 
 
@@ -323,9 +323,8 @@ export class StatsPage {
             ]
 
         };
-        console.log(c);
-        console.log(options);    
-        this.nav.push(chartStats, { type: 1, options: options });
+      
+       this.nav.push(chartStats, { type: 1, options: options });
 
 
     }
