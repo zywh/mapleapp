@@ -1,32 +1,37 @@
-
-
 <ion-toolbar>
-  <ion-buttons start>
-   <button (click)="resetSelections()"> 复位</button>
-  </ion-buttons>
+    
+    <ion-buttons left>
+        <button outline [solid]="selectOptions.selectListType" (click)="selectOptions.selectListType = true"> <ion-icon name="map"></ion-icon>地图</button>
+    </ion-buttons>
 
-  <ion-title>搜索条件</ion-title>
+    <ion-buttons left>
+        <button  outline [solid]="!selectOptions.selectListType" (click)="selectOptions.selectListType = false"><ion-icon name="list"></ion-icon>列表</button>
+    </ion-buttons>
+    
+    <ion-buttons right>
+        <button (click)="resetSelections()"> 复位</button>
+    </ion-buttons>
+    <ion-buttons right>
+        <button (click)="dismiss()">确认</button>
+    </ion-buttons>
 
-  <ion-buttons end>
-     <button (click)="dismiss()">确认</button>
-  </ion-buttons>
 </ion-toolbar>
 
 
 
 
 <ion-content class="map-option-modal">
-    
+
 
     <ion-row>
-        <ion-col >
+        <ion-col>
             <ion-item no-lines>
                 <ion-label>{{(selectOptions?.selectSR == true)? '出售':'出租'}}</ion-label>
                 <ion-toggle [(ngModel)]="selectOptions.selectSR"></ion-toggle>
             </ion-item>
         </ion-col>
 
-        <ion-col >
+        <ion-col>
             <ion-item no-lines>
                 <ion-label>单位({{(selectUnit == true)? '米':'尺'}})</ion-label>
                 <ion-toggle (ionChange)="onChange($event)" [(ngModel)]="selectUnit"></ion-toggle>
@@ -51,43 +56,47 @@
     <ion-list no-lines>
         <ion-range class='range-p' min="0" max="6" step="1" [(ngModel)]="selectOptions.selectBeds">
             <ion-label class='range-label' range-left>卧室</ion-label>
-            <ion-badge  range-right>{{ (selectOptions.selectBeds > 0)? "至少" + selectOptions.selectBeds +"间" : "不限" }}</ion-badge>
+            <ion-badge range-right>{{ (selectOptions.selectBeds > 0)? "至少" + selectOptions.selectBeds +"间" : "不限" }}</ion-badge>
 
-        </ion-range> 
-       
-           
+        </ion-range>
+
+
         <ion-range class='range-p' min="0" max="6" step="1" [(ngModel)]="selectOptions.selectBaths">
-             <ion-label class='range-label' range-left> 洗手间</ion-label>
+            <ion-label class='range-label' range-left> 洗手间</ion-label>
             <ion-badge range-right>{{ (selectOptions.selectBaths > 0)? "至少" + selectOptions.selectBaths +"间" : "不限" }}</ion-badge>
         </ion-range>
         <ion-range class='range-p' min="0" max="90" step="5" [(ngModel)]="selectOptions.selectDate">
             <ion-label class='range-label' range-left> 上市</ion-label>
-        <ion-badge range-right>{{ (selectOptions.selectDate > 0)? "最近" + selectOptions.selectDate +"天" : "不限" }}</ion-badge>
+            <ion-badge range-right>{{ (selectOptions.selectDate > 0)? "最近" + selectOptions.selectDate +"天" : "不限" }}</ion-badge>
         </ion-range>
-        
-     </ion-list>
-     <ion-list no-lines> 
+
+    </ion-list>
+    <ion-list no-lines>
         <ion-item>
-           价格{{(selectOptions.selectSR == false)? "(/月)":"(万)"}}<ion-badge item-right>{{selectOptions.selectPrice.lower}}-{{(selectOptions.selectPrice.upper == 600)? "不限" : selectOptions.selectPrice.upper}}</ion-badge>
+            价格{{(selectOptions.selectSR == false)? "(/月)":"(万)"}}
+            <ion-badge item-right>{{selectOptions.selectPrice.lower}}-{{(selectOptions.selectPrice.upper == 600)? "不限" : selectOptions.selectPrice.upper}}</ion-badge>
         </ion-item>
-         <ion-range class='range-s' dualKnobs="true" min="0" [max]="(selectOptions?.selectSR == false)?8000:600" step="10" [(ngModel)]="selectOptions.selectPrice">
+        <ion-range class='range-s' dualKnobs="true" min="0" [max]="(selectOptions?.selectSR == false)?8000:600" step="10" [(ngModel)]="selectOptions.selectPrice">
         </ion-range>
-        
+
         <ion-item>
             房屋面积({{(selectUnit == true)? '平方米':'平方尺'}})
-                <ion-badge item-right>{{selectOptions.selectHousesize.lower / unit}}-{{(selectOptions.selectHousesize.upper == 4000)? "不限" :selectOptions.selectHousesize.upper / unit }}</ion-badge>
+            <ion-badge item-right>{{selectOptions.selectHousesize.lower / unit}}-{{(selectOptions.selectHousesize.upper == 4000)? "不限" :selectOptions.selectHousesize.upper
+                / unit }}</ion-badge>
         </ion-item>
         <ion-range class='range-s' dualKnobs="true" min="0" max="4000" step="100" [(ngModel)]="selectOptions.selectHousesize">
         </ion-range>
 
-       
+
         <ion-item no-lines>
-           土地面积({{(selectUnit == true)? '平方米':'平方尺'}})
-                <ion-badge item-right>{{selectOptions.selectLandsize.lower /unit}}-{{(selectOptions.selectLandsize.upper == 43560)? "不限" :selectOptions.selectLandsize.upper /unit}}</ion-badge>
+            土地面积({{(selectUnit == true)? '平方米':'平方尺'}})
+            <ion-badge item-right>{{selectOptions.selectLandsize.lower /unit}}-{{(selectOptions.selectLandsize.upper == 43560)? "不限" :selectOptions.selectLandsize.upper
+                /unit}}
+            </ion-badge>
         </ion-item>
         <ion-range class='range-s' dualKnobs="true" min="0" max="43560" step="1000" [(ngModel)]="selectOptions.selectLandsize">
         </ion-range>
     </ion-list>
 
-  
+
 </ion-content>

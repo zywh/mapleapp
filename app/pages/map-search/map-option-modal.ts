@@ -9,6 +9,7 @@ interface selectOptionsObj {
     selectSR?: Boolean,
     selectHousesize?: String,
     selectLandsize?: String,
+    selectListType?: Boolean,
     selectDate?: Number
 }
 
@@ -50,6 +51,7 @@ export class SelectOptionModal {
             selectLandsize: { lower: 0, upper: 43560 },
             selectPrice: { lower: 0, upper: 600 },
             selectType: '',
+            selectListType: true,
             selectDate: 0
 
         }
