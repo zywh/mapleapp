@@ -325,7 +325,7 @@ export class HouseDetailPage implements OnInit {
 
   getPropertyTxt() {
       let propertyTxt = this.house.prop_feat1_out;
-      
+			
       if ( this.house.prop_feat2_out )
         propertyTxt = propertyTxt + " , " + this.house.prop_feat2_out;
       if ( this.house.prop_feat3_out )

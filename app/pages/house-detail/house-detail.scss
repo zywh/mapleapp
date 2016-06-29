@@ -28,8 +28,12 @@ ion-card.fyxq_cont {
         width: auto; 
         display: inline-block;
     }
+
     .fyxq_ptss { 
+        clear: both;
         padding:1px 0;
+
+        &::after {clear: both; }
         .fyxq_ptssleft {
             float:left;
             font-size:18px;
@@ -41,29 +45,31 @@ ion-card.fyxq_cont {
             overflow: hidden;
             white-space: nowrap;
             padding-top: 1px;
-          }
-         .fyxq_ptssright.fyxq_ptpd {
-                span { 
-                    display:block; 
-                    margin-left:5px; margin-right:10px; /* margin-bottom:10px; */margin-top:3px;  
-                    white-space:nowrap; 
-                    color:#999999; 
-                    float:left; height:20px;
-                }
-                span b { 
-                    background:url(../../img/maple/xz.jpg) 0 center no-repeat; 
-                    width:22px; height:14px; 
-                    display:inline-block;
-                }
-                span s { 
-                    background:url(../../img/maple/wxz.jpg) 0 0 no-repeat; 
-                    vertical-align:middle; 
-                    width:22px; height:14px; 
-                    display:inline-block;
+
+            &.fyxq_ptpd {
+                    span { 
+                        margin-left:5px; margin-right:10px; /* margin-bottom:10px; */margin-top:3px;  
+                        white-space:nowrap; 
+                        color:#999999; 
+                        float:left; height:20px;
+                    }
+                    span b { 
+                        display: inline-block;
+                        background:url(../../img/maple/xz.jpg) 0 center no-repeat; 
+                        width:22px; height:14px; 
+                    }
+                    span s { 
+                        display: inline-block;
+                        background:url(../../img/maple/wxz.jpg) 0 0 no-repeat; 
+                        vertical-align:middle; 
+                        width:22px; height:14px; 
+                    }
                 }
             }
     }
     .fyxq_rx { 
+        clear: both;
+        &::after { clear: both; }
         font-weight: bold;
         float:left; 
         line-height:30px; 
@@ -87,6 +93,16 @@ ion-card.fyxqlb_cont {
         ion-label.switchF2M {
             text-align: right;
         }
+        .switchF2M {
+            float: right;
+            &::after {clear: both}
+            ion-label {
+                display: inline-block;
+            }
+            ion-toggle {
+                display: inline-block;
+            }
+        }
     }
     .xqlb_list {
         ion-item { 
@@ -100,11 +116,16 @@ ion-card.fyxqlb_cont {
             ion-toggle {
                 padding: 0px;
             }
-            span.xqlb_label { width: 40px}
         }
         ion-label {
             margin: 0px;
-        }    
+        }
+        ion-label[fixed] {
+            flex: 0 0 90px;
+            width: 90px;
+            min-width: 60px;
+            max-width: 90px; 
+        }
     }
     .fwbj_table {
         overflow: auto;

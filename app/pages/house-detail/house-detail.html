@@ -26,8 +26,8 @@
       <ion-segment-button value="school" (ionSelect)="gotoSchool()">
         学校
       </ion-segment-button>
-      <ion-segment-button value="video" (ionSelect)="gotoVideo()">
-        {{(house.tour_url)?"":"无"}}视频
+      <ion-segment-button value="video" [disabled]="(house.tour_url)?'false':'true'" (ionSelect)="gotoVideo()">
+        视频
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -47,60 +47,56 @@
 		<div class="fyxq_ptssright">{{getPriceTxt()}}
 			<span *ngIf="exchangeRate">&nbsp;（约<i>{{getPriceRMB()}}</i>万人民币）</span>
 		</div>
-		<div class="cl"></div>
 	</div>
 	<div class="fyxq_ptss">
 		<div class="fyxq_ptssleft">地址：</div>
 		<div class="fyxq_ptssright">{{house.addr}}&nbsp;{{house.municipality}}</div>
-		<div class="cl"></div>
 	</div>
 	<div class="fyxq_ptss">
 		<div class="fyxq_ptssleft">{{(house.investType_id == 1)?"学区":"城市"}}：</div>
 		<div class="fyxq_ptssright">{{house_mname?.municipality_cname}}</div>
-		<div class="cl"></div>
 	</div>
 	<div class="fyxq_ptss">
 		<div class="fyxq_ptssleft">户型：</div>
 		<div class="fyxq_ptssright"><img src="img/maple/1s.jpg"/>&nbsp;&nbsp;{{house.br}}&nbsp;&nbsp;<img src="img/maple/1t.jpg"/>&nbsp;&nbsp;{{house.bath_tot}}</div>
-		<div class="cl"></div>
 	</div>
 	<div class="fyxq_ptss">
 		<div class="fyxq_ptssleft">配套：</div>
 		<div class="fyxq_ptssright fyxq_ptpd">
 			<div [ngSwitch]="house.a_c.toString().toLowerCase().includes('air')">
-				<!--有 --><span *ngSwitchWhen="true"><b></b><font color="#FF3300">空调</font></span>
-				<!--无 --><span *ngSwitchDefault><s></s>空调</span>
+				<span *ngSwitchWhen="true"><b></b><font color="#FF3300">空调</font></span>
+				<span *ngSwitchDefault><s></s>空调</span>
 			</div>
 			<div [ngSwitch]="house.central_vac=='Y'">
-				<!--有 --><span *ngSwitchWhen="true"><b></b><font color="#FF3300">吸尘</font></span>
-				<!--无 --><span *ngSwitchDefault><s></s>吸尘</span>
+				<span *ngSwitchWhen="true"><b></b><font color="#FF3300">吸尘</font></span>
+				<span *ngSwitchDefault><s></s>吸尘</span>
 			</div>
 			<div [ngSwitch]="house.furnished=='1'">
-				<!--有 --><span *ngSwitchWhen="true"><b></b><font color="#FF3300">家具</font></span>
-				<!--无 --><span *ngSwitchDefault><s></s>家具</span>
+				<span *ngSwitchWhen="true"><b></b><font color="#FF3300">家具</font></span>
+				<span *ngSwitchDefault><s></s>家具</span>
 			</div>
 			<div [ngSwitch]="house.elevator=='Y'">
-				<!--有 --><span *ngSwitchWhen="true"><b></b><font color="#FF3300">电梯</font></span>
-				<!--无 --><span *ngSwitchDefault><s></s>电梯</span>
+				<span *ngSwitchWhen="true"><b></b><font color="#FF3300">电梯</font></span>
+				<span *ngSwitchDefault><s></s>电梯</span>
 			</div>
 			<div [ngSwitch]="house.bsmt1_out !='None' || !house.bsmt2_out">
-				<!--有 --><span *ngSwitchWhen="true"><b></b><font color="#FF3300">地下室</font></span>
-				<!--无 --><span *ngSwitchDefault><s></s>地下室</span>
+				<span *ngSwitchWhen="true"><b></b><font color="#FF3300">地下室</font></span>
+				<span *ngSwitchDefault><s></s>地下室</span>
 			</div>
 			<div [ngSwitch]="house.pool.toString().includes('pool')">
-				<!--有 --><span *ngSwitchWhen="true"><b></b><font color="#FF3300">泳池</font></span> 
-				<!--无 --><span *ngSwitchDefault><s></s>泳池</span> 
+				<span *ngSwitchWhen="true"><b></b><font color="#FF3300">泳池</font></span> 
+				<span *ngSwitchDefault><s></s>泳池</span> 
 			</div> 
 			<div [ngSwitch]="house.fpl_num == 'Y'">
-				<!--有 --><span *ngSwitchWhen="true"><b></b><font color="#FF3300">壁炉</font></span>
-				<!--无 --><span *ngSwitchDefault><s></s>壁炉</span>
+				<span *ngSwitchWhen="true"><b></b><font color="#FF3300">壁炉</font></span>
+				<span *ngSwitchDefault><s></s>壁炉</span>
 			</div>
-		<div class="cl"></div>
+		</div>
 	</div>
 	<div class="fyxq_rx">服务热线：
-			<img src="img/maple/plat.jpg"/><a href="tel:400-9900-393"><span>400-870-1029</span></a>
+		<img src="img/maple/plat.jpg"/><a href="tel:400-9900-393"><span>400-870-1029</span></a>
 	</div>
-	</div>
+
 </ion-card>	
 
 <!--End-->
@@ -108,61 +104,36 @@
 <!--START-->			
 <ion-card class="fyxqlb_cont">
 	<ion-list class="xqlb_list">
-		<ion-item-divider id="housedivider" divider primary>
-									详情列表
-<!--
-			<ion-row>
-					<ion-col>
-							<ion-item no-lines>
-									<ion-label no-padding>详情列表</ion-label>
-							</ion-item>
-					</ion-col>
-					<ion-col >
-							<ion-item no-lines>
-									<ion-label class="switchF2M">{{(switchF2M == true)? F2M.feet: F2M.meter}}</ion-label>
-									<ion-toggle [(ngModel)]="switchF2M"></ion-toggle>
-							</ion-item>
-					</ion-col>
-			</ion-row>
--->			
+		<ion-item-divider id="housedivider" divider primary>详情列表
+			<div class="switchF2M">
+				<ion-label>{{(switchF2M == true)? F2M.feet: F2M.meter}}</ion-label>
+				<ion-toggle [(ngModel)]="switchF2M"></ion-toggle>
+			</div>
 		</ion-item-divider>
-			<ion-row>
-					<ion-col no-padding>
-									<ion-item><span class="xqlb_label">MLS编号：</span>{{house.ml_num}}</ion-item>
-					</ion-col>
-					<ion-col no-padding>
-							<ion-item>
-									<ion-label class="switchF2M">{{(switchF2M == true)? F2M.feet: F2M.meter}}</ion-label>
-									<ion-toggle [(ngModel)]="switchF2M"></ion-toggle>
-							</ion-item>
-					</ion-col>
-			</ion-row>
-<!--		<ion-item><span class="xqlb_label">MLS编号：</span>{{house.ml_num}}</ion-item>-->
-		<ion-item><span class="xqlb_label">交叉路口：</span>{{house.cross_st}}</ion-item>
-		<ion-item><span class="xqlb_label">物业类别：</span>{{house_propertyType?.name}}</ion-item>
-		<ion-item><span class="xqlb_label">挂牌时间：</span>{{house.pix_updt}}</ion-item>
-		<ion-item><span class="xqlb_label">房屋层数：</span>{{house.style}}</ion-item>
-		<ion-item><span class="xqlb_label">土地面积：</span>{{getLandArea()}}</ion-item>
-		<ion-item><span class="xqlb_label">房屋面积：</span>{{house.sqft}}</ion-item>
-		<ion-item><span class="xqlb_label">土地描述：</span>{{house.acres}}</ion-item>
-		<ion-item><span class="xqlb_label">房屋数量：</span>{{add2(house.rms,house.rooms_plus)}}</ion-item>
-		<ion-item><span class="xqlb_label">地税/年份：</span>{{house.taxes}}/{{house.yr}} 年</ion-item>
-		<ion-item><span class="xqlb_label">卧房数量：</span>{{add2(house.br,house.br_plus)}}</ion-item>
-		<ion-item><span class="xqlb_label">物业管理费：</span>无</ion-item>
-		<ion-item><span class="xqlb_label">厨房数量：</span>{{add2(house.num_kit,house.kit_plus)}}</ion-item>
-		<ion-item><span class="xqlb_label">建造年份：</span>{{house.yr_built}}年</ion-item>
-		<ion-item><span class="xqlb_label">卫生间数量：</span>{{house.bath_tot}}</ion-item>
-		<ion-item><span class="xqlb_label">地下室：</span>{{house.bsmt1_out}}&nbsp;{{house.bsmt2_out}}</ion-item>
-		<ion-item><span class="xqlb_label">车库数量：</span>{{house.gar_space}}</ion-item>
-		<ion-item><span class="xqlb_label">暖气：</span>{{house.heating}}</ion-item>
-		<ion-item><span class="xqlb_label">大门朝向：</span>{{COMP_PTS[house.comp_pts]}}</ion-item>
-		<ion-item><span class="xqlb_label">空调：</span>{{house.a_c}}</ion-item>
-		<ion-item><span class="xqlb_label">邮编：</span>{{house.zip}}</ion-item>
-		<ion-item><span class="xqlb_label">中央吸尘：</span>{{(house.central_vac=="Y")?"是":"否"}}</ion-item>
-		<ion-item><span class="xqlb_label">游泳池：</span>{{house.pool}}</ion-item>
-		<ion-item><span class="xqlb_label">出售/出租：</span>{{S_R[house.s_r]}}</ion-item>
-		<ion-item><span class="xqlb_label">周边和配套：</span>{{propertyTxt}}</ion-item>
-
+		<ion-item><ion-label fixed class="xqlb_label">MLS编号：</ion-label><ion-label>{{house.ml_num}}</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">交叉路口：</ion-label><ion-label>{{house.cross_st}}</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">物业类别：</ion-label><ion-label>{{house_propertyType?.name}}</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">挂牌时间：</ion-label><ion-label>{{house.pix_updt}}</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">房屋层数：</ion-label><ion-label>{{house.style}}</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">土地面积：</ion-label><ion-label>{{getLandArea()}}</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">房屋面积：</ion-label><ion-label>{{house.sqft}}</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">土地描述：</ion-label><ion-label>{{house.acres}}</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">房屋数量：</ion-label><ion-label>{{add2(house.rms,house.rooms_plus)}}</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">地税/年份：</ion-label><ion-label>{{house.taxes}}/{{house.yr}} 年</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">卧房数量：</ion-label><ion-label>{{add2(house.br,house.br_plus)}}</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">物业管理费：</ion-label><ion-label>无</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">厨房数量：</ion-label><ion-label>{{add2(house.num_kit,house.kit_plus)}}</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">建造年份：</ion-label><ion-label>{{house.yr_built}}年</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">卫生间数量：</ion-label><ion-label>{{house.bath_tot}}</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">地下室：</ion-label><ion-label>{{house.bsmt1_out}}&nbsp;{{house.bsmt2_out}}</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">车库数量：</ion-label><ion-label>{{house.gar_space}}</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">暖气：</ion-label><ion-label>{{house.heating}}</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">大门朝向：</ion-label><ion-label>{{COMP_PTS[house.comp_pts]}}</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">空调：</ion-label><ion-label>{{house.a_c}}</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">邮编：</ion-label><ion-label>{{house.zip}}</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">中央吸尘：</ion-label><ion-label>{{(house.central_vac=="Y")?"是":"否"}}</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">游泳池：</ion-label><ion-label>{{house.pool}}</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">出售/出租：</ion-label><ion-label>{{S_R[house.s_r]}}</ion-label></ion-item>
 		<ion-item-divider id="housedivider" divider primary>房屋布局</ion-item-divider>
 		<ion-item>
 			<div class="fwbj_table">
@@ -187,7 +158,8 @@
 			</tbody></table>
 			</div>
 		</ion-item>
-		
+		<ion-item-divider id="housedivider" divider primary>房屋周边</ion-item-divider>
+		<div class="fwms_item">{{getPropertyTxt()}}</div>
 		<ion-item-divider id="housedivider" divider primary>房屋描述</ion-item-divider>
 		<div class="fwms_item">{{house.ad_text}}<BR/><B>Extras:</B><BR/>{{house.extras}}</div>
 	</ion-list>
