@@ -12,14 +12,6 @@ import {SignupPage} from './pages/signup/signup';
 import {TutorialPage} from './pages/tutorial/tutorial';
 import {NetworkErrorPage} from './pages/network-error/network-error';
 import {HouselistSearch} from './pages/houselist-search/houselist-search'
-// import {MapSearchPage} from './pages/map-search/map-search';
-// import {ProjectsPage} from './pages/projects/projects';
-// import {SchoolSearchPage} from './pages/school-search/school-search';
-// import {SchoolMapPage} from './pages/school-map/school-map';
-// import {StatsPage} from './pages/stats/stats';
-// import {AboutPage} from './pages/about/about';
-// import {PostPage} from './pages/post/post';
-// import {HomePage} from './pages/home/home';
 import {MapleConf} from './providers/maple-rest-data/maple-config';
 
 interface PageObj {
@@ -55,7 +47,7 @@ class MapleApp {
     { title: '学区房', component: TabsPage, index: 2, icon: 'school' },
     { title: '项目推荐', component: TabsPage, index: 3, icon: 'thumbs-up' },
     { title: '房源统计', component: TabsPage, index: 4, icon: 'stats' },
-    { title: '列表搜索', component: HouselistSearch, icon: 'list' },
+    // { title: '列表搜索', component: HouselistSearch, icon: 'list' },
     { title: '关于我们', component: TabsPage, index: 5, icon: 'information-circle' },
 
   ];

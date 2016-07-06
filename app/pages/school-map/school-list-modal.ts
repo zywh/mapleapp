@@ -17,12 +17,12 @@ export class SchoolListModal {
         private viewCtrl: ViewController
     ) {
         this.schoolList = parm.get('data');
-        console.log("SchoolList");
-        console.log(this.schoolList);
+       
     }
 
     schoolClick(lat, lng) {
-        this.events.publish('school:mappage', { lat: lat, lng: lng }); //public event and trigger tab select and map change
+        let center = new google.maps.LatLng(lat, lng);
+        this.events.publish('map:center', center); //public event and trigger tab select and map change
         this.dismiss();
     }
 

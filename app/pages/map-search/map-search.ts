@@ -94,7 +94,7 @@ export class MapSearchPage {
     private events: Events
   ) {
     //this.searchQuery = '';
-    console.log(this.selectOptions);
+   
     this.resetItems();
     this.listenEvents(); //listen School map event
     this.loadRichMarker();
@@ -113,8 +113,7 @@ export class MapSearchPage {
       this.mviewLoaded = true;
       let center = data[0];
       setTimeout(() => {
-        console.log("Map Switch event is received");
-        console.log("Set Center to" + center);
+       
         this.nav.pop();//pop house detail page
         let marker = new google.maps.Marker({
           position: center,
@@ -137,7 +136,7 @@ export class MapSearchPage {
     let modal = Modal.create(SelectOptionModal, { data: opt });
     modal.onDismiss(data => {
       this.selectOptions = data;
-      console.log(this.selectOptions);
+      //console.log(this.selectOptions);
       this.changeMap();
     });
     this.nav.present(modal);
@@ -147,7 +146,7 @@ export class MapSearchPage {
   ionViewWillEnter() {
     if (!this.mviewLoaded) {
       setTimeout(() => {
-        console.log("First Time Will enter view Add Google Map listener")
+        //console.log("First Time Will enter view Add Google Map listener")
         google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(); });
         google.maps.event.addListener(this.map, 'click', () => {
           //close all open POP UP options/list etc
@@ -156,7 +155,7 @@ export class MapSearchPage {
             this.queryText = '';
             //this.viewCtrl.dismiss();
           this.listModal.dismiss();
-            console.log("Map is clicked");
+            
           });
 
         });
@@ -164,12 +163,12 @@ export class MapSearchPage {
     }
   }
   ionViewDidEnter() {
-    console.log("Map View did entered");
+    //console.log("Map View did entered");
     if (!this.mviewLoaded) {
 
       this.mviewLoaded = true;
       setTimeout(() => {
-        console.log("first time view is entered. Center map based on Geolocation")
+        //console.log("first time view is entered. Center map based on Geolocation")
         this.setCenter(false); //no marker
       }, 300);
     }
@@ -178,7 +177,7 @@ export class MapSearchPage {
 
   getResult(url) {
     this.mapleRestData.load(url, this.parms).subscribe(
-      data => { this.houselist = data.Data; console.log(this.houselist) }
+      data => { this.houselist = data.Data;  }
 
     )
   }
@@ -240,9 +239,9 @@ export class MapSearchPage {
       this.nav.present(this.listModal);
       
 
-      console.log("House list show");
+    
     } else {
-      console.log("house grid/city,show alert window");
+     
        this.nav.push(HouselistSearch, { opts: this.selectOptions,bounds: this._bounds });
 
     //   let actionSheet = ActionSheet.create({
@@ -306,18 +305,18 @@ export class MapSearchPage {
         data => {
           if (data.hasOwnProperty("CITY")) {
             this.cityItems = data.CITY;
-            console.log("CITY Autocomplete:" + this.cityItems);
+           // console.log("CITY Autocomplete:" + this.cityItems);
           };
 
           if (data.hasOwnProperty("MLS")) {
             this.mlsItems = data.MLS;
-            console.log("MLS Autocomplete:" + this.mlsItems);
+            //console.log("MLS Autocomplete:" + this.mlsItems);
           }
           if (data.hasOwnProperty("ADDRESS")) {
             this.addressItems = data.ADDRESS;
-            console.log("ADDRESS Autocomplete:" + this.addressItems);
+            //console.log("ADDRESS Autocomplete:" + this.addressItems);
           }
-          console.log(data);
+         
         }); //end of callback
 
     }
@@ -493,7 +492,7 @@ export class MapSearchPage {
   }
 
   changeMap() {
-    console.log("Change Map: Button Show?" + this.isListShow);
+    console.log("Change Map");
     google.maps.event.trigger(this.map, 'resize');
     this.currentDiv = ''; //reset all popup
 
@@ -539,7 +538,7 @@ export class MapSearchPage {
         //loading.dismiss();
         this.totalCount = data.Data.Total;
         this.markerType = data.Data.Type;
-        console.log("Change Map Refresh Data:" + this.markerType);
+       
         //Start City Markers
         if ((this.markerType == 'city') || (this.markerType == 'grid')) {
           // this._zone.run(() => {
@@ -574,7 +573,7 @@ export class MapSearchPage {
           let listAllHtml;
           this.currentHouseList = data.Data.MapHouseList;
           let panelhtml;
-          console.log("Current House List Length:" + this.currentHouseList.length);
+         // console.log("Current House List Length:" + this.currentHouseList.length);
 
           // console.log('Image Host:' + this.imgHost);
           for (let index = 0, l = totalhouse; index < l; index++) {

@@ -151,10 +151,10 @@ export class SchoolMapPage {
 
     //Add marker only if first time or marker
     ionViewDidEnter() {
-        console.log("School Map View did entered");
+        //console.log("School Map View did entered");
         if ((this.markerArray.length == 0) && (!this.sviewLoaded)) {
             setTimeout(() => {
-                console.log("School Map is entered No marker First Time. Zoom and center")
+                //console.log("School Map is entered No marker First Time. Zoom and center")
                 this.map.setZoom(13);
                 this.setCenter(false);
             }, 400);
@@ -194,7 +194,7 @@ export class SchoolMapPage {
     }
 
     openSchoolList() {
-        console.log(this.schoolList);
+        //console.log(this.schoolList);
 
         let modal = Modal.create(SchoolListModal, { data: this.schoolList });
         modal.onDismiss(data => {

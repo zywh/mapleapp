@@ -28,7 +28,7 @@ export class SelectOptionModal {
         private viewCtrl: ViewController
     ) {
         //this.viewCtrl = viewCtrl;
-        console.log(this.params);
+        //console.log(this.params);
         this.selectOptions = params.get('data');
         this.unit = 10;
 
@@ -36,7 +36,7 @@ export class SelectOptionModal {
 
    
     onChange(ev) {
-        console.log("Changed", ev);
+       
         this.unit = (this.selectUnit == true)? 10: 1;
 
     }

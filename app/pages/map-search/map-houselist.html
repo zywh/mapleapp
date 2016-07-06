@@ -11,7 +11,7 @@
 
 <ion-content class="map-houselist">
 
-  <ion-card class="house_card" *ngFor="let house of currentHouseList">
+  <ion-card class="house_card" *ngFor="let house of currentHouseList" (click)="gotoHouseDetail(house.MLS)" >
       <img [src]="imgHost + house.CoverImg" />
       <div class="house_desc" text-left text-nowrap>
       
@@ -49,4 +49,4 @@
     </ion-slides>-->
 
 </ion-content>
- <button full (click)="close()">关闭窗口</button>
+ <!--<button full (click)="close()">关闭窗口</button>-->

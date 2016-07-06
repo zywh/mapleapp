@@ -26,9 +26,9 @@
 <ion-content class="houselist-search">
 
   <ion-list>
-    <ion-item class="house_card" *ngFor="let house of currentHouseList">
+    <ion-item class="house_card" *ngFor="let house of currentHouseList" (click)="gotoHouseDetail(house.MLS)" >
       <ion-thumbnail item-left>
-        <img [src]="imgHost + house.CoverImg" (click)="gotoHouseDetail(house.MLS)" />
+        <img [src]="imgHost + house.CoverImg" />
       </ion-thumbnail>
 
       <h2>{{house.Address}}</h2>

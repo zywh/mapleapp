@@ -92,13 +92,12 @@ export class HouselistSearch {
     }
     pagePre() {
         --this.pageIndex;
-        console.log("PrePage:" + this.pageIndex);
         this.getHouseList();
     }
 
     pageNext() {
         ++this.pageIndex;
-        console.log("NextPage:" + this.pageIndex);
+        
         this.getHouseList();
     }
     doInfinite(infiniteScroll) {
@@ -106,7 +105,6 @@ export class HouselistSearch {
             if (this.pageIndex < this.pageTotal - 1) {
                 ++this.pageIndex;
                 this.getHouseList();
-                console.log('Async operation has ended');
                 infiniteScroll.complete();
             }else {
                  infiniteScroll.complete();
@@ -116,7 +114,7 @@ export class HouselistSearch {
 
 
     getHouseList() {
-        console.log("Get House List");
+       
         this.currentDiv = ''; //reset all popup
 
         // let loading = Loading.create({
@@ -149,8 +147,7 @@ export class HouselistSearch {
                 let totalhouse = data.Data.HouseList.length;
                 this.imgHost = data.Data.imgHost;
                 this.currentHouseList = data.Data.HouseList;
-                console.log("Current House List Length:" + this.currentHouseList);
-
+               
             });
 
         //END of Data Subscribe
