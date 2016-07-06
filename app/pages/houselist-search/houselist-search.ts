@@ -26,12 +26,15 @@ export class HouselistSearch {
 
 
     private queryText: String = '';
-    private totalCount: Number;
+    private totalCount: number;
     private cityItems: any;
     private addressItems: any;
     private mlsItems: any;
     private currentDiv;
     private imgHost;
+    private bounds;
+    private pageIndex: number = 0;
+    private pageTotal: number = 1;
     private selectOptions = {
         selectSR: true,
         selectBaths: 0,
@@ -49,28 +52,19 @@ export class HouselistSearch {
 
     constructor(
         private nav: NavController,
-        private mapleRestData: MapleRestData
+        private mapleRestData: MapleRestData,
+        private parms: NavParams
 
 
     ) {
 
-        console.log(this.selectOptions);
-        this.resetItems();
-
+       this.selectOptions = parms.data.opts;
+       this.bounds = parms.data.bounds;
+       console.log(this.selectOptions);
 
     }
 
 
-
-    openModal(opt) {
-        let modal = Modal.create(SelectOptionModal, { data: opt });
-        modal.onDismiss(data => {
-            this.selectOptions = data;
-            console.log(this.selectOptions);
-            this.getHouseList();
-        });
-        this.nav.present(modal);
-    }
 
     //first time view is entered. add listener
     ionViewWillEnter() {
@@ -96,56 +90,17 @@ export class HouselistSearch {
     gotoHouseDetail(mls) {
         this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList });
     }
-
-
-    //select autocomplete action
-    resetItems() {
-        this.cityItems = [];
-        this.addressItems = [];
-        this.mlsItems = [];
-        //this.searchQuery = '';
+    pagePre(){
+        --this.pageIndex;
+        console.log("PrePage:" + this.pageIndex);
+        this.getHouseList();
     }
 
-
-    itemTapped(event, item, type) {
-
-        // let center = new google.maps.LatLng(item.lat, item.lng);
-        // this.setLocation(center, this.defaultZoom, true);
-        this.resetItems();
-
-
+    pageNext(){
+        ++this.pageIndex;
+        console.log("NextPage:" + this.pageIndex);
+        this.getHouseList();
     }
-    //auto complete REST CAll
-    getItems(searchbar) {
-
-        this.resetItems();
-        this.currentDiv = 'searchlist';
-        if (this.queryText == '') {
-            return;
-        } else {
-            let parm = { term: this.queryText };
-            //Call REST and generate item object
-            this.mapleRestData.load('index.php?r=ngget/getCityList', parm).subscribe(
-                data => {
-                    if (data.hasOwnProperty("CITY")) {
-                        this.cityItems = data.CITY;
-                        console.log("CITY Autocomplete:" + this.cityItems);
-                    };
-
-                    if (data.hasOwnProperty("MLS")) {
-                        this.mlsItems = data.MLS;
-                        console.log("MLS Autocomplete:" + this.mlsItems);
-                    }
-                    if (data.hasOwnProperty("ADDRESS")) {
-                        this.addressItems = data.ADDRESS;
-                        console.log("ADDRESS Autocomplete:" + this.addressItems);
-                    }
-                    console.log(data);
-                }); //end of callback
-
-        }
-    }
-
     getHouseList() {
         console.log("Get House List");
         this.currentDiv = ''; //reset all popup
@@ -158,6 +113,8 @@ export class HouselistSearch {
 
         let HouseArray = [];
         let searchParms = {
+            bounds: this.bounds,
+            pageindex: this.pageIndex, 
             sr: (this.selectOptions.selectSR == true) ? 'Sale' : 'Lease',
             housetype: this.selectOptions.selectType,
             houseprice: this.selectOptions.selectPrice,
@@ -172,6 +129,7 @@ export class HouselistSearch {
             data => {
                 //loading.dismiss();
                 this.totalCount = data.Data.Total;
+                this.pageTotal = Math.ceil(this.totalCount/8);
                 let houses = [];
                 let totalprice = 0;
                 let totalhouse = data.Data.HouseList.length;

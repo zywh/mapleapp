@@ -2,6 +2,7 @@ import {Modal, Loading, Events, Alert, Popover, ActionSheet, MenuController, Pla
 import {Geolocation} from 'ionic-native';
 import { NgZone, Component} from '@angular/core';;
 import {HouseDetailPage} from '../house-detail/house-detail';
+import {HouselistSearch} from '../houselist-search/houselist-search';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {SelectOptionModal} from './map-option-modal';
 import {MapHouselist} from './map-houselist';
@@ -53,6 +54,7 @@ export class MapSearchPage {
   private imgHost: String;
   private listModal: ViewController;
   private defaultZoom: Number = 14;
+  private _bounds;
   private swiperOptions = {
     //loop: true,
     //pager: true,
@@ -241,32 +243,34 @@ export class MapSearchPage {
       console.log("House list show");
     } else {
       console.log("house grid/city,show alert window");
-      let actionSheet = ActionSheet.create({
-        title: '当前房源' + this.totalCount + '套，选择查询参数或放大地图',
-        buttons: [
-          {
-            text: '查询参数',
-            role: 'destructive',
-            handler: () => {
-              this.openModal(this.selectOptions);
-            }
-          }, {
-            text: '放大地图',
-            handler: () => {
+       this.nav.push(HouselistSearch, { opts: this.selectOptions,bounds: this._bounds });
 
-              let currentzoom = this.map.getZoom();
-              this.map.setZoom(currentzoom + 2);
-            }
-          }, {
-            text: '取消',
-            role: 'cancel',
-            handler: () => {
-              console.log('Cancel clicked');
-            }
-          }
-        ]
-      });
-      this.nav.present(actionSheet);
+    //   let actionSheet = ActionSheet.create({
+    //     title: '当前房源' + this.totalCount + '套，选择查询参数或放大地图',
+    //     buttons: [
+    //       {
+    //         text: '查询参数',
+    //         role: 'destructive',
+    //         handler: () => {
+    //           this.openModal(this.selectOptions);
+    //         }
+    //       }, {
+    //         text: '放大地图',
+    //         handler: () => {
+
+    //           let currentzoom = this.map.getZoom();
+    //           this.map.setZoom(currentzoom + 2);
+    //         }
+    //       }, {
+    //         text: '取消',
+    //         role: 'cancel',
+    //         handler: () => {
+    //           console.log('Cancel clicked');
+    //         }
+    //       }
+    //     ]
+    //   });
+    //   this.nav.present(actionSheet);
 
     }
   }
@@ -514,10 +518,10 @@ export class MapSearchPage {
     let HouseArray = [];
 
     let marker;
-    let _bounds = _sw.lat() + "," + _sw.lng() + "," + _ne.lat() + "," + _ne.lng();
+    this._bounds = _sw.lat() + "," + _sw.lng() + "," + _ne.lat() + "," + _ne.lng();
 
     let mapParms = {
-      bounds: _bounds,
+      bounds: this._bounds,
       gridx: gridx,
       gridy: gridy,
       sr: (this.selectOptions.selectSR == true) ? 'Sale' : 'Lease',
