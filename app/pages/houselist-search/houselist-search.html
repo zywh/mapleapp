@@ -1,0 +1,54 @@
+<ion-navbar *navbar class="map-search hide-border">
+
+
+  <ion-buttons left>
+    <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+  </ion-buttons>
+  <ion-searchbar hideCancelButton [(ngModel)]="queryText" (ionFocus)="currentDiv='searchlist'" (ionInput)="getItems($event)"
+    placeholder="城市/地址/MLS#"></ion-searchbar>
+  <ion-buttons end>
+    <button class="bar-button-default" (click)="openModal(selectOptions)">
+        <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
+   </button>
+  </ion-buttons>
+ 
+</ion-navbar>
+
+
+
+<ion-content class="map-search">
+  <div class="search_list" *ngIf="currentDiv == 'searchlist'">
+    <ion-item padding *ngFor="let item of cityItems" (click)="itemTapped($event, item,1)">
+      <button light clear> <ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }}</span></button>
+      <ion-badge item-right>城市</ion-badge>
+    </ion-item>
+    <ion-item padding *ngFor="let item of mlsItems" (click)="itemTapped($event, item,2)">
+      <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }},{{item.city}}</span></button>
+      <ion-badge item-right>MLS{{item.price}}万</ion-badge>
+    </ion-item>
+    <ion-item padding *ngFor="let item of addressItems" (click)="itemTapped($event, item,3)">
+      <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }},{{item.city}}</span></button>
+      <ion-badge item-right>地址{{item.price}}万</ion-badge>
+    </ion-item>
+  </div>
+
+
+  <ion-list>
+    <ion-item class="house_card" *ngFor="let house of currentHouseList">
+      <ion-thumbnail item-left>
+        <img [src]="imgHost + house.CoverImg" />
+      </ion-thumbnail>
+     
+          <ion-badge item-left>MLS:{{house.MLS}}</ion-badge>
+          <ion-badge item-right><i class="fa fa-usd" aria-hidden="true"></i>{{house.Price}}万</ion-badge>
+          <div><i padding-horizontal secondary class="fa fa-building" aria-hidden="true"></i><span padding-right>{{house.HouseType}}</span>{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨</div>
+          <div> <ion-icon padding-horizontal secondary name="navigate"></ion-icon><span padding-right>{{house.Address}}</span>{{house.MunicipalityName}}</div>
+    
+    </ion-item>
+    
+  </ion-list>
+
+
+</ion-content>

@@ -92,6 +92,7 @@ export class MapSearchPage {
     private events: Events
   ) {
     //this.searchQuery = '';
+    console.log(this.selectOptions);
     this.resetItems();
     this.listenEvents(); //listen School map event
     this.loadRichMarker();
@@ -134,6 +135,7 @@ export class MapSearchPage {
     let modal = Modal.create(SelectOptionModal, { data: opt });
     modal.onDismiss(data => {
       this.selectOptions = data;
+      console.log(this.selectOptions);
       this.changeMap();
     });
     this.nav.present(modal);
