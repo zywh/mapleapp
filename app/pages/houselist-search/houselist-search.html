@@ -6,39 +6,24 @@
         <ion-icon name="menu"></ion-icon>
     </button>
   </ion-buttons>
-  <h4 text-left>房源总数：{{totalCount}}- {{pageIndex + 1}}/{{pageTotal}}页</h4>
+  <p text-left>房源总数：{{totalCount}}套 - {{pageIndex + 1}}/{{pageTotal}}页</p>
   <ion-buttons end>
-    <button (click)="pagePre()">
+    <button (click)="pagePre()" *ngIf="pageIndex > 0">
         <ion-icon name="arrow-dropleft"></ion-icon>
      </button>
   </ion-buttons>
-  
+
   <ion-buttons end>
-    <button (click)="pageNext()">
+    <button (click)="pageNext()" *ngIf="pageIndex < pageTotal-1">
         <ion-icon name="arrow-dropright"></ion-icon>
      </button>
   </ion-buttons>
- 
+
 </ion-navbar>
 
 
 
 <ion-content class="houselist-search">
-  <!--<div class="search_list" *ngIf="currentDiv == 'searchlist'">
-    <ion-item padding *ngFor="let item of cityItems" (click)="itemTapped($event, item,1)">
-      <button light clear> <ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }}</span></button>
-      <ion-badge item-right>城市</ion-badge>
-    </ion-item>
-    <ion-item padding *ngFor="let item of mlsItems" (click)="itemTapped($event, item,2)">
-      <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }},{{item.city}}</span></button>
-      <ion-badge item-right>MLS{{item.price}}万</ion-badge>
-    </ion-item>
-    <ion-item padding *ngFor="let item of addressItems" (click)="itemTapped($event, item,3)">
-      <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }},{{item.city}}</span></button>
-      <ion-badge item-right>地址{{item.price}}万</ion-badge>
-    </ion-item>
-  </div>-->
-
 
   <ion-list>
     <ion-item class="house_card" *ngFor="let house of currentHouseList">
@@ -50,11 +35,13 @@
       <p>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
         <ion-badge item-right>{{house.Price}}万</ion-badge>
       </p>
-      <p>{{house.MunicipalityName}}</p>
+      <p>{{house.MunicipalityName}},{{house.ProvinceCname}}</p>
 
     </ion-item>
 
   </ion-list>
-
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-content>

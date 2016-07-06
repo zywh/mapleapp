@@ -58,9 +58,9 @@ export class HouselistSearch {
 
     ) {
 
-       this.selectOptions = parms.data.opts;
-       this.bounds = parms.data.bounds;
-       console.log(this.selectOptions);
+        this.selectOptions = parms.data.opts;
+        this.bounds = parms.data.bounds;
+        console.log(this.selectOptions);
 
     }
 
@@ -90,17 +90,31 @@ export class HouselistSearch {
     gotoHouseDetail(mls) {
         this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList });
     }
-    pagePre(){
+    pagePre() {
         --this.pageIndex;
         console.log("PrePage:" + this.pageIndex);
         this.getHouseList();
     }
 
-    pageNext(){
+    pageNext() {
         ++this.pageIndex;
         console.log("NextPage:" + this.pageIndex);
         this.getHouseList();
     }
+    doInfinite(infiniteScroll) {
+        setTimeout(() => {
+            if (this.pageIndex < this.pageTotal - 1) {
+                ++this.pageIndex;
+                this.getHouseList();
+                console.log('Async operation has ended');
+                infiniteScroll.complete();
+            }else {
+                 infiniteScroll.complete();
+            }
+        }, 500);
+    }
+
+
     getHouseList() {
         console.log("Get House List");
         this.currentDiv = ''; //reset all popup
@@ -114,7 +128,7 @@ export class HouselistSearch {
         let HouseArray = [];
         let searchParms = {
             bounds: this.bounds,
-            pageindex: this.pageIndex, 
+            pageindex: this.pageIndex,
             sr: (this.selectOptions.selectSR == true) ? 'Sale' : 'Lease',
             housetype: this.selectOptions.selectType,
             houseprice: this.selectOptions.selectPrice,
@@ -129,7 +143,7 @@ export class HouselistSearch {
             data => {
                 //loading.dismiss();
                 this.totalCount = data.Data.Total;
-                this.pageTotal = Math.ceil(this.totalCount/8);
+                this.pageTotal = Math.ceil(this.totalCount / 8);
                 let houses = [];
                 let totalprice = 0;
                 let totalhouse = data.Data.HouseList.length;
