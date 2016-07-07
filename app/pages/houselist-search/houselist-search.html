@@ -6,7 +6,7 @@
         <ion-icon name="menu"></ion-icon>
     </button>
   </ion-buttons>
-  <p text-left>房源总数：{{totalCount}}套 - {{pageIndex + 1}}/{{pageTotal}}页</p>
+  <p text-left class="bar-button-default">房源总数：{{totalCount}}套 - {{pageIndex + 1}}/{{pageTotal}}页</p>
   <ion-buttons end>
     <button (click)="pagePre()" *ngIf="pageIndex > 0">
         <ion-icon name="arrow-dropleft"></ion-icon>

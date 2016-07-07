@@ -1,12 +1,14 @@
 
 
 
-<ion-navbar *navbar>
-   <button clear (click)="close()">
-    <ion-icon name="arrow-back" ></ion-icon>
+<ion-toolbar>
+  <ion-buttons left>
+   <button class="bar-button-default" (click)="close()">
+    <ion-icon outline name="arrow-back" ></ion-icon>
   </button>
+  </ion-buttons>
   <ion-title>房源列表</ion-title>
-</ion-navbar>
+</ion-toolbar>
 
 
 <ion-content class="map-houselist">
