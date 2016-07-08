@@ -160,7 +160,7 @@ ionicBootstrap(
     //backButtonText: "返回",
     backButtonText: "",
     prodMode: true,
-    tabSubPages: false, //android house detail no two header bar
+    //tabSubPages: false, //android house detail has two header bar
     //mode: 'ios',
     //temp padding to fix ionic view status bar overlapping
     platforms: {
