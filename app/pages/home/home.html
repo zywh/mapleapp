@@ -5,36 +5,65 @@
   Ionic pages and navigation.
 -->
 <ion-navbar *navbar>
- 
-   <button menuToggle>
+
+  <button menuToggle>
     <ion-icon name="menu"></ion-icon>
   </button>
-   <ion-title>枫之都</ion-title>
-  
+  <ion-title>枫之都</ion-title>
+
 </ion-navbar>
 
 <ion-content class="home">
-   <ion-slides [options]="projectSwiperOptions" class="swiper-container">
-    <ion-slide *ngFor="let project of projects">
-      <img [src]="project.room_type_image" (click)="goToProject(project.id)" class="slide-image"/>
-      <h2 class="slide-title" [innerHTML]="project.name"></h2>
-     
-    </ion-slide>
-    
-  </ion-slides> 
-  <div >
-  <ion-item-divider  divider>推荐房源</ion-item-divider>
-  <ion-card>
-  </ion-card>
 
-  <ion-list>
-    <ion-list-header> 地产咨询</ion-list-header>
-    <a ion-item *ngFor="let post of post1" (click)="goToPost(post.id)"> {{post?.title}} </a> 
-  </ion-list>  
-  <ion-item-divider divider>加国信息</ion-item-divider>
-  <ion-card>
-  </ion-card>
+  <div>
+    <ion-searchbar cancelButtonText="取消" showCancelButton="true" [(ngModel)]="hQueryText" (ionFocus)="currentDiv='hSearchlist'"
+      (ionInput)="hGetItems($event)" placeholder="房源搜索：城市/地址/MLS#"></ion-searchbar>
+    <div class="search_list" *ngIf="currentDiv == 'hSearchlist'">
+      <ion-item padding *ngFor="let item of cityItems" (click)="itemTapped(item,1)">
+        <button light clear> <ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }}</span></button>
+        <ion-badge item-right>城市</ion-badge>
+      </ion-item>
+      <ion-item padding *ngFor="let item of mlsItems" (click)="itemTapped(item,1)">
+        <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }},{{item.city}}</span></button>
+        <ion-badge item-right>MLS:{{item.price}}万</ion-badge>
+      </ion-item>
+      <ion-item padding *ngFor="let item of addressItems" (click)="itemTapped(item,1)">
+        <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }},{{item.city}}</span></button>
+        <ion-badge item-right>地址:{{item.price}}万</ion-badge>
+      </ion-item>
+    </div>
+
+    <ion-searchbar cancelButtonText="取消" showCancelButton="true" [(ngModel)]="sQueryText" (ionFocus)="currentDiv='sSearchlist'"
+      (ionInput)="sGetItems($event)" placeholder="学校搜索：城市/学校"></ion-searchbar>
+    <div class="search_list" *ngIf="currentDiv == 'sSearchlist'">
+      <ion-item padding *ngFor="let item of scityItems" (click)="itemTapped(item,2)">
+        <button light clear> <ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }}</span></button>
+        <ion-badge item-right>城市</ion-badge>
+      </ion-item>
+      <ion-item padding *ngFor="let item of schoolItems" (click)="itemTapped(item,2)">
+        <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.school }}</span></button>
+        <ion-badge item-right>排名:{{item.paiming}}</ion-badge>
+      </ion-item>
+    </div>
   </div>
-  
-</ion-content>
 
+
+  <ion-slides [options]="projectSwiperOptions" class="swiper-container">
+    <ion-slide *ngFor="let project of projects">
+      <img [src]="project.room_type_image" (click)="goToProject(project.id)" class="slide-image" />
+      <h2 class="slide-title" [innerHTML]="project.name"></h2>
+
+    </ion-slide>
+
+  </ion-slides>
+
+  <div>
+    <h2 padding-left> 地产咨询</h2>
+    <ion-list>
+      <a ion-item *ngFor="let post of post1" (click)="goToPost(post.id)"> {{post?.title}} </a>
+    </ion-list>
+
+
+  </div>
+
+</ion-content>

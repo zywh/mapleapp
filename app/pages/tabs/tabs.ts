@@ -6,7 +6,6 @@ import {ProjectsPage} from '../projects/projects';
 import {StatsPage} from '../stats/stats';
 import {SchoolSearchPage} from '../school-search/school-search';
 import {SchoolMapPage} from '../school-map/school-map';
-import {MapPage} from '../map/map';
 import {HomePage} from '../home/home';
 //import {MapleConf} from './providers/maple-rest-data/maple-config';
 
@@ -30,6 +29,7 @@ export class TabsPage {
   about: any = AboutPage;
   mySelectedIndex: number;
   mapParms: MapParmObj ;
+  private preload: Boolean = true;
 
 
 
@@ -39,18 +39,24 @@ export class TabsPage {
     this.listenEvents();
   }
 
-  schoolTabSelected(){
-    //console.log("School Tab is selected");
-    //this.events.publish("tab:schoolmap");
-    // this.nav.setRoot(TabsPage ,{ tabIndex: 2 });
-     this.nav.setRoot(SchoolMapPage);
-  }
+  // schoolTabSelected(){
+  //   //console.log("School Tab is selected");
+  //   //this.events.publish("tab:schoolmap");
+  //   // this.nav.setRoot(TabsPage ,{ tabIndex: 2 });
+  //    this.nav.setRoot(SchoolMapPage);
+  // }
  listenEvents() {
-    this.events.subscribe('school:mappage', (data) => {
-     
-     
-      this.mapParms = data[0];
+    this.events.subscribe('map:center', (data) => {
+      // console.log("Map Center event:")
+      // this.mapParms = data[0];
       this.tabRef.select(1);
+      
+    });
+    this.events.subscribe('schoolmap:center', (data) => {
+      // console.log("Map Center event:")
+      // this.mapParms = data[0];
+    
+      this.tabRef.select(2);
       
     });
  }

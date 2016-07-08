@@ -1,0 +1,47 @@
+<ion-navbar *navbar class="hide-border">
+
+
+  <ion-buttons left>
+    <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-buttons>
+  <p text-left class="bar-button-default">房源总数：{{totalCount}}套 - {{pageIndex + 1}}/{{pageTotal}}页</p>
+  <ion-buttons end>
+    <button class="bar-button-default" (click)="pagePre()" *ngIf="pageIndex > 0">
+        <ion-icon name="arrow-dropleft"></ion-icon>
+     </button>
+  </ion-buttons>
+
+  <ion-buttons end>
+    <button class="bar-button-default" (click)="pageNext()" *ngIf="pageIndex < pageTotal-1">
+        <ion-icon name="arrow-dropright"></ion-icon>
+     </button>
+  </ion-buttons>
+
+</ion-navbar>
+
+
+
+<ion-content class="houselist-search">
+
+  <ion-list>
+    <ion-item class="house_card" *ngFor="let house of currentHouseList" (click)="gotoHouseDetail(house.MLS)" >
+      <ion-thumbnail item-left>
+        <img [src]="imgHost + house.CoverImg" />
+      </ion-thumbnail>
+
+      <h2>{{house.Address}}</h2>
+      <p>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
+        <ion-badge item-right>{{house.Price}}万</ion-badge>
+      </p>
+      <p>{{house.MunicipalityName}},{{house.ProvinceCname}}</p>
+
+    </ion-item>
+
+  </ion-list>
+  <!--<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>-->
+
+</ion-content>

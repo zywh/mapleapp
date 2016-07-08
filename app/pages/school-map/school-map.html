@@ -6,27 +6,25 @@
 -->
 <ion-navbar *navbar class="school-map hide-border">
 
-  <ion-row center>
-    <ion-col width-10 no-padding>
-      <button menuToggle>
+ 
+
+ <ion-buttons left>
+    <button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
-    </ion-col>
-    <ion-col width-67 no-padding>
-      <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (ionFocus)="currentDiv='searchlist'" (ionInput)="getItems($event)"
+  </ion-buttons>    
+   <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (ionFocus)="currentDiv='searchlist'" (ionInput)="getItems($event)"
         placeholder="城市/学校"></ion-searchbar>
-    </ion-col>
-    <ion-col width-10 no-padding>
-      <button class="bar-button-default" (click)="openModal(selectSchool)">
+   <ion-buttons end>
+    <button class="bar-button-default" (click)="openModal(selectSchool)">
         <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
       </button>
-    </ion-col>
-    <ion-col width-10 no-padding>
-      <button class="bar-button-default" (click)="setLocation(center,12)">
+   </ion-buttons>
+   <ion-buttons end>
+    <button class="bar-button-default" (click)="setCenter(true)">
         <ion-icon ios="ios-locate-outline" md="md-locate"></ion-icon>
-      </button>
-    </ion-col>
-  </ion-row>
+    </button>
+   </ion-buttons>
 
 
 </ion-navbar>

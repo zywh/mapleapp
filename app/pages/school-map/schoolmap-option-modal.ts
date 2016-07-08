@@ -39,7 +39,7 @@ export class SelectOptionModal {
         this.selectOptions = {
             selectPingfen: 0,
             selectRank: 0,
-            selectType: true,
+            selectType: false,
             selectXingzhi: ''
 
         }

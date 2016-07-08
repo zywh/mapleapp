@@ -1,8 +1,5 @@
 import {Modal, Range, NavParams, Page, ViewController} from 'ionic-angular';
 import {Component} from '@angular/core';;
-//import {HouseDetailPage} from '../house-detail/house-detail';
-//import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-//import {McSearchOption} from './search-option';
 
 interface selectOptionsObj {
     selectPrice?: String,
@@ -11,7 +8,9 @@ interface selectOptionsObj {
     selectBaths?: Number,
     selectSR?: Boolean,
     selectHousesize?: String,
-    selectLandsize?: String
+    selectLandsize?: String,
+    selectListType?: Boolean,
+    selectDate?: Number
 }
 
 @Component({
@@ -29,20 +28,17 @@ export class SelectOptionModal {
         private viewCtrl: ViewController
     ) {
         //this.viewCtrl = viewCtrl;
-        console.log(this.params);
+        //console.log(this.params);
         this.selectOptions = params.get('data');
         this.unit = 10;
 
     }
 
-    // brightness: number = 20;
-    // saturation: number = 0;
-    // warmth: number = 1300;
-
-    // structure: any = { lower: 33, upper: 60 };
+   
     onChange(ev) {
-        console.log("Changed", ev);
+       
         this.unit = (this.selectUnit == true)? 10: 1;
+
     }
 
 
@@ -54,7 +50,9 @@ export class SelectOptionModal {
             selectHousesize: { lower: 0, upper: 4000 },
             selectLandsize: { lower: 0, upper: 43560 },
             selectPrice: { lower: 0, upper: 600 },
-            selectType: ''
+            selectType: '',
+            selectListType: true,
+            selectDate: 0
 
         }
     }

@@ -25,7 +25,7 @@
 
 
     <ion-item no-lines>
-        <ion-label>{{(selectOptions?.selectType == true)? '中学':'小学'}}</ion-label>
+        <ion-label>学校类型({{(selectOptions?.selectType == true)? '中学':'不限'}})</ion-label>
         <ion-toggle [(ngModel)]="selectOptions.selectType"></ion-toggle>
     </ion-item>
 
