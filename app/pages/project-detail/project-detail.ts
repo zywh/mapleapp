@@ -51,10 +51,10 @@ export class ProjectDetailPage implements OnInit {
   };
 
   ngOnInit() {
-   
+
     this.mapleconf.load().then(data => {
       this.getResult(data.projectRest);
-      
+
     })
   }
 
@@ -62,7 +62,7 @@ export class ProjectDetailPage implements OnInit {
     this.mapleRestData.load(url, this.parms).subscribe(
       data => {
         this.project = data;
-      
+
       }
 
     )
@@ -88,9 +88,26 @@ export class ProjectDetailPage implements OnInit {
     //console.log(this.project.room_type_image + ":" + this.project.name)
     let link = "http://m.maplecity.com.cn/index.php?r=projects/more&id=" + this.project.id;
     let img = this.project.room_type_image.replace('uploads', this.project.replaceurl);
-    console.log(img);
+
     //let link = "http://m.maplecity.com.cn/index.php?r=projects/more&id=" + this.project.id;
-    SocialSharing.share(this.project.summary, this.project.name, img, link);
+    //SocialSharing.share(this.project.summary, this.project.name, img, link);
+
+    var onSuccess = function (result) {
+      console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true
+      console.log("Shared to app: " + result.app); // On Android result.app is currently empty. On iOS it's empty when sharing is cancelled (result.completed=false)
+    }
+    var options = {
+      message: this.project.summary, // not supported on some apps (Facebook, Instagram)
+      subject: this.project.name, // fi. for email
+      files: [img], // an array of filenames either locally or remotely
+      url: link,
+      chooserTitle: '分享' // Android only, you can override the default share sheet title
+    }
+    var onError = function (msg) {
+      console.log("Sharing failed with message: " + msg);
+    }
+    SocialSharing.shareWithOptions(options);
+
     // Wechat.share({
     //   message: {
     //     title: this.project.name,
