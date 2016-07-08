@@ -4,7 +4,7 @@ import {OnInit,Component,ViewChild} from '@angular/core';;
 import {SocialSharing} from 'ionic-native';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
-import {SchoolSearchPage} from '../../pages/school-search/school-search';
+import {HouseCityStatsPage} from '../../pages/house-city-stats/house-city-stats';
 
 /*
   Generated class for the HouseDetailPage page.
@@ -356,7 +356,10 @@ export class HouseDetailPage implements OnInit {
 				return this.house.land_area + this.F2M.sfeet;
 	}
 
-  gotoSchool() {
+  gotoCityStats() {
+    this.nav.push(HouseCityStatsPage, this.house.municipality);
+  }
+	  gotoSchool() {
     //this.nav.push(SchoolSearchPage);
  		let center = new google.maps.LatLng(this.house.latitude, this.house.longitude);
 		this.events.publish('schoolmap:center', center);
@@ -387,10 +390,17 @@ export class HouseDetailPage implements OnInit {
   openHouseList() {
 	}
 
-   share(message, subject, file, link) {
+   share() {
+	 //share(message, subject, file, link) {
+	//	 'House Title', 'House Detail', null, 'https://m.maplecity.com.cn'
        // this.platform.ready().then(() => {
             //window.plugins.socialsharing.share(message, subject, file, link);
-            SocialSharing.share(message, subject, file, link);
+		let message = "MLS：" + this.parms.id;
+		let subject = this.getPriceTxt() + "-" + this.house.addr + " " + this.house.municipality;
+		let img = this.photoUrl(this.photos[0]);
+		let link = "http://m.maplecity.com.cn/index.php?r=mhouse/view&id=" + this.parms.id;
+		console.log("socialshare",message,subject,img,link); 				
+    SocialSharing.share(message, subject, img, link);
            
        // });
     }

@@ -13,7 +13,7 @@ import {  Highcharts } from 'angular2-highcharts';
   <ion-title>{{city}}-统计</ion-title>
     </ion-navbar>
   
-    <ion-content>
+    <ion-content style="z-index:16">
        <div id="chart"></div>
     </ion-content>
     `

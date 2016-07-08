@@ -7,7 +7,7 @@
 <ion-navbar *navbar>
   <ion-title>{{"MLS：" + parms.id}}</ion-title>
 	<ion-buttons end>
-  <button  (click)="share('House Title', 'House Detail', null, 'https://m.maplecity.com.cn')">
+  <button  (click)="share()">
   <ion-icon isActive="false" name="share" ></ion-icon>
   </button>
   </ion-buttons>
@@ -23,6 +23,9 @@
   
   <ion-toolbar [attr.primary]="isAndroid ? '' : null">
     <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
+      <ion-segment-button value="school" (ionSelect)="gotoCityStats()">
+        社区
+      </ion-segment-button>
       <ion-segment-button value="school" (ionSelect)="gotoSchool()">
         学校
       </ion-segment-button>
@@ -170,17 +173,17 @@
 
 <div id="houstList_control">
 <div *ngIf="houseList.prev">
-	<button fab fab-bottom  fab-left (click)="go2PrevHouse()" style="z-index: 100;opacity: 0.8;">
+	<button fab fab-bottom  fab-left (click)="go2PrevHouse()" style="z-index: 12;opacity: 0.8;">
 		<ion-icon name="arrow-dropleft" is-active="true"></ion-icon>
 	</button>
 </div>
 <div *ngIf="houseList.total > 1">
-<button fab fab-bottom fab-center (click)="openHouseList()" style="z-index: 100;opacity:0.8;font-size:10px;">
+<button fab fab-bottom fab-center (click)="openHouseList()" style="z-index: 12;opacity:0.8;font-size:10px;">
 	<ion-icon is-active="true">{{houseList.index + 1}}/{{houseList.total}}</ion-icon>
 </button>
 </div>
 <div *ngIf="houseList.next">  
-		<button fab  fab-bottom fab-right (click)="go2NextHouse()" style="z-index: 100;opacity: 0.8;">
+		<button fab  fab-bottom fab-right (click)="go2NextHouse()" style="z-index: 12;opacity: 0.8;">
 		<ion-icon name="arrow-dropright" is-active="true"></ion-icon>
 	</button>
 </div> 
