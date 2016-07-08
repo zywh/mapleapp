@@ -94,7 +94,7 @@ export class MapSearchPage {
     private events: Events
   ) {
     //this.searchQuery = '';
-   
+
     this.resetItems();
     this.listenEvents(); //listen School map event
     this.loadRichMarker();
@@ -113,7 +113,7 @@ export class MapSearchPage {
       this.mviewLoaded = true;
       let center = data[0];
       setTimeout(() => {
-       
+
         this.nav.pop();//pop house detail page
         let marker = new google.maps.Marker({
           position: center,
@@ -154,8 +154,8 @@ export class MapSearchPage {
             this.currentDiv = '';
             this.queryText = '';
             //this.viewCtrl.dismiss();
-          this.listModal.dismiss();
-            
+            //this.listModal.dismiss();
+
           });
 
         });
@@ -177,7 +177,7 @@ export class MapSearchPage {
 
   getResult(url) {
     this.mapleRestData.load(url, this.parms).subscribe(
-      data => { this.houselist = data.Data;  }
+      data => { this.houselist = data.Data; }
 
     )
   }
@@ -235,41 +235,41 @@ export class MapSearchPage {
     if ((this.markerType == 'house') && (this.totalCount > 0)) {
       // this.currentDiv = (this.currentDiv == 'houselist') ? '' : 'houselist';
       //let popover = Popover.create(MapHouselistPopover, {list: this.currentHouseList, imgHost: this.imgHost});
-      this.listModal = Modal.create(MapHouselist, {list: this.currentHouseList, imgHost: this.imgHost});
+      this.listModal = Modal.create(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost });
       this.nav.present(this.listModal);
-      
 
-    
+
+
     } else {
-     
-       this.nav.push(HouselistSearch, { opts: this.selectOptions,bounds: this._bounds });
 
-    //   let actionSheet = ActionSheet.create({
-    //     title: '当前房源' + this.totalCount + '套，选择查询参数或放大地图',
-    //     buttons: [
-    //       {
-    //         text: '查询参数',
-    //         role: 'destructive',
-    //         handler: () => {
-    //           this.openModal(this.selectOptions);
-    //         }
-    //       }, {
-    //         text: '放大地图',
-    //         handler: () => {
+      this.nav.push(HouselistSearch, { opts: this.selectOptions, bounds: this._bounds });
 
-    //           let currentzoom = this.map.getZoom();
-    //           this.map.setZoom(currentzoom + 2);
-    //         }
-    //       }, {
-    //         text: '取消',
-    //         role: 'cancel',
-    //         handler: () => {
-    //           console.log('Cancel clicked');
-    //         }
-    //       }
-    //     ]
-    //   });
-    //   this.nav.present(actionSheet);
+      //   let actionSheet = ActionSheet.create({
+      //     title: '当前房源' + this.totalCount + '套，选择查询参数或放大地图',
+      //     buttons: [
+      //       {
+      //         text: '查询参数',
+      //         role: 'destructive',
+      //         handler: () => {
+      //           this.openModal(this.selectOptions);
+      //         }
+      //       }, {
+      //         text: '放大地图',
+      //         handler: () => {
+
+      //           let currentzoom = this.map.getZoom();
+      //           this.map.setZoom(currentzoom + 2);
+      //         }
+      //       }, {
+      //         text: '取消',
+      //         role: 'cancel',
+      //         handler: () => {
+      //           console.log('Cancel clicked');
+      //         }
+      //       }
+      //     ]
+      //   });
+      //   this.nav.present(actionSheet);
 
     }
   }
@@ -305,7 +305,7 @@ export class MapSearchPage {
         data => {
           if (data.hasOwnProperty("CITY")) {
             this.cityItems = data.CITY;
-           // console.log("CITY Autocomplete:" + this.cityItems);
+            // console.log("CITY Autocomplete:" + this.cityItems);
           };
 
           if (data.hasOwnProperty("MLS")) {
@@ -316,7 +316,7 @@ export class MapSearchPage {
             this.addressItems = data.ADDRESS;
             //console.log("ADDRESS Autocomplete:" + this.addressItems);
           }
-         
+
         }); //end of callback
 
     }
@@ -358,7 +358,7 @@ export class MapSearchPage {
   }
 
 
-  setContent(lat, lng, count, html, price, mls) {
+  setContent(lat, lng, count, html,houses, price, mls) {
     let point = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
     let content = this.setMarkerCss(count, price);
 	   let marker = new RichMarker({
@@ -372,38 +372,41 @@ export class MapSearchPage {
 
 
     marker.addListener('click', () => {
+      if (count == 1) {
+        let alert = Alert.create({
+          //title: 'Confirm purchase',
+          message: html,
+          cssClass: 'house_popup',
+          buttons: [
+            {
+              text: '取消',
+              role: 'cancel',
 
-      let alert = Alert.create({
-        //title: 'Confirm purchase',
-        message: html,
-        cssClass: 'house_popup',
-        buttons: [
-          {
-            text: '取消',
-            role: 'cancel',
-
-          },
-          {
-            text: '详情',
-            handler: () => {
-              let navTransition = alert.dismiss();
-              navTransition.then(() => {
-                this.nav.pop();
-                this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList });
-                //this.nav.push(HouseDetailPage, mls); 
-              });
-              return false;
+            },
+            {
+              text: '详情',
+              handler: () => {
+                let navTransition = alert.dismiss();
+                navTransition.then(() => {
+                  this.nav.pop();
+                  this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList });
+                  //this.nav.push(HouseDetailPage, mls); 
+                });
+                return false;
+              }
             }
-          }
-        ]
-      });
-      this.nav.present(alert);
-      //   //infowindow.open(this.map, marker);
+          ]
+        });
+        this.nav.present(alert);
+      } else {
+        console.log("More than one");
+        // this.listModal = Modal.create(MapHouselist, { list: houses, imgHost: this.imgHost });
+        // this.nav.present(this.listModal);
+        this.nav.push(MapHouselist,{ list: houses, imgHost: this.imgHost });
 
-      // let popover = Popover.create(HousePopup)
-      // this.nav.present(popover, {
-      //   ev: html
-      // })
+
+      }
+
 
     });
 
@@ -538,7 +541,7 @@ export class MapSearchPage {
         //loading.dismiss();
         this.totalCount = data.Data.Total;
         this.markerType = data.Data.Type;
-       
+
         //Start City Markers
         if ((this.markerType == 'city') || (this.markerType == 'grid')) {
           // this._zone.run(() => {
@@ -573,7 +576,7 @@ export class MapSearchPage {
           let listAllHtml;
           this.currentHouseList = data.Data.MapHouseList;
           let panelhtml;
-         // console.log("Current House List Length:" + this.currentHouseList.length);
+          // console.log("Current House List Length:" + this.currentHouseList.length);
 
           // console.log('Image Host:' + this.imgHost);
           for (let index = 0, l = totalhouse; index < l; index++) {
@@ -616,7 +619,7 @@ export class MapSearchPage {
 
                 houses.push(house);
                 //this.setContent(tlat, tlng, 1, houses, markerprice);
-                this.setContent(tlat, tlng, 1, li, markerprice, house.MLS);
+                this.setContent(tlat, tlng, 1, li, house,markerprice, house.MLS);
                 houses = [];
                 totalprice = 0;
                 panelhtml = '';
@@ -627,7 +630,8 @@ export class MapSearchPage {
                 panelhtml = panelhtml + li;
                 let price = (totalprice + markerprice) / count;
                 //this.setContent(tlat, tlng, count, houses, price);
-                this.setContent(tlat, tlng, count, panelhtml, price, house.MLS);
+                // this.setContent(tlat, tlng, count, panelhtml, price, house.MLS);
+                this.setContent(tlat, tlng, count, panelhtml,houses, price, house.MLS);
                 count = 1;
                 totalprice = 0;
                 houses = [];

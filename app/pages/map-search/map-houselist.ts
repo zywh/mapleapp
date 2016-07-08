@@ -42,7 +42,7 @@ export class MapHouselist {
 
 
     close() {
-        this.viewCtrl.dismiss();
+        this.nav.pop();
     }
 
 

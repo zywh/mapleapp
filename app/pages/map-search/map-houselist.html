@@ -1,6 +1,3 @@
-
-
-
 <ion-toolbar>
   <ion-buttons left>
    <button class="bar-button-default" (click)="close()">
@@ -11,9 +8,26 @@
 </ion-toolbar>
 
 
-<ion-content class="map-houselist">
+<ion-content class="houselist-search">
 
-  <ion-card class="house_card" *ngFor="let house of currentHouseList" (click)="gotoHouseDetail(house.MLS)" >
+  
+  <ion-list>
+    <ion-item class="house_card" *ngFor="let house of currentHouseList" (click)="gotoHouseDetail(house.MLS)" >
+      <ion-thumbnail item-left>
+        <img [src]="imgHost + house.CoverImg" />
+      </ion-thumbnail>
+
+      <h2>{{house.Address}}</h2>
+      <p>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
+        <ion-badge item-right>{{house.Price}}万</ion-badge>
+      </p>
+      <p>{{house.MunicipalityName}},{{house.ProvinceCname}}</p>
+
+    </ion-item>
+
+  </ion-list>
+
+  <!--<ion-card class="house_card" *ngFor="let house of currentHouseList" (click)="gotoHouseDetail(house.MLS)" >
       <img [src]="imgHost + house.CoverImg" />
       <div class="house_desc" text-left text-nowrap>
       
@@ -27,7 +41,7 @@
           </div>
       </div>
     
-  </ion-card>
+  </ion-card>-->
  
  <!--<ion-slides [options]="swiperOptions" class="swiper-container">
       <ion-slide *ngFor="let house of currentHouseList" class="swiper-slide" (click)="gotoHouseDetail(house.MLS)">
