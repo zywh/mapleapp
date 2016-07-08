@@ -6,13 +6,6 @@ import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {cityStats} from './cityStats';
 import {Highcharts} from 'angular2-highcharts';
 
-
-/*
-  Generated class for the HouseCityStatsPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   templateUrl: 'build/pages/house-city-stats/house-city-stats.html',
 })
@@ -23,23 +16,7 @@ export class HouseCityStatsPage {
   private topics = [];
   private data;
   private city: String;
-  private highchartsOptions = Highcharts.setOptions({
-    lang: {
-      loading: '加载中...',
-      months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-      shortMonths: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-      weekdays: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
-      exportButtonTitle: '导出',
-      printButtonTitle: '打印',
-      rangeSelectorFrom: '从',
-      rangeSelectorTo: '到',
-      rangeSelectorZoom: "缩放",
-      downloadPNG: '下载PNG格式',
-      downloadJPEG: '下载JPEG格式',
-      downloadPDF: '下载PDF格式',
-      downloadSVG: '下载SVG格式'
-    }
-  });
+  
 
   constructor(
     private mapleRestData: MapleRestData,
@@ -56,11 +33,6 @@ export class HouseCityStatsPage {
     var mm = today.getMonth() + 1;
     var yyyy = today.getFullYear();
     return yyyy + "-" + mm + "-" + dd;
-  }
-
-  // ngOnInit() {
-  ionViewLoaded() {
-
   }
 
   ionViewWillEnter() {
