@@ -1,81 +1,84 @@
-<ion-navbar *navbar>
-  <button menuToggle>
+<ion-header>
+  <ion-navbar>
+    <button menuToggle>
     <ion-icon name="menu"></ion-icon>
   </button>
-  <ion-title>关于我们</ion-title>
-</ion-navbar>
+    <ion-title>关于我们</ion-title>
+  </ion-navbar>
 
+  <ion-toolbar>
+      <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
+          <ion-segment-button value="about">
+            关于
+          </ion-segment-button>
+          <ion-segment-button value="advantage">
+            优势
+          </ion-segment-button>
 
-<ion-toolbar padding [attr.primary]="isAndroid ? '' : null">
-  <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
-    <ion-segment-button value="about">
-      关于
-    </ion-segment-button>
-    <ion-segment-button value="advantage">
-      优势
-    </ion-segment-button>
+          <ion-segment-button value="contact">
+            联系
+          </ion-segment-button>
+          <ion-segment-button value="hire">
+            招募
+          </ion-segment-button>
+     </ion-segment>
+  </ion-toolbar>  
+</ion-header>
 
-    <ion-segment-button value="contact">
-      联系
-    </ion-segment-button>
-    <ion-segment-button value="hire">
-      招募
-    </ion-segment-button>
-  </ion-segment>
-</ion-toolbar>
+ <ion-content padding class='about_page'>
 
-<ion-content padding class='about_page'>
-  <div class="nybanner_about"></div>
+    
+      <div class="nybanner_about"></div>
 
-  <div class="spacer" style="width: 284.545px; height: 17.9886px;"></div>
-  <div [ngSwitch]="section">
-    <div *ngSwitchWhen="'about'">
-      <div class="zcwz_label">
-        <div class="zcwz_label_left">{{postAbout?.title}}</div>
-        <div class="zcwz_label_right">{{postAbout?.catname}}</div>
-      </div>
-      <div class="fyxqdown">
-        <div class="fyxqdown_left">
-          <div class="zcwz about_js" [innerHTML]="postAbout?.content"></div>
+      <div class="spacer" style="width: 284.545px; height: 17.9886px;"></div>
+      <div [ngSwitch]="section">
+        <div *ngSwitchWhen="'about'">
+          <div class="zcwz_label">
+            <div class="zcwz_label_left">{{postAbout?.title}}</div>
+            <div class="zcwz_label_right">{{postAbout?.catname}}</div>
+          </div>
+          <div class="fyxqdown">
+            <div class="fyxqdown_left">
+              <div class="zcwz about_js" [innerHTML]="postAbout?.content"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div *ngSwitchWhen="'advantage'">
+          <div class="zcwz_label">
+            <div class="zcwz_label_left">{{postAdvantage?.title}}</div>
+            <div class="zcwz_label_right">{{postAdvantage?.catname}}</div>
+          </div>
+          <div class="fyxqdown">
+            <div class="fyxqdown_left">
+              <div class="zcwz about_js" [innerHTML]="changeImgPath(postAdvantage?.content)"></div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngSwitchWhen="'contact'">
+          <div class="zcwz_label">
+            <div class="zcwz_label_left">{{postContact?.title}}</div>
+            <div class="zcwz_label_right">{{postContact?.catname}}</div>
+          </div>
+          <div class="fyxqdown">
+            <div class="fyxqdown_left">
+              <div class="zcwz about_js" [innerHTML]="changeImgPath(postContact?.content)"></div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngSwitchWhen="'hire'">
+          <div class="zcwz_label">
+            <div class="zcwz_label_left">{{postHire?.title}}</div>
+            <div class="zcwz_label_right">{{postHire?.catname}}</div>
+          </div>
+          <div class="fyxqdown">
+            <div class="fyxqdown_left">
+              <div class="zcwz about_js" [innerHTML]="changeImgPath(postHire?.content)"></div>
+            </div>
+          </div>
         </div>
       </div>
-
-    </div>
-
-    <div *ngSwitchWhen="'advantage'">
-      <div class="zcwz_label">
-        <div class="zcwz_label_left">{{postAdvantage?.title}}</div>
-        <div class="zcwz_label_right">{{postAdvantage?.catname}}</div>
-      </div>
-      <div class="fyxqdown">
-        <div class="fyxqdown_left">
-          <div class="zcwz about_js" [innerHTML]="changeImgPath(postAdvantage?.content)"></div>
-        </div>
-      </div>
-    </div>
-
-    <div *ngSwitchWhen="'contact'">
-      <div class="zcwz_label">
-        <div class="zcwz_label_left">{{postContact?.title}}</div>
-        <div class="zcwz_label_right">{{postContact?.catname}}</div>
-      </div>
-      <div class="fyxqdown">
-        <div class="fyxqdown_left">
-          <div class="zcwz about_js" [innerHTML]="changeImgPath(postContact?.content)"></div>
-        </div>
-      </div>
-    </div>
-
-    <div *ngSwitchWhen="'hire'">
-      <div class="zcwz_label">
-        <div class="zcwz_label_left">{{postHire?.title}}</div>
-        <div class="zcwz_label_right">{{postHire?.catname}}</div>
-      </div>
-      <div class="fyxqdown">
-        <div class="fyxqdown_left">
-          <div class="zcwz about_js" [innerHTML]="changeImgPath(postHire?.content)"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</ion-content>
+ </ion-content>

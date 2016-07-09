@@ -4,7 +4,8 @@
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-navbar *navbar class="map-search hide-border">
+<ion-header>
+<ion-navbar class="map-search hide-border">
 
 
   <ion-buttons left>
@@ -25,6 +26,7 @@
     </button>
   </ion-buttons>
 </ion-navbar>
+</ion-header>
 
 <ion-content class="map-search">
   <div class="search_list" *ngIf="currentDiv == 'searchlist'">
@@ -77,10 +79,11 @@
 
 
 </ion-content>
-
+<ion-footer>
 <!--<div *ngIf="currentDiv == 'listButton'" style="z-index:100;opacity:0.8;">-->
-<div style="z-index:10;opacity:0.8;">
+<!--<div style="z-index:10;opacity:0.8;">-->
   <button fab fab-bottom fab-center (click)="openHouseList($event)">
     <ion-icon name="list" is-active="false"></ion-icon>
   </button>
-</div>
+<!--</div>-->
+</ion-footer>

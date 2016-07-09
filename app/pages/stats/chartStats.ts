@@ -6,15 +6,16 @@ import {  Highcharts } from 'angular2-highcharts';
 @Component({
 
     template: `
-    <ion-navbar *navbar>
-    <button menuToggle>
-    <ion-icon name="menu"></ion-icon>
-    </button>
-  <ion-title>统计</ion-title>
-    </ion-navbar>
+    <ion-header>
+        <ion-navbar >
+        <ion-title>统计</ion-title>
+        </ion-navbar>
+    </ion-header>
+ 
   
-    <ion-content style="z-index: 11;">
+    <ion-content >
        <div id="chart"></div>
+      
     </ion-content>
     `
 
@@ -34,6 +35,7 @@ export class chartStats {
 
 
     ionViewWillEnter() {
+       
         setTimeout(() => {
             console.log("Start Chart");
             if (this.type == 0) { this.chart = new Highcharts.Chart(this.options); }
