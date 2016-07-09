@@ -97,7 +97,7 @@
 		</div>
 	</div>
 	<div class="fyxq_rx">服务热线：
-		<img src="img/maple/plat.jpg"/><a href="tel:400-9900-393"><span>400-870-1029</span></a>
+		<img src="img/maple/plat.jpg"/><a [href]="mapleConf.data.phone"><span>{{mapleConf.data.phone}}</span></a>
 	</div>
 
 </ion-card>	
@@ -124,7 +124,7 @@
 		<ion-item><ion-label fixed class="xqlb_label">房屋数量：</ion-label><ion-label>{{add2(house.rms,house.rooms_plus)}}</ion-label></ion-item>
 		<ion-item><ion-label fixed class="xqlb_label">地税/年份：</ion-label><ion-label>{{house.taxes}}/{{house.yr}} 年</ion-label></ion-item>
 		<ion-item><ion-label fixed class="xqlb_label">卧房数量：</ion-label><ion-label>{{add2(house.br,house.br_plus)}}</ion-label></ion-item>
-		<ion-item><ion-label fixed class="xqlb_label">物业管理费：</ion-label><ion-label>无</ion-label></ion-item>
+		<ion-item><ion-label fixed class="xqlb_label">物业管理费：</ion-label><ion-label>{{house.prepay}}</ion-label></ion-item>
 		<ion-item><ion-label fixed class="xqlb_label">厨房数量：</ion-label><ion-label>{{add2(house.num_kit,house.kit_plus)}}</ion-label></ion-item>
 		<ion-item><ion-label fixed class="xqlb_label">建造年份：</ion-label><ion-label>{{house.yr_built}}年</ion-label></ion-item>
 		<ion-item><ion-label fixed class="xqlb_label">卫生间数量：</ion-label><ion-label>{{house.bath_tot}}</ion-label></ion-item>
