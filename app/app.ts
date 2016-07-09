@@ -9,7 +9,6 @@ import {AccountPage} from './pages/account/account';
 import {TabsPage} from './pages/tabs/tabs';
 import {LoginPage} from './pages/login/login';
 import {SignupPage} from './pages/signup/signup';
-import {TutorialPage} from './pages/tutorial/tutorial';
 import {NetworkErrorPage} from './pages/network-error/network-error';
 import {HouselistSearch} from './pages/houselist-search/houselist-search'
 import {MapleConf} from './providers/maple-rest-data/maple-config';

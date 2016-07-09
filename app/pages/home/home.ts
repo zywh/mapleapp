@@ -5,19 +5,8 @@ import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {Http, Headers, RequestOptions} from '@angular/http';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {ProjectDetailPage} from '../project-detail/project-detail';
-// import {MapSearchPage} from '../map-search/map-search';
-// import {SchoolMapPage} from '../school-map/school-map';
 import {PostPage} from '../post/post';
-import {MapleFooter} from '../maple-footer/maple-footer';
-//import {RangeKnob,Range} from '../ion-range/range';
 
-
-/*
-  Generated class for the HomePage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   templateUrl: 'build/pages/home/home.html',
   // directives: [MapleFooter]

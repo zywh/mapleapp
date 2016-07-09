@@ -6,14 +6,13 @@ import {  Highcharts } from 'angular2-highcharts';
 @Component({
 
     template: `
-    <ion-navbar *navbar>
-    <button menuToggle>
-    <ion-icon name="menu"></ion-icon>
-    </button>
-  <ion-title>{{city}}-统计</ion-title>
+    <ion-header>
+    <ion-navbar>
+      <ion-title>{{city}}-统计</ion-title>
     </ion-navbar>
+    </ion-header>
   
-    <ion-content style="z-index:16">
+    <ion-content>
        <div id="chart"></div>
     </ion-content>
     `
