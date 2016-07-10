@@ -124,7 +124,11 @@ export class MapSearchPage {
       }, 600);
 
     });
-
+    this.events.subscribe('schoolmap:center', (data) => {
+      setTimeout(() => {
+        this.nav.pop();
+      }, 100);
+    });
   }
   optionChange(event) {
     this.currentDiv = '';
@@ -235,8 +239,9 @@ export class MapSearchPage {
     if ((this.markerType == 'house') && (this.totalCount > 0)) {
       // this.currentDiv = (this.currentDiv == 'houselist') ? '' : 'houselist';
       //let popover = Popover.create(MapHouselistPopover, {list: this.currentHouseList, imgHost: this.imgHost});
-      this.listModal = Modal.create(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost });
-      this.nav.present(this.listModal);
+      // this.listModal = Modal.create(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost });
+      // this.nav.present(this.listModal);
+      this.nav.push(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost })
 
 
 
@@ -358,7 +363,7 @@ export class MapSearchPage {
   }
 
 
-  setContent(lat, lng, count, html,houses, price, mls) {
+  setContent(lat, lng, count, html, houses, price, mls) {
     let point = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
     let content = this.setMarkerCss(count, price);
 	   let marker = new RichMarker({
@@ -402,7 +407,7 @@ export class MapSearchPage {
         console.log("More than one");
         // this.listModal = Modal.create(MapHouselist, { list: houses, imgHost: this.imgHost });
         // this.nav.present(this.listModal);
-        this.nav.push(MapHouselist,{ list: houses, imgHost: this.imgHost });
+        this.nav.push(MapHouselist, { list: houses, imgHost: this.imgHost });
 
 
       }
@@ -619,7 +624,7 @@ export class MapSearchPage {
 
                 houses.push(house);
                 //this.setContent(tlat, tlng, 1, houses, markerprice);
-                this.setContent(tlat, tlng, 1, li, house,markerprice, house.MLS);
+                this.setContent(tlat, tlng, 1, li, house, markerprice, house.MLS);
                 houses = [];
                 totalprice = 0;
                 panelhtml = '';
@@ -631,7 +636,7 @@ export class MapSearchPage {
                 let price = (totalprice + markerprice) / count;
                 //this.setContent(tlat, tlng, count, houses, price);
                 // this.setContent(tlat, tlng, count, panelhtml, price, house.MLS);
-                this.setContent(tlat, tlng, count, panelhtml,houses, price, house.MLS);
+                this.setContent(tlat, tlng, count, panelhtml, houses, price, house.MLS);
                 count = 1;
                 totalprice = 0;
                 houses = [];

@@ -52,9 +52,8 @@ export class TabsPage {
       
     });
     this.events.subscribe('schoolmap:center', (data) => {
-      // console.log("Map Center event:")
+      console.log("Map Center event:")
       // this.mapParms = data[0];
-    
       this.tabRef.select(2);
       
     });

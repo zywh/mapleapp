@@ -166,7 +166,8 @@ export class SchoolMapPage {
         this.events.subscribe('schoolmap:center', (data) => {
 
             setTimeout(() => {
-                this.sviewLoaded = true
+                this.sviewLoaded = true;
+                //this.nav.pop();
                 this.setLocation(data[0], this.defaultZoom,true);
             }, 300);
         });

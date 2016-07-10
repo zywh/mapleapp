@@ -1,12 +1,11 @@
 <ion-header>
-<ion-navbar class="hide-border">
-
-
+<ion-navbar >
+<!--
   <ion-buttons left>
     <button menuToggle>
         <ion-icon name="menu"></ion-icon>
     </button>
-  </ion-buttons>
+  </ion-buttons>-->
   <p text-left class="bar-button-default">房源总数：{{totalCount}}套 - {{pageIndex + 1}}/{{pageTotal}}页</p>
   <ion-buttons end>
     <button class="bar-button-default" (click)="pagePre()" *ngIf="pageIndex > 0">
