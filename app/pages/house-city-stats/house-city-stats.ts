@@ -36,12 +36,16 @@ export class HouseCityStatsPage {
   }
 
   ionViewWillEnter() {
-    console.log("Stats Page will enter");
-    this.mapleconf.load().then(data => {
-      //console.log(data.getMlsDataRest);
-      this.getCityStats(data.getCityDataRest);
 
-    })
+    console.log("Stats Page will enter");
+    if (this.topics.length == 0) {
+      this.mapleconf.load().then(data => {
+        //console.log(data.getMlsDataRest);
+        this.getCityStats(data.getCityDataRest);
+
+      })
+    }  
+      
   }
 
   getCityStats(url) {
