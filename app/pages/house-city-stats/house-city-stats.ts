@@ -47,6 +47,7 @@ export class HouseCityStatsPage {
   getCityStats(url) {
     this.mapleRestData.load(url, { city: this.city }).subscribe(
       data => {
+        this.topics = [];
         this.data = data;
         console.log(data);
         for (let topic in data) {
