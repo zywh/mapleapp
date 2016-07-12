@@ -3,6 +3,7 @@ import {Geolocation} from 'ionic-native';
 import { NgZone, Component} from '@angular/core';;
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {HouselistSearch} from '../houselist-search/houselist-search';
+import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {SelectOptionModal} from './map-option-modal';
 import {MapHouselist} from './map-houselist';
@@ -87,7 +88,7 @@ export class MapSearchPage {
     private nav: NavController,
     private mapleRestData: MapleRestData,
     private menu: MenuController,
-    //private confData: ConferenceData,
+    private mapleconf: MapleConf,
     private navparm: NavParams,
     private _zone: NgZone,
     private viewCtrl: ViewController,
@@ -157,8 +158,6 @@ export class MapSearchPage {
           this._zone.run(() => {
             this.currentDiv = '';
             this.queryText = '';
-            //this.viewCtrl.dismiss();
-            //this.listModal.dismiss();
 
           });
 
@@ -216,9 +215,6 @@ export class MapSearchPage {
     }, 40); //wait for switch to avoid blank map
 
 
-    // this.confData.getMap().then(mapData => {  //Need this for werid map issue. Menu page switch will make map blank
-    //   this.loadMap(lat, lng, 16);
-    // })
 
   }
 
@@ -284,29 +280,42 @@ export class MapSearchPage {
     this.cityItems = [];
     this.addressItems = [];
     this.mlsItems = [];
-    //this.searchQuery = '';
+    //this.queryText = '';
   }
+  searchFocus() {
+    // this.resetItems();
+    console.log("Search List is focus");
+    this._zone.run(() => {
+      this.currentDiv = 'searchlist';
+      this.queryText = '';
+      this.resetItems();
+    });
 
+  }
+ searchBlur(){
+   console.log("Search List is blured");
+ }
 
-  itemTapped(event, item, type) {
+  itemTapped(item) {
 
     let center = new google.maps.LatLng(item.lat, item.lng);
+    console.log("Set Center");
     this.setLocation(center, this.defaultZoom, true);
-    this.resetItems();
-
-
+   
   }
   //auto complete REST CAll
   getItems(searchbar) {
 
+
+    // if (this.queryText == '') {
+    //   return;
+    // } else {
     this.resetItems();
-    this.currentDiv = 'searchlist';
-    if (this.queryText == '') {
-      return;
-    } else {
-      let parm = { term: this.queryText };
-      //Call REST and generate item object
-      this.mapleRestData.load('index.php?r=ngget/getCityList', parm).subscribe(
+    let parm = { term: this.queryText };
+    //Call REST and generate item object
+    this.mapleconf.load().then(data => {
+      this.mapleRestData.load(data.getCitylistDataRest, parm).subscribe(
+        //this.mapleRestData.load('index.php?r=ngget/getCityList', parm).subscribe(
         data => {
           if (data.hasOwnProperty("CITY")) {
             this.cityItems = data.CITY;
@@ -324,28 +333,16 @@ export class MapSearchPage {
 
         }); //end of callback
 
-    }
+      //}
+    })
   }
 
   //SetCenter and Zoom if location button is clicked
   setCenter(isMarker) {
-
-    let options = { timeout: 10000, enableHighAccuracy: true };
-
-    navigator.geolocation.getCurrentPosition(
-
-      (position) => {
-        this.defaultcenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        let lat = position.coords.latitude;
-        if (lat > 20) {
-          this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
-
-        } else { this.setLocation(this.defaultcenter, this.defaultZoom, isMarker); }
-
-      },
-      (error) => { this.setLocation(this.defaultcenter, this.defaultZoom, isMarker); }, options
-    );
-
+    this.mapleconf.getLocation().then(data => {
+      this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
+      this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
+    })
   }
 
   //Move to center and creata a marker
@@ -541,133 +538,130 @@ export class MapSearchPage {
 
 				};
     //console.log("Map House Search Parms:" + mapParms);
-    this.mapleRestData.load('index.php?r=ngget/getMapHouse', mapParms).subscribe(
-      data => {
-        loading.dismiss();
-        this.totalCount = data.Data.Total;
-        this.markerType = data.Data.Type;
+    this.mapleconf.load().then(data => {
 
-        //Start City Markers
-        if ((this.markerType == 'city') || (this.markerType == 'grid')) {
-          // this._zone.run(() => {
-          //   this.isListShow = false;
-          //   this.currentDiv = '';
-          // });
-          for (let p in data.Data.AreaHouseCount) {
+      // this.mapleRestData.load('index.php?r=ngget/getMapHouse', mapParms).subscribe(
+      this.mapleRestData.load(data.mapHouseRest, mapParms).subscribe(
+        data => {
+          loading.dismiss();
+          this.totalCount = data.Data.Total;
+          this.markerType = data.Data.Type;
 
-            let areaHouse = data.Data.AreaHouseCount[p];
-            if (areaHouse.HouseCount > 0) {
-              let price = areaHouse.TotalPrice / areaHouse.HouseCount;
-              //console.log("Name:" + areaHouse.NameCn + "Lat:" + areaHouse.GeocodeLat + "Count:" + areaHouse.HouseCount + "AvgPrice:" + price);
-              this.setContentCount(areaHouse.GeocodeLat, areaHouse.GeocodeLng, areaHouse.HouseCount.toString(), areaHouse.NameCn, price);
+          //Start City Markers
+          if ((this.markerType == 'city') || (this.markerType == 'grid')) {
+            // this._zone.run(() => {
+            //   this.isListShow = false;
+            //   this.currentDiv = '';
+            // });
+            for (let p in data.Data.AreaHouseCount) {
 
-            }
-          }
-        }   //End of City Markers
-
-
-        if (this.markerType == 'house') {
-          this._zone.run(() => {
-            this.isListShow = true;
-            this.currentDiv = 'listButton';
-          });
-          let count = 1;
-          let houses = [];
-          let totalprice = 0;
-          let totalhouse = data.Data.MapHouseList.length;
-          this.imgHost = data.Data.imgHost;
-          let nextLat;
-          let nextLng;
-          let listAllHtml;
-          this.currentHouseList = data.Data.MapHouseList;
-          let panelhtml;
-          // console.log("Current House List Length:" + this.currentHouseList.length);
-
-          // console.log('Image Host:' + this.imgHost);
-          for (let index = 0, l = totalhouse; index < l; index++) {
-            let house = data.Data.MapHouseList[index];
-
-
-            if (index < (totalhouse - 1)) {
-              nextLat = data.Data.MapHouseList[index + 1].GeocodeLat;
-              nextLng = data.Data.MapHouseList[index + 1].GeocodeLng;
-
-            }
-            //console.log("Current:" + this.GeocodeLng + "Next:" + nextLng + "Total:" + totalhouse + "index:" + index + "Count:" + count);
-            let imgurl = this.imgHost + house.CoverImg;
-            let imgurltn = this.imgHost + house.CoverImgtn;
-            let hprice = (house.SaleLease == 'Lease') ? Math.round(house.Price) * 10000 + '加元/月' : Math.round(house.Price) + '万加元';
-            let markerprice = Math.round(house.Price);
-
-            let tlat = parseFloat(house.GeocodeLat);
-            let tlng = parseFloat(house.GeocodeLng);
-
-
-            let li = ' <ion-card>'
-              + '<img src="' + this.imgHost + house.CoverImg + '" />'
-              + '<div class="house_desc" text-left text-nowrap>'
-              + '<ion-item padding-left>'
-              + '<ion-badge item-left>MLS:' + house.MLS + '</ion-badge>'
-              + '  <ion-badge item-right><i class="fa fa-usd" aria-hidden="true"></i>' + house.Price + '万</ion-badge>'
-              + '   </ion-item>'
-
-              + '    <div class="card-subtitle" text-left>'
-              + '     <div><i padding-right secondary class="fa fa-building" aria-hidden="true"></i><span padding-right>' + house.HouseType + '</span>' + house.Beds + '卧' + house.Baths + '卫' + house.Kitchen + '厨</div>'
-              + '     <div><i padding-right secondary class="fa fa-location-arrow" aria-hidden="true"></i><span padding-right>' + house.Address + '</span>' + house.MunicipalityName + '</div>'
-              + '     </div></div>'
-              + ' </ion-card> '
-
-            if ((nextLng != house.GeocodeLng) || (nextLat != house.GeocodeLat)) {
-
-              if (count == 1) {
-
-
-                houses.push(house);
-                //this.setContent(tlat, tlng, 1, houses, markerprice);
-                this.setContent(tlat, tlng, 1, li, house, markerprice, house.MLS);
-                houses = [];
-                totalprice = 0;
-                panelhtml = '';
-              } else {
-                //generate panel list view
-
-                houses.push(house);
-                panelhtml = panelhtml + li;
-                let price = (totalprice + markerprice) / count;
-                //this.setContent(tlat, tlng, count, houses, price);
-                // this.setContent(tlat, tlng, count, panelhtml, price, house.MLS);
-                this.setContent(tlat, tlng, count, panelhtml, houses, price, house.MLS);
-                count = 1;
-                totalprice = 0;
-                houses = [];
-                panelhtml = '';
+              let areaHouse = data.Data.AreaHouseCount[p];
+              if (areaHouse.HouseCount > 0) {
+                let price = areaHouse.TotalPrice / areaHouse.HouseCount;
+                //console.log("Name:" + areaHouse.NameCn + "Lat:" + areaHouse.GeocodeLat + "Count:" + areaHouse.HouseCount + "AvgPrice:" + price);
+                this.setContentCount(areaHouse.GeocodeLat, areaHouse.GeocodeLng, areaHouse.HouseCount.toString(), areaHouse.NameCn, price);
 
               }
+            }
+          }   //End of City Markers
 
+
+          if (this.markerType == 'house') {
+            this._zone.run(() => {
+              this.isListShow = true;
+              this.currentDiv = 'listButton';
+            });
+            let count = 1;
+            let houses = [];
+            let totalprice = 0;
+            let totalhouse = data.Data.MapHouseList.length;
+            this.imgHost = data.Data.imgHost;
+            let nextLat;
+            let nextLng;
+            let listAllHtml;
+            this.currentHouseList = data.Data.MapHouseList;
+            let panelhtml;
+            // console.log("Current House List Length:" + this.currentHouseList.length);
+
+            // console.log('Image Host:' + this.imgHost);
+            for (let index = 0, l = totalhouse; index < l; index++) {
+              let house = data.Data.MapHouseList[index];
+
+
+              if (index < (totalhouse - 1)) {
+                nextLat = data.Data.MapHouseList[index + 1].GeocodeLat;
+                nextLng = data.Data.MapHouseList[index + 1].GeocodeLng;
+
+              }
+              //console.log("Current:" + this.GeocodeLng + "Next:" + nextLng + "Total:" + totalhouse + "index:" + index + "Count:" + count);
+              let imgurl = this.imgHost + house.CoverImg;
+              let imgurltn = this.imgHost + house.CoverImgtn;
+              let hprice = (house.SaleLease == 'Lease') ? Math.round(house.Price) * 10000 + '加元/月' : Math.round(house.Price) + '万加元';
+              let markerprice = Math.round(house.Price);
+
+              let tlat = parseFloat(house.GeocodeLat);
+              let tlng = parseFloat(house.GeocodeLng);
+
+
+              let li = ' <ion-card>'
+                + '<img src="' + this.imgHost + house.CoverImg + '" />'
+                + '<div class="house_desc" text-left text-nowrap>'
+                + '<ion-item padding-left>'
+                + '<ion-badge item-left>MLS:' + house.MLS + '</ion-badge>'
+                + '  <ion-badge item-right><i class="fa fa-usd" aria-hidden="true"></i>' + house.Price + '万</ion-badge>'
+                + '   </ion-item>'
+
+                + '    <div class="card-subtitle" text-left>'
+                + '     <div><i padding-right secondary class="fa fa-building" aria-hidden="true"></i><span padding-right>' + house.HouseType + '</span>' + house.Beds + '卧' + house.Baths + '卫' + house.Kitchen + '厨</div>'
+                + '     <div><i padding-right secondary class="fa fa-location-arrow" aria-hidden="true"></i><span padding-right>' + house.Address + '</span>' + house.MunicipalityName + '</div>'
+                + '     </div></div>'
+                + ' </ion-card> '
+
+              if ((nextLng != house.GeocodeLng) || (nextLat != house.GeocodeLat)) {
+
+                if (count == 1) {
+
+
+                  houses.push(house);
+                  //this.setContent(tlat, tlng, 1, houses, markerprice);
+                  this.setContent(tlat, tlng, 1, li, house, markerprice, house.MLS);
+                  houses = [];
+                  totalprice = 0;
+                  panelhtml = '';
+                } else {
+                  //generate panel list view
+
+                  houses.push(house);
+                  panelhtml = panelhtml + li;
+                  let price = (totalprice + markerprice) / count;
+                  //this.setContent(tlat, tlng, count, houses, price);
+                  // this.setContent(tlat, tlng, count, panelhtml, price, house.MLS);
+                  this.setContent(tlat, tlng, count, panelhtml, houses, price, house.MLS);
+                  count = 1;
+                  totalprice = 0;
+                  houses = [];
+                  panelhtml = '';
+
+                }
+
+
+              }
+              else {
+                ++count;
+                totalprice = totalprice + markerprice;
+                houses.push(house);
+                panelhtml = panelhtml + li;
+              }
 
             }
-            else {
-              ++count;
-              totalprice = totalprice + markerprice;
-              houses.push(house);
-              panelhtml = panelhtml + li;
-            }
+          } //End of if HOUSE
+        });
 
-          }
-        } //End of if HOUSE
-      });
- 
-    //END of Data Subscribe
-
+      //END of Data Subscribe
+    })
   }
 
   //End of MAP import function
 
 }
-
-@Component({
-  template: `This is a popover`
-})
-
-export class HousePopup { }
 

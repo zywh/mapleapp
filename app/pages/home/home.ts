@@ -1,5 +1,5 @@
 //import {Page, NavController} from 'ionic-angular';
-import {Page, NavController, NavParams,Events} from 'ionic-angular';
+import {Page, NavController, NavParams, Events} from 'ionic-angular';
 import {OnInit, Component} from '@angular/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {Http, Headers, RequestOptions} from '@angular/http';
@@ -23,6 +23,10 @@ export class HomePage implements OnInit {
   private currentDiv;
   private scityItems;
   private schoolItems;
+  private homeSegment: string = "info";
+  private isAndroid: boolean = false;
+  private nearbyHouseList: Object = '';
+  private recommendHouseList: Object = '';
 
 
   constructor(
@@ -31,7 +35,7 @@ export class HomePage implements OnInit {
     private mapleRestData: MapleRestData,
     private mapleconf: MapleConf,
     private events: Events
-  ) {}
+  ) { }
 
   projectSwiperOptions = {
     loop: true,
@@ -42,15 +46,25 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.mapleconf.load().then(data => {
-
-      //this.getProjects('index.php?r=ngget/getProjects');
-      this.postListRest = data.postRest;
+      //this.postListRest = data.postRest;
       this.getProjects(data.projectRest);
       this.getPosts(data.postListRest, 12);
-
+      
     })
+
+  }
+  nearby(){
+    
+   this.mapleconf.getLocation().then(data =>{
+      console.log(data);
+   })
+   
   }
 
+  recommend(){
+
+  }
+  
   getProjects(url) {
     this.mapleRestData.load(url, this.parms).subscribe(
       data => { this.projects = data; }
@@ -77,7 +91,7 @@ export class HomePage implements OnInit {
     this.addressItems = [];
     this.mlsItems = [];
     this.scityItems = [];
-    this.schoolItems= [];
+    this.schoolItems = [];
     //this.searchQuery = '';
   }
 
@@ -111,15 +125,15 @@ export class HomePage implements OnInit {
   itemTapped(item, type) {
 
     let center = new google.maps.LatLng(item.lat, item.lng);
-    if ( type == 1){
-       this.events.publish('map:center', center);
-       
+    if (type == 1) {
+      this.events.publish('map:center', center);
+
     }
-    if ( type == 2){
-       this.events.publish('schoolmap:center', center);
-       console.log(item.lat + ":"+ item.lng)
+    if (type == 2) {
+      this.events.publish('schoolmap:center', center);
+      console.log(item.lat + ":" + item.lng)
     }
-  
+
     this.resetItems();
 
 

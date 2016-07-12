@@ -11,7 +11,7 @@
         <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
    </button>
   </ion-buttons>
-  <ion-searchbar hideCancelButton [(ngModel)]="queryText" (ionBlur)="currentDiv=''" (ionFocus)="currentDiv='searchlist'" (ionInput)="getItems($event)"
+  <ion-searchbar hideCancelButton [(ngModel)]="queryText" (ionFocus)="searchFocus()" (ionInput)="getItems($event)"
     placeholder="城市/地址/MLS#"></ion-searchbar>
   
   <ion-buttons end>
@@ -24,15 +24,15 @@
 
 <ion-content class="map-search">
   <div class="search_list" *ngIf="currentDiv == 'searchlist'">
-    <ion-item padding *ngFor="let item of cityItems" (click)="itemTapped($event, item,1)">
+    <ion-item padding *ngFor="let item of cityItems" (click)="itemTapped(item)">
       <button light clear> <ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }}</span></button>
       <ion-badge item-right>城市</ion-badge>
     </ion-item>
-    <ion-item padding *ngFor="let item of mlsItems" (click)="itemTapped($event, item,2)">
+    <ion-item padding *ngFor="let item of mlsItems" (click)="itemTapped(item)">
       <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }},{{item.city}}</span></button>
       <ion-badge item-right>MLS{{item.price}}万</ion-badge>
     </ion-item>
-    <ion-item padding *ngFor="let item of addressItems" (click)="itemTapped($event, item,3)">
+    <ion-item padding *ngFor="let item of addressItems" (click)="itemTapped(item)">
       <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }},{{item.city}}</span></button>
       <ion-badge item-right>地址{{item.price}}万</ion-badge>
     </ion-item>
