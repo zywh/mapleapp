@@ -5,6 +5,7 @@ import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {Http, Headers, RequestOptions} from '@angular/http';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {ProjectDetailPage} from '../project-detail/project-detail';
+import {HouseDetailPage} from '../house-detail/house-detail';
 import {PostPage} from '../post/post';
 
 @Component({
@@ -25,8 +26,9 @@ export class HomePage implements OnInit {
   private schoolItems;
   private homeSegment: string = "info";
   private isAndroid: boolean = false;
-  private nearbyHouseList: Object = '';
-  private recommendHouseList: Object = '';
+  private nearbyHouseList;
+  private recommendHouseList;
+  private imgHost;
 
 
   constructor(
@@ -48,23 +50,58 @@ export class HomePage implements OnInit {
     this.mapleconf.load().then(data => {
       //this.postListRest = data.postRest;
       this.getProjects(data.projectRest);
-      this.getPosts(data.postListRest, 12);
-      
+      this.getPosts(data.postListRest, 6);
+
     })
 
   }
-  nearby(){
+  searchHouse(type) {
+     
+     let range: number = 0.015;
+     //parm for recommendation
+     if ( type == 2){
+       range = 0.30;
+        
+     }
+    this.mapleconf.getLocation().then(data => {
+     
+      let swLat = data['lat'] - range;
+      let swLng = data['lng'] - range;
+      let neLat = data['lat'] + range;
+      let neLng = data['lng'] + range;
+      let bounds = swLat + "," + swLng + "," + neLat + "," + neLng;
+      let mapParms = {
+      
+        bounds: bounds,
+        type: type,
+        sr: 'Sale'
+     	};
     
-   this.mapleconf.getLocation().then(data =>{
-      console.log(data);
-   })
-   
+      this.mapleconf.load().then(data => {
+
+        this.mapleRestData.load(data.mapHouseRest, mapParms).subscribe(
+          data => {
+            console.log(data);
+            if ((data.Data.Total > 0) && (data.Data.Type == 'house')) {
+              this.imgHost = data.Data.imgHost;
+              this.nearbyHouseList = data.Data.MapHouseList;
+            }
+          })
+
+      });
+
+    })
+    //end of getLication
+
   }
 
-  recommend(){
+  recommend() {
 
   }
-  
+
+  gotoHouseDetail(mls, list) {
+    this.nav.push(HouseDetailPage, { id: mls, list: list });
+  }
   getProjects(url) {
     this.mapleRestData.load(url, this.parms).subscribe(
       data => { this.projects = data; }

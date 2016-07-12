@@ -1,6 +1,6 @@
 <ion-header>
 <ion-navbar >
-  <ion-title>Post</ion-title>
+  <ion-title>地产信息</ion-title>
 </ion-navbar>
 </ion-header>
  
@@ -23,12 +23,12 @@
 
 <ion-footer>
  <div *ngIf="preButton">
-    <button fab fab-bottom   fab-left (click)="go2PrePost()" style="z-index:100;opacity:0.8;">
+    <button fab fab-bottom   fab-left (click)="go2PrePost()" style="opacity:0.8;">
       <ion-icon name="arrow-dropleft" is-active="true"></ion-icon>
     </button>
   </div>
   <div *ngIf="nextButton">  
-     <button fab  fab-bottom fab-right (click)="go2NextPost()" style="z-index:100;opacity:0.8;">
+     <button fab  fab-bottom fab-right (click)="go2NextPost()" style="opacity:0.8;">
       <ion-icon name="arrow-dropright" is-active="true"></ion-icon>
     </button>
   </div> 

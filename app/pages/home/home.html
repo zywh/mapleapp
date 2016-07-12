@@ -60,19 +60,18 @@
 
   <ion-segment [(ngModel)]="homeSegment">
     <ion-segment-button value="info">地产信息</ion-segment-button>
-    <ion-segment-button value="nearby" (ionSelect)="nearby()">周边房源</ion-segment-button>
-    <ion-segment-button value="recommend"  (ionSelect)="recommend()">房源推荐</ion-segment-button>
+    <ion-segment-button value="house1" (ionSelect)="searchHouse(1)">周边房源</ion-segment-button>
+    <ion-segment-button value="house2"  (ionSelect)="searchHouse(2)">房源推荐</ion-segment-button>
   </ion-segment>
   <div [ngSwitch]="homeSegment">
-    <div *ngSwitchWhen="'info'">
+    <div *ngSwitchCase="'info'">
       <ion-list>
         <a ion-item *ngFor="let post of post1" (click)="goToPost(post.id)"> {{post?.title}} </a>
       </ion-list>
     </div>
-    <div *ngSwitchWhen="'nearby'">
-<!--
-      <ion-list>
-        <ion-item *ngFor="let house of nearbyHouseList" (click)="gotoHouseDetail(house.MLS)">
+    <div *ngSwitchCase="'house1'">
+      <ion-list class="houselist-search">
+        <ion-item *ngFor="let house of nearbyHouseList" (click)="gotoHouseDetail(house.MLS,nearbyHouseList)">
           <ion-thumbnail item-left>
             <img [src]="imgHost + house.CoverImg" />
           </ion-thumbnail>
@@ -85,10 +84,24 @@
 
         </ion-item>
 
-      </ion-list>-->
+      </ion-list>
     </div>
-    <div *ngSwitchWhen="'recommend'">
+  <div *ngSwitchCase="'house2'">
+      <ion-list class="houselist-search">
+        <ion-item *ngFor="let house of nearbyHouseList" (click)="gotoHouseDetail(house.MLS,nearbyHouseList)">
+          <ion-thumbnail item-left>
+            <img [src]="imgHost + house.CoverImg" />
+          </ion-thumbnail>
 
+          <h2>{{house.Address}}</h2>
+          <p>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
+            <ion-badge item-right>{{house.Price}}万</ion-badge>
+          </p>
+          <p>{{house.MunicipalityName}},{{house.ProvinceCname}}</p>
+
+        </ion-item>
+
+      </ion-list>
     </div>
   </div>
 
