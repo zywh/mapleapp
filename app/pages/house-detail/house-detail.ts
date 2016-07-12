@@ -400,8 +400,8 @@ export class HouseDetailPage implements OnInit {
 		//	 'House Title', 'House Detail', null, 'https://m.maplecity.com.cn'
 		// this.platform.ready().then(() => {
 		//window.plugins.socialsharing.share(message, subject, file, link);
-		let message = "MLS：" + this.parms.id;
-		let subject = this.getPriceTxt() + "-" + this.house.addr + " " + this.house.municipality;
+		let subject = "枫之都房产：MLS" + this.parms.id;
+		let message = this.getPriceTxt() + " - " + this.house.addr + " " + this.house.municipality;
 		let img = this.photoUrl(this.photos[0]);
 		let link = "http://m.maplecity.com.cn/index.php?r=mhouse/view&id=" + this.parms.id;
 		console.log("socialshare", message, subject, img, link);

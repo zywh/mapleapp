@@ -6,20 +6,14 @@
 -->
 <ion-header>
 <ion-navbar class="map-search hide-border">
-
-
-  <ion-buttons left>
-    <button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-  </ion-buttons>
-  <ion-searchbar hideCancelButton [(ngModel)]="queryText" (ionFocus)="currentDiv='searchlist'" (ionInput)="getItems($event)"
-    placeholder="城市/地址/MLS#"></ion-searchbar>
-  <ion-buttons end>
+<ion-buttons left>
     <button class="bar-button-default" (click)="openModal(selectOptions)">
         <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
    </button>
   </ion-buttons>
+  <ion-searchbar hideCancelButton [(ngModel)]="queryText" (ionFocus)="searchFocus()" (ionInput)="getItems($event)"
+    placeholder="城市/地址/MLS#"></ion-searchbar>
+  
   <ion-buttons end>
     <button class="bar-button-default" (click)="setCenter(true)">
         <ion-icon ios="ios-locate-outline" md="md-locate"></ion-icon>
@@ -30,50 +24,22 @@
 
 <ion-content class="map-search">
   <div class="search_list" *ngIf="currentDiv == 'searchlist'">
-    <ion-item padding *ngFor="let item of cityItems" (click)="itemTapped($event, item,1)">
+    <ion-item padding *ngFor="let item of cityItems" (click)="itemTapped(item)">
       <button light clear> <ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }}</span></button>
       <ion-badge item-right>城市</ion-badge>
     </ion-item>
-    <ion-item padding *ngFor="let item of mlsItems" (click)="itemTapped($event, item,2)">
+    <ion-item padding *ngFor="let item of mlsItems" (click)="itemTapped(item)">
       <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }},{{item.city}}</span></button>
       <ion-badge item-right>MLS{{item.price}}万</ion-badge>
     </ion-item>
-    <ion-item padding *ngFor="let item of addressItems" (click)="itemTapped($event, item,3)">
+    <ion-item padding *ngFor="let item of addressItems" (click)="itemTapped(item)">
       <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }},{{item.city}}</span></button>
       <ion-badge item-right>地址{{item.price}}万</ion-badge>
     </ion-item>
   </div>
 
 
-<!--
-  <div class="map_options" *ngIf="currentDiv == 'mapoption'">
-    <mc-search-option [selectOptions]="selectOptions" (optionChange)="optionChange($event);"></mc-search-option>
-  </div>-->
 
-
-  <!--<div class="house_list" *ngIf="listShow()">
-    <ion-slides [options]="swiperOptions" class="swiper-container">
-      <ion-slide *ngFor="let house of currentHouseList" class="swiper-slide" (click)="gotoHouseDetail(house.MLS)">
-        <ion-card class="house_card">
-          <img [src]="imgHost + house.CoverImg" />
-          <div class="house_desc" text-left text-nowrap>
-
-            <ion-item>
-              <ion-badge item-left>MLS:{{house.MLS}}</ion-badge>
-              <ion-badge item-right><i class="fa fa-usd" aria-hidden="true"></i>{{house.Price}}万</ion-badge>
-            </ion-item>
-
-            <div class="card-subtitle" text-left>
-              <div><i padding-right secondary class="fa fa-building" aria-hidden="true"></i><span padding-right>{{house.HouseType}}</span>{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨</div>
-              <div>
-                <ion-icon padding-right secondary name="navigate"></ion-icon><span padding-right>{{house.Address}}</span>{{house.MunicipalityName}}</div>
-            </div>
-          </div>
-        </ion-card>
-      </ion-slide>
-
-    </ion-slides>
-  </div>-->
 
   <div id="map"></div>
 

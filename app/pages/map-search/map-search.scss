@@ -1,7 +1,7 @@
 
 $imgWidth: 270px;
 $imgHeight: 210px;
-$popupsize: 240px;
+$popupsize: 280px;
 
 .searchbar-input {
     padding: 6px 40px;
@@ -92,6 +92,7 @@ $popupsize: 240px;
 
   .alert-message {
     padding: 0;
+    max-height: $popupsize;
   }
 }    
 
