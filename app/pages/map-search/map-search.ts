@@ -127,7 +127,7 @@ export class MapSearchPage {
     this.events.subscribe('schoolmap:center', (data) => {
       setTimeout(() => {
         this.nav.pop();
-      }, 100);
+      }, 50);
     });
   }
   optionChange(event) {
@@ -163,7 +163,7 @@ export class MapSearchPage {
           });
 
         });
-      }, 200);
+      }, 100);
     }
   }
   ionViewDidEnter() {
@@ -174,7 +174,7 @@ export class MapSearchPage {
       setTimeout(() => {
         //console.log("first time view is entered. Center map based on Geolocation")
         this.setCenter(false); //no marker
-      }, 300);
+      }, 200);
     }
 
   }
@@ -213,7 +213,7 @@ export class MapSearchPage {
         zoom: 12
       });
 
-    }, 100); //wait for switch to avoid blank map
+    }, 40); //wait for switch to avoid blank map
 
 
     // this.confData.getMap().then(mapData => {  //Need this for werid map issue. Menu page switch will make map blank
@@ -225,11 +225,11 @@ export class MapSearchPage {
 
 
 
-  listShow() {
-    //Show House List
-    return ((this.currentDiv == 'houselist') && (this.markerType == 'house'));
+  // listShow() {
+  //   //Show House List
+  //   return ((this.currentDiv == 'houselist') && (this.markerType == 'house'));
 
-  }
+  // }
   gotoHouseDetail(mls) {
     this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList });
   }
@@ -503,12 +503,12 @@ export class MapSearchPage {
     console.log("Change Map");
     google.maps.event.trigger(this.map, 'resize');
     this.currentDiv = ''; //reset all popup
+    let loading = Loading.create({
+      content: '加载房源...'
+    });
+    this.nav.present(loading);
 
     this.clearAll(); //clear marker
-    // let loading = Loading.create({
-    //   content: '加载房源...'
-    // });
-    // this.nav.present(loading);
 
 
 
@@ -543,7 +543,7 @@ export class MapSearchPage {
     //console.log("Map House Search Parms:" + mapParms);
     this.mapleRestData.load('index.php?r=ngget/getMapHouse', mapParms).subscribe(
       data => {
-        //loading.dismiss();
+        loading.dismiss();
         this.totalCount = data.Data.Total;
         this.markerType = data.Data.Type;
 
@@ -656,7 +656,7 @@ export class MapSearchPage {
           }
         } //End of if HOUSE
       });
-
+ 
     //END of Data Subscribe
 
   }
