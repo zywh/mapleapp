@@ -10,18 +10,13 @@
  
 
  <ion-buttons left>
-    <button menuToggle>
-        <ion-icon name="menu"></ion-icon>
+   <button class="bar-button-default" (click)="openModal(selectSchool)">
+        <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
       </button>
   </ion-buttons>    
    <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (ionFocus)="currentDiv='searchlist'" (ionInput)="getItems($event)"
         placeholder="城市/学校"></ion-searchbar>
-   <ion-buttons end>
-    <button class="bar-button-default" (click)="openModal(selectSchool)">
-        <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
-      </button>
-   </ion-buttons>
-   <ion-buttons end>
+  <ion-buttons end>
     <button class="bar-button-default" (click)="setCenter(true)">
         <ion-icon ios="ios-locate-outline" md="md-locate"></ion-icon>
     </button>

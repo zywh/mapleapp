@@ -125,7 +125,7 @@ export class SchoolMapPage {
                 zoom: 10
             });
 
-        }, 100); //wait for switch to avoid blank map
+        }, 50); //wait for switch to avoid blank map
 
     }
 
@@ -145,7 +145,7 @@ export class SchoolMapPage {
                 });
 
                 this.sviewLoaded = true;
-            }, 200); //Set timeout to load it after mapinit
+            }, 100); //Set timeout to load it after mapinit
         }
     }
 
@@ -157,7 +157,7 @@ export class SchoolMapPage {
                 //console.log("School Map is entered No marker First Time. Zoom and center")
                 this.map.setZoom(13);
                 this.setCenter(false);
-            }, 400);
+            }, 300);
         }
 
     }
@@ -169,7 +169,7 @@ export class SchoolMapPage {
                 this.sviewLoaded = true;
                 //this.nav.pop();
                 this.setLocation(data[0], this.defaultZoom,true);
-            }, 300);
+            }, 200);
         });
     }
 
@@ -366,10 +366,10 @@ export class SchoolMapPage {
         google.maps.event.trigger(this.map, 'resize');
 
         this.clearAll(this.markerArray); //clear marker
-        // let loading = Loading.create({
-        //   content: '加载房源...'
-        // });
-        // this.nav.present(loading);
+        let loading = Loading.create({
+          content: '加载学校...'
+        });
+        this.nav.present(loading);
 
 
 
@@ -401,7 +401,7 @@ export class SchoolMapPage {
 
         this.mapleRestData.load('index.php?r=ngget/getSchoolmap', mapParms).subscribe(
             data => {
-
+                loading.dismiss();
                 this.markerType = data.type;
                 this._zone.run(() => {
                     this.currentDiv = '';
