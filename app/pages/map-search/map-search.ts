@@ -122,7 +122,7 @@ export class MapSearchPage {
           draggable: false,
         });
         this.setLocation(center, this.defaultZoom, true);
-      }, 600);
+      }, 50);
 
     });
     this.events.subscribe('schoolmap:center', (data) => {
@@ -233,13 +233,7 @@ export class MapSearchPage {
   openHouseList(ev) {
 
     if ((this.markerType == 'house') && (this.totalCount > 0)) {
-      // this.currentDiv = (this.currentDiv == 'houselist') ? '' : 'houselist';
-      //let popover = Popover.create(MapHouselistPopover, {list: this.currentHouseList, imgHost: this.imgHost});
-      // this.listModal = Modal.create(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost });
-      // this.nav.present(this.listModal);
       this.nav.push(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost })
-
-
 
     } else {
 
@@ -285,23 +279,26 @@ export class MapSearchPage {
   searchFocus() {
     // this.resetItems();
     console.log("Search List is focus");
-    this._zone.run(() => {
-      this.currentDiv = 'searchlist';
-      this.queryText = '';
-      this.resetItems();
-    });
+    // this._zone.run(() => {
+    this.currentDiv = 'searchlist';
+    this.queryText = '';
+    this.resetItems();
+    // });
 
   }
- searchBlur(){
-   console.log("Search List is blured");
- }
+  searchBlur() {
+    console.log("Search List is blured");
+   // this.queryText = '';
+  }
 
   itemTapped(item) {
 
     let center = new google.maps.LatLng(item.lat, item.lng);
-    console.log("Set Center");
+    this.currentDiv = '';
+    this.queryText = '';
+    console.log("Set Center and clear text");
     this.setLocation(center, this.defaultZoom, true);
-   
+
   }
   //auto complete REST CAll
   getItems(searchbar) {
@@ -315,20 +312,20 @@ export class MapSearchPage {
     //Call REST and generate item object
     this.mapleconf.load().then(data => {
       this.mapleRestData.load(data.getCitylistDataRest, parm).subscribe(
-        //this.mapleRestData.load('index.php?r=ngget/getCityList', parm).subscribe(
+
         data => {
           if (data.hasOwnProperty("CITY")) {
             this.cityItems = data.CITY;
-            // console.log("CITY Autocomplete:" + this.cityItems);
+            console.log("CITY Autocomplete:" + this.cityItems);
           };
 
           if (data.hasOwnProperty("MLS")) {
             this.mlsItems = data.MLS;
-            //console.log("MLS Autocomplete:" + this.mlsItems);
+            console.log("MLS Autocomplete:" + this.mlsItems);
           }
           if (data.hasOwnProperty("ADDRESS")) {
             this.addressItems = data.ADDRESS;
-            //console.log("ADDRESS Autocomplete:" + this.addressItems);
+            console.log("ADDRESS Autocomplete:" + this.addressItems);
           }
 
         }); //end of callback
@@ -606,10 +603,10 @@ export class MapSearchPage {
               let li = ' <ion-card>'
                 + '<img src="' + this.imgHost + house.CoverImg + '" />'
                 + '<div class="house_desc" text-left text-nowrap>'
-                + '<ion-item padding-left>'
+                // + '<ion-item padding-left>'
                 + '<ion-badge item-left>MLS:' + house.MLS + '</ion-badge>'
                 + '  <ion-badge item-right><i class="fa fa-usd" aria-hidden="true"></i>' + house.Price + '万</ion-badge>'
-                + '   </ion-item>'
+                // + '   </ion-item>'
 
                 + '    <div class="card-subtitle" text-left>'
                 + '     <div><i padding-right secondary class="fa fa-building" aria-hidden="true"></i><span padding-right>' + house.HouseType + '</span>' + house.Beds + '卧' + house.Baths + '卫' + house.Kitchen + '厨</div>'

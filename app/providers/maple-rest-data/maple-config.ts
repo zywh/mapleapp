@@ -10,9 +10,9 @@ export class MapleConf {
   public restHost: String = 'http://r.maplecity.com.cn/';
   private confJson = "mapleconf.json";
 
-  static get parameters() {
-    return [[Http]]
-  }
+  // static get parameters() {
+  //   return [[Http]]
+  // }
   constructor(private http: Http) {
 
   }
@@ -61,5 +61,7 @@ export class MapleConf {
 
 
   };
+
+  
 }
 

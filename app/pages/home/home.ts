@@ -12,7 +12,7 @@ import {PostPage} from '../post/post';
   templateUrl: 'build/pages/home/home.html',
   // directives: [MapleFooter]
 })
-export class HomePage implements OnInit {
+export class HomePage {
   private projects: Object;
   private postListRest;
   private post1;
@@ -48,7 +48,8 @@ export class HomePage implements OnInit {
     autoplay: 300
   };
 
-  ngOnInit() {
+  // ngOnInit() {
+  ionViewWillEnter() {
     this.mapleconf.load().then(data => {
       //this.postListRest = data.postRest;
       this.houseRestURL = data.mapHouseRest;
@@ -58,52 +59,46 @@ export class HomePage implements OnInit {
 
     })
     this.mapleconf.getLocation().then(data => {
-      this.data =data;
+      this.data = data;
     })
 
   }
   searchHouse(s) {
-     console.log("Button is clicked for house search");
-     let range: number = 0.015;
-     //parm for recommendation
-     if ( s == 'recommend'){
-       
-       range = 0.1;
-        
-     }
+    console.log("Button is clicked for house search");
+    let range: number = 0.015;
+    //parm for recommendation
+    if (s == 'recommend') {
+
+      range = 0.1;
+
+    }
     // this.mapleconf.getLocation().then(data => {
-     
-      let swLat = this.data['lat'] - range;
-      let swLng = this.data['lng'] - range;
-      let neLat = this.data['lat'] + range;
-      let neLng = this.data['lng'] + range;
-      let bounds = swLat + "," + swLng + "," + neLat + "," + neLng;
-      let mapParms = {
-      
-        bounds: bounds,
-        type: s,
-        sr: 'Sale'
-     	};
-    
-     
 
-        this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
-          data => {
-            console.log(data);
-            if (data.Data.Type == 'house'){
-              this.imgHost = data.Data.imgHost;
-              this.nearbyHouseList = data.Data.MapHouseList;
-            }
-          })
+    let swLat = this.data['lat'] - range;
+    let swLng = this.data['lng'] - range;
+    let neLat = this.data['lat'] + range;
+    let neLng = this.data['lng'] + range;
+    let bounds = swLat + "," + swLng + "," + neLat + "," + neLng;
+    let mapParms = {
 
-     
+      bounds: bounds,
+      type: s,
+      sr: 'Sale'
+    };
 
-    //})
-    //end of getLication
 
+
+    this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
+      data => {
+        console.log(data);
+        if (data.Data.Type == 'house') {
+          this.imgHost = data.Data.imgHost;
+          this.nearbyHouseList = data.Data.MapHouseList;
+        }
+      })
   }
 
-  
+
   gotoHouseDetail(mls, list) {
     this.nav.push(HouseDetailPage, { id: mls, list: list });
   }
@@ -137,49 +132,58 @@ export class HomePage implements OnInit {
     //this.searchQuery = '';
   }
 
-  sGetItems(searchbar) {
+  // sGetItems(searchbar) {
 
-    this.resetItems();
-    this.currentDiv = 'sSearchlist';
+  //   this.resetItems();
+  //   this.currentDiv = 'sSearchlist';
 
-    if (this.sQueryText == '') {
-      return;
-    } else {
-      let parm = { term: this.sQueryText };
-      //Call REST and generate item object
-      this.mapleRestData.load('index.php?r=ngget/getSchoolAutoComplete', parm).subscribe(
-        data => {
-          if (data.hasOwnProperty("CITY")) {
-            this.scityItems = data.CITY;
+  //   if (this.sQueryText == '') {
+  //     return;
+  //   } else {
+  //     let parm = { term: this.sQueryText };
+  //     //Call REST and generate item object
+  //     this.mapleRestData.load('index.php?r=ngget/getSchoolAutoComplete', parm).subscribe(
+  //       data => {
+  //         if (data.hasOwnProperty("CITY")) {
+  //           this.scityItems = data.CITY;
 
-          };
+  //         };
 
-          if (data.hasOwnProperty("SCHOOL")) {
-            this.schoolItems = data.SCHOOL;
+  //         if (data.hasOwnProperty("SCHOOL")) {
+  //           this.schoolItems = data.SCHOOL;
 
-          }
+  //         }
 
-        }); //end of callback
-      //this.items = ["city", "address", "MLS"];
-    }
-  }
+  //       }); //end of callback
+  //     //this.items = ["city", "address", "MLS"];
+  //   }
+  // }
 
   itemTapped(item, type) {
-
+    
     let center = new google.maps.LatLng(item.lat, item.lng);
+   
     if (type == 1) {
-      this.events.publish('map:center', center);
+       this.events.publish('map:center', center);
+       this.hQueryText == '';
+       this.currentDiv = '';
 
     }
     if (type == 2) {
       this.events.publish('schoolmap:center', center);
       console.log(item.lat + ":" + item.lng)
     }
+   
+  }
 
+ searchFocus() {
+     this.hQueryText = '';
     this.resetItems();
-
+    this.currentDiv = 'searchlist';
+ 
 
   }
+
   //auto complete REST CAll
   hGetItems(searchbar) {
 

@@ -5,17 +5,17 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-<ion-navbar class="map-search hide-border">
+<ion-navbar class="map-search">
 <ion-buttons left>
-    <button class="bar-button-default" (click)="openModal(selectOptions)">
+    <button  (click)="openModal(selectOptions)">
         <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
    </button>
   </ion-buttons>
-  <ion-searchbar hideCancelButton [(ngModel)]="queryText" (ionFocus)="searchFocus()" (ionInput)="getItems($event)"
+  <ion-searchbar  [(ngModel)]="queryText" (ionFocus)="searchFocus()" (ionInput)="getItems($event)"
     placeholder="城市/地址/MLS#"></ion-searchbar>
   
   <ion-buttons end>
-    <button class="bar-button-default" (click)="setCenter(true)">
+    <button (click)="setCenter(true)">
         <ion-icon ios="ios-locate-outline" md="md-locate"></ion-icon>
     </button>
   </ion-buttons>
