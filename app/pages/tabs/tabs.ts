@@ -4,7 +4,6 @@ import {AboutPage} from '../about/about';
 import {MapSearchPage} from '../map-search/map-search';
 import {ProjectsPage} from '../projects/projects';
 import {StatsPage} from '../stats/stats';
-import {SchoolSearchPage} from '../school-search/school-search';
 import {SchoolMapPage} from '../school-map/school-map';
 import {HomePage} from '../home/home';
 //import {MapleConf} from './providers/maple-rest-data/maple-config';
@@ -53,9 +52,8 @@ export class TabsPage {
       
     });
     this.events.subscribe('schoolmap:center', (data) => {
-      // console.log("Map Center event:")
+      console.log("Map Center event:")
       // this.mapParms = data[0];
-    
       this.tabRef.select(2);
       
     });

@@ -88,7 +88,7 @@ export class HouselistSearch {
 
 
     gotoHouseDetail(mls) {
-        this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList });
+       this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList });
     }
     pagePre() {
         --this.pageIndex;
@@ -97,7 +97,7 @@ export class HouselistSearch {
 
     pageNext() {
         ++this.pageIndex;
-        
+
         this.getHouseList();
     }
     doInfinite(infiniteScroll) {
@@ -106,15 +106,15 @@ export class HouselistSearch {
                 ++this.pageIndex;
                 this.getHouseList();
                 infiniteScroll.complete();
-            }else {
-                 infiniteScroll.complete();
+            } else {
+                infiniteScroll.complete();
             }
         }, 500);
     }
 
 
     getHouseList() {
-       
+
         this.currentDiv = ''; //reset all popup
 
         // let loading = Loading.create({
@@ -147,7 +147,7 @@ export class HouselistSearch {
                 let totalhouse = data.Data.HouseList.length;
                 this.imgHost = data.Data.imgHost;
                 this.currentHouseList = data.Data.HouseList;
-               
+
             });
 
         //END of Data Subscribe

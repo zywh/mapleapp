@@ -1,5 +1,5 @@
 .house-detail {
-    z-index: 11;
+    // z-index: 11;
     .swiper-container {
         width: 100%;
         height: auto; //66.8vw;
@@ -92,6 +92,7 @@ ion-card.fyxqlb_cont {
         color:color($colors, primary);
         ion-label.switchF2M {
             text-align: right;
+            padding-right: 5px;
         }
         .switchF2M {
             float: right;

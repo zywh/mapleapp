@@ -4,7 +4,8 @@
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-navbar *navbar>
+<ion-header>
+<ion-navbar >
   <ion-title>{{"MLS：" + parms.id}}</ion-title>
 	<ion-buttons end>
   <button  (click)="share()">
@@ -12,6 +13,7 @@
   </button>
   </ion-buttons>
 </ion-navbar>
+</ion-header>
 
 <ion-content class="house-detail">
 
@@ -97,7 +99,7 @@
 		</div>
 	</div>
 	<div class="fyxq_rx">服务热线：
-		<img src="img/maple/plat.jpg"/><a [href]="mapleConf.data.phone"><span>{{mapleConf.data.phone}}</span></a>
+		<img src="img/maple/plat.jpg"/><a href="tel:{{mapleConf.data.phone}}"><span>{{mapleConf.data.phone}}</span></a>
 	</div>
 
 </ion-card>	
@@ -107,11 +109,15 @@
 <!--START-->			
 <ion-card class="fyxqlb_cont">
 	<ion-list class="xqlb_list">
-		<ion-item-divider id="housedivider" divider primary>详情列表
+		<ion-item-divider id="housedivider" divider primary><ion-label>详情列表</ion-label>
+				<ion-label class="switchF2M">{{(switchF2M == true)? F2M.feet: F2M.meter}}</ion-label>
+				<ion-toggle [(ngModel)]="switchF2M"></ion-toggle>
+<!--			
 			<div class="switchF2M">
 				<ion-label>{{(switchF2M == true)? F2M.feet: F2M.meter}}</ion-label>
 				<ion-toggle [(ngModel)]="switchF2M"></ion-toggle>
 			</div>
+-->			
 		</ion-item-divider>
 		<ion-item><ion-label fixed class="xqlb_label">MLS编号：</ion-label><ion-label>{{house.ml_num}}</ion-label></ion-item>
 		<ion-item><ion-label fixed class="xqlb_label">交叉路口：</ion-label><ion-label>{{house.cross_st}}</ion-label></ion-item>
@@ -170,7 +176,7 @@
 <!--End-->
  
 </ion-content>
-
+<ion-footer>
 <div id="houstList_control">
 <div *ngIf="houseList.prev">
 	<button fab fab-bottom  fab-left (click)="go2PrevHouse()" style="z-index: 12;opacity: 0.8;">
@@ -188,6 +194,7 @@
 	</button>
 </div> 
 </div>
+</ion-footer>
 <!--
 <div class="house_list" *ngIf="false">
 	<ion-slides [options]="swiperOptions" class="swiper-container">
