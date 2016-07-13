@@ -57,12 +57,13 @@
 
     </ion-slide>
   </ion-slides>
-
+<ion-toolbar [attr.primary]="isAndroid ? '' : null">
   <ion-segment [(ngModel)]="homeSegment">
     <ion-segment-button value="info">地产信息</ion-segment-button>
-    <ion-segment-button value="house1" (ionSelect)="searchHouse(1)">周边房源</ion-segment-button>
-    <ion-segment-button value="house2"  (ionSelect)="searchHouse(2)">房源推荐</ion-segment-button>
+    <ion-segment-button value="house1" (ionSelect)="searchHouse('nearby')">周边房源</ion-segment-button>
+    <ion-segment-button value="house2"  (ionSelect)="searchHouse('recommend')">房源推荐</ion-segment-button>
   </ion-segment>
+</ion-toolbar>
   <div [ngSwitch]="homeSegment">
     <div *ngSwitchCase="'info'">
       <ion-list>

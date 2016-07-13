@@ -29,6 +29,8 @@ export class HomePage implements OnInit {
   private nearbyHouseList;
   private recommendHouseList;
   private imgHost;
+  private houseRestURL;
+  private data;
 
 
   constructor(
@@ -49,56 +51,59 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.mapleconf.load().then(data => {
       //this.postListRest = data.postRest;
+      this.houseRestURL = data.mapHouseRest;
       this.getProjects(data.projectRest);
       this.getPosts(data.postListRest, 6);
 
+
+    })
+    this.mapleconf.getLocation().then(data => {
+      this.data =data;
     })
 
   }
-  searchHouse(type) {
-     
+  searchHouse(s) {
+     console.log("Button is clicked for house search");
      let range: number = 0.015;
      //parm for recommendation
-     if ( type == 2){
-       range = 0.30;
+     if ( s == 'recommend'){
+       
+       range = 0.1;
         
      }
-    this.mapleconf.getLocation().then(data => {
+    // this.mapleconf.getLocation().then(data => {
      
-      let swLat = data['lat'] - range;
-      let swLng = data['lng'] - range;
-      let neLat = data['lat'] + range;
-      let neLng = data['lng'] + range;
+      let swLat = this.data['lat'] - range;
+      let swLng = this.data['lng'] - range;
+      let neLat = this.data['lat'] + range;
+      let neLng = this.data['lng'] + range;
       let bounds = swLat + "," + swLng + "," + neLat + "," + neLng;
       let mapParms = {
       
         bounds: bounds,
-        type: type,
+        type: s,
         sr: 'Sale'
      	};
     
-      this.mapleconf.load().then(data => {
+     
 
-        this.mapleRestData.load(data.mapHouseRest, mapParms).subscribe(
+        this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
           data => {
             console.log(data);
-            if ((data.Data.Total > 0) && (data.Data.Type == 'house')) {
+            if (data.Data.Type == 'house'){
               this.imgHost = data.Data.imgHost;
               this.nearbyHouseList = data.Data.MapHouseList;
             }
           })
 
-      });
+     
 
-    })
+    //})
     //end of getLication
 
   }
 
-  recommend() {
-
-  }
-
+  
   gotoHouseDetail(mls, list) {
     this.nav.push(HouseDetailPage, { id: mls, list: list });
   }
