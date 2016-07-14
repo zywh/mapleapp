@@ -149,11 +149,8 @@ export class MapSearchPage {
 
   //first time view is entered. add listener
   ionViewWillEnter() {
-    console.log("Map View will enter")
-  }
-  ionViewDidEnter() {
-
-    if (!this.mviewLoaded) {
+  
+      if (!this.mviewLoaded) {
       setTimeout(() => {
         console.log("First Time Will enter view Add Google Map listener")
         this.mviewLoaded = true;
@@ -168,8 +165,20 @@ export class MapSearchPage {
           });
 
         });
-      }, 300);
+      }, 50);
     }
+
+  }
+  ionViewDidEnter() {
+     console.log("Map View did entered");
+        if ((this.markerArray.length == 0) && (!this.mviewLoaded)) {
+            setTimeout(() => {
+                //console.log("School Map is entered No marker First Time. Zoom and center")
+               this.map.setZoom(13); //need keep zoom different to have calling loading properly to avoid blank
+               this.setCenter(false);
+            }, 100);
+        }
+
 
 
   }
@@ -182,8 +191,42 @@ export class MapSearchPage {
   }
 
   // initial view is loaded by tab page with 100ms delay
+  ngAfterViewInit(){
+      
+        // setTimeout(() => {
+        //     console.log("NG View Loaded init map")
+        //     let mapEle = document.getElementById('schoolmap');
+
+        //     this.map = new google.maps.Map(mapEle, {
+        //         //center: mapData.find(d => d.center),
+        //         center: this.defaultcenter,
+        //         minZoom: 9,
+        //         mapTypeControl: true,
+        //         mapTypeControlOptions: {
+        //             style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+        //             position: google.maps.ControlPosition.TOP_LEFT
+        //         },
+        //         zoomControl: true,
+        //         zoomControlOptions: {
+        //             position: google.maps.ControlPosition.RIGHT_TOP
+        //         },
+        //         scaleControl: true,
+        //         streetViewControl: true,
+        //         streetViewControlOptions: {
+        //             position: google.maps.ControlPosition.TOP_RIGHT
+        //         },
+        //         zoom: 10
+        //     });
+
+        // }, 50); //wait for switch to avoid blank map
+
+ 
+
+
+
+  }
   ionViewLoaded() {
-    console.log("Map ViewLoaded");
+   console.log("Map ViewLoaded");
     setTimeout(() => {
       let mapEle = document.getElementById('map');
 
@@ -208,7 +251,7 @@ export class MapSearchPage {
         zoom: 12
       });
 
-    }, 100); //wait for switch to avoid blank map
+    }, 50); //wait for switch to avoid blank map
 
 
 
