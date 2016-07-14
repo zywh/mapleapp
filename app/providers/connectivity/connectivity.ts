@@ -1,57 +1,38 @@
 import {Injectable} from '@angular/core';
-//import {Http} from '@angular/http';
 import {Platform} from 'ionic-angular';
 import {Network} from 'ionic-native';
-import 'rxjs/add/operator/map';
 
-/*
-  Generated class for the Connectivity provider.
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 @Injectable()
 export class Connectivity {
-  data: any = null;
-  private onDevice;
 
-  constructor(private platform: Platform) {
-    this.onDevice = this.platform.is('ios') || this.platform.is('android');
+  onDevice: boolean;
+
+  constructor(public platform: Platform) {
+    this.onDevice = this.platform.is('cordova');
   }
 
-  isOnline() {
+  isOnline(): boolean {
 
-    // if (this.onDevice  && Network.connection) {
+    if (this.onDevice && Network.connection) {
+      return Network.connection !== 'none';
 
-    //   let networkState = navigator.connection.type;
-    //   return networkState !== Connection.NONE;
-
-    // } else {
-
-    //   return navigator.onLine;
-
-    // }
-    let connectionType = Network.connection;
-    console.log("Connectivity Type:" + connectionType);
-    if (connectionType === "none" || connectionType === "unknown") {
-      return !navigator.onLine;
     } else {
+
       return navigator.onLine;
+
+    }
+
+
+  }
+
+  isOffline(): boolean {
+    if (this.onDevice && Network.connection) {
+      return Network.connection === 'none';
+    } else {
+      return !navigator.onLine;
     }
   }
-
-  // isOffline(){
-  //   if(this.onDevice && navigator.connection){
-
-  //     let networkState = navigator.connection.type;
-
-
-  //     return networkState === Connection.NONE;
-
-  //   } else {
-  //     return !navigator.onLine;     
-  //   }
-  // }
 
 }
 

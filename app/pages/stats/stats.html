@@ -1,18 +1,13 @@
-<!--
-  Generated template for the StatsPage page.
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
   <ion-navbar>
-    <!--<button menuToggle>
+    <button menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button>-->
+    </button>
     <ion-title>房源数据统计</ion-title>
   </ion-navbar>
 </ion-header>
-<!--<button (click)="cityStats('Toronto')">CityStats</button>-->
+
 <ion-content class="stats">
 
 
@@ -35,7 +30,7 @@
   <div class="spacer" style="width: 284.545px; height: 17.9886px;"></div>
 
   <div [ngSwitch]="section">
-    <div *ngSwitchWhen="'toronto'">
+    <div *ngSwitchCase="'toronto'">
       <h3 text-center> 大多伦多地产历史统计</h3>
       <ion-list>
         <ion-item *ngFor="let c of gtaChartList" (click)="gtaStats(c.data,c.title)"> {{c.title}}
@@ -44,7 +39,7 @@
       </ion-list>
     </div>
 
-    <div *ngSwitchWhen="'house'">
+    <div *ngSwitchCase="'house'">
 
       <h3 text-center> 今日房源实时统计 </h3>
       <ion-label text-center> {{date2str()}}</ion-label>
@@ -60,7 +55,7 @@
       </ion-list>
     </div>
 
-    <div *ngSwitchWhen="'canada'">
+    <div *ngSwitchCase="'canada'">
 
       <ion-list>
         <h3 text-center>加拿大房屋指数(HPI)历史图表</h3>
