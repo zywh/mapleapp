@@ -3,7 +3,7 @@ import {Geolocation} from 'ionic-native';
 import { NgZone, Component, ViewChild} from '@angular/core';;
 import {MapSearchPage} from '../map-search/map-search';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-
+import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {SelectOptionModal} from './schoolmap-option-modal';
 import {SchoolListModal} from './school-list-modal';
 import {ConferenceData} from '../../providers/conference-data';
@@ -59,6 +59,7 @@ export class SchoolMapPage {
         private nav: NavController,
         private mapleRestData: MapleRestData,
         private confData: ConferenceData,
+        private mapleconf: MapleConf,
         private _zone: NgZone,
         private viewCtrl: ViewController,
         private events: Events
@@ -131,7 +132,7 @@ export class SchoolMapPage {
 
     //load map listener if first time
     ionViewWillEnter() {
-        
+
         if (!this.sviewLoaded) {
             console.log("School Map View will enter. Add school map Listener");
             setTimeout(() => {
@@ -168,29 +169,19 @@ export class SchoolMapPage {
             setTimeout(() => {
                 this.sviewLoaded = true;
                 //this.nav.pop();
-                this.setLocation(data[0], this.defaultZoom,true);
+                this.setLocation(data[0], this.defaultZoom, true);
             }, 200);
         });
     }
 
     setCenter(isMarker) {
 
-        let options = { timeout: 10000, enableHighAccuracy: true };
+        this.mapleconf.getLocation().then(data => {
+            this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
+            this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
+        })
 
-        navigator.geolocation.getCurrentPosition(
-
-            (position) => {
-                this.defaultcenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                let lat = position.coords.latitude;
-                if (lat > 20) {
-                  
-                    this.setLocation(this.defaultcenter, this.defaultZoom,isMarker);
-
-                } else { this.setLocation(this.defaultcenter, this.defaultZoom,isMarker); }
-
-            },
-            (error) => { this.setLocation(this.defaultcenter, this.defaultZoom,isMarker); }, options
-        );
+      
 
     }
 
@@ -216,7 +207,7 @@ export class SchoolMapPage {
     itemTapped(event, item, type) {
 
         let center = new google.maps.LatLng(item.lat, item.lng);
-        this.setLocation(center, 14,true);
+        this.setLocation(center, 14, true);
         this.resetItems();
 
     }
@@ -231,36 +222,41 @@ export class SchoolMapPage {
         } else {
             let parm = { term: this.searchQuery };
             //Call REST and generate item object
-            this.mapleRestData.load('index.php?r=ngget/getSchoolAutoComplete', parm).subscribe(
-                data => {
-                    if (data.hasOwnProperty("CITY")) {
-                        this.cityItems = data.CITY;
+            this.mapleconf.load().then(data => {
+                this.mapleRestData.load(data.getSchoolAcDataRest, parm).subscribe(
+                    // this.mapleRestData.load('index.php?r=ngget/getSchoolAutoComplete', parm).subscribe(
+                    data => {
+                        if (data.hasOwnProperty("CITY")) {
+                            this.cityItems = data.CITY;
 
-                    };
+                        };
 
-                    if (data.hasOwnProperty("SCHOOL")) {
-                        this.schoolItems = data.SCHOOL;
+                        if (data.hasOwnProperty("SCHOOL")) {
+                            this.schoolItems = data.SCHOOL;
 
-                    }
+                        }
 
-                }); //end of callback
-            //this.items = ["city", "address", "MLS"];
+                    }); //end of callback
+                //this.items = ["city", "address", "MLS"];
+
+            });
         }
+
     }
     //SetCenter and Zoom
-    setLocation(center, zoom,isMarker) {
+    setLocation(center, zoom, isMarker) {
         this.map.setCenter(center);
         this.map.setZoom(zoom);
-        if (isMarker){
-        this.clearAll(this.sMarkerArray);
-        
-        let marker = new google.maps.Marker({
-            position: center,
-            map: this.map,
-            draggable: false,
+        if (isMarker) {
+            this.clearAll(this.sMarkerArray);
 
-        });
-        this.sMarkerArray.push(marker);
+            let marker = new google.maps.Marker({
+                position: center,
+                map: this.map,
+                draggable: false,
+
+            });
+            this.sMarkerArray.push(marker);
         }
     }
 
@@ -367,7 +363,7 @@ export class SchoolMapPage {
 
         this.clearAll(this.markerArray); //clear marker
         let loading = Loading.create({
-          content: '加载学校...'
+            content: '加载学校...'
         });
         this.nav.present(loading);
 
@@ -398,56 +394,57 @@ export class SchoolMapPage {
 
 
         };
+        this.mapleconf.load().then(data => {
+            this.mapleRestData.load(data.getSchoolmapDataRest, mapParms).subscribe(
+                //this.mapleRestData.load('index.php?r=ngget/getSchoolmap', mapParms).subscribe(
+                data => {
+                    loading.dismiss();
+                    this.markerType = data.type;
+                    this._zone.run(() => {
+                        this.currentDiv = '';
+                    });
+                    //Start Grid Markers
+                    if (this.markerType == 'grid') {
 
-        this.mapleRestData.load('index.php?r=ngget/getSchoolmap', mapParms).subscribe(
-            data => {
-                loading.dismiss();
-                this.markerType = data.type;
-                this._zone.run(() => {
-                    this.currentDiv = '';
-                });
-                //Start Grid Markers
-                if (this.markerType == 'grid') {
+                        for (let p in data.gridList) {
+                            let school = data.gridList[p];
+                            let schoolcount = school.SchoolCount;
+                            if (schoolcount > 0) {
+                                let avgrating = Math.round(school.TotalRating * 10 / schoolcount) / 10;
+                                //console.log( "Name:" + school.GeocodeLat + "Lat:" + school.GeocodeLng + "Count:"+ school.SchoolCount + "TotalRating:" + school.TotalRating + "AvgRating:" + avgrating);
+                                this.setContentCount(school.GeocodeLat, school.GeocodeLng, school.SchoolCount, school.GridName, avgrating);
 
-                    for (let p in data.gridList) {
-                        let school = data.gridList[p];
-                        let schoolcount = school.SchoolCount;
-                        if (schoolcount > 0) {
-                            let avgrating = Math.round(school.TotalRating * 10 / schoolcount) / 10;
-                            //console.log( "Name:" + school.GeocodeLat + "Lat:" + school.GeocodeLng + "Count:"+ school.SchoolCount + "TotalRating:" + school.TotalRating + "AvgRating:" + avgrating);
-                            this.setContentCount(school.GeocodeLat, school.GeocodeLng, school.SchoolCount, school.GridName, avgrating);
+                            }
+                        }
+                    } //End of City Markers
+                    this.schoolList = data.SchoolList;
+                    if ((this.markerType == 'school') && (this.schoolList.length > 0)) {
+
+                        this._zone.run(() => {
+                            this.currentDiv = 'listButton';
+                        });
+
+                        for (let p in data.SchoolList) {
+                            let school = data.SchoolList[p];
+                            var name = school.School;
+                            var rank = school.Paiming;
+                            var rating = school.Pingfen;
+                            var tlat = parseFloat(school.Lat);
+                            var tlng = parseFloat(school.Lng);
+
+                            //Generate single house popup view
+                            var html = "<p text-left>名称：" + name + "</p>"
+                                + "<p text-left>年级：" + school.Grade + "</p>"
+                                + "<p text-left>地址：" + school.Address + "</p>"
+                                + "<p text-left>城市：" + school.City + " " + school.Province + " " + school.Zip + "</p>"
+                                + "<p text-left>排名：<ion-badge>" + rank + "</ion-badge> 评分：<ion-badge>" + rating + "</ion-badge></p>";
+
+                            this.setContent(tlat, tlng, html, rating);
 
                         }
-                    }
-                } //End of City Markers
-                this.schoolList = data.SchoolList;
-                if ((this.markerType == 'school') && (this.schoolList.length > 0)) {
-
-                    this._zone.run(() => {
-                        this.currentDiv = 'listButton';
-                    });
-
-                    for (let p in data.SchoolList) {
-                        let school = data.SchoolList[p];
-                        var name = school.School;
-                        var rank = school.Paiming;
-                        var rating = school.Pingfen;
-                        var tlat = parseFloat(school.Lat);
-                        var tlng = parseFloat(school.Lng);
-
-                        //Generate single house popup view
-                        var html = "<p text-left>名称：" + name + "</p>"
-                            + "<p text-left>年级：" + school.Grade + "</p>"
-                            + "<p text-left>地址：" + school.Address + "</p>"
-                            + "<p text-left>城市：" + school.City + " " + school.Province + " " + school.Zip + "</p>"
-                            + "<p text-left>排名：<ion-badge>" + rank + "</ion-badge> 评分：<ion-badge>" + rating + "</ion-badge></p>";
-
-                        this.setContent(tlat, tlng, html, rating);
-
-                    }
-                } //End of if HOUSE
-            });
-
+                    } //End of if HOUSE
+                });
+        });
         //END of Data Subscribe
 
     }

@@ -164,7 +164,8 @@ ionicBootstrap(
     //temp padding to fix ionic view status bar overlapping
     platforms: {
       ios: {
-        //statusbarPadding: true
+        statusbarPadding: false
+
       },
     }
 
