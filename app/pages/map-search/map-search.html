@@ -11,7 +11,7 @@
         <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
    </button>
   </ion-buttons>
-  <ion-searchbar  [(ngModel)]="queryText" (ionFocus)="searchFocus()" (ionInput)="getItems($event)"
+  <ion-searchbar   (ionInput)="getItems($event)"
     placeholder="城市/地址/MLS#"></ion-searchbar>
   
   <ion-buttons end>

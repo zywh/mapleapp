@@ -160,63 +160,63 @@ export class HomePage {
   // }
 
   itemTapped(item, type) {
-    
+
     let center = new google.maps.LatLng(item.lat, item.lng);
-   
+
     if (type == 1) {
-       this.events.publish('map:center', center);
-       this.hQueryText == '';
-       this.currentDiv = '';
+      this.events.publish('map:center', center);
+      this.hQueryText == '';
+      this.currentDiv = '';
 
     }
     if (type == 2) {
       this.events.publish('schoolmap:center', center);
       console.log(item.lat + ":" + item.lng)
     }
-   
+
   }
 
- searchFocus() {
-     this.hQueryText = '';
+  searchFocus() {
+    this.hQueryText = '';
     this.resetItems();
     this.currentDiv = 'searchlist';
- 
+
 
   }
 
   //auto complete REST CAll
-  hGetItems(searchbar) {
+  hGetItems(ev) {
 
     this.resetItems();
     this.currentDiv = 'hSearchlist';
+    let val = ev.target.value;
 
+    if (val && val.trim() != '') {
 
-    if (this.hQueryText == '') {
-      return;
-    } else {
-      let parm = { term: this.hQueryText };
       //Call REST and generate item object
-      this.mapleRestData.load('index.php?r=ngget/getCityList', parm).subscribe(
-        data => {
-          if (data.hasOwnProperty("CITY")) {
-            this.cityItems = data.CITY;
-            console.log("CITY Autocomplete:" + this.cityItems);
-          };
+      this.mapleconf.load().then(data => {
+        this.mapleRestData.load(data.getCitylistDataRest, { term: val }).subscribe(
+          data => {
+            if (data.hasOwnProperty("CITY")) {
+              this.cityItems = data.CITY;
+              console.log("CITY Autocomplete:" + this.cityItems);
+            };
 
-          if (data.hasOwnProperty("MLS")) {
-            this.mlsItems = data.MLS;
-            console.log("MLS Autocomplete:" + this.mlsItems);
-          }
-          if (data.hasOwnProperty("ADDRESS")) {
-            this.addressItems = data.ADDRESS;
-            console.log("ADDRESS Autocomplete:" + this.addressItems);
-          }
-          console.log(data);
-        }); //end of callback
-      //this.items = ["city", "address", "MLS"];
+            if (data.hasOwnProperty("MLS")) {
+              this.mlsItems = data.MLS;
+              console.log("MLS Autocomplete:" + this.mlsItems);
+            }
+            if (data.hasOwnProperty("ADDRESS")) {
+              this.addressItems = data.ADDRESS;
+              console.log("ADDRESS Autocomplete:" + this.addressItems);
+            }
+            console.log(data);
+          }); //end of callback
+        //this.items = ["city", "address", "MLS"];
+      })
     }
   }
 
 
-}
+  }
 

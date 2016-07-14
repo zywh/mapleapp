@@ -181,22 +181,7 @@ export class SchoolMapPage {
             this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
         })
 
-        // let options = { timeout: 10000, enableHighAccuracy: true };
-
-        // navigator.geolocation.getCurrentPosition(
-
-        //     (position) => {
-        //         this.defaultcenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        //         let lat = position.coords.latitude;
-        //         if (lat > 20) {
-
-        //             this.setLocation(this.defaultcenter, this.defaultZoom,isMarker);
-
-        //         } else { this.setLocation(this.defaultcenter, this.defaultZoom,isMarker); }
-
-        //     },
-        //     (error) => { this.setLocation(this.defaultcenter, this.defaultZoom,isMarker); }, options
-        // );
+      
 
     }
 

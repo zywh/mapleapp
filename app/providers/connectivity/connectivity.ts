@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 //import {Http} from '@angular/http';
 import {Platform} from 'ionic-angular';
-import {Connection} from 'ionic-native';
+import {Network} from 'ionic-native';
 import 'rxjs/add/operator/map';
 
 /*
@@ -20,30 +20,38 @@ export class Connectivity {
   }
 
   isOnline() {
-    if (this.onDevice  && navigator.connection) {
-      
-      let networkState = navigator.connection.type;
-      return networkState !== Connection.NONE;
 
+    // if (this.onDevice  && Network.connection) {
+
+    //   let networkState = navigator.connection.type;
+    //   return networkState !== Connection.NONE;
+
+    // } else {
+
+    //   return navigator.onLine;
+
+    // }
+    let connectionType = Network.connection;
+    console.log("Connectivity Type:" + connectionType);
+    if (connectionType === "none" || connectionType === "unknown") {
+      return !navigator.onLine;
     } else {
-    
       return navigator.onLine;
-           
     }
   }
-  
-  isOffline(){
-    if(this.onDevice && navigator.connection){
- 
-      let networkState = navigator.connection.type;
-      
- 
-      return networkState === Connection.NONE;
- 
-    } else {
-      return !navigator.onLine;     
-    }
-  }
+
+  // isOffline(){
+  //   if(this.onDevice && navigator.connection){
+
+  //     let networkState = navigator.connection.type;
+
+
+  //     return networkState === Connection.NONE;
+
+  //   } else {
+  //     return !navigator.onLine;     
+  //   }
+  // }
 
 }
 

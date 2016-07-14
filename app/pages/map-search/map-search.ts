@@ -149,9 +149,15 @@ export class MapSearchPage {
 
   //first time view is entered. add listener
   ionViewWillEnter() {
+    console.log("Map View will enter")
+  }
+  ionViewDidEnter() {
+
     if (!this.mviewLoaded) {
       setTimeout(() => {
-        //console.log("First Time Will enter view Add Google Map listener")
+        console.log("First Time Will enter view Add Google Map listener")
+        this.mviewLoaded = true;
+        this.setCenter(false);
         google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(); });
         google.maps.event.addListener(this.map, 'click', () => {
           //close all open POP UP options/list etc
@@ -162,19 +168,9 @@ export class MapSearchPage {
           });
 
         });
-      }, 100);
+      }, 300);
     }
-  }
-  ionViewDidEnter() {
-    //console.log("Map View did entered");
-    if (!this.mviewLoaded) {
 
-      this.mviewLoaded = true;
-      setTimeout(() => {
-        //console.log("first time view is entered. Center map based on Geolocation")
-        this.setCenter(false); //no marker
-      }, 200);
-    }
 
   }
 
@@ -187,7 +183,7 @@ export class MapSearchPage {
 
   // initial view is loaded by tab page with 100ms delay
   ionViewLoaded() {
-
+    console.log("Map ViewLoaded");
     setTimeout(() => {
       let mapEle = document.getElementById('map');
 
@@ -212,7 +208,7 @@ export class MapSearchPage {
         zoom: 12
       });
 
-    }, 40); //wait for switch to avoid blank map
+    }, 100); //wait for switch to avoid blank map
 
 
 
@@ -221,11 +217,6 @@ export class MapSearchPage {
 
 
 
-  // listShow() {
-  //   //Show House List
-  //   return ((this.currentDiv == 'houselist') && (this.markerType == 'house'));
-
-  // }
   gotoHouseDetail(mls) {
     this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList });
   }
@@ -276,20 +267,7 @@ export class MapSearchPage {
     this.mlsItems = [];
     //this.queryText = '';
   }
-  searchFocus() {
-    // this.resetItems();
-    console.log("Search List is focus");
-    // this._zone.run(() => {
-    this.currentDiv = 'searchlist';
-    this.queryText = '';
-    this.resetItems();
-    // });
-
-  }
-  searchBlur() {
-    console.log("Search List is blured");
-   // this.queryText = '';
-  }
+ 
 
   itemTapped(item) {
 
@@ -301,37 +279,37 @@ export class MapSearchPage {
 
   }
   //auto complete REST CAll
-  getItems(searchbar) {
+  getItems(ev) {
 
-
-    // if (this.queryText == '') {
-    //   return;
-    // } else {
     this.resetItems();
-    let parm = { term: this.queryText };
-    //Call REST and generate item object
-    this.mapleconf.load().then(data => {
-      this.mapleRestData.load(data.getCitylistDataRest, parm).subscribe(
+    let val = ev.target.value;
 
-        data => {
-          if (data.hasOwnProperty("CITY")) {
-            this.cityItems = data.CITY;
-            console.log("CITY Autocomplete:" + this.cityItems);
-          };
+    if (val && val.trim() != '') {
+      this.currentDiv = 'searchlist';
+      //Call REST and generate item object
+      this.mapleconf.load().then(data => {
+        this.mapleRestData.load(data.getCitylistDataRest, { term: val }).subscribe(
 
-          if (data.hasOwnProperty("MLS")) {
-            this.mlsItems = data.MLS;
-            console.log("MLS Autocomplete:" + this.mlsItems);
-          }
-          if (data.hasOwnProperty("ADDRESS")) {
-            this.addressItems = data.ADDRESS;
-            console.log("ADDRESS Autocomplete:" + this.addressItems);
-          }
+          data => {
+            if (data.hasOwnProperty("CITY")) {
+              this.cityItems = data.CITY;
+              console.log("CITY Autocomplete:" + this.cityItems);
+            };
 
-        }); //end of callback
+            if (data.hasOwnProperty("MLS")) {
+              this.mlsItems = data.MLS;
+              console.log("MLS Autocomplete:" + this.mlsItems);
+            }
+            if (data.hasOwnProperty("ADDRESS")) {
+              this.addressItems = data.ADDRESS;
+              console.log("ADDRESS Autocomplete:" + this.addressItems);
+            }
 
-      //}
-    })
+          }); //end of callback
+
+        //}
+      })
+    }
   }
 
   //SetCenter and Zoom if location button is clicked

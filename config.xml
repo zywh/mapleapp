@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.maplecity.mobileapp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>Maple City Mobile App</name>
+  <name>MapleCity</name>
   <description>&#xD;
        枫之都手机应用&#xD;
   </description>
