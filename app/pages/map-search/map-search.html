@@ -13,7 +13,8 @@
   </ion-buttons>
   <!--<ion-input  [(ngModel)]="queryText" type="text" clearInput (keyup)="getItems($event)"
     placeholder="城市/地址/MLS#"></ion-input>-->
-  <ion-searchbar hideCancelButton  [(ngModel)]="queryText" (ionFocus)="searchFocus()" (ionInput)="getItems($event)" 
+
+    <ion-searchbar primary  [(ngModel)]="queryText" (ionInput)="getItems($event)" 
     placeholder="城市/地址/MLS#"></ion-searchbar>
   
   <ion-buttons end>

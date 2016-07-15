@@ -144,7 +144,7 @@ export class MapSearchPage {
       this.selectOptions = data;
       //console.log(this.selectOptions);
       //this.changeMap();
-      this.maps.changeMap(this.selectOptions);
+      this.changeMap();
       
     });
     this.nav.present(modal);

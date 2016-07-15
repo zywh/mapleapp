@@ -285,7 +285,10 @@ export class SchoolMapPage {
                 buttons: [{ text: '取消', role: 'cancel' },
                     {
                         text: '周边房源',
-                        handler: () => { this.events.publish('map:center', point); }
+                        handler: () => { 
+                            this.events.publish('map:center', point); 
+                            //this.nav.push(MapSearchPage);
+                        }
                     }
                 ]
             });
