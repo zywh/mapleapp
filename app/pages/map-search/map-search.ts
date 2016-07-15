@@ -111,6 +111,7 @@ export class MapSearchPage {
     this.listenEvents(); //listen School map event
     this.loadRichMarker();
     //  this.pleaseConnect = pleaseConnect;
+  
 
   }
 
@@ -147,6 +148,13 @@ export class MapSearchPage {
     Geolocation.getCurrentPosition().then((position) => {
 
       let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+   
+      if (this.navparm.data.lat > 20) {
+        console.log("Redirect from other page with center");
+        latLng = new google.maps.LatLng(this.navparm.data.lat, this.navparm.data.lng);
+      }
+   
+
       let mapOptions = {
         center: latLng,
         minZoom: 4,

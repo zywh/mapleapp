@@ -35,7 +35,7 @@ export class TabsPage {
   constructor(private nav: NavController, navParams: NavParams,private events: Events) {
     this.mySelectedIndex = navParams.data.tabIndex || 0;
     this.mapParms = navParams.data.rootParms || {};
-    this.listenEvents();
+    //this.listenEvents();
   }
 
   // schoolTabSelected(){
@@ -44,23 +44,23 @@ export class TabsPage {
   //   // this.nav.setRoot(TabsPage ,{ tabIndex: 2 });
   //    this.nav.setRoot(SchoolMapPage);
   // }
- listenEvents() {
-    this.events.subscribe('map:center', (data) => {
-      // console.log("Map Center event:")
-      // this.mapParms = data[0];
-      // this.tabRef.select(1);
-     // this.mySelectedIndex = 1;
+//  listenEvents() {
+//     this.events.subscribe('map:center', (data) => {
+//       // console.log("Map Center event:")
+//       // this.mapParms = data[0];
+//       // this.tabRef.select(1);
+//      // this.mySelectedIndex = 1;
 
       
-    });
-    this.events.subscribe('schoolmap:center', (data) => {
-      console.log("Map Center event:")
-      // this.mapParms = data[0];
-      //this.tabRef.select(2);
-      // this.mySelectedIndex = 2;
+//     });
+//     this.events.subscribe('schoolmap:center', (data) => {
+//       console.log("Map Center event:")
+//       // this.mapParms = data[0];
+//       //this.tabRef.select(2);
+//       // this.mySelectedIndex = 2;
       
-    });
- }
+//     });
+//  }
 
 
 }
