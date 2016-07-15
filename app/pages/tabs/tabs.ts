@@ -48,13 +48,16 @@ export class TabsPage {
     this.events.subscribe('map:center', (data) => {
       // console.log("Map Center event:")
       // this.mapParms = data[0];
-      this.tabRef.select(1);
+      // this.tabRef.select(1);
+     // this.mySelectedIndex = 1;
+
       
     });
     this.events.subscribe('schoolmap:center', (data) => {
       console.log("Map Center event:")
       // this.mapParms = data[0];
-      this.tabRef.select(2);
+      //this.tabRef.select(2);
+      // this.mySelectedIndex = 2;
       
     });
  }

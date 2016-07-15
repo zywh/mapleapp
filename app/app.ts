@@ -123,6 +123,20 @@ class MapleApp {
     this.events.subscribe('user:logout', () => {
       this.enableMenu(false);
     });
+
+    this.events.subscribe('map:center', (data) => {
+      // console.log("Map Center event:")
+      // this.mapParms = data[0];
+      // this.tabRef.select(1);
+      // this.mySelectedIndex = 1;
+      console.log("Switch Page");
+      setTimeout(() => {
+        this.nav.setRoot(TabsPage, { tabIndex: 1 });
+      }, 1000);
+
+
+
+    });
   }
 
   enableMenu(loggedIn) {
@@ -148,7 +162,7 @@ class MapleApp {
       this.rootPage = NetworkErrorPage;
     }
   }
- 
+
 }
 
 ionicBootstrap(

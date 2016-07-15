@@ -1,13 +1,13 @@
-import {Modal, Loading, Tabs, Alert, ActionSheet, Events, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
-import {Geolocation} from 'ionic-native';
+import {ModalController, LoadingController, AlertController, Events, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
+//import {Geolocation} from 'ionic-native';
 import { NgZone, Component, ViewChild} from '@angular/core';;
 import {MapSearchPage} from '../map-search/map-search';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {SelectOptionModal} from './schoolmap-option-modal';
 import {SchoolListModal} from './school-list-modal';
-import {ConferenceData} from '../../providers/conference-data';
-import {TabsPage} from '../tabs/tabs';
+//import {ConferenceData} from '../../providers/conference-data';
+//import {TabsPage} from '../tabs/tabs';
 declare var RichMarker: any;
 
 interface schoolSelectOptionsObj {
@@ -58,9 +58,12 @@ export class SchoolMapPage {
     constructor(
         private nav: NavController,
         private mapleRestData: MapleRestData,
-        private confData: ConferenceData,
+        //private confData: ConferenceData,
         private mapleconf: MapleConf,
         private _zone: NgZone,
+        private alertc: AlertController,
+        private modalc: ModalController,
+        private loadingc: LoadingController,
         private viewCtrl: ViewController,
         private events: Events
     ) {
@@ -89,12 +92,12 @@ export class SchoolMapPage {
 
     }
     openModal(opt) {
-        let modal = Modal.create(SelectOptionModal, { data: opt });
-        modal.onDismiss(data => {
+        let modal = this.modalc.create(SelectOptionModal, { data: opt });
+        modal.onDidDismiss(data => {
             this.selectSchool = data;
             this.changeMap();
         });
-        this.nav.present(modal);
+        modal.present();
     }
 
 
@@ -181,25 +184,25 @@ export class SchoolMapPage {
             this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
         })
 
-      
+
 
     }
 
     openSchoolList() {
         //console.log(this.schoolList);
 
-        let modal = Modal.create(SchoolListModal, { data: this.schoolList });
-        modal.onDismiss(data => {
+        let modal = this.modalc.create(SchoolListModal, { data: this.schoolList });
+        modal.onDidDismiss(data => {
             //this.selectSchool = data;
 
         });
-        this.nav.present(modal);
+        modal.present();
 
     }
 
     resetItems() {
         this.cityItems = [];
-        this.schoolItems =[];
+        this.schoolItems = [];
         //this.addressItems = [];
 
     }
@@ -278,21 +281,21 @@ export class SchoolMapPage {
 
         marker.addListener('click', () => {
 
-            let alert = Alert.create({
+            let alert =this.alertc.create({
                 title: '学校简介',
                 message: html,
                 cssClass: 'school_popup',
                 buttons: [{ text: '取消', role: 'cancel' },
                     {
                         text: '周边房源',
-                        handler: () => { 
-                            this.events.publish('map:center', point); 
+                        handler: () => {
+                            this.events.publish('map:center', point);
                             //this.nav.push(MapSearchPage);
                         }
                     }
                 ]
             });
-            this.nav.present(alert);
+            alert.present();
             //   //infowindow.open(this.map, marker);
         });
 
@@ -366,10 +369,10 @@ export class SchoolMapPage {
         google.maps.event.trigger(this.map, 'resize');
 
         this.clearAll(this.markerArray); //clear marker
-        let loading = Loading.create({
+        let loading = this.loadingc.create({
             content: '加载学校...'
         });
-        this.nav.present(loading);
+       loading.present();
 
 
 

@@ -1,15 +1,18 @@
-import {Modal, Loading, Events, Alert, Popover, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
-//import {Geolocation} from 'ionic-native';
+import {ModalController, LoadingController, Events, AlertController, Popover, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
+import {Geolocation} from 'ionic-native';
 import { NgZone, Component, ElementRef, ViewChild} from '@angular/core';;
+import {Connectivity} from '../../providers/connectivity/connectivity';
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {HouselistSearch} from '../houselist-search/houselist-search';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
+import {Observable} from 'rxjs/Observable';
 import {GoogleMaps} from '../../providers/google-maps/google-maps';
 import {SelectOptionModal} from './map-option-modal';
 import {MapHouselist} from './map-houselist';
 //import {ConferenceData} from '../../providers/conference-data';
 declare var RichMarker: any;
+declare var google;
 
 interface selectOptionsObj {
   selectPrice?: String,
@@ -25,16 +28,19 @@ interface selectOptionsObj {
 
 @Component({
   templateUrl: 'build/pages/map-search/map-search.html',
-   providers: [GoogleMaps]
+  providers: [GoogleMaps]
 })
 
 
 export class MapSearchPage {
-  
-  // @ViewChild('map') mapElement: ElementRef;
-  // @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
+
+  @ViewChild('map') mapElement: ElementRef;
+  @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
 
   private queryText: String = '';
+  mapInitialised: boolean = false;
+  mapLoaded: any;
+  mapLoadedObserver: any;
   private cityItems: any;
   private addressItems: any;
   private mlsItems: any;
@@ -85,14 +91,18 @@ export class MapSearchPage {
 
   constructor(
     public nav: NavController,
-    //public maps: GoogleMaps, 
+    public maps: GoogleMaps,
     public platform: Platform,
     private mapleRestData: MapleRestData,
+    public connectivityService: Connectivity,
     private menu: MenuController,
     private mapleconf: MapleConf,
     private navparm: NavParams,
     private _zone: NgZone,
     private viewCtrl: ViewController,
+    private alertc: AlertController,
+    private modalc: ModalController,
+    private loadingc: LoadingController,
     private events: Events
   ) {
     //this.searchQuery = '';
@@ -100,6 +110,7 @@ export class MapSearchPage {
     this.resetItems();
     this.listenEvents(); //listen School map event
     this.loadRichMarker();
+    //  this.pleaseConnect = pleaseConnect;
 
   }
 
@@ -108,6 +119,156 @@ export class MapSearchPage {
     script.src = "extjs/richmarker.js";
     document.body.appendChild(script);
   }
+
+  disableMap(): void {
+
+    if (this.pleaseConnect) {
+      this.pleaseConnect.nativeElement.style.display = "block";
+
+    }
+
+  }
+
+  enableMap(): void {
+
+    if (this.pleaseConnect) {
+      this.pleaseConnect.nativeElement.style.display = "none";
+    }
+
+  }
+
+  initMap() {
+
+    this.mapInitialised = true;
+    //let mapEle = document.getElementById('map');
+    // this.mapleconf.getLocation().then(data => {
+    //   this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
+
+    Geolocation.getCurrentPosition().then((position) => {
+
+      let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      let mapOptions = {
+        center: latLng,
+        minZoom: 4,
+        mapTypeControl: true,
+        mapTypeControlOptions: {
+          style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+          position: google.maps.ControlPosition.TOP_LEFT
+        },
+        zoomControl: true,
+        zoomControlOptions: {
+          position: google.maps.ControlPosition.RIGHT_TOP
+        },
+        scaleControl: true,
+        streetViewControl: true,
+        streetViewControlOptions: {
+          position: google.maps.ControlPosition.TOP_RIGHT
+        },
+        zoom: 12,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      }
+
+      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+      google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(); });
+
+      //this.mapLoadedObserver.next(true);
+
+    });
+
+
+  }
+
+  loadGoogleMaps(): void {
+
+    if (typeof google == "undefined" || typeof google.maps == "undefined") {
+
+      console.log("Google maps JavaScript needs to be loaded.");
+      this.disableMap();
+
+      if (this.connectivityService.isOnline()) {
+
+        window['mapInit'] = () => {
+          this.initMap();
+          this.enableMap();
+        }
+
+        let script = document.createElement("script");
+        script.id = "googleMaps";
+        script.src = "http://ditu.google.cn/maps/api/js?&amp;libraries=places&amp;language=zh-cn&callback=mapInit";
+        document.body.appendChild(script);
+
+      }
+    }
+    else {
+
+      if (this.connectivityService.isOnline()) {
+        this.initMap();
+        this.enableMap();
+      }
+      else {
+        this.disableMap();
+      }
+
+    }
+
+    this.addConnectivityListeners();
+
+  }
+
+  addConnectivityListeners(): void {
+
+    document.addEventListener('online', () => {
+      setTimeout(() => {
+        if (typeof google == "undefined" || typeof google.maps == "undefined") {
+          this.loadGoogleMaps();
+        }
+        else {
+          if (!this.mapInitialised) {
+            this.initMap();
+          }
+
+          this.enableMap();
+        }
+
+      }, 2000);
+
+    }, false);
+
+    document.addEventListener('offline', () => {
+
+      console.log("offline");
+
+      this.disableMap();
+
+    }, false);
+
+  }
+  init(): any {
+
+    //this.mapElement = mapElement;
+    //this.pleaseConnect = pleaseConnect;
+
+    this.mapLoaded = Observable.create(observer => {
+      this.mapLoadedObserver = observer;
+    });
+
+    this.loadGoogleMaps();
+
+    return this.mapLoaded;
+
+  }
+
+  ngAfterViewInit(): void {
+    //  this.mapLoaded = Observable.create(observer => {
+    //   this.mapLoadedObserver = observer;
+    // });
+     let mapLoaded = this.init(); 
+   // this.loadGoogleMaps();
+
+
+  }
+
+
 
   //change center if school is selected from school map page
   listenEvents() {
@@ -139,49 +300,50 @@ export class MapSearchPage {
 
   // }
   openModal(opt) {
-    let modal = Modal.create(SelectOptionModal, { data: opt });
-    modal.onDismiss(data => {
+    let modal = this.modalc.create(SelectOptionModal, { data: opt });
+    modal.onDidDismiss(data => {
       this.selectOptions = data;
       //console.log(this.selectOptions);
       //this.changeMap();
       this.changeMap();
-      
+
     });
-    this.nav.present(modal);
+    //this.nav.present(modal);
+    modal.present();
   }
 
   //first time view is entered. add listener
-  ionViewWillEnter() {
-  
-      if (!this.mviewLoaded) {
-      setTimeout(() => {
-        console.log("First Time Will enter view Add Google Map listener")
-        this.mviewLoaded = true;
-        this.setCenter(false);
-        google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(); });
-        google.maps.event.addListener(this.map, 'click', () => {
-          //close all open POP UP options/list etc
-          this._zone.run(() => {
-            this.currentDiv = '';
-            this.queryText = '';
+  // ionViewWillEnter() {
 
-          });
+  //     if (!this.mviewLoaded) {
+  //     setTimeout(() => {
+  //       console.log("First Time Will enter view Add Google Map listener")
+  //       this.mviewLoaded = true;
+  //       this.setCenter(false);
+  //       google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(); });
+  //       google.maps.event.addListener(this.map, 'click', () => {
+  //         //close all open POP UP options/list etc
+  //         this._zone.run(() => {
+  //           this.currentDiv = '';
+  //           this.queryText = '';
 
-        });
-      }, 50);
-    }
+  //         });
 
-  }
-  ionViewDidEnter() {
-     console.log("Map View did entered");
-        if ((this.markerArray.length == 0) && (!this.mviewLoaded)) {
-            setTimeout(() => {
-                //console.log("School Map is entered No marker First Time. Zoom and center")
-               this.map.setZoom(13); //need keep zoom different to have calling loading properly to avoid blank
-               this.setCenter(false);
-            }, 100);
-        }
-  }
+  //       });
+  //     }, 50);
+  //   }
+
+  // }
+  // ionViewDidEnter() {
+  //    console.log("Map View did entered");
+  //       if ((this.markerArray.length == 0) && (!this.mviewLoaded)) {
+  //           setTimeout(() => {
+  //               //console.log("School Map is entered No marker First Time. Zoom and center")
+  //              this.map.setZoom(19); //need keep zoom different to have calling loading properly to avoid blank
+  //              this.setCenter(false);
+  //           }, 100);
+  //       }
+  // }
 
 
   // }
@@ -193,40 +355,40 @@ export class MapSearchPage {
     )
   }
 
- 
-
-  
-  ionViewLoaded() {
-   console.log("Map ViewLoaded");
-    setTimeout(() => {
-      let mapEle = document.getElementById('map');
-
-      this.map = new google.maps.Map(mapEle, {
-
-        center: this.defaultcenter,
-        minZoom: 4,
-        mapTypeControl: true,
-        mapTypeControlOptions: {
-          style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-          position: google.maps.ControlPosition.TOP_LEFT
-        },
-        zoomControl: true,
-        zoomControlOptions: {
-          position: google.maps.ControlPosition.RIGHT_TOP
-        },
-        scaleControl: true,
-        streetViewControl: true,
-        streetViewControlOptions: {
-          position: google.maps.ControlPosition.TOP_RIGHT
-        },
-        zoom: 12
-      });
-
-    }, 50); //wait for switch to avoid blank map
 
 
 
-  }
+  // ionViewLoaded() {
+  //  console.log("Map ViewLoaded");
+  //   setTimeout(() => {
+  //     let mapEle = document.getElementById('map');
+
+  //     this.map = new google.maps.Map(mapEle, {
+
+  //       center: this.defaultcenter,
+  //       minZoom: 4,
+  //       mapTypeControl: true,
+  //       mapTypeControlOptions: {
+  //         style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+  //         position: google.maps.ControlPosition.TOP_LEFT
+  //       },
+  //       zoomControl: true,
+  //       zoomControlOptions: {
+  //         position: google.maps.ControlPosition.RIGHT_TOP
+  //       },
+  //       scaleControl: true,
+  //       streetViewControl: true,
+  //       streetViewControlOptions: {
+  //         position: google.maps.ControlPosition.TOP_RIGHT
+  //       },
+  //       zoom: 12
+  //     });
+
+  //   }, 50); //wait for switch to avoid blank map
+
+
+
+  //}
 
 
 
@@ -255,7 +417,7 @@ export class MapSearchPage {
     this.mlsItems = [];
     //this.queryText = '';
   }
- 
+
 
   itemTapped(item) {
 
@@ -267,15 +429,15 @@ export class MapSearchPage {
 
   }
   //auto complete REST CAll
-  searchFocus(){
+  searchFocus() {
     console.log("Search box is focused");
-    this.queryText='';
+    this.queryText = '';
   }
   getItems(ev) {
 
     this.resetItems();
     let val = ev.target.value;
-   
+
     if (val && val.trim() != '') {
       this.currentDiv = 'searchlist';
       //Call REST and generate item object
@@ -331,7 +493,7 @@ export class MapSearchPage {
   setContent(lat, lng, count, html, houses, price, mls) {
     let point = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
     let content = this.setMarkerCss(count, price);
-	   let marker = new RichMarker({
+    let marker = new RichMarker({
       position: point,
       map: this.map,
       draggable: false,
@@ -343,7 +505,7 @@ export class MapSearchPage {
 
     marker.addListener('click', () => {
       if (count == 1) {
-        let alert = Alert.create({
+        let alert = this.alertc.create({
           //title: 'Confirm purchase',
           message: html,
           cssClass: 'house_popup',
@@ -367,7 +529,8 @@ export class MapSearchPage {
             }
           ]
         });
-        this.nav.present(alert);
+        // this.nav.present(alert);
+        alert.present();
       } else {
         console.log("More than one");
         // this.listModal = Modal.create(MapHouselist, { list: houses, imgHost: this.imgHost });
@@ -387,7 +550,7 @@ export class MapSearchPage {
     //let content = "<i class='icon_map_mark'><span>" + totalCount + "</span></i>";
     let point = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
     let content = this.setMarkerCss(totalCount, price); //default color
-	   let marker = new RichMarker({
+    let marker = new RichMarker({
       position: point,
       map: this.map,
       draggable: false,
@@ -468,10 +631,12 @@ export class MapSearchPage {
     console.log("Change Map");
     //google.maps.event.trigger(this.map, 'resize');
     this.currentDiv = ''; //reset all popup
-    let loading = Loading.create({
+    // let loading = Loading.create({
+    let loading = this.loadingc.create({
       content: '加载房源...'
     });
-    this.nav.present(loading);
+    // this.nav.present(loading);
+    loading.present();
 
     this.clearAll(); //clear marker
 
@@ -504,7 +669,7 @@ export class MapSearchPage {
       houseground: this.selectOptions.selectLandsize,
       housedate: this.selectOptions.selectDate
 
-				};
+    };
     //console.log("Map House Search Parms:" + mapParms);
     this.mapleconf.load().then(data => {
 
