@@ -11,7 +11,9 @@
         <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
    </button>
   </ion-buttons>
-  <ion-searchbar   (ionInput)="getItems($event)"
+  <!--<ion-input  [(ngModel)]="queryText" type="text" clearInput (keyup)="getItems($event)"
+    placeholder="城市/地址/MLS#"></ion-input>-->
+  <ion-searchbar hideCancelButton  [(ngModel)]="queryText" (ionFocus)="searchFocus()" (ionInput)="getItems($event)" 
     placeholder="城市/地址/MLS#"></ion-searchbar>
   
   <ion-buttons end>

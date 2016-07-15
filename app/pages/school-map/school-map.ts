@@ -199,6 +199,7 @@ export class SchoolMapPage {
 
     resetItems() {
         this.cityItems = [];
+        this.schoolItems =[];
         //this.addressItems = [];
 
     }
@@ -215,7 +216,7 @@ export class SchoolMapPage {
     getItems(searchbar) {
 
         this.resetItems();
-        this.currentDiv = 'searchlist';
+        this.currentDiv = 'schoolList';
 
         if (this.searchQuery == '') {
             return;

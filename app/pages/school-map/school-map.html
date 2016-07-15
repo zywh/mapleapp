@@ -14,7 +14,7 @@
         <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
       </button>
   </ion-buttons>    
-   <ion-searchbar hideCancelButton [(ngModel)]="searchQuery" (ionFocus)="currentDiv='searchlist'" (ionInput)="getItems($event)"
+   <ion-searchbar hideCancelButton [(ngModel)]="searchQuery"  (ionInput)="getItems($event)"
         placeholder="城市/学校"></ion-searchbar>
   <ion-buttons end>
     <button class="bar-button-default" (click)="setCenter(true)">
@@ -27,7 +27,7 @@
 </ion-header>
 
 <ion-content class="school-map">
-  <div class="search_list" *ngIf="currentDiv == 'searchlist'">
+  <div class="search_list" *ngIf="currentDiv == 'schoolList'">
     <ion-item padding *ngFor="let item of cityItems" (click)="itemTapped($event, item,1)">
       <button light clear> <ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }}</span></button>
       <ion-badge item-right>城市</ion-badge>

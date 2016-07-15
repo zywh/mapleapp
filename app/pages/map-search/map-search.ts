@@ -193,56 +193,9 @@ export class MapSearchPage {
     )
   }
 
-  // initial view is loaded by tab page with 100ms delay
-  // ngAfterViewInit(){
-      // console.log("Map view is entered");
-      //   let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement); 
-       
-      //       // this.map =  this.maps.map ;
-      //        console.log("Add Map Listenser");
-            //google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(); }); 
-
-        // mapLoaded.subscribe(update => {
-        //   //this.maps.changeMarker(this.latitude, this.longitude)
-         
-        
-        // });
-
-      
-
-  
-        // setTimeout(() => {
-        //     console.log("NG View Loaded init map")
-        //     let mapEle = document.getElementById('schoolmap');
-
-        //     this.map = new google.maps.Map(mapEle, {
-        //         //center: mapData.find(d => d.center),
-        //         center: this.defaultcenter,
-        //         minZoom: 9,
-        //         mapTypeControl: true,
-        //         mapTypeControlOptions: {
-        //             style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-        //             position: google.maps.ControlPosition.TOP_LEFT
-        //         },
-        //         zoomControl: true,
-        //         zoomControlOptions: {
-        //             position: google.maps.ControlPosition.RIGHT_TOP
-        //         },
-        //         scaleControl: true,
-        //         streetViewControl: true,
-        //         streetViewControlOptions: {
-        //             position: google.maps.ControlPosition.TOP_RIGHT
-        //         },
-        //         zoom: 10
-        //     });
-
-        // }, 50); //wait for switch to avoid blank map
-
  
 
-
-
-  //}
+  
   ionViewLoaded() {
    console.log("Map ViewLoaded");
     setTimeout(() => {
@@ -314,11 +267,15 @@ export class MapSearchPage {
 
   }
   //auto complete REST CAll
+  searchFocus(){
+    console.log("Search box is focused");
+    this.queryText='';
+  }
   getItems(ev) {
 
     this.resetItems();
     let val = ev.target.value;
-
+   
     if (val && val.trim() != '') {
       this.currentDiv = 'searchlist';
       //Call REST and generate item object
