@@ -82,6 +82,8 @@ export class HomePage {
     let mapParms = {
 
       bounds: bounds,
+      centerLat: this.data['lat'],
+      centerLng: this.data['lng'],
       type: s,
       sr: 'Sale'
     };
