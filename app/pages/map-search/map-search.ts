@@ -106,7 +106,7 @@ export class MapSearchPage {
    
     this.resetItems();
     //this.listenEvents(); //listen School map event
-    console.log(this.navparm.data);
+    //console.log(this.navparm.data);
 
     
   }
@@ -148,7 +148,7 @@ export class MapSearchPage {
         streetViewControlOptions: {
           position: google.maps.ControlPosition.TOP_RIGHT
         },
-        zoom: 12,
+        zoom: 14,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       }
 

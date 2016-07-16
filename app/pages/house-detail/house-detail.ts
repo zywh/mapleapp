@@ -363,8 +363,9 @@ export class HouseDetailPage implements OnInit {
     //this.nav.push(SchoolSearchPage);
 		let navTransition = this.nav.pop();
 		navTransition.then(() => {
-			let center = new google.maps.LatLng(this.house.latitude, this.house.longitude);
-			this.events.publish('schoolmap:center', center);
+			//let center = new google.maps.LatLng(this.house.latitude, this.house.longitude);
+			//this.events.publish('schoolmap:center', center);
+			this.events.publish('schoolmap:center', {lat:this.house.latitude, lng:this.house.longitude,type:'HOUSE'});
 		}
 		)
 

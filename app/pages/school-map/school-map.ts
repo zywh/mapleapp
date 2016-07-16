@@ -29,7 +29,7 @@ export class SchoolMapPage {
 
 
     @ViewChild('schoolmap') mapElement: ElementRef;
-   
+
 
     mapInitialised: boolean = false;
     mapLoaded: any;
@@ -81,70 +81,73 @@ export class SchoolMapPage {
     ) {
 
         this.resetItems();
-        this.listenEvents();
+        //this.listenEvents();
 
     }
 
 
-    
-  initMap() {
 
-    this.mapInitialised = true;
-    //let mapEle = document.getElementById('map');
-    this.mapleconf.getLocation().then(data => {
-      this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
+    initMap() {
 
-    // Geolocation.getCurrentPosition().then((position) => {
+        this.mapInitialised = true;
+        //let mapEle = document.getElementById('map');
+        this.mapleconf.getLocation().then(data => {
+            this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
 
-      //let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            // Geolocation.getCurrentPosition().then((position) => {
 
-      if (this.navparm.data.lat > 20) {
-        console.log("Redirect from other page with center");
-        // latLng = new google.maps.LatLng(this.navparm.data.lat, this.navparm.data.lng);
-        this.defaultcenter = new google.maps.LatLng(this.navparm.data.lat, this.navparm.data.lng);
-      }
-
-
-      let mapOptions = {
-        //center: latLng,
-        center: this.defaultcenter,
-        minZoom: 4,
-        mapTypeControl: true,
-        mapTypeControlOptions: {
-          style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-          position: google.maps.ControlPosition.TOP_LEFT
-        },
-        zoomControl: true,
-        zoomControlOptions: {
-          position: google.maps.ControlPosition.RIGHT_TOP
-        },
-        scaleControl: true,
-        streetViewControl: true,
-        streetViewControlOptions: {
-          position: google.maps.ControlPosition.TOP_RIGHT
-        },
-        zoom: 12,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      }
-
-      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-      google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(); });
-
-    
-
-    });
+            //let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            console.log(this.navparm.data);
+            if (this.navparm.data.lat > 20) {
+                console.log("Redirect from other page with center");
+                // latLng = new google.maps.LatLng(this.navparm.data.lat, this.navparm.data.lng);
+                this.defaultcenter = new google.maps.LatLng(this.navparm.data.lat, this.navparm.data.lng);
+            }
 
 
-  }
+            let mapOptions = {
+                //center: latLng,
+                center: this.defaultcenter,
+                minZoom: 4,
+                mapTypeControl: true,
+                mapTypeControlOptions: {
+                    style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                    position: google.maps.ControlPosition.TOP_LEFT
+                },
+                zoomControl: true,
+                zoomControlOptions: {
+                    position: google.maps.ControlPosition.RIGHT_TOP
+                },
+                scaleControl: true,
+                streetViewControl: true,
+                streetViewControlOptions: {
+                    position: google.maps.ControlPosition.TOP_RIGHT
+                },
+                zoom: 14,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
 
- 
+            this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+            google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(); });
+            if (this.navparm.data.type == 'HOUSE') {
+                console.log("Map page switch over")
+                this.setLocation(this.defaultcenter, 13, "HOUSE")
+            }
 
-  ngAfterViewInit(): void {
-   
-    let mapLoaded = this.initMap();
-  
 
-  }
+        });
+
+
+    }
+
+
+
+    ngAfterViewInit(): void {
+        console.log("Schoomap ngAfterViewInit");
+        let mapLoaded = this.initMap();
+
+
+    }
 
 
 
@@ -165,16 +168,16 @@ export class SchoolMapPage {
 
 
 
-    listenEvents() {
-        this.events.subscribe('schoolmap:center', (data) => {
+    // listenEvents() {
+    //     this.events.subscribe('schoolmap:center', (data) => {
 
-            setTimeout(() => {
-                this.sviewLoaded = true;
-                //this.nav.pop();
-                this.setLocation(data[0], this.defaultZoom, true);
-            }, 200);
-        });
-    }
+    //         setTimeout(() => {
+    //             this.sviewLoaded = true;
+    //             //this.nav.pop();
+    //             this.setLocation(data[0], this.defaultZoom, true);
+    //         }, 200);
+    //     });
+    // }
 
     setCenter(isMarker) {
 
@@ -288,7 +291,7 @@ export class SchoolMapPage {
                     {
                         text: '周边房源',
                         handler: () => {
-                            this.events.publish('map:center', {lat:lat,lng:lng,type:'SCHOOL'});
+                            this.events.publish('map:center', { lat: lat, lng: lng, type: 'SCHOOL' });
                             // this.events.publish('map:center', point);
                             //this.nav.push(MapSearchPage, { lat: lat, lng: lng });
                         }
@@ -366,7 +369,7 @@ export class SchoolMapPage {
 
     changeMap() {
         console.log("Change Map: ");
-       // google.maps.event.trigger(this.map, 'resize');
+        // google.maps.event.trigger(this.map, 'resize');
 
         this.clearAll(this.markerArray); //clear marker
         let loading = this.loadingc.create({
