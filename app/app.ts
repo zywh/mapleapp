@@ -122,12 +122,12 @@ class MapleApp {
     this.events.subscribe('map:center', (data) => {
 
       setTimeout(() => {
-        this.nav.setRoot(TabsPage, { tabIndex: 1, rootParms: data });
+        this.nav.setRoot(TabsPage, { tabIndex: 1, rootParms: data[0] });
       }, 300);
     });
     this.events.subscribe('schoolmap:center', (data) => {
       setTimeout(() => {
-        this.nav.setRoot(TabsPage, { tabIndex: 2, rootParms: data });
+        this.nav.setRoot(TabsPage, { tabIndex: 2, rootParms: data[0] });
       }, 300);
 
 

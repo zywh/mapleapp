@@ -288,9 +288,9 @@ export class SchoolMapPage {
                     {
                         text: '周边房源',
                         handler: () => {
+                            this.events.publish('map:center', {lat:lat,lng:lng,type:'SCHOOL'});
                             // this.events.publish('map:center', point);
-                            // this.events.publish('map:center', point);
-                            this.nav.push(MapSearchPage, { lat: lat, lng: lng });
+                            //this.nav.push(MapSearchPage, { lat: lat, lng: lng });
                         }
                     }
                 ]

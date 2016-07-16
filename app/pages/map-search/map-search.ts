@@ -106,8 +106,9 @@ export class MapSearchPage {
    
     this.resetItems();
     //this.listenEvents(); //listen School map event
-     
+    console.log(this.navparm.data);
 
+    
   }
 
  
@@ -122,10 +123,9 @@ export class MapSearchPage {
     // Geolocation.getCurrentPosition().then((position) => {
 
       //let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
+      // console.log("initmap:" + this.navparm['lat']);
       if (this.navparm.data.lat > 20) {
         console.log("Redirect from other page with center");
-        // latLng = new google.maps.LatLng(this.navparm.data.lat, this.navparm.data.lng);
         this.defaultcenter = new google.maps.LatLng(this.navparm.data.lat, this.navparm.data.lng);
       }
 
@@ -154,8 +154,12 @@ export class MapSearchPage {
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
       google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(); });
-
-     return this.map;
+      //Add marker if it's redirected from school page
+      if (this.navparm.data.type == 'SCHOOL'){
+        console.log("SChool page switch over")
+        this.setLocation(this.defaultcenter,13,"SCHOOL")
+      }
+    
 
     });
 
@@ -166,9 +170,30 @@ export class MapSearchPage {
 
   ngAfterViewInit(): void {
      let mapLoaded = this.initMap();
+     console.log("NG Afterviewinit")
   }
 
 
+   ionViewWillEnter(){
+        console.log("Mappage will enter");
+        
+    }
+
+    ionViewDidEnter(){
+         console.log("Mappage did enter");
+    }
+
+     ionViewDidLeave(){
+         console.log("Mappage Did Leave");
+    }
+
+     ionViewWillLeave(){
+         console.log("Mappage will Leave");
+    }
+
+     ionViewWillUnload(){
+         console.log("Mappage will Unload");
+    }
 
   //change center if school is selected from school map page
   // listenEvents() {
@@ -225,11 +250,23 @@ export class MapSearchPage {
   openHouseList(ev) {
 
     if ((this.markerType == 'house') && (this.totalCount > 0)) {
-      this.nav.push(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost })
+      //this.nav.push(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost })
+      let modal = this.modalc.create(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost });
+        modal.onDidDismiss(data => {
+            //this.selectSchool = data;
+
+        });
+        modal.present();
 
     } else {
 
-      this.nav.push(HouselistSearch, { opts: this.selectOptions, bounds: this._bounds });
+      //this.nav.push(HouselistSearch, { opts: this.selectOptions, bounds: this._bounds });
+      let modal = this.modalc.create(HouselistSearch, { opts: this.selectOptions, bounds: this._bounds });
+        modal.onDidDismiss(data => {
+            //this.selectSchool = data;
+
+        });
+        modal.present();
 
 
     }

@@ -50,8 +50,9 @@
 </ion-content>
 <ion-footer>
 <!--<div *ngIf="currentDiv == 'listButton'" style="z-index:100;opacity:0.8;">-->
+  <div *ngIf="currentDiv == 'listButton'" style="opacity:0.8;">
   <button *ngIf="currentDiv == 'listButton'" fab fab-bottom fab-center (click)="openSchoolList()">
     <ion-icon name="list" is-active="false"></ion-icon>
   </button>
-<!--</div>-->
+</div>
 </ion-footer>
