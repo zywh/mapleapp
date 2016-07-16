@@ -10,9 +10,12 @@
         <button  outline [solid]="!selectOptions.selectListType" (click)="selectOptions.selectListType = false"><ion-icon name="list"></ion-icon>列表</button>
     </ion-buttons>-->
     
-    <ion-buttons right>
+    <ion-buttons left>
         <button (click)="resetSelections()"> 复位</button>
     </ion-buttons>
+    
+    <ion-title>搜索条件</ion-title>
+
     <ion-buttons right>
         <button (click)="dismiss()">确认</button>
     </ion-buttons>

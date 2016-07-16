@@ -8,6 +8,22 @@ $schoolmarker: 24px;
 .school-map {
   
  
+  #please-connect {
+      position: absolute;
+      background-color: #000;
+      opacity: 0.5;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+  }
+  #please-connect p {
+      color: #fff;
+      font-weight: bold;
+      text-align: center;
+      position: relative;
+      font-size: 1.6em;
+      top: 30%;
+  }
  
   
   #schoolmap {
@@ -15,17 +31,11 @@ $schoolmarker: 24px;
     height: 100%;
  
   }
-
-  .bar-button-default {
-      padding: 0 0 0 0px;
-      min-width: 0;
-      box-shadow: 0 0 0 0;
-    }
     
   
-  .btn-options {
-  font-size: 14px; /* option button font size*/
-  }
+  // .btn-options {
+  // font-size: 14px; /* option button font size*/
+  // }
   
   ion-label {
     margin: 0;

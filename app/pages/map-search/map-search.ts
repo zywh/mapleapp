@@ -7,7 +7,7 @@ import {HouselistSearch} from '../houselist-search/houselist-search';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {Observable} from 'rxjs/Observable';
-import {GoogleMaps} from '../../providers/google-maps/google-maps';
+//import {GoogleMaps} from '../../providers/google-maps/google-maps';
 import {SelectOptionModal} from './map-option-modal';
 import {MapHouselist} from './map-houselist';
 //import {ConferenceData} from '../../providers/conference-data';
@@ -28,15 +28,14 @@ interface selectOptionsObj {
 
 @Component({
   templateUrl: 'build/pages/map-search/map-search.html',
-  providers: [GoogleMaps]
+ // providers: [GoogleMaps]
 })
 
 
 export class MapSearchPage {
 
   @ViewChild('map') mapElement: ElementRef;
-  @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
-
+ 
   private queryText: String = '';
   mapInitialised: boolean = false;
   mapLoaded: any;
@@ -91,7 +90,6 @@ export class MapSearchPage {
 
   constructor(
     public nav: NavController,
-    public maps: GoogleMaps,
     public platform: Platform,
     private mapleRestData: MapleRestData,
     public connectivityService: Connectivity,
@@ -105,58 +103,36 @@ export class MapSearchPage {
     private loadingc: LoadingController,
     private events: Events
   ) {
-    //this.searchQuery = '';
-
+   
     this.resetItems();
-    this.listenEvents(); //listen School map event
-    this.loadRichMarker();
-    //  this.pleaseConnect = pleaseConnect;
-  
+    //this.listenEvents(); //listen School map event
+     
 
   }
 
-  loadRichMarker() {
-    let script = document.createElement("script");
-    script.src = "extjs/richmarker.js";
-    document.body.appendChild(script);
-  }
-
-  disableMap(): void {
-
-    if (this.pleaseConnect) {
-      this.pleaseConnect.nativeElement.style.display = "block";
-
-    }
-
-  }
-
-  enableMap(): void {
-
-    if (this.pleaseConnect) {
-      this.pleaseConnect.nativeElement.style.display = "none";
-    }
-
-  }
+ 
 
   initMap() {
 
     this.mapInitialised = true;
     //let mapEle = document.getElementById('map');
-    // this.mapleconf.getLocation().then(data => {
-    //   this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
+    this.mapleconf.getLocation().then(data => {
+      this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
 
-    Geolocation.getCurrentPosition().then((position) => {
+    // Geolocation.getCurrentPosition().then((position) => {
 
-      let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-   
+      //let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
       if (this.navparm.data.lat > 20) {
         console.log("Redirect from other page with center");
-        latLng = new google.maps.LatLng(this.navparm.data.lat, this.navparm.data.lng);
+        // latLng = new google.maps.LatLng(this.navparm.data.lat, this.navparm.data.lng);
+        this.defaultcenter = new google.maps.LatLng(this.navparm.data.lat, this.navparm.data.lng);
       }
-   
+
 
       let mapOptions = {
-        center: latLng,
+        //center: latLng,
+        center: this.defaultcenter,
         minZoom: 4,
         mapTypeControl: true,
         mapTypeControlOptions: {
@@ -179,134 +155,45 @@ export class MapSearchPage {
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
       google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(); });
 
-      //this.mapLoadedObserver.next(true);
+     return this.map;
 
     });
 
 
   }
 
-  loadGoogleMaps(): void {
-
-    if (typeof google == "undefined" || typeof google.maps == "undefined") {
-
-      console.log("Google maps JavaScript needs to be loaded.");
-      this.disableMap();
-
-      if (this.connectivityService.isOnline()) {
-
-        window['mapInit'] = () => {
-          this.initMap();
-          this.enableMap();
-        }
-
-        let script = document.createElement("script");
-        script.id = "googleMaps";
-        script.src = "http://ditu.google.cn/maps/api/js?&amp;libraries=places&amp;language=zh-cn&callback=mapInit";
-        document.body.appendChild(script);
-
-      }
-    }
-    else {
-
-      if (this.connectivityService.isOnline()) {
-        this.initMap();
-        this.enableMap();
-      }
-      else {
-        this.disableMap();
-      }
-
-    }
-
-    this.addConnectivityListeners();
-
-  }
-
-  addConnectivityListeners(): void {
-
-    document.addEventListener('online', () => {
-      setTimeout(() => {
-        if (typeof google == "undefined" || typeof google.maps == "undefined") {
-          this.loadGoogleMaps();
-        }
-        else {
-          if (!this.mapInitialised) {
-            this.initMap();
-          }
-
-          this.enableMap();
-        }
-
-      }, 2000);
-
-    }, false);
-
-    document.addEventListener('offline', () => {
-
-      console.log("offline");
-
-      this.disableMap();
-
-    }, false);
-
-  }
-  init(): any {
-
-    //this.mapElement = mapElement;
-    //this.pleaseConnect = pleaseConnect;
-
-    this.mapLoaded = Observable.create(observer => {
-      this.mapLoadedObserver = observer;
-    });
-
-    this.loadGoogleMaps();
-
-    return this.mapLoaded;
-
-  }
+  
 
   ngAfterViewInit(): void {
-    //  this.mapLoaded = Observable.create(observer => {
-    //   this.mapLoadedObserver = observer;
-    // });
-     let mapLoaded = this.init(); 
-   // this.loadGoogleMaps();
-
-
+     let mapLoaded = this.initMap();
   }
 
 
 
   //change center if school is selected from school map page
-  listenEvents() {
-    this.events.subscribe('map:center', (data) => {
-      this.mviewLoaded = true;
-      let center = data[0];
-      setTimeout(() => {
+  // listenEvents() {
+  //   this.events.subscribe('map:center', (data) => {
+  //     this.mviewLoaded = true;
+  //     let center = data[0];
+  //     setTimeout(() => {
 
-        this.nav.pop();//pop house detail page
-        let marker = new google.maps.Marker({
-          position: center,
-          map: this.map,
-          draggable: false,
-        });
-        this.setLocation(center, this.defaultZoom, true);
-      }, 50);
+  //       this.nav.pop();//pop house detail page
+  //       let marker = new google.maps.Marker({
+  //         position: center,
+  //         map: this.map,
+  //         draggable: false,
+  //       });
+  //       this.setLocation(center, this.defaultZoom, true);
+  //     }, 50);
 
-    });
-    this.events.subscribe('schoolmap:center', (data) => {
-      setTimeout(() => {
-        this.nav.pop();
-      }, 50);
-    });
-  }
-  // optionChange(event) {
-  //   this.currentDiv = '';
-  //   this.selectOptions = event;
-  //   this.maps.changeMap(this.selectOptions);
-
+  //   });
+  //   this.events.subscribe('schoolmap:center', (data) => {
+  //     setTimeout(() => {
+  //       this.nav.pop();
+  //     }, 50);
+  //   });
   // }
+ 
   openModal(opt) {
     let modal = this.modalc.create(SelectOptionModal, { data: opt });
     modal.onDidDismiss(data => {
@@ -320,41 +207,6 @@ export class MapSearchPage {
     modal.present();
   }
 
-  //first time view is entered. add listener
-  // ionViewWillEnter() {
-
-  //     if (!this.mviewLoaded) {
-  //     setTimeout(() => {
-  //       console.log("First Time Will enter view Add Google Map listener")
-  //       this.mviewLoaded = true;
-  //       this.setCenter(false);
-  //       google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(); });
-  //       google.maps.event.addListener(this.map, 'click', () => {
-  //         //close all open POP UP options/list etc
-  //         this._zone.run(() => {
-  //           this.currentDiv = '';
-  //           this.queryText = '';
-
-  //         });
-
-  //       });
-  //     }, 50);
-  //   }
-
-  // }
-  // ionViewDidEnter() {
-  //    console.log("Map View did entered");
-  //       if ((this.markerArray.length == 0) && (!this.mviewLoaded)) {
-  //           setTimeout(() => {
-  //               //console.log("School Map is entered No marker First Time. Zoom and center")
-  //              this.map.setZoom(19); //need keep zoom different to have calling loading properly to avoid blank
-  //              this.setCenter(false);
-  //           }, 100);
-  //       }
-  // }
-
-
-  // }
 
   getResult(url) {
     this.mapleRestData.load(url, this.parms).subscribe(
@@ -362,41 +214,6 @@ export class MapSearchPage {
 
     )
   }
-
-
-
-
-  // ionViewLoaded() {
-  //  console.log("Map ViewLoaded");
-  //   setTimeout(() => {
-  //     let mapEle = document.getElementById('map');
-
-  //     this.map = new google.maps.Map(mapEle, {
-
-  //       center: this.defaultcenter,
-  //       minZoom: 4,
-  //       mapTypeControl: true,
-  //       mapTypeControlOptions: {
-  //         style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-  //         position: google.maps.ControlPosition.TOP_LEFT
-  //       },
-  //       zoomControl: true,
-  //       zoomControlOptions: {
-  //         position: google.maps.ControlPosition.RIGHT_TOP
-  //       },
-  //       scaleControl: true,
-  //       streetViewControl: true,
-  //       streetViewControlOptions: {
-  //         position: google.maps.ControlPosition.TOP_RIGHT
-  //       },
-  //       zoom: 12
-  //     });
-
-  //   }, 50); //wait for switch to avoid blank map
-
-
-
-  //}
 
 
 

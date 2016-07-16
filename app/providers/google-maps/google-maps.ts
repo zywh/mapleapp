@@ -24,6 +24,7 @@ export class GoogleMaps {
   mapLoadedObserver: any;
   currentMarker: any;
   apiKey: string;
+  mapOptions: any;
 
   constructor(
     public connectivityService: Connectivity,
@@ -92,7 +93,8 @@ export class GoogleMaps {
 
   }
 
-  initMap() {
+
+    initMap() {
 
     this.mapInitialised = true;
 
@@ -100,7 +102,7 @@ export class GoogleMaps {
 
       let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-      let mapOptions = {
+      this.mapOptions = {
         center: latLng,
         minZoom: 4,
         mapTypeControl: true,
@@ -120,8 +122,8 @@ export class GoogleMaps {
         zoom: 12,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       }
-
-      this.map = new google.maps.Map(this.mapElement, mapOptions);
+      
+     this.mapInit(this.mapElement,this.mapOptions);
      // google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(this.selectOptions); });
 
       //this.mapLoadedObserver.next(true);
@@ -129,9 +131,13 @@ export class GoogleMaps {
     });
 
   }
-  getMap(){
-    return this.map;
+
+  mapInit(el,options){
+     
+      this.map = new google.maps.Map(el, options)
+
   }
+  
   disableMap(): void {
 
     if(this.pleaseConnect){

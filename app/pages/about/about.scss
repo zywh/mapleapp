@@ -1,13 +1,8 @@
 .nybanner_about{ background:url(../../img/maple/c1.jpg) center center no-repeat; background-size: cover;   height: 140px;}
 
 .about_page{
-  .ion-icon {
-  color: color($colors, primary);
-  width: 20px;
-  }
+  
  
-/* CSS Document */
-img{ border:0; max-width: 100%;  height: auto;  width: auto\9; /* ie8 */}
 
 /*枫之都介绍*/
 .fyxq{ margin-top:30px;}
@@ -81,47 +76,4 @@ img{ border:0; max-width: 100%;  height: auto;  width: auto\9; /* ie8 */}
 
 
   
-}
-.about-header {
-  background-color: #434954;
-  padding: 16px;
-  width: 100%;
-  min-height: 150px;
-  text-align: center;
-}
-
-.about-header img {
-  max-width: 200px;
-  min-height: 115px;
-  margin-left: -15px;
-  padding: 25px 0 20px 0;
-}
-
-.about-info p {
-  color: #697072;
-  text-align: left;
-}
-
-.about-info div {
-  padding: 5px;
-  text-align: left;
-  font-size: 1.5rem;
-}
-
-.about-info ion-icon {
-  color: color($colors, primary);
-  width: 20px;
-}
-
-.ios .about-info {
-  text-align: center;
-}
-
-.ios .about-info div {
-  display: inline-block;
-}
-
-.ios .about-info ion-icon {
-  width: auto;
-  margin-right: 10px;
 }

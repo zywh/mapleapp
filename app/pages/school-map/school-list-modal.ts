@@ -1,6 +1,4 @@
 import {ViewController, NavParams, Events} from 'ionic-angular';
-import {Geolocation} from 'ionic-native';
-
 import {Component} from '@angular/core';;
 
 

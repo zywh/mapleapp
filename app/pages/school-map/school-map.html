@@ -10,14 +10,14 @@
  
 
  <ion-buttons left>
-   <button class="bar-button-default" (click)="openModal(selectSchool)">
+   <button  (click)="openModal(selectSchool)">
         <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
       </button>
   </ion-buttons>    
    <ion-searchbar hideCancelButton [(ngModel)]="searchQuery"  (ionInput)="getItems($event)"
         placeholder="城市/学校"></ion-searchbar>
   <ion-buttons end>
-    <button class="bar-button-default" (click)="setCenter(true)">
+    <button  (click)="setCenter(true)">
         <ion-icon ios="ios-locate-outline" md="md-locate"></ion-icon>
     </button>
    </ion-buttons>
@@ -39,7 +39,12 @@
 
   </div>
 
-  <div id="schoolmap"></div>
+<!--  
+	<div #schoolCon id="schoolCon">
+		<p>Please connect to the Internet...</p>
+	</div>-->
+
+  <div #schoolmap id="schoolmap"></div>
 
 
 </ion-content>
