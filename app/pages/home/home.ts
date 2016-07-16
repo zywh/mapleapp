@@ -73,7 +73,7 @@ export class HomePage {
 
     }
     // this.mapleconf.getLocation().then(data => {
-
+    console.log(this.data);
     let swLat = this.data['lat'] - range;
     let swLng = this.data['lng'] - range;
     let neLat = this.data['lat'] + range;

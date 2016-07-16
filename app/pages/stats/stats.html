@@ -6,11 +6,7 @@
     </button>
     <ion-title>房源数据统计</ion-title>
   </ion-navbar>
-</ion-header>
-
-<ion-content class="stats">
-
-
+  
 
   <ion-toolbar [attr.primary]="isAndroid ? '' : null">
     <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
@@ -27,7 +23,12 @@
 
     </ion-segment>
   </ion-toolbar>
-  <div class="spacer" style="width: 284.545px; height: 17.9886px;"></div>
+</ion-header>
+
+<ion-content class="stats">
+<!--
+
+  <div class="spacer" style="width: 284.545px; height: 17.9886px;"></div>-->
 
   <div [ngSwitch]="section">
     <div *ngSwitchCase="'toronto'">

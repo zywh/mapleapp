@@ -231,7 +231,7 @@ export class StatsPage {
 
                 for (let location in data) {
                     let value = data[location]; // Hamilton,Vancouver etc
-                    console.log(location);
+                    //console.log(location);
                     let chartdata = [];
                     //Loop through each month
                     //console.log(value);

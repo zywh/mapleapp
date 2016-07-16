@@ -6,7 +6,7 @@
     <ion-title>关于我们</ion-title>
   </ion-navbar>
 
-  <ion-toolbar>
+  <ion-toolbar [attr.primary]="isAndroid ? '' : null">
       <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
           <ion-segment-button value="about">
             关于
