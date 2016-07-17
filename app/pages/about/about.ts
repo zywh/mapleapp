@@ -15,7 +15,7 @@ interface Post {
   templateUrl: 'build/pages/about/about.html',
  
 })
-export class AboutPage implements OnInit {
+export class AboutPage  {
  
   private section: string = "about";
   private isAndroid: boolean = false;
