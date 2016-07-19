@@ -650,10 +650,21 @@ export class MapSearchPage {
 
             }
           } //End of if HOUSE
-        });
+        
+      
+    },
+    error => {
+      
+     this.restError(loading);
+    }
+    );
 
       //END of Data Subscribe
     })
+  }
+
+  restError(loading){
+    loading.dismiss();
   }
 
   //End of MAP import function
