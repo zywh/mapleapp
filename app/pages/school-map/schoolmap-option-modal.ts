@@ -17,7 +17,7 @@ interface selectOptionsObj {
     templateUrl: 'build/pages/school-map/schoolmap-option-modal.html'
 
 })
-export class SelectOptionModal {
+export class SchoolSelectOptionModal {
     private selectOptions: selectOptionsObj;
   
     constructor(

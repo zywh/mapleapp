@@ -7,7 +7,7 @@ import {MapSearchPage} from '../map-search/map-search';
 //import {GoogleMaps} from '../../providers/google-maps/google-maps';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
-import {SelectOptionModal} from './schoolmap-option-modal';
+import {SchoolSelectOptionModal} from './schoolmap-option-modal';
 import {SchoolListModal} from './school-list-modal';
 
 declare var RichMarker: any;
@@ -158,7 +158,7 @@ export class SchoolMapPage {
 
     }
     openModal(opt) {
-        let modal = this.modalc.create(SelectOptionModal, { data: opt });
+        let modal = this.modalc.create(SchoolSelectOptionModal, { data: opt });
         modal.onDidDismiss(data => {
             this.selectSchool = data;
             this.changeMap();
