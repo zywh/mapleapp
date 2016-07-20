@@ -5,25 +5,21 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-<ion-navbar >
+<ion-toolbar  no-border-bottom>
+	 <ion-buttons left>
+   <button  (click)="nav.pop()">
+    <ion-icon outline name="arrow-back" ></ion-icon>
+  </button>
+  </ion-buttons>
   <ion-title>{{"MLS：" + parms.id}}</ion-title>
 	<ion-buttons end>
   <button  (click)="share()">
   <ion-icon isActive="false" name="share" ></ion-icon>
   </button>
   </ion-buttons>
-</ion-navbar>
-</ion-header>
-
-<ion-content class="house-detail">
-
-  <ion-slides #photo_slider [options]="swiperOptions" class="swiper-container">
-	<ion-slide *ngFor="let photo of photos">
-      <img [src]="photoUrl(photo)" class="slide-image"/>
-    </ion-slide>
-  </ion-slides>
-  
-  <ion-toolbar [attr.primary]="isAndroid ? '' : null">
+</ion-toolbar>
+ 
+  <ion-toolbar [attr.primary]="isAndroid ? '' : null"  no-border-bottom>
     <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
       <ion-segment-button value="school" (ionSelect)="gotoCityStats()">
         社区
@@ -36,6 +32,16 @@
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
+</ion-header>
+
+<ion-content class="house-detail">
+
+  <ion-slides #photo_slider [options]="swiperOptions" class="swiper-container">
+	<ion-slide *ngFor="let photo of photos">
+      <img [src]="photoUrl(photo)" class="slide-image"/>
+    </ion-slide>
+  </ion-slides>
+ 
 <!--  
 	<div [ngSwitch]="section">
     <div *ngSwitchCase="'school'">

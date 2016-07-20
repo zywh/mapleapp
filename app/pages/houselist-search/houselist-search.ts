@@ -88,7 +88,7 @@ export class HouselistSearch {
 
 
     gotoHouseDetail(mls) {
-       this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList });
+       this.nav.pop().then(()=> this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList }))
     }
     pagePre() {
         --this.pageIndex;

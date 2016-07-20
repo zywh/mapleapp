@@ -1,4 +1,4 @@
-import {NavParams, ViewController, NavController, Events} from 'ionic-angular';
+import {NavParams,  NavController, Events} from 'ionic-angular';
 import {Component} from '@angular/core';
 import {HouseDetailPage} from '../house-detail/house-detail';
 
@@ -14,9 +14,8 @@ export class MapHouselist {
 
     constructor(
         private params: NavParams,
-        private nav: NavController,
-        private events: Events,
-        private viewCtrl: ViewController
+        private nav: NavController
+       
     ) {
         //this.viewCtrl = viewCtrl;
         console.log(this.params.data);
@@ -26,7 +25,8 @@ export class MapHouselist {
     }
     
     gotoHouseDetail(mls) {
-        this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList });
+        this.nav.pop().then(()=> this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList }))
+     
     }
 
 

@@ -119,13 +119,12 @@ export class MapSearchPage {
     private events: Events
   ) {
 
-    this.resetItems();
+    
     //this.listenEvents(); //listen School map event
     console.log(this.navparm.data);
     this.mapType = this.navparm.data.pageType;
-
-
-
+    this.resetItems();
+    this.setMapType(this.mapType);
 
   }
 
@@ -138,13 +137,9 @@ export class MapSearchPage {
     this.mapleconf.getLocation().then(data => {
       this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
 
-      // Geolocation.getCurrentPosition().then((position) => {
-
-      //let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-      // console.log("initmap:" + this.navparm['lat']);
-      if (this.navparm.data.lat > 20) {
+      if (this.navparm.data.parms.lat > 20) {
         console.log("Redirect from other page with center");
-        this.defaultcenter = new google.maps.LatLng(this.navparm.data.lat, this.navparm.data.lng);
+        this.defaultcenter = new google.maps.LatLng(this.navparm.data.parms.lat, this.navparm.data.parms.lng);
       }
 
 
@@ -175,11 +170,11 @@ export class MapSearchPage {
       google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(this.mapType); });
 
 
-
       //Add marker if it's redirected from school page
-      if (this.navparm.data.type != '') {
-        console.log("SChool page switch over")
-        this.setLocation(this.defaultcenter, 13, this.navparm.data.type)
+      console.log(this.navparm.data.parms.type);
+      if (this.navparm.data.parms.type != 'NONE') {
+        console.log("SChool page switch over");
+        this.setLocation(this.defaultcenter, 13, this.navparm.data.parms.type)
       }
 
 
@@ -217,31 +212,9 @@ export class MapSearchPage {
     console.log("Mappage will Unload");
   }
 
-  //change center if school is selected from school map page
-  // listenEvents() {
-  //   this.events.subscribe('map:center', (data) => {
-  //     this.mviewLoaded = true;
-  //     let center = data[0];
-  //     setTimeout(() => {
-
-  //       this.nav.pop();//pop house detail page
-  //       let marker = new google.maps.Marker({
-  //         position: center,
-  //         map: this.map,
-  //         draggable: false,
-  //       });
-  //       this.setLocation(center, this.defaultZoom, true);
-  //     }, 50);
-
-  //   });
-  //   this.events.subscribe('schoolmap:center', (data) => {
-  //     setTimeout(() => {
-  //       this.nav.pop();
-  //     }, 50);
-  //   });
-  // }
 
   openModal() {
+    console.log("Page:"+ this.optionPage)
     let modal = this.modalc.create(this.optionPage, { data: this.selectOptions });
     modal.onDidDismiss(data => {
       this.selectOptions = data;
@@ -275,20 +248,12 @@ export class MapSearchPage {
       if ((this.markerType == 'house') && (this.totalCount > 0)) {
         //this.nav.push(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost })
         let modal = this.modalc.create(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost });
-        modal.onDidDismiss(data => {
-          //this.selectSchool = data;
-
-        });
-        modal.present();
+         modal.present();
 
       } else {
 
         //this.nav.push(HouselistSearch, { opts: this.selectOptions, bounds: this._bounds });
         let modal = this.modalc.create(HouselistSearch, { opts: this.selectOptions, bounds: this._bounds });
-        modal.onDidDismiss(data => {
-          //this.selectSchool = data;
-
-        });
         modal.present();
 
 
@@ -296,24 +261,16 @@ export class MapSearchPage {
     } else {
 
       let modal = this.modalc.create(SchoolListModal, { data: this.schoolList });
-      modal.onDidDismiss(data => {
-        //this.selectSchool = data;
-
-      });
       modal.present();
     }
 
   }
 
   //select autocomplete action
-  resetItems() {
-    this.cityItems = [];
-    this.addressItems = [];
-    this.mlsItems = [];
-    this.schoolItems = [];
 
-
-    if (this.mapType == 0) {
+  setMapType(type){
+    
+    if (type == 0) {
       //init house page parm
       this.selectOptions = {
         selectSR: true,
@@ -341,6 +298,13 @@ export class MapSearchPage {
     }
 
 
+  }
+
+  resetItems() {
+    this.cityItems = [];
+    this.addressItems = [];
+    this.mlsItems = [];
+    this.schoolItems = [];
 
   }
 

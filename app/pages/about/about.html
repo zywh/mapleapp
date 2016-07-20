@@ -1,12 +1,12 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar  no-border-bottom>
     <button menuToggle>
     <ion-icon name="menu"></ion-icon>
   </button>
     <ion-title>关于我们</ion-title>
   </ion-navbar>
 
-  <ion-toolbar [attr.primary]="isAndroid ? '' : null">
+  <ion-toolbar [attr.primary]="isAndroid ? '' : null" >
       <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
           <ion-segment-button value="about">
             关于
