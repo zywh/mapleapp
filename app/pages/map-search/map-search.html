@@ -15,7 +15,7 @@
     placeholder="城市/地址/MLS#"></ion-input>-->
 
     <ion-searchbar primary  [(ngModel)]="queryText" (ionInput)="getItems($event)" 
-    placeholder="城市/地址/MLS#"></ion-searchbar>
+    [placeholder]="(mapType == 0)?'城市/地址/MLS#':'城市/学校'"></ion-searchbar>
   
   <ion-buttons end>
     <button (click)="setCenter(true)">
@@ -39,6 +39,10 @@
       <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }},{{item.city}}</span></button>
       <ion-badge item-right>地址{{item.price}}万</ion-badge>
     </ion-item>
+    <ion-item padding *ngFor="let item of schoolItems" (click)="itemTapped(item)">
+      <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.school }}</span></button>
+      <ion-badge item-right>排名:{{item.paiming}}</ion-badge>
+    </ion-item>
   </div>
 
 <!--
@@ -54,7 +58,7 @@
 <ion-footer>
 <!--<div *ngIf="currentDiv == 'listButton'" style="z-index:100;opacity:0.8;">-->
 <div style="opacity:0.8;">
-  <button fab fab-bottom fab-center (click)="openHouseList($event)">
+  <button fab fab-bottom fab-center (click)="openList($event)">
     <ion-icon name="list" is-active="false"></ion-icon>
   </button>
 </div>

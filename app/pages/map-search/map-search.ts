@@ -266,29 +266,42 @@ export class MapSearchPage {
     this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList });
   }
 
-  openHouseList(ev) {
+  openList(ev) {
 
-    if ((this.markerType == 'house') && (this.totalCount > 0)) {
-      //this.nav.push(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost })
-      let modal = this.modalc.create(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost });
-      modal.onDidDismiss(data => {
-        //this.selectSchool = data;
+    if (this.mapType == 0) {
 
-      });
-      modal.present();
 
+      if ((this.markerType == 'house') && (this.totalCount > 0)) {
+        //this.nav.push(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost })
+        let modal = this.modalc.create(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost });
+        modal.onDidDismiss(data => {
+          //this.selectSchool = data;
+
+        });
+        modal.present();
+
+      } else {
+
+        //this.nav.push(HouselistSearch, { opts: this.selectOptions, bounds: this._bounds });
+        let modal = this.modalc.create(HouselistSearch, { opts: this.selectOptions, bounds: this._bounds });
+        modal.onDidDismiss(data => {
+          //this.selectSchool = data;
+
+        });
+        modal.present();
+
+
+      }
     } else {
 
-      //this.nav.push(HouselistSearch, { opts: this.selectOptions, bounds: this._bounds });
-      let modal = this.modalc.create(HouselistSearch, { opts: this.selectOptions, bounds: this._bounds });
+      let modal = this.modalc.create(SchoolListModal, { data: this.schoolList });
       modal.onDidDismiss(data => {
         //this.selectSchool = data;
 
       });
       modal.present();
-
-
     }
+
   }
 
   //select autocomplete action
@@ -612,10 +625,11 @@ export class MapSearchPage {
 
       let restUrl = data.mapHouseRest;
       if (type == 1) {
-        restUrl = data.getSchoolmapDataRest
+        restUrl = data.getSchoolmapDataRest;
       }
       this.mapleRestData.load(restUrl, mapParms).subscribe(
         data => {
+          console.log("MapType:" + type)
           loading.dismiss();
           if (type == 0) {
             this.processHouseData(data);
