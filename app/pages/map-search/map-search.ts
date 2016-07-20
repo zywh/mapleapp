@@ -121,7 +121,8 @@ export class MapSearchPage {
 
     this.resetItems();
     //this.listenEvents(); //listen School map event
-    //console.log(this.navparm.data);
+    console.log(this.navparm.data);
+    this.mapType = this.navparm.data.pageType;
 
 
 
