@@ -34,5 +34,23 @@ export class Connectivity {
     }
   }
 
+  loadJs(){
+       window['mapInit'] = () => {
+      
+        let script = document.createElement("script");
+        script.src = "extjs/richmarker.js";
+        console.log("Load Richmarker JS")
+        document.body.appendChild(script);
+
+
+      }
+      let script = document.createElement("script");
+      script.id = "googleMaps";
+      script.src = "http://ditu.google.cn/maps/api/js?&amp;libraries=places&amp;language=zh-cn&callback=mapInit";
+      document.body.appendChild(script);
+  }
+
+  
+
 }
 

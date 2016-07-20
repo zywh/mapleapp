@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {NavController,AlertController} from 'ionic-angular';
 import {TabsPage} from '../tabs/tabs';
 import {Connectivity} from '../../providers/connectivity/connectivity';
 
@@ -13,19 +13,43 @@ import {Connectivity} from '../../providers/connectivity/connectivity';
   templateUrl: 'build/pages/network-error/network-error.html',
 })
 export class NetworkErrorPage {
-  constructor(public nav: NavController,private connectivity: Connectivity) {
+  constructor(public nav: NavController,
+  private connectivity: Connectivity,
+  private alertc: AlertController
+  ) {
     this.addConnectivityListeners();
+    this.presentError();
   }
 
+  presentError() {
+  let alert = this.alertc.create({
+    title: '警告',
+    message: '网络连接错误，重试?',
+    buttons: [
+      {
+        text: '取消',
+        role: 'cancel',
+        handler: () => {
+          alert.dismiss();
+        }
+      },
+      {
+        text: '重试',
+        handler: () => {
+          alert.dismiss().then(res=> this.refresh())
+        }
+      }
+    ]
+  });
+  alert.present();
+}
+
  refresh() {
-    this.addConnectivityListeners();
+    //this.addConnectivityListeners();
     console.log("Google maps JavaScript needs to be loaded.");
     if (this.connectivity.isOnline()) {
-      console.log("online, loading map");
-      let script = document.createElement("script");
-      script.id = "googleMaps";
-      script.src = "http://ditu.google.cn/maps/api/js?&amp;libraries=places&amp;language=zh-cn";
-      document.body.appendChild(script);
+      
+      this.connectivity.loadJs();
       this.nav.setRoot(TabsPage);
       
     } else {
@@ -40,14 +64,15 @@ export class NetworkErrorPage {
     let onOnline = function () {
       setTimeout(function () {
         if (typeof google == "undefined" || typeof google.maps == "undefined") {
-          let script = document.createElement("script");
-          //script.id = "googleMaps";
-          script.src = "http://ditu.google.cn/maps/api/js?&amp;libraries=places&amp;language=zh-cn";
-          document.body.appendChild(script);
+          this.connectivity.loadJs();
+          // let script = document.createElement("script");
+          // //script.id = "googleMaps";
+          // script.src = "http://ditu.google.cn/maps/api/js?&amp;libraries=places&amp;language=zh-cn";
+          // document.body.appendChild(script);
 
-        } else {
+        } 
           this.nav.setRoot(TabsPage);
-        }
+        
       }, 2000);
     };
 

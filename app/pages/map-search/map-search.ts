@@ -664,8 +664,30 @@ export class MapSearchPage {
   }
 
   restError(loading){
-    loading.dismiss();
+    loading.dismiss().then(res=> this.presentError());
   }
+  presentError() {
+  let alert = this.alertc.create({
+    title: '警告',
+    message: '数据装载超时，重试?',
+    buttons: [
+      {
+        text: '取消',
+        role: 'cancel',
+        handler: () => {
+          alert.dismiss();
+        }
+      },
+      {
+        text: '重试',
+        handler: () => {
+          alert.dismiss().then(res=> this.changeMap());
+        }
+      }
+    ]
+  });
+  alert.present();
+}
 
   //End of MAP import function
 

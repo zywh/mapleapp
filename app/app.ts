@@ -143,18 +143,7 @@ class MapleApp {
     //this.addConnectivityListeners();
     console.log("Google maps JavaScript needs to be loaded.");
     if (this.connectivity.isOnline()) {
-        window['mapInit'] = () => {
-      
-        let script = document.createElement("script");
-        script.src = "extjs/richmarker.js";
-        document.body.appendChild(script);
-
-
-      }
-      let script = document.createElement("script");
-      script.id = "googleMaps";
-      script.src = "http://ditu.google.cn/maps/api/js?&amp;libraries=places&amp;language=zh-cn&callback=mapInit";
-      document.body.appendChild(script);
+      this.connectivity.loadJs();
 
     } else {
       console.log("Network Offline: load error page")
