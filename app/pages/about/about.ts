@@ -15,7 +15,7 @@ interface Post {
   templateUrl: 'build/pages/about/about.html',
  
 })
-export class AboutPage implements OnInit {
+export class AboutPage  {
  
   private section: string = "about";
   private isAndroid: boolean = false;
@@ -27,15 +27,15 @@ export class AboutPage implements OnInit {
   private imgHost;
  // private postAbout: Post;
 
-  static get parameters() {
-    return [[MapleRestData],[MapleConf]];
-  }
+  // static get parameters() {
+  //   return [[MapleRestData],[MapleConf]];
+  // }
 
   constructor(private mapleRestData: MapleRestData, private mapleconf: MapleConf) { }
 
 
-  ngOnInit() {
-    
+  ngAfterViewInit(): void {
+     console.log("About page init");
       this.mapleconf.load().then(data => {
       console.log(data.projectRest);
       this.getResult(data.aboutRest);

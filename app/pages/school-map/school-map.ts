@@ -1,13 +1,15 @@
-import {Modal, Loading, Tabs, Alert, ActionSheet, Events, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
+import {ModalController, LoadingController, AlertController, Events, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
-import { NgZone, Component, ViewChild} from '@angular/core';;
+import { NgZone, Component, ElementRef, ViewChild} from '@angular/core';;
+import {Connectivity} from '../../providers/connectivity/connectivity';
+import {Observable} from 'rxjs/Observable';
 import {MapSearchPage} from '../map-search/map-search';
+//import {GoogleMaps} from '../../providers/google-maps/google-maps';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
-import {SelectOptionModal} from './schoolmap-option-modal';
+import {SchoolSelectOptionModal} from './schoolmap-option-modal';
 import {SchoolListModal} from './school-list-modal';
-import {ConferenceData} from '../../providers/conference-data';
-import {TabsPage} from '../tabs/tabs';
+
 declare var RichMarker: any;
 
 interface schoolSelectOptionsObj {
@@ -19,12 +21,19 @@ interface schoolSelectOptionsObj {
 
 @Component({
     templateUrl: 'build/pages/school-map/school-map.html',
-
+    //providers: [GoogleMaps,MapSearchPage]
 })
 
 
 export class SchoolMapPage {
 
+
+    @ViewChild('schoolmap') mapElement: ElementRef;
+
+
+    mapInitialised: boolean = false;
+    mapLoaded: any;
+    mapLoadedObserver: any;
     private searchQuery: String = '';
     private cityItems: any;
     private schoolItems: any;
@@ -58,57 +67,48 @@ export class SchoolMapPage {
     constructor(
         private nav: NavController,
         private mapleRestData: MapleRestData,
-        private confData: ConferenceData,
+        //private confData: ConferenceData,
         private mapleconf: MapleConf,
+        //public maps: GoogleMaps,
         private _zone: NgZone,
+        private alertc: AlertController,
+        private modalc: ModalController,
+        public connectivityService: Connectivity,
+        private loadingc: LoadingController,
+        private navparm: NavParams,
         private viewCtrl: ViewController,
         private events: Events
     ) {
 
         this.resetItems();
-        this.loadRichMarker(); //Load richmarker after googlemap. Check network connection to avoid blank page
-        this.listenEvents();
+        //this.listenEvents();
 
     }
 
 
-    loadRichMarker() {
+
+    initMap() {
+
+        this.mapInitialised = true;
+        //let mapEle = document.getElementById('map');
+        this.mapleconf.getLocation().then(data => {
+            this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
+
+            // Geolocation.getCurrentPosition().then((position) => {
+
+            //let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            console.log(this.navparm.data);
+            if (this.navparm.data.lat > 20) {
+                console.log("Redirect from other page with center");
+                // latLng = new google.maps.LatLng(this.navparm.data.lat, this.navparm.data.lng);
+                this.defaultcenter = new google.maps.LatLng(this.navparm.data.lat, this.navparm.data.lng);
+            }
 
 
-        let script = document.createElement("script");
-        script.src = "extjs/richmarker.js";
-        document.body.appendChild(script);
-
-    }
-
-
-    optionChange(event) {
-        this.currentDiv = '';
-        this.selectSchool = event;
-        this.changeMap();
-
-    }
-    openModal(opt) {
-        let modal = Modal.create(SelectOptionModal, { data: opt });
-        modal.onDismiss(data => {
-            this.selectSchool = data;
-            this.changeMap();
-        });
-        this.nav.present(modal);
-    }
-
-
-    //init map. It only once 
-    ionViewLoaded() {
-
-        setTimeout(() => {
-            console.log("View Loaded init map")
-            let mapEle = document.getElementById('schoolmap');
-
-            this.map = new google.maps.Map(mapEle, {
-                //center: mapData.find(d => d.center),
+            let mapOptions = {
+                //center: latLng,
                 center: this.defaultcenter,
-                minZoom: 9,
+                minZoom: 4,
                 mapTypeControl: true,
                 mapTypeControlOptions: {
                     style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
@@ -123,56 +123,61 @@ export class SchoolMapPage {
                 streetViewControlOptions: {
                     position: google.maps.ControlPosition.TOP_RIGHT
                 },
-                zoom: 10
-            });
+                zoom: 14,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
 
-        }, 50); //wait for switch to avoid blank map
+            this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+            google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(); });
+            if (this.navparm.data.type == 'HOUSE') {
+                console.log("Map page switch over")
+                this.setLocation(this.defaultcenter, 13, "HOUSE")
+            }
 
-    }
 
-    //load map listener if first time
-    ionViewWillEnter() {
-
-        if (!this.sviewLoaded) {
-            console.log("School Map View will enter. Add school map Listener");
-            setTimeout(() => {
-                google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(); });
-                google.maps.event.addListener(this.map, 'click', () => {
-                    this._zone.run(() => {
-                        this.searchQuery = '';
-                        this.currentDiv = '';
-                    });
-
-                });
-
-                this.sviewLoaded = true;
-            }, 100); //Set timeout to load it after mapinit
-        }
-    }
-
-    //Add marker only if first time or marker
-    ionViewDidEnter() {
-        //console.log("School Map View did entered");
-        if ((this.markerArray.length == 0) && (!this.sviewLoaded)) {
-            setTimeout(() => {
-                //console.log("School Map is entered No marker First Time. Zoom and center")
-                this.map.setZoom(13);
-                this.setCenter(false);
-            }, 300);
-        }
-
-    }
-
-    listenEvents() {
-        this.events.subscribe('schoolmap:center', (data) => {
-
-            setTimeout(() => {
-                this.sviewLoaded = true;
-                //this.nav.pop();
-                this.setLocation(data[0], this.defaultZoom, true);
-            }, 200);
         });
+
+
     }
+
+
+
+    ngAfterViewInit(): void {
+        console.log("Schoomap ngAfterViewInit");
+        let mapLoaded = this.initMap();
+
+
+    }
+
+
+
+    optionChange(event) {
+        this.currentDiv = '';
+        this.selectSchool = event;
+        this.changeMap();
+
+    }
+    openModal(opt) {
+        let modal = this.modalc.create(SchoolSelectOptionModal, { data: opt });
+        modal.onDidDismiss(data => {
+            this.selectSchool = data;
+            this.changeMap();
+        });
+        modal.present();
+    }
+
+
+
+    // listenEvents() {
+    //     this.events.subscribe('schoolmap:center', (data) => {
+
+    //         setTimeout(() => {
+    //             this.sviewLoaded = true;
+    //             //this.nav.pop();
+    //             this.setLocation(data[0], this.defaultZoom, true);
+    //         }, 200);
+    //     });
+    // }
 
     setCenter(isMarker) {
 
@@ -181,39 +186,25 @@ export class SchoolMapPage {
             this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
         })
 
-        // let options = { timeout: 10000, enableHighAccuracy: true };
 
-        // navigator.geolocation.getCurrentPosition(
-
-        //     (position) => {
-        //         this.defaultcenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        //         let lat = position.coords.latitude;
-        //         if (lat > 20) {
-
-        //             this.setLocation(this.defaultcenter, this.defaultZoom,isMarker);
-
-        //         } else { this.setLocation(this.defaultcenter, this.defaultZoom,isMarker); }
-
-        //     },
-        //     (error) => { this.setLocation(this.defaultcenter, this.defaultZoom,isMarker); }, options
-        // );
 
     }
 
     openSchoolList() {
         //console.log(this.schoolList);
 
-        let modal = Modal.create(SchoolListModal, { data: this.schoolList });
-        modal.onDismiss(data => {
+        let modal = this.modalc.create(SchoolListModal, { data: this.schoolList });
+        modal.onDidDismiss(data => {
             //this.selectSchool = data;
 
         });
-        this.nav.present(modal);
+        modal.present();
 
     }
 
     resetItems() {
         this.cityItems = [];
+        this.schoolItems = [];
         //this.addressItems = [];
 
     }
@@ -230,7 +221,7 @@ export class SchoolMapPage {
     getItems(searchbar) {
 
         this.resetItems();
-        this.currentDiv = 'searchlist';
+        this.currentDiv = 'schoolList';
 
         if (this.searchQuery == '') {
             return;
@@ -292,18 +283,22 @@ export class SchoolMapPage {
 
         marker.addListener('click', () => {
 
-            let alert = Alert.create({
+            let alert = this.alertc.create({
                 title: '学校简介',
                 message: html,
                 cssClass: 'school_popup',
                 buttons: [{ text: '取消', role: 'cancel' },
                     {
                         text: '周边房源',
-                        handler: () => { this.events.publish('map:center', point); }
+                        handler: () => {
+                            this.events.publish('map:center', { lat: lat, lng: lng, type: 'SCHOOL' });
+                            // this.events.publish('map:center', point);
+                            //this.nav.push(MapSearchPage, { lat: lat, lng: lng });
+                        }
                     }
                 ]
             });
-            this.nav.present(alert);
+            alert.present();
             //   //infowindow.open(this.map, marker);
         });
 
@@ -374,13 +369,13 @@ export class SchoolMapPage {
 
     changeMap() {
         console.log("Change Map: ");
-        google.maps.event.trigger(this.map, 'resize');
+        // google.maps.event.trigger(this.map, 'resize');
 
         this.clearAll(this.markerArray); //clear marker
-        let loading = Loading.create({
+        let loading = this.loadingc.create({
             content: '加载学校...'
         });
-        this.nav.present(loading);
+        loading.present();
 
 
 

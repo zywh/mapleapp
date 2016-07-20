@@ -1,49 +1,56 @@
 import {Injectable} from '@angular/core';
-//import {Http} from '@angular/http';
 import {Platform} from 'ionic-angular';
-import {Connection} from 'ionic-native';
-import 'rxjs/add/operator/map';
+import {Network} from 'ionic-native';
 
-/*
-  Generated class for the Connectivity provider.
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 @Injectable()
 export class Connectivity {
-  data: any = null;
-  private onDevice;
 
-  constructor(private platform: Platform) {
-    this.onDevice = this.platform.is('ios') || this.platform.is('android');
+  onDevice: boolean;
+
+  constructor(public platform: Platform) {
+    this.onDevice = this.platform.is('cordova');
   }
 
-  isOnline() {
-    if (this.onDevice  && navigator.connection) {
-      
-      let networkState = navigator.connection.type;
-      return networkState !== Connection.NONE;
+  isOnline(): boolean {
+
+    if (this.onDevice && Network.connection) {
+      return Network.connection !== 'none';
 
     } else {
-    
+
       return navigator.onLine;
-           
+
     }
+
+
   }
-  
-  isOffline(){
-    if(this.onDevice && navigator.connection){
- 
-      let networkState = navigator.connection.type;
-      
- 
-      return networkState === Connection.NONE;
- 
+
+  isOffline(): boolean {
+    if (this.onDevice && Network.connection) {
+      return Network.connection === 'none';
     } else {
-      return !navigator.onLine;     
+      return !navigator.onLine;
     }
   }
+
+  loadJs(){
+       window['mapInit'] = () => {
+      
+        let script = document.createElement("script");
+        script.src = "extjs/richmarker.js";
+        console.log("Load Richmarker JS")
+        document.body.appendChild(script);
+
+
+      }
+      let script = document.createElement("script");
+      script.id = "googleMaps";
+      script.src = "http://ditu.google.cn/maps/api/js?&amp;libraries=places&amp;language=zh-cn&callback=mapInit";
+      document.body.appendChild(script);
+  }
+
+  
 
 }
 

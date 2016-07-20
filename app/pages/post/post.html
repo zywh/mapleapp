@@ -1,6 +1,17 @@
 <ion-header>
 <ion-navbar >
   <ion-title>地产信息</ion-title>
+  <ion-buttons end>
+      <button (click)="go2PrePost()"  *ngIf="preButton">
+      <ion-icon name="arrow-dropleft" is-active="true"></ion-icon>
+    </button>
+    </ion-buttons>
+
+  <ion-buttons end>
+       <button (click)="go2NextPost()" *ngIf="nextButton" >
+      <ion-icon name="arrow-dropright" is-active="true"></ion-icon>
+    </button>
+  </ion-buttons>
 </ion-navbar>
 </ion-header>
  
@@ -20,7 +31,7 @@
       </div>
  
 </ion-content>
-
+<!--
 <ion-footer>
  <div *ngIf="preButton">
     <button fab fab-bottom   fab-left (click)="go2PrePost()" style="opacity:0.8;">
@@ -32,6 +43,6 @@
       <ion-icon name="arrow-dropright" is-active="true"></ion-icon>
     </button>
   </div> 
-</ion-footer>
+</ion-footer>-->
 
  

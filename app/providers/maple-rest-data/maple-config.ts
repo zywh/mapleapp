@@ -10,9 +10,9 @@ export class MapleConf {
   public restHost: String = 'http://r.maplecity.com.cn/';
   private confJson = "mapleconf.json";
 
-  static get parameters() {
-    return [[Http]]
-  }
+  // static get parameters() {
+  //   return [[Http]]
+  // }
   constructor(private http: Http) {
 
   }
@@ -61,5 +61,82 @@ export class MapleConf {
 
 
   };
+
+  setHouseMarkerCss(countn, price) {
+    let markercontent = '';
+
+    let color = "hsl(" + this.getPrice2Scale(price) + ", 100%, 50%)";
+    if (countn < 10) {
+      // markercontent = "<i class='common_bg icon_map_mark16' style='background-color:" + color + ";'><span>" + countn + "</span></i>";
+      markercontent = "<i class=' icon_map_mark1' style='background-color:" + color + ";'><span>" + countn + "</span></i>";
+    }
+    if ((countn >= 10) && (countn < 100)) {
+      markercontent = "<i class=' icon_map_mark2' style='background-color:" + color + ";'><span>" + countn + "</span></i>";
+    }
+    if ((countn >= 100) && (countn < 1000)) {
+      markercontent = "<i class=' icon_map_mark3' style='background-color:" + color + ";'><span>" + countn + "</span></i>";
+    }
+    if (countn >= 1000) {
+      markercontent = "<i class='icon_map_mark4' style='background-color:" + color + ";'><span>" + countn + "</span></i>";
+    }
+
+    return markercontent;
+
+  }
+
+   setSchoolMarkerCss(rating) {
+        var bg = this.getRating2Scale(rating).bg;
+        var font = this.getRating2Scale(rating).font;
+        var markercontent = "<i class='common_bg icon_map_mark2' style='background-color:" + bg + ";'><span style='color:" + font + ";'>" + rating + "</span></i>";
+        return markercontent;
+
+    }
+
+  getRating2Scale(rating) {
+
+    let color = {
+      bg: '',
+      font: ''
+    };
+    let hueEnd = 130;
+    let ratingStep = hueEnd / 10; //Rating is 0-10
+    let hue = Math.ceil(ratingStep * rating);
+    color.bg = "hsl(" + hue + ", 100%, 50%)";
+    color.font = "#000";
+    if (rating == "无") {
+      color.bg = "#757575";
+      color.font = "#fff";
+    };
+    if (hue < 15) {
+      color.font = "#fff";
+    };
+
+    return color;
+  }
+  
+  getPrice2Scale(price) {
+
+    //let wanPrice = Math.log2(price);
+    let wanPrice = Math.ceil(price / 10);
+    let hue = 0;
+    let hueStart = 0;
+    let hueEnd = 70;
+
+    //let maxPrice = Math.log2(500); // In 10,000
+    let maxPrice = 50; // In 10,000
+    let minPrice = 0;
+    let PriceStep = (hueEnd - hueStart) / (maxPrice - minPrice);
+
+    if (wanPrice >= maxPrice) {
+      hue = 0;
+    } else {
+      hue = hueEnd - PriceStep * wanPrice;
+    }
+    //console.log("Price:" + price +" Hue:" + hue + "PriceStep:" + PriceStep);
+
+    return Math.floor(hue);
+  }
+
+  
 }
 

@@ -36,17 +36,12 @@ class MapleApp {
   // the login page disables the left menu
   appPages: PageObj[] = [
 
-    // { title: '首页', component: HomePage, icon: 'information-circle' },
-    // { title: '地图搜索', component: MapSearchPage, icon: 'information-circle' },
-    // { title: '学区房', component: SchoolSearchPage, icon: 'information-circle' },
-    // { title: '项目推荐', component: ProjectsPage, icon: 'information-circle' },
-    // { title: '房源统计', component: StatsPage, icon: 'information-circle' },
+
     { title: '首页', component: TabsPage, icon: 'home' },
     { title: '地图搜索', component: TabsPage, index: 1, icon: 'map' },
     { title: '学区房', component: TabsPage, index: 2, icon: 'school' },
     { title: '项目推荐', component: TabsPage, index: 3, icon: 'thumbs-up' },
     { title: '房源统计', component: TabsPage, index: 4, icon: 'stats' },
-    // { title: '列表搜索', component: HouselistSearch, icon: 'list' },
     { title: '关于我们', component: TabsPage, index: 5, icon: 'information-circle' },
 
   ];
@@ -63,7 +58,7 @@ class MapleApp {
   // rootPage: any = ProjectsPage;
   //rootPage: any = HomePage;
   //rootPage: any = TabsPage;
-  rootPage: any;
+  rootPage: any = TabsPage;
   constructor(
     private events: Events,
     private userData: UserData,
@@ -123,6 +118,21 @@ class MapleApp {
     this.events.subscribe('user:logout', () => {
       this.enableMenu(false);
     });
+
+    this.events.subscribe('map:center', (data) => {
+
+      setTimeout(() => {
+        this.nav.setRoot(TabsPage, { tabIndex: 1, rootParms: data[0] });
+      }, 300);
+    });
+    this.events.subscribe('schoolmap:center', (data) => {
+      setTimeout(() => {
+        this.nav.setRoot(TabsPage, { tabIndex: 2, rootParms: data[0] });
+      }, 300);
+
+
+
+    });
   }
 
   enableMenu(loggedIn) {
@@ -133,23 +143,17 @@ class MapleApp {
     //this.addConnectivityListeners();
     console.log("Google maps JavaScript needs to be loaded.");
     if (this.connectivity.isOnline()) {
-      console.log("online, loading map");
-      let script = document.createElement("script");
-      script.id = "googleMaps";
-      script.src = "http://ditu.google.cn/maps/api/js?&amp;libraries=places&amp;language=zh-cn";
-      document.body.appendChild(script);
-      // let script1 = document.createElement("script");
-      // script1.src = "extjs/richmarker.js";
-      // document.body.appendChild(script1);
-      this.rootPage = TabsPage;
-      // this.rootPage = NetworkErrorPage;
+      this.connectivity.loadJs();
+
     } else {
       console.log("Network Offline: load error page")
       this.rootPage = NetworkErrorPage;
     }
   }
- 
+
+
 }
+
 
 ionicBootstrap(
   MapleApp,
@@ -164,7 +168,8 @@ ionicBootstrap(
     //temp padding to fix ionic view status bar overlapping
     platforms: {
       ios: {
-        //statusbarPadding: true
+        statusbarPadding: false
+
       },
     }
 

@@ -38,10 +38,10 @@
   </ion-toolbar>
 <!--  
 	<div [ngSwitch]="section">
-    <div *ngSwitchWhen="'school'">
+    <div *ngSwitchCase="'school'">
       <p></p>
     </div>
-    <div *ngSwitchWhen="'video'">
+    <div *ngSwitchCase="'video'">
       <p> </p>
     </div>
   </div>
@@ -69,31 +69,31 @@
 		<div class="fyxq_ptssleft">配套：</div>
 		<div class="fyxq_ptssright fyxq_ptpd">
 			<div [ngSwitch]="house.a_c.toString().toLowerCase().includes('air')">
-				<span *ngSwitchWhen="true"><b></b><font color="#FF3300">空调</font></span>
+				<span *ngSwitchCase="true"><b></b><font color="#FF3300">空调</font></span>
 				<span *ngSwitchDefault><s></s>空调</span>
 			</div>
 			<div [ngSwitch]="house.central_vac=='Y'">
-				<span *ngSwitchWhen="true"><b></b><font color="#FF3300">吸尘</font></span>
+				<span *ngSwitchCase="true"><b></b><font color="#FF3300">吸尘</font></span>
 				<span *ngSwitchDefault><s></s>吸尘</span>
 			</div>
 			<div [ngSwitch]="house.furnished=='1'">
-				<span *ngSwitchWhen="true"><b></b><font color="#FF3300">家具</font></span>
+				<span *ngSwitchCase="true"><b></b><font color="#FF3300">家具</font></span>
 				<span *ngSwitchDefault><s></s>家具</span>
 			</div>
 			<div [ngSwitch]="house.elevator=='Y'">
-				<span *ngSwitchWhen="true"><b></b><font color="#FF3300">电梯</font></span>
+				<span *ngSwitchCase="true"><b></b><font color="#FF3300">电梯</font></span>
 				<span *ngSwitchDefault><s></s>电梯</span>
 			</div>
 			<div [ngSwitch]="house.bsmt1_out !='None' || !house.bsmt2_out">
-				<span *ngSwitchWhen="true"><b></b><font color="#FF3300">地下室</font></span>
+				<span *ngSwitchCase="true"><b></b><font color="#FF3300">地下室</font></span>
 				<span *ngSwitchDefault><s></s>地下室</span>
 			</div>
 			<div [ngSwitch]="house.pool.toString().includes('pool')">
-				<span *ngSwitchWhen="true"><b></b><font color="#FF3300">泳池</font></span> 
+				<span *ngSwitchCase="true"><b></b><font color="#FF3300">泳池</font></span> 
 				<span *ngSwitchDefault><s></s>泳池</span> 
 			</div> 
 			<div [ngSwitch]="house.fpl_num == 'Y'">
-				<span *ngSwitchWhen="true"><b></b><font color="#FF3300">壁炉</font></span>
+				<span *ngSwitchCase="true"><b></b><font color="#FF3300">壁炉</font></span>
 				<span *ngSwitchDefault><s></s>壁炉</span>
 			</div>
 		</div>

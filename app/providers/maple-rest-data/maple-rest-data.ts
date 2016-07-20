@@ -15,18 +15,18 @@ import 'rxjs/Rx';
 */
 @Injectable()
 export class MapleRestData {
- 
 
-  static get parameters() {
-    return [[Http],[MapleConf]]
-  }
 
-  constructor(private http:Http, private mapleconf: MapleConf) {
-  
+  // static get parameters() {
+  //   return [[Http],[MapleConf]]
+  // }
+
+  constructor(private http: Http, private mapleconf: MapleConf) {
+
   }
 
   load(restURL, parms: Object) {
-   
+
     let dataURL = this.mapleconf.restHost + restURL;
     let body = JSON.stringify({ parms });
     console.log("REST POST body:" + body);
@@ -34,6 +34,8 @@ export class MapleRestData {
     let options = new RequestOptions({ headers: headers });
     let url = dataURL;
     return this.http.post(url, body, options)
+      .retryWhen(error => error.delay(500))
+      .timeout(2000, new Error('delay exceeded')) // <------
       .map(res => res.json())
       .catch(this.handleError);
   }

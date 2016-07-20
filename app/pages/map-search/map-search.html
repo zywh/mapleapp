@@ -5,17 +5,20 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-<ion-navbar class="map-search hide-border">
+<ion-navbar class="map-search">
 <ion-buttons left>
-    <button class="bar-button-default" (click)="openModal(selectOptions)">
+    <button  (click)="openModal()">
         <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
    </button>
   </ion-buttons>
-  <ion-searchbar hideCancelButton [(ngModel)]="queryText" (ionFocus)="searchFocus()" (ionInput)="getItems($event)"
+  <!--<ion-input  [(ngModel)]="queryText" type="text" clearInput (keyup)="getItems($event)"
+    placeholder="城市/地址/MLS#"></ion-input>-->
+
+    <ion-searchbar primary  [(ngModel)]="queryText" (ionInput)="getItems($event)" 
     placeholder="城市/地址/MLS#"></ion-searchbar>
   
   <ion-buttons end>
-    <button class="bar-button-default" (click)="setCenter(true)">
+    <button (click)="setCenter(true)">
         <ion-icon ios="ios-locate-outline" md="md-locate"></ion-icon>
     </button>
   </ion-buttons>
@@ -38,18 +41,21 @@
     </ion-item>
   </div>
 
+<!--
 
+	<div #pleaseConnect id="please-connect">
+		<p>Please connect to the Internet...</p>
+	</div>-->
 
-
-  <div id="map"></div>
+  <div #map id="map"></div>
 
 
 </ion-content>
 <ion-footer>
 <!--<div *ngIf="currentDiv == 'listButton'" style="z-index:100;opacity:0.8;">-->
-<!--<div style="z-index:10;opacity:0.8;">-->
+<div style="opacity:0.8;">
   <button fab fab-bottom fab-center (click)="openHouseList($event)">
     <ion-icon name="list" is-active="false"></ion-icon>
   </button>
-<!--</div>-->
+</div>
 </ion-footer>

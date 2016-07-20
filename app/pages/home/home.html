@@ -1,53 +1,35 @@
-<!--
-  Generated template for the HomePage page.
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
   <ion-navbar>
-    <!--
+    
   <button menuToggle>
     <ion-icon name="menu"></ion-icon>
   </button>
-  <ion-title>枫之都</ion-title>-->
-    <ion-searchbar cancelButtonText="取消" showCancelButton="true" [(ngModel)]="hQueryText" (ionFocus)="currentDiv='hSearchlist'"
-      (ionInput)="hGetItems($event)" placeholder="房源搜索:城市/地址/MLS#"></ion-searchbar>
+  <ion-title>枫之都</ion-title>
+
   </ion-navbar>
 </ion-header>
 
 <ion-content class="home">
 
-  <div>
+  <!--<ion-searchbar 
+    (ionInput)="hGetItems($event)" placeholder="房源搜索:城市/地址/MLS#"></ion-searchbar>
 
-    <div class="search_list" *ngIf="currentDiv == 'hSearchlist'">
-      <ion-item padding *ngFor="let item of cityItems" (click)="itemTapped(item,1)">
-        <button light clear> <ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }}</span></button>
-        <ion-badge item-right>城市</ion-badge>
-      </ion-item>
-      <ion-item padding *ngFor="let item of mlsItems" (click)="itemTapped(item,1)">
-        <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }},{{item.city}}</span></button>
-        <ion-badge item-right>MLS:{{item.price}}万</ion-badge>
-      </ion-item>
-      <ion-item padding *ngFor="let item of addressItems" (click)="itemTapped(item,1)">
-        <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }},{{item.city}}</span></button>
-        <ion-badge item-right>地址:{{item.price}}万</ion-badge>
-      </ion-item>
-    </div>
-    <!--
-    <ion-searchbar cancelButtonText="取消" showCancelButton="true" [(ngModel)]="sQueryText" (ionFocus)="currentDiv='sSearchlist'"
-      (ionInput)="sGetItems($event)" placeholder="学校搜索：城市/学校"></ion-searchbar>
-    <div class="search_list" *ngIf="currentDiv == 'sSearchlist'">
-      <ion-item padding *ngFor="let item of scityItems" (click)="itemTapped(item,2)">
-        <button light clear> <ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }}</span></button>
-        <ion-badge item-right>城市</ion-badge>
-      </ion-item>
-      <ion-item padding *ngFor="let item of schoolItems" (click)="itemTapped(item,2)">
-        <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.school }}</span></button>
-        <ion-badge item-right>排名:{{item.paiming}}</ion-badge>
-      </ion-item>
-    </div>-->
-  </div>
+  <div class="search_list" *ngIf="currentDiv == 'hSearchlist'">
+    <ion-item padding *ngFor="let item of cityItems" (click)="itemTapped(item,1)">
+      <button light clear> <ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }}</span></button>
+      <ion-badge item-right>城市</ion-badge>
+    </ion-item>
+    <ion-item padding *ngFor="let item of mlsItems" (click)="itemTapped(item,1)">
+      <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }},{{item.city}}</span></button>
+      <ion-badge item-right>MLS:{{item.price}}万</ion-badge>
+    </ion-item>
+    <ion-item padding *ngFor="let item of addressItems" (click)="itemTapped(item,1)">
+      <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }},{{item.city}}</span></button>
+      <ion-badge item-right>地址:{{item.price}}万</ion-badge>
+    </ion-item>
+  </div>-->
+
 
 
   <ion-slides [options]="projectSwiperOptions" class="swiper-container">
@@ -57,13 +39,13 @@
 
     </ion-slide>
   </ion-slides>
-<ion-toolbar [attr.primary]="isAndroid ? '' : null">
-  <ion-segment [(ngModel)]="homeSegment">
-    <ion-segment-button value="info">地产信息</ion-segment-button>
-    <ion-segment-button value="house1" (ionSelect)="searchHouse('nearby')">周边房源</ion-segment-button>
-    <ion-segment-button value="house2"  (ionSelect)="searchHouse('recommend')">房源推荐</ion-segment-button>
-  </ion-segment>
-</ion-toolbar>
+  <ion-toolbar [attr.primary]="isAndroid ? '' : null">
+    <ion-segment [(ngModel)]="homeSegment">
+      <ion-segment-button value="info">地产信息</ion-segment-button>
+      <ion-segment-button value="house1" (ionSelect)="searchHouse('nearby')">周边房源</ion-segment-button>
+      <ion-segment-button value="house2" (ionSelect)="searchHouse('recommend')">房源推荐</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
   <div [ngSwitch]="homeSegment">
     <div *ngSwitchCase="'info'">
       <ion-list>
@@ -87,7 +69,7 @@
 
       </ion-list>
     </div>
-  <div *ngSwitchCase="'house2'">
+    <div *ngSwitchCase="'house2'">
       <ion-list class="houselist-search">
         <ion-item *ngFor="let house of nearbyHouseList" (click)="gotoHouseDetail(house.MLS,nearbyHouseList)">
           <ion-thumbnail item-left>

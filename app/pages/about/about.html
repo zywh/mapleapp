@@ -6,7 +6,7 @@
     <ion-title>关于我们</ion-title>
   </ion-navbar>
 
-  <ion-toolbar>
+  <ion-toolbar [attr.primary]="isAndroid ? '' : null">
       <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
           <ion-segment-button value="about">
             关于
@@ -32,7 +32,7 @@
 
       <div class="spacer" style="width: 284.545px; height: 17.9886px;"></div>
       <div [ngSwitch]="section">
-        <div *ngSwitchWhen="'about'">
+        <div *ngSwitchCase="'about'">
           <div class="zcwz_label">
             <div class="zcwz_label_left">{{postAbout?.title}}</div>
             <div class="zcwz_label_right">{{postAbout?.catname}}</div>
@@ -45,7 +45,7 @@
 
         </div>
 
-        <div *ngSwitchWhen="'advantage'">
+        <div *ngSwitchCase="'advantage'">
           <div class="zcwz_label">
             <div class="zcwz_label_left">{{postAdvantage?.title}}</div>
             <div class="zcwz_label_right">{{postAdvantage?.catname}}</div>
@@ -57,7 +57,7 @@
           </div>
         </div>
 
-        <div *ngSwitchWhen="'contact'">
+        <div *ngSwitchCase="'contact'">
           <div class="zcwz_label">
             <div class="zcwz_label_left">{{postContact?.title}}</div>
             <div class="zcwz_label_right">{{postContact?.catname}}</div>
@@ -69,7 +69,7 @@
           </div>
         </div>
 
-        <div *ngSwitchWhen="'hire'">
+        <div *ngSwitchCase="'hire'">
           <div class="zcwz_label">
             <div class="zcwz_label_left">{{postHire?.title}}</div>
             <div class="zcwz_label_right">{{postHire?.catname}}</div>
