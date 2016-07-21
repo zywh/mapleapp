@@ -64,6 +64,8 @@ export class HouseCityStatsPage {
       });
   }
 
+  
+
 
 
   cityStatsColumn(topic) {
@@ -102,15 +104,18 @@ export class HouseCityStatsPage {
       },
 
 
-      series: [{
-        name: topic,
-        data: eval("this.data." + topic)
-      }]
+      //series: [{
+      //  name: topic,
+      //  data: eval("this.data." + topic)
+      //}]
 
+      series: eval("this.data." + topic + ".series"),
+      drilldown: eval("this.data." + topic + ".drilldown"),
 
 
     };
     //console.log(this.data[topic]);
+    console.log(options);
     this.nav.push(cityStats, { city: this.city, options: options });
   }
 
