@@ -1,4 +1,4 @@
-import {ModalController, LoadingController, Events, AlertController, Popover, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
+import {ModalController, LoadingController, Events, AlertController, PopoverController, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 import { NgZone, Component, ElementRef, ViewChild} from '@angular/core';;
 import {Connectivity} from '../../providers/connectivity/connectivity';
@@ -13,6 +13,7 @@ import {MapHouselist} from './map-houselist';
 //import {ConferenceData} from '../../providers/conference-data';
 import {SchoolSelectOptionModal} from '../school-map/schoolmap-option-modal';
 import {SchoolListModal} from '../school-map/school-list-modal';
+import {HousePopover} from './house-popover';
 declare var RichMarker: any;
 declare var google;
 
@@ -94,12 +95,8 @@ export class MapSearchPage {
   // }
   private selectOptions;
   private optionPage;
-
-
-
   private currentHouseList; //Hold list of all houses on current map
   private currentHouses; //Hold array of houses for single marker
-
   private currentDiv;
   private mapType: Number = 1; // 0 for house and 1 for school
 
@@ -116,10 +113,11 @@ export class MapSearchPage {
     private alertc: AlertController,
     private modalc: ModalController,
     private loadingc: LoadingController,
+    private popoverc: PopoverController,
     private events: Events
   ) {
 
-    
+
     //this.listenEvents(); //listen School map event
     console.log(this.navparm.data);
     this.mapType = this.navparm.data.pageType;
@@ -214,7 +212,7 @@ export class MapSearchPage {
 
 
   openModal() {
-    console.log("Page:"+ this.optionPage)
+    console.log("Page:" + this.optionPage)
     let modal = this.modalc.create(this.optionPage, { data: this.selectOptions });
     modal.onDidDismiss(data => {
       this.selectOptions = data;
@@ -248,7 +246,7 @@ export class MapSearchPage {
       if ((this.markerType == 'house') && (this.totalCount > 0)) {
         //this.nav.push(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost })
         let modal = this.modalc.create(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost });
-         modal.present();
+        modal.present();
 
       } else {
 
@@ -268,8 +266,8 @@ export class MapSearchPage {
 
   //select autocomplete action
 
-  setMapType(type){
-    
+  setMapType(type) {
+
     if (type == 0) {
       //init house page parm
       this.selectOptions = {
@@ -388,7 +386,7 @@ export class MapSearchPage {
   }
 
 
-  setContent(lat, lng, count, html, houses, price, mls) {
+  setContent(lat, lng, count, html, houses, price, house) {
     let point = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
     //let content = this.setMarkerCss(count, price);
     console.log("Set House Content Marker")
@@ -405,32 +403,33 @@ export class MapSearchPage {
 
     marker.addListener('click', () => {
       if (count == 1) {
-        let alert = this.alertc.create({
-          //title: 'Confirm purchase',
-          message: html,
-          cssClass: 'house_popup',
-          buttons: [
-            {
-              text: '取消',
-              role: 'cancel',
+        // let alert = this.alertc.create({
+        //   //title: 'Confirm purchase',
+        //   message: html,
+        //   cssClass: 'house_popup',
+        //   buttons: [
+        //     {
+        //       text: '取消',
+        //       role: 'cancel',
 
-            },
-            {
-              text: '详情',
-              handler: () => {
-                let navTransition = alert.dismiss();
-                navTransition.then(() => {
-                  this.nav.pop();
-                  this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList });
-                  //this.nav.push(HouseDetailPage, mls); 
-                });
-                return false;
-              }
-            }
-          ]
-        });
-        // this.nav.present(alert);
-        alert.present();
+        //     },
+        //     {
+        //       text: '详情',
+        //       handler: () => {
+        //         let navTransition = alert.dismiss();
+        //         navTransition.then(() => {
+        //           this.nav.pop();
+        //           this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList });
+        //           //this.nav.push(HouseDetailPage, mls); 
+        //         });
+        //         return false;
+        //       }
+        //     }
+        //   ]
+        // });
+        // // this.nav.present(alert);
+        // alert.present();
+        this.housePopover(house);
       } else {
         console.log("More than one");
         // this.listModal = Modal.create(MapHouselist, { list: houses, imgHost: this.imgHost });
@@ -664,10 +663,10 @@ export class MapSearchPage {
 
 
     if (this.markerType == 'house') {
-      this._zone.run(() => {
-        this.isListShow = true;
-        this.currentDiv = 'listButton';
-      });
+      // this._zone.run(() => {
+      //   this.isListShow = true;
+      //   this.currentDiv = 'listButton';
+      // });
       let count = 1;
       let houses = [];
       let totalprice = 0;
@@ -709,9 +708,11 @@ export class MapSearchPage {
           // + '   </ion-item>'
 
           + '    <div class="card-subtitle" text-left>'
-          + '     <div><i padding-right secondary class="fa fa-building" aria-hidden="true"></i><span padding-right>' + house.HouseType + '</span>' + house.Beds + '卧' + house.Baths + '卫' + house.Kitchen + '厨</div>'
-          + '     <div><i padding-right secondary class="fa fa-location-arrow" aria-hidden="true"></i><span padding-right>' + house.Address + '</span>' + house.MunicipalityName + '</div>'
-          + '     </div></div>'
+          // + '     <div><i padding-right secondary class="fa fa-building" aria-hidden="true"></i><span padding-right>' + house.HouseType + '</span>' + house.Beds + '卧' + house.Baths + '卫' + house.Kitchen + '厨</div>'
+          // + '     <div><i padding-right secondary class="fa fa-location-arrow" aria-hidden="true"></i><span padding-right>' + house.Address + '</span>' + house.MunicipalityName + '</div>'
+          + '<div>' + house.HouseType + '</div>'
+          + '<div>' + house.Address + ',' + house.MunicipalityName  + '</div>'
+          + '</div></div>'
           + ' </ion-card> '
 
         if ((nextLng != house.GeocodeLng) || (nextLat != house.GeocodeLat)) {
@@ -721,7 +722,8 @@ export class MapSearchPage {
 
             houses.push(house);
             //this.setContent(tlat, tlng, 1, houses, markerprice);
-            this.setContent(tlat, tlng, 1, li, house, markerprice, house.MLS);
+            //this.setContent(tlat, tlng, 1, li, house, markerprice, house.MLS);
+            this.setContent(tlat, tlng, 1, li, house, markerprice, house);
             houses = [];
             totalprice = 0;
             panelhtml = '';
@@ -801,5 +803,17 @@ export class MapSearchPage {
 
   //End of MAP import function
 
+  housePopover(house) {
+    let popover = this.popoverc.create(HousePopover, {
+      house: house,
+      list: this.currentHouseList,
+      imgHost: this.imgHost
+    });
+
+    popover.present();
+    
+  }
+
 }
+
 
