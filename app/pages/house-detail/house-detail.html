@@ -21,7 +21,7 @@
  
   <ion-toolbar [attr.primary]="isAndroid ? '' : null"  no-border-bottom>
     <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
-      <ion-segment-button value="school" (ionSelect)="gotoCityStats()">
+      <ion-segment-button value="citystats" (ionSelect)="gotoCityStats()">
         社区
       </ion-segment-button>
       <ion-segment-button value="school" (ionSelect)="gotoSchool()">
@@ -29,6 +29,9 @@
       </ion-segment-button>
       <ion-segment-button value="video" [disabled]="(house.tour_url)?'false':'true'" (ionSelect)="gotoVideo()">
         视频
+      </ion-segment-button>
+			  <ion-segment-button value="map"  (ionSelect)="mapDirection()">
+        地图
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>

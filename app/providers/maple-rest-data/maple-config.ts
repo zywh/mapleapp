@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import { Http} from '@angular/http';
+import {Platform} from 'ionic-angular';
 //import {Observable} from 'rxjs/Observable';
 //import 'rxjs/Rx';
 
@@ -13,7 +14,7 @@ export class MapleConf {
   // static get parameters() {
   //   return [[Http]]
   // }
-  constructor(private http: Http) {
+  constructor(private http: Http, private platform: Platform) {
 
   }
 
@@ -28,9 +29,9 @@ export class MapleConf {
 
     // don't have the data yet
     return new Promise(resolve => {
-     
+
       this.http.get(dataURL).subscribe(res => {
-     
+
         this.data = res.json();
         resolve(this.data);
       });
@@ -84,13 +85,13 @@ export class MapleConf {
 
   }
 
-   setSchoolMarkerCss(rating) {
-        var bg = this.getRating2Scale(rating).bg;
-        var font = this.getRating2Scale(rating).font;
-        var markercontent = "<i class='common_bg icon_map_mark2' style='background-color:" + bg + ";'><span style='color:" + font + ";'>" + rating + "</span></i>";
-        return markercontent;
+  setSchoolMarkerCss(rating) {
+    var bg = this.getRating2Scale(rating).bg;
+    var font = this.getRating2Scale(rating).font;
+    var markercontent = "<i class='common_bg icon_map_mark2' style='background-color:" + bg + ";'><span style='color:" + font + ";'>" + rating + "</span></i>";
+    return markercontent;
 
-    }
+  }
 
   getRating2Scale(rating) {
 
@@ -113,7 +114,7 @@ export class MapleConf {
 
     return color;
   }
-  
+
   getPrice2Scale(price) {
 
     //let wanPrice = Math.log2(price);
@@ -136,7 +137,17 @@ export class MapleConf {
 
     return Math.floor(hue);
   }
+  mapDirection(lat, lng) {
 
-  
+    let destination = lat + ',' + lng;
+    if (this.platform.is('ios')) {
+      window.open('maps://?q=' + destination, '_system');
+    } else {
+      let label = encodeURI('目的地');
+      window.open('geo:0,0?q=' + destination + '(' + label + ')', '_system');
+    }
+  }
+
+
 }
 

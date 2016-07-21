@@ -13,20 +13,20 @@ import {HouseCityStatsPage} from '../../pages/house-city-stats/house-city-stats'
   Ionic pages and navigation.
 */
 @Component({
-  templateUrl: 'build/pages/house-detail/house-detail.html',
+	templateUrl: 'build/pages/house-detail/house-detail.html',
 })
 export class HouseDetailPage implements OnInit {
 	private parms = { id: '', list: [] };
 	private houseList = { prev: '', next: '', index: 0, total: 0 };
 	private section: string = "summary";
-  private isAndroid: boolean = false;
-  private switchF2M: Boolean = true; //"英尺"
+	private isAndroid: boolean = false;
+	private switchF2M: Boolean = true; //"英尺"
 	private rooms: Array<Object> = [];
 	private house_mname: any;
 	private house_propertyType: any;
 	private photos: Array<string>;
 	private exchangeRate: number;
-  private house = {
+	private house = {
 		id: '',  // => 'ID',
 		name: '', // => '名称',
 		prepay: '', // => '首付',
@@ -219,42 +219,42 @@ export class HouseDetailPage implements OnInit {
 
 	@ViewChild('photo_slider') slider: Slides;
 
-  constructor(
+	constructor(
 		private nav: NavController,
 		private navParams: NavParams,
 		private mapleRestData: MapleRestData,
 		private mapleConf: MapleConf,
 		private events: Events,
 		private platform: Platform) {
-    this.nav = nav;
+		this.nav = nav;
 		console.log(navParams);
-    this.parms = navParams.data;
+		this.parms = navParams.data;
 		//this.isAndroid = platform.is('android');
-  }
+	}
 
-  swiperOptions = {
-    //loop: true,
+	swiperOptions = {
+		//loop: true,
 		autoHeight: true,
-    pager: true,
-    speed: 100,
-    autoplay: 3000
-  };
+		pager: true,
+		speed: 100,
+		autoplay: 3000
+	};
 
-  private COMP_PTS = { "N": "北", "S": "南", "W": "西", "E": "东" };
-  private S_R = { "Sale": "出售", "Lease": "出租" };
+	private COMP_PTS = { "N": "北", "S": "南", "W": "西", "E": "东" };
+	private S_R = { "Sale": "出售", "Lease": "出租" };
 	private F2M = { feet: "尺", meter: "米", sfeet: "平方英尺", smeter: "平方米" };
 
-  ngOnInit() {
+	ngOnInit() {
 		this.mapleConf.load().then(data => {
 			//this.getResult('index.php?r=ngget/getHouseDetail');
 			this.getResult(data.houseDetailRest, this.parms.id);
-    })
-  }
+		})
+	}
 
-  getResult(url, id) {
+	getResult(url, id) {
 		this.parms.id = id;
-    this.mapleRestData.load(url, { 'id': id }).subscribe(
-      data => {
+		this.mapleRestData.load(url, { 'id': id }).subscribe(
+			data => {
 				//console.log(data);
 				this.house = data.house;
 				this.house_mname = data.house_mname;
@@ -266,8 +266,8 @@ export class HouseDetailPage implements OnInit {
 				//console.log(this.slider); 
 				this.slider.slideTo(0);
 			}
-    )
-  }
+		)
+	}
 
 	setHouseList() {
 		this.houseList = { prev: null, next: null, index: 0, total: 0 };
@@ -288,7 +288,7 @@ export class HouseDetailPage implements OnInit {
 	}
 
 	round1(num) {
-    return +(Math.round(+(num + "e+1")) + "e-1");
+		return +(Math.round(+(num + "e+1")) + "e-1");
 	}
 
 	round2(num) {
@@ -310,20 +310,20 @@ export class HouseDetailPage implements OnInit {
 		this.rooms[11] = { level: h.level12, out: h.rm12_out, len: h.rm12_len, wth: h.rm12_wth, area: this.round1(h.rm12_len * h.rm12_wth), desc: this.getRoomDesc(h.rm12_dc1_out, h.rm12_dc2_out, h.rm12_dc3_out) };
 	}
 
-  getPriceTxt() {
-    let priceTxt;
+	getPriceTxt() {
+		let priceTxt;
 		if (this.house.s_r == "Sale")
-      priceTxt = Number(this.house.lp_dol) / 10000 + "万加币";
-    else
-      priceTxt = this.house.lp_dol + "加元/月";
+			priceTxt = Number(this.house.lp_dol) / 10000 + "万加币";
+		else
+			priceTxt = this.house.lp_dol + "加元/月";
 		return priceTxt;
-  }
+	}
 
 	getPriceRMB() {
 		return this.round2(parseFloat(this.house.lp_dol) * this.exchangeRate / 10000);
 	}
 
-  getPropertyTxt() {
+	getPropertyTxt() {
 		let propertyTxt = this.house.prop_feat1_out;
 
 		if (this.house.prop_feat2_out)
@@ -338,9 +338,9 @@ export class HouseDetailPage implements OnInit {
 			propertyTxt = propertyTxt + " , " + this.house.prop_feat6_out;
 
 		return propertyTxt;
-  }
+	}
 
-  getRoomDesc(dc1, dc2, dc3) {
+	getRoomDesc(dc1, dc2, dc3) {
 		let roomDesc = dc1;
 
 		if (dc2) roomDesc = roomDesc + " , " + dc2;
@@ -356,22 +356,22 @@ export class HouseDetailPage implements OnInit {
 			return this.house.land_area + this.F2M.sfeet;
 	}
 
-  gotoCityStats() {
-    this.nav.push(HouseCityStatsPage, this.house.municipality);
-  }
+	gotoCityStats() {
+		this.nav.push(HouseCityStatsPage, this.house.municipality);
+	}
 	gotoSchool() {
-    //this.nav.push(SchoolSearchPage);
+		//this.nav.push(SchoolSearchPage);
 		let navTransition = this.nav.pop();
 		navTransition.then(() => {
 			//let center = new google.maps.LatLng(this.house.latitude, this.house.longitude);
 			//this.events.publish('schoolmap:center', center);
-			this.events.publish('schoolmap:center', {lat:this.house.latitude, lng:this.house.longitude,type:'HOUSE'});
+			this.events.publish('schoolmap:center', { lat: this.house.latitude, lng: this.house.longitude, type: 'HOUSE' });
 		}
 		)
 
-  }
+	}
 
-  gotoVideo() {
+	gotoVideo() {
 		if (this.house.tour_url) window.open(this.house.tour_url, "_blank");
 		/*this.platform.ready().then(() => {
 				if (this.house.tour_url) cordova.InAppBrowser.open(this.house.tour_url, "_system", "location=true");
@@ -382,18 +382,22 @@ export class HouseDetailPage implements OnInit {
 		return this.mapleConf.data.picHost + photo;
 	}
 
-  go2PrevHouse() {
+	go2PrevHouse() {
 		if (this.houseList.prev)
 			this.getResult(this.mapleConf.data.houseDetailRest, this.houseList.prev);
 	}
 
-  go2NextHouse() {
+	go2NextHouse() {
 		if (this.houseList.next)
 			this.getResult(this.mapleConf.data.houseDetailRest, this.houseList.next);
-  }
+	}
 
 
-  openHouseList() {
+	openHouseList() {
+	}
+
+	mapDirection(){
+		this.mapleConf.mapDirection(this.house.latitude,this.house.longitude)
 	}
 
 	share() {
@@ -406,7 +410,7 @@ export class HouseDetailPage implements OnInit {
 		let img = this.photoUrl(this.photos[0]);
 		let link = "http://m.maplecity.com.cn/index.php?r=mhouse/view&id=" + this.parms.id;
 		console.log("socialshare", message, subject, img, link);
-    SocialSharing.share(message, subject, img, link);
+		SocialSharing.share(message, subject, img, link);
 
 		// });
 	}
