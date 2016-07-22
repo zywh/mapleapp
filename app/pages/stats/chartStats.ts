@@ -1,7 +1,7 @@
 import {NavController, NavParams, ViewController} from 'ionic-angular';
 import { Component }    from '@angular/core';
-import {  Highcharts } from 'angular2-highcharts';
-//declare var Highcharts: any;
+//import {  Highcharts } from 'angular2-highcharts';
+declare var Highcharts: any;
 
 @Component({
 
@@ -26,7 +26,7 @@ export class chartStats {
     private options: Object;
     private type: Number; // 0 for chart and 1 for highstock
     private pagetitle: String;
-    private chart: HighchartsChartObject;
+    private chart;
     constructor(private parm: NavParams, private view: ViewController) {
         this.type = this.parm.data.type;
         this.options = this.parm.data.options;
