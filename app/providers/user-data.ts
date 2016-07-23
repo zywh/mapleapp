@@ -1,14 +1,35 @@
 import {Injectable} from '@angular/core';
-import {Storage, LocalStorage, Events} from 'ionic-angular';
+import {Storage, LocalStorage, Events,SqlStorage} from 'ionic-angular';
 
 
 @Injectable()
 export class UserData {
   _favorites = [];
   HAS_LOGGED_IN = 'hasLoggedIn';
-  storage = new Storage(LocalStorage);
+  storage: Storage;
+  constructor(private events: Events) {
+     this.storage = new Storage(SqlStorage, {name:'maplecity'});
+  }
+  getfHouse(): Promise<any> {
+    return this.storage.get('fHouse');  
+  }
 
-  constructor(private events: Events) {}
+  save(data): void {
+
+    let saveData = [];
+
+    //Remove observables
+    data.forEach((house) => {
+      saveData.push({
+        mls: house.mls,
+        lat: house.lat,
+        lng: house.lng
+      });
+    });
+
+    let newData = JSON.stringify(saveData);
+    this.storage.set('fHouse', newData);
+  }
 
   hasFavorite(sessionName) {
     return (this._favorites.indexOf(sessionName) > -1);
