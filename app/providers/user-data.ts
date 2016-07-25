@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Storage, LocalStorage, Events,SqlStorage} from 'ionic-angular';
+import {Storage, LocalStorage, Events, SqlStorage} from 'ionic-angular';
+import * as PouchDB from 'pouchdb';
 
 
 @Injectable()
@@ -7,11 +8,111 @@ export class UserData {
   _favorites = [];
   HAS_LOGGED_IN = 'hasLoggedIn';
   storage: Storage;
+
+  //fbid: number;
+  username: string;
+  //picture: string;
+  db: any;
+  data: any;
+  cloudantUsername: string;
+  cloudantPassword: string;
+  remote: string;
   constructor(private events: Events) {
-     this.storage = new Storage(SqlStorage, {name:'maplecity'});
+    this.storage = new Storage(SqlStorage, { name: 'maplecity' });
+
+    this.db = new PouchDB('mapleapp');
+    this.cloudantUsername = 'heyedimedsoicknotheavalm';
+    this.cloudantPassword = '9c84c07ba29b0747736acdf7d512d7e392f54eb6';
+    this.remote = 'https://ee4f85e1-81a5-40bf-ac41-a08248a11b18-bluemix.cloudant.com/mapleapp';
+    let options = {
+      live: true,
+      retry: true,
+      continuous: true,
+      auth: {
+        username: this.cloudantUsername,
+        password: this.cloudantPassword
+      }
+    };
+    this.db.sync(this.remote, options);
   }
+
+  addDocument(message) {
+    this.db.put(message);
+    
+  }
+  getDocuments(): Promise<any> {
+
+    return new Promise(resolve => {
+
+      this.db.allDocs({
+
+        include_docs: true,
+        limit: 30,
+        descending: true
+
+      }).then((result) => {
+
+        this.data = [];
+
+        let docs = result.rows.map((row) => {
+          this.data.push(row.doc);
+        });
+
+        this.data.reverse();
+
+        resolve(this.data);
+
+        this.db.changes({ live: true, since: 'now', include_docs: true }).on('change', (change) => {
+          this.handleChange(change);
+        });
+
+      }).catch((error) => {
+
+        console.log(error);
+
+      });
+
+    });
+
+  }
+
+  handleChange(change): void {
+
+    let changedDoc = null;
+    let changedIndex = null;
+
+    this.data.forEach((doc, index) => {
+
+      if (doc._id === change.id) {
+        changedDoc = doc;
+        changedIndex = index;
+      }
+
+    });
+
+    //A document was deleted
+    if (change.deleted) {
+      this.data.splice(changedIndex, 1);
+    }
+    else {
+
+      //A document was updated
+      if (changedDoc) {
+        this.data[changedIndex] = change.doc;
+      }
+
+      //A document was added
+      else {
+        this.data.push(change.doc);
+      }
+
+    }
+
+  }
+
+
   getfHouse(): Promise<any> {
-    return this.storage.get('fHouse');  
+    return this.storage.get('fHouse');
   }
 
   save(data): void {
