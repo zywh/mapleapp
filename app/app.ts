@@ -63,11 +63,11 @@ class MapleApp {
   rootPage: any = TabsPage;
   constructor(
     private events: Events,
-    private userData: UserData,
+    public userData: UserData,
     private menu: MenuController,
     platform: Platform,
     mapleconf: MapleConf,
-    private connectivity: Connectivity
+    public connectivity: Connectivity
     //confData: ConferenceData
   ) {
     // Call any initial plugins when ready

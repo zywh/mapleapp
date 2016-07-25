@@ -6,6 +6,7 @@ import {Http, Headers, RequestOptions} from '@angular/http';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {ProjectDetailPage} from '../project-detail/project-detail';
 import {HouseDetailPage} from '../house-detail/house-detail';
+import {UserData} from '../../providers/user-data';
 import {PostPage} from '../post/post';
 
 @Component({
@@ -31,12 +32,14 @@ export class HomePage {
   private imgHost;
   private houseRestURL;
   private data;
+  private favHouse;
 
 
   constructor(
     private nav: NavController,
     private parms: NavParams,
     private mapleRestData: MapleRestData,
+    private userData: UserData,
     private mapleconf: MapleConf,
     private events: Events
   ) { }
@@ -47,6 +50,13 @@ export class HomePage {
     speed: 4000,
     autoplay: 300
   };
+  
+  fav(){
+    this.userData.getDocuments().then(res=>{
+           console.log(res);
+    })
+    
+  }
 
   // ngOnInit() {
   ionViewWillEnter() {

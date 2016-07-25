@@ -4,6 +4,7 @@ import {OnInit, Component, ViewChild} from '@angular/core';;
 import {SocialSharing} from 'ionic-native';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
+import {UserData} from '../../providers/user-data';
 import {HouseCityStatsPage} from '../../pages/house-city-stats/house-city-stats';
 
 /*
@@ -16,6 +17,7 @@ import {HouseCityStatsPage} from '../../pages/house-city-stats/house-city-stats'
 	templateUrl: 'build/pages/house-detail/house-detail.html',
 })
 export class HouseDetailPage implements OnInit {
+	private isFav: Boolean = false;
 	private parms = { id: '', list: [] };
 	private houseList = { prev: '', next: '', index: 0, total: 0 };
 	private section: string = "summary";
@@ -225,7 +227,9 @@ export class HouseDetailPage implements OnInit {
 		private mapleRestData: MapleRestData,
 		private mapleConf: MapleConf,
 		private events: Events,
+		private userData: UserData,
 		private platform: Platform) {
+		
 		this.nav = nav;
 		console.log(navParams);
 		this.parms = navParams.data;
@@ -249,6 +253,13 @@ export class HouseDetailPage implements OnInit {
 			//this.getResult('index.php?r=ngget/getHouseDetail');
 			this.getResult(data.houseDetailRest, this.parms.id);
 		})
+	}
+
+	fav(){
+		this.isFav = !this.isFav;
+		let doc = this.house;
+		this.userData.addDocument(doc);
+
 	}
 
 	getResult(url, id) {

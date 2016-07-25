@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Storage, LocalStorage, Events, SqlStorage} from 'ionic-angular';
 import * as PouchDB from 'pouchdb';
+//declare var PouchDB: any;
 
 
 @Injectable()
@@ -36,8 +37,9 @@ export class UserData {
     this.db.sync(this.remote, options);
   }
 
-  addDocument(message) {
-    this.db.put(message);
+  addDocument(d) {
+    console.log(d);
+    this.db.put(d);
     
   }
   getDocuments(): Promise<any> {
@@ -53,12 +55,13 @@ export class UserData {
       }).then((result) => {
 
         this.data = [];
+        console.log(result)
 
         let docs = result.rows.map((row) => {
           this.data.push(row.doc);
         });
 
-        this.data.reverse();
+        //this.data.reverse();
 
         resolve(this.data);
 
@@ -111,26 +114,26 @@ export class UserData {
   }
 
 
-  getfHouse(): Promise<any> {
-    return this.storage.get('fHouse');
-  }
+  // getfHouse(): Promise<any> {
+  //   return this.storage.get('fHouse');
+  // }
 
-  save(data): void {
+  // save(data): void {
 
-    let saveData = [];
+  //   let saveData = [];
 
-    //Remove observables
-    data.forEach((house) => {
-      saveData.push({
-        mls: house.mls,
-        lat: house.lat,
-        lng: house.lng
-      });
-    });
+  //   //Remove observables
+  //   data.forEach((house) => {
+  //     saveData.push({
+  //       mls: house.mls,
+  //       lat: house.lat,
+  //       lng: house.lng
+  //     });
+  //   });
 
-    let newData = JSON.stringify(saveData);
-    this.storage.set('fHouse', newData);
-  }
+  //   let newData = JSON.stringify(saveData);
+  //   this.storage.set('fHouse', newData);
+  // }
 
   hasFavorite(sessionName) {
     return (this._favorites.indexOf(sessionName) > -1);

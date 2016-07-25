@@ -13,6 +13,11 @@
   </ion-buttons>
   <ion-title>{{"MLS：" + parms.id}}</ion-title>
 	<ion-buttons end>
+  <button  (click)="fav()">
+  <ion-icon [isActive]="isFav" name="star" ></ion-icon>
+  </button>
+  </ion-buttons>
+	<ion-buttons end>
   <button  (click)="share()">
   <ion-icon isActive="false" name="share" ></ion-icon>
   </button>
