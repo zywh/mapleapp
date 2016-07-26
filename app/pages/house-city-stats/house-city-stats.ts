@@ -76,8 +76,18 @@ export class HouseCityStatsPage {
       credits: { enabled: false },
       chart: {
         renderTo: 'chart',
+        //height: 600,
         // type: 'column'
-        type: 'bar'
+        type: 'pie'
+      },
+      plotOptions: {
+          pie: {
+              allowPointSelect: true,
+              cursor: 'pointer',
+              dataLabels: {
+                  enabled: false              
+              }
+          }
       },
 
       title: { text: topic },
@@ -88,10 +98,9 @@ export class HouseCityStatsPage {
         title: {
           text: '数量'
         }
-
       },
       legend: {
-        enabled: false,
+        enabled: true,
         // layout: 'vertical',
         // align: 'right',
         // verticalAlign: 'top',
@@ -101,19 +110,14 @@ export class HouseCityStatsPage {
       },
   
       tooltip: {
-        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}<br/>'
+        //headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        headerFormat: '',
+        pointFormat: '<span style="color:black">{point.name}</span>: <br><b>{point.y}</b>'
+        //pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}<br/>'
       },
-
-
-      //series: [{
-      //  name: topic,
-      //  data: eval("this.data." + topic)
-      //}]
 
       series: eval("this.data." + topic + ".series"),
       drilldown: eval("this.data." + topic + ".drilldown"),
-
 
     };
     console.log(this.data[topic]);
