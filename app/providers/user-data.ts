@@ -42,23 +42,25 @@ export class UserData {
     this.db.put(d);
     
   }
-  getDocuments(): Promise<any> {
+  getFavHouses(username): Promise<any> {
 
     return new Promise(resolve => {
 
-      this.db.allDocs({
+      // this.db.allDocs({
 
-        include_docs: true,
-        limit: 30,
-        descending: true
+      //   include_docs: true,
+      //   limit: 30,
+      //   descending: true
 
-      }).then((result) => {
+      this.db.query('_design/username',{username: username})
+       .then((result) => {
 
         this.data = [];
-        console.log(result)
+        console.log(result);
 
         let docs = result.rows.map((row) => {
           this.data.push(row.doc);
+         
         });
 
         //this.data.reverse();

@@ -32,7 +32,8 @@ export class HomePage {
   private imgHost;
   private houseRestURL;
   private data;
-  private favHouse;
+  private favHouses;
+  private username;
 
 
   constructor(
@@ -52,8 +53,10 @@ export class HomePage {
   };
   
   fav(){
-    this.userData.getDocuments().then(res=>{
-           console.log(res);
+    this.userData.getFavHouses(this.username).then(res=>{
+      this.favHouses = res;
+    
+     
     })
     
   }

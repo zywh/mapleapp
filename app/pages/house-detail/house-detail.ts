@@ -28,6 +28,7 @@ export class HouseDetailPage implements OnInit {
 	private house_propertyType: any;
 	private photos: Array<string>;
 	private exchangeRate: number;
+	private username:String;
 	private house = {
 		id: '',  // => 'ID',
 		name: '', // => '名称',
@@ -229,10 +230,11 @@ export class HouseDetailPage implements OnInit {
 		private events: Events,
 		private userData: UserData,
 		private platform: Platform) {
-		
+
 		this.nav = nav;
 		console.log(navParams);
 		this.parms = navParams.data;
+		this.username = 'david';//testing user
 		//this.isAndroid = platform.is('android');
 	}
 
@@ -255,9 +257,25 @@ export class HouseDetailPage implements OnInit {
 		})
 	}
 
-	fav(){
+	fav() {
 		this.isFav = !this.isFav;
-		let doc = this.house;
+		//let doc = this.house;
+		let wan = Math.ceil(Number(this.house.lp_dol)/10000);
+		let img = this.photoUrl(this.photos[0]);
+		let doc = {
+			'_id': new Date().toJSON(),
+			'username': this.username,
+			'MLS': this.house.ml_num,
+			'CoverImg': img,
+			'HouseType': this.house_propertyType.name,
+			'Beds': this.house.br,
+			'Baths': this.house.bath_tot,
+			'Kitchen': this.house.num_kit,
+			'Price': wan,
+			'MunicipalityName': this.house_mname.municipality_cname,
+			'ProvinceCname': this.house.county
+		};
+
 		this.userData.addDocument(doc);
 
 	}
@@ -275,7 +293,7 @@ export class HouseDetailPage implements OnInit {
 				this.houseRooms(this.house);
 				this.setHouseList();
 				//console.log(this.slider); 
-				this.slider.slideTo(0);
+				//this.slider.slideTo(0);
 			}
 		)
 	}
@@ -407,8 +425,8 @@ export class HouseDetailPage implements OnInit {
 	openHouseList() {
 	}
 
-	mapDirection(){
-		this.mapleConf.mapDirection(this.house.latitude,this.house.longitude)
+	mapDirection() {
+		this.mapleConf.mapDirection(this.house.latitude, this.house.longitude)
 	}
 
 	share() {

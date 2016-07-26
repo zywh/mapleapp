@@ -89,9 +89,9 @@
     </div>
     <div *ngSwitchCase="'house3'">
       <ion-list class="houselist-search">
-        <ion-item *ngFor="let house of favHouse" (click)="gotoHouseDetail(house.MLS,favHouse)">
+        <ion-item *ngFor="let house of favHouses" (click)="gotoHouseDetail(house.MLS,favHouses)">
           <ion-thumbnail item-left>
-            <img [src]="imgHost + house.CoverImg" />
+            <img [src]="house.CoverImg" />
           </ion-thumbnail>
 
           <h2>{{house.Address}}</h2>
