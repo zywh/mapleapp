@@ -86,7 +86,8 @@ export class HouseCityStatsPage {
               cursor: 'pointer',
               dataLabels: {
                   enabled: false              
-              }
+              },
+              showInLegend: true
           }
       },
 
