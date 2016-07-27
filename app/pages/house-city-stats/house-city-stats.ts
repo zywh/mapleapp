@@ -105,10 +105,9 @@ export class HouseCityStatsPage {
         // y: 80,
         labelFormatter: function () {
           let words = this.name.split(/\s+/);
-          if (words.length >= 21) words.splice(21,0,'<br>');
-          if (words.length >= 14) words.splice(14,0,'<br>');
-          if (words.length >= 7) words.splice(7,0,'<br>');
-          console.log(words);
+          for (var i = 4; i > 0; i--)
+            if (words.length >= 7*i) words.splice(7*i, 0, '<br>');
+          //console.log(words);
           return words.join(' ');
         }
 
