@@ -66,6 +66,15 @@ export class HouseCityStatsPage {
       });
   }
 
+  wordbreaks(str) {
+      let words = str.split(/\s+/);
+      for (var i = 4; i > 0; i--)
+        if (words.length >= 7*i) words.splice(7*i, 0, '<br>');
+      console.log(words);
+
+      return words.join(' ');    
+  }
+
   cityStatsColumn(topic) {
     console.log("Display City Chart:" + topic);
     let options = {
@@ -116,7 +125,14 @@ export class HouseCityStatsPage {
       tooltip: {
         //headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
         headerFormat: '',
-        pointFormat: '<span style="color:black">{point.name}</span>: <br><b>{point.y}</b>'
+        pointFormatter: function () {
+          let words = this.name.split(/\s+/);
+          for (var i = 4; i > 0; i--)
+            if (words.length >= 7*i) words.splice(7*i, 0, '<br>');
+          //console.log(words);
+          return "<span style='color:black'>" + words.join(' ') + "</span>: <br><b>" + this.y + "</b>";
+        }
+        //pointFormat: '<span style="color:black">{point.name}</span>: <br><b>{point.y}</b>'
         //pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}<br/>'
       },
 
