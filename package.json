@@ -18,6 +18,7 @@
     "@angular/platform-browser-dynamic": "^2.0.0-rc.3",
     "@angular/router": "^2.0.0-rc.2",
     "angular2-highcharts": "^0.1.0",
+    "angular2-jwt": "^0.1.18",
     "body-parser": "^1.15.0",
     "compression": "^1.6.1",
     "cors": "^2.7.1",

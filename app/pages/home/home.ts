@@ -8,6 +8,8 @@ import {ProjectDetailPage} from '../project-detail/project-detail';
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {UserData} from '../../providers/user-data';
 import {PostPage} from '../post/post';
+import {ProfilePage} from '../profile/profile';
+import {AuthService} from '../../providers/auth/auth';
 
 @Component({
   templateUrl: 'build/pages/home/home.html',
@@ -42,6 +44,7 @@ export class HomePage {
     private mapleRestData: MapleRestData,
     private userData: UserData,
     private mapleconf: MapleConf,
+    private auth: AuthService, 
     private events: Events
   ) { }
 
@@ -59,6 +62,9 @@ export class HomePage {
      
     })
     
+  }
+  profile(){
+    this.nav.push(ProfilePage);
   }
 
   // ngOnInit() {

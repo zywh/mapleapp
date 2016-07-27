@@ -1,4 +1,5 @@
-import {ViewChild, Component} from '@angular/core';
+import {ViewChild, Component,Type,provide} from '@angular/core';
+import {Http} from '@angular/http'
 import {ionicBootstrap, Events, Platform, Nav, MenuController} from 'ionic-angular';
 import {StatusBar, Splashscreen} from 'ionic-native';
 import {ConferenceData} from './providers/conference-data';
@@ -14,6 +15,8 @@ import {FavoritePage} from './pages/favorite/favorite'
 import {NetworkErrorPage} from './pages/network-error/network-error';
 import {HouselistSearch} from './pages/houselist-search/houselist-search'
 import {MapleConf} from './providers/maple-rest-data/maple-config';
+import {AuthHttp, AuthConfig} from 'angular2-jwt';
+import {AuthService} from './providers/auth/auth';
 
 interface PageObj {
   title: string;
@@ -67,7 +70,8 @@ class MapleApp {
     private menu: MenuController,
     platform: Platform,
     mapleconf: MapleConf,
-    public connectivity: Connectivity
+    public connectivity: Connectivity,
+    private auth: AuthService
     //confData: ConferenceData
   ) {
     // Call any initial plugins when ready
@@ -160,7 +164,18 @@ class MapleApp {
 
 ionicBootstrap(
   MapleApp,
-  [ConferenceData, UserData, MapleRestData, MapleConf, Connectivity],
+  [ConferenceData, 
+  UserData, 
+  MapleRestData, 
+  MapleConf, 
+  Connectivity,
+  provide(AuthHttp, {
+    useFactory: (http) => {
+      return new AuthHttp(new AuthConfig({noJwtError: true}), http);
+    },
+    deps: [Http]
+  }),
+  AuthService],
   {
     tabbarPlacement: "bottom",
     //backButtonText: "返回",
