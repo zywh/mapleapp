@@ -66,10 +66,6 @@ export class HouseCityStatsPage {
       });
   }
 
-  
-
-
-
   cityStatsColumn(topic) {
     console.log("Display City Chart:" + topic);
     let options = {
@@ -107,6 +103,14 @@ export class HouseCityStatsPage {
         // verticalAlign: 'top',
         // x: -40,
         // y: 80,
+        labelFormatter: function () {
+          let words = this.name.split(/\s+/);
+          if (words.length >= 21) words.splice(21,0,'<br>');
+          if (words.length >= 14) words.splice(14,0,'<br>');
+          if (words.length >= 7) words.splice(7,0,'<br>');
+          console.log(words);
+          return words.join(' ');
+        }
 
       },
   
