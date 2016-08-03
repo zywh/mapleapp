@@ -6,6 +6,7 @@ import {ProjectsPage} from '../projects/projects';
 import {StatsPage} from '../stats/stats';
 import {SchoolMapPage} from '../school-map/school-map';
 import {HomePage} from '../home/home';
+import {ProfilePage} from '../profile/profile';
 //import {MapleConf} from './providers/maple-rest-data/maple-config';
 
 interface MapParmObj {
@@ -22,6 +23,7 @@ export class TabsPage {
   home: any = HomePage;
   map: any = MapSearchPage;
   project: any = ProjectsPage;
+  profile: any = ProfilePage;
  // school: any = SchoolMapPage;
   school: any = MapSearchPage;
   stats: any = StatsPage;

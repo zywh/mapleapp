@@ -7,33 +7,59 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Profile</ion-title>
+    <ion-title>其他功能</ion-title>
   </ion-navbar>
 
 </ion-header>
 
+<ion-content padding>
+
+  <div padding *ngIf="!auth.authenticated()">
+    <button block (click)="auth.login()">登录</button>
+  </div>
+
+  <div *ngIf="auth.authenticated()">
+
+    <ion-card>
+
+      <ion-item *ngIf="auth.user">
+        <ion-avatar item-left>
+          <img src="{{ auth.user.picture }}">
+        </ion-avatar>
+        <h2>{{ auth.user.nickname }}</h2>
+        <p>{{ auth.user.email }}</p>
+      </ion-item>
+
+    </ion-card>
 
 
-<ion-content padding *ngIf="!auth.authenticated()">
+    <ion-item-group>
+      <ion-item-divider divider>收藏</ion-item-divider>
+      <ion-list>
+        <a ion-item (click)="favorite()"><ion-icon primary name="home" item-left></ion-icon>我的房源</a>
+        <a ion-item (click)="route()"><ion-icon primary  name="compass" item-left></ion-icon>看房列表</a>
+      </ion-list>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider divider>设置</ion-item-divider>
+      <ion-list>
+        <a ion-item (click)="houseSearchDefault()"> <ion-icon primary name="home" item-left></ion-icon>缺省房源搜索条件</a>
+        <a ion-item (click)="schoolSearchDefault()"> <ion-icon primary name="school" item-left></ion-icon>缺省学校搜索条件</a>
+        <a ion-item (click)="centerDefault()"> <ion-icon primary  name="locate" item-left></ion-icon>缺省搜索中心位置</a>
+      </ion-list>
+    </ion-item-group>
+     <ion-list>
+     <a ion-item (click)="auth.logout()"><ion-icon primary  name="log-out" item-left></ion-icon>退出登录</a>
+     </ion-list>
+   
+  </div>
+  <ion-item-group>
+    <ion-list>
+        <a ion-item (click)="aboutUs()"> <ion-icon primary name="information-circle" item-left></ion-icon>关于我们</a>
+        <a ion-item (click)="help()"> <ion-icon primary name="help" item-left></ion-icon>帮助与反馈</a>
+        
+      </ion-list>
   
-  <button block (click)="auth.login()">Login</button>
-  
-</ion-content>
+  </ion-item-group>
 
-<ion-content padding *ngIf="auth.authenticated()">  
-  
-  <ion-card>
-
-    <ion-item *ngIf="auth.user">
-      <ion-avatar item-left>
-        <img src="{{ auth.user.picture }}">
-      </ion-avatar>
-      <h2>{{ auth.user.nickname }}</h2>
-      <p>{{ auth.user.email }}</p>
-    </ion-item>
-  
-  </ion-card>
-  
-  <button block (click)="auth.logout()">Logout</button>
-  
 </ion-content>
