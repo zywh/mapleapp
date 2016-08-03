@@ -15,7 +15,7 @@ export class ProfilePage {
     private auth: AuthService,
     private nav: NavController
   ) {
-
+    console.log(auth.user);
   }
   aboutUs(){
     this.nav.push(AboutPage);
@@ -38,7 +38,7 @@ export class ProfilePage {
   }
 
   centerDefault(){
-    
+
   }
 
 }

@@ -3,6 +3,7 @@ import {Storage, LocalStorage} from 'ionic-angular';
 import {AuthHttp, JwtHelper, tokenNotExpired} from 'angular2-jwt';
 import {Injectable, NgZone} from '@angular/core';
 import {Observable} from 'rxjs/Rx';
+import {CN} from './cn';
 
 // Avoid name not found warnings
 declare var Auth0: any;
@@ -11,22 +12,26 @@ declare var Auth0Lock: any;
 @Injectable()
 export class AuthService {
   jwtHelper: JwtHelper = new JwtHelper();
-  auth0 = new Auth0({clientID: '9fNpEj70wvf86dv5DeXPijTnkLVX5QZi', domain: 'mapleapp.auth0.com'});
-  lock = new Auth0Lock('9fNpEj70wvf86dv5DeXPijTnkLVX5QZi', 'mapleapp.auth0.com', {
-  // auth0 = new Auth0({clientID: 'sfyFhgeWtYy5x1W5fOwFg2FEqnHRHae3', domain: 'mapleapp.auth0.com'});
-  // lock = new Auth0Lock('sfyFhgeWtYy5x1W5fOwFg2FEqnHRHae3', 'mapleapp.auth0.com', {
+  auth0 = new Auth0({ clientID: '9fNpEj70wvf86dv5DeXPijTnkLVX5QZi', domain: 'mapleapp.auth0.com' });
+  options = {
+    theme: {
+      logo: "http://www.maplecity.com.cn/themes/house/images/layout/logo.jpg",
+      primaryColor: "#FF5722"
+    },
+   languageDictionary: CN,
     auth: {
       redirect: false,
       params: {
         scope: 'openid offline_access',
       }
     }
-  });
+  }
+  lock = new Auth0Lock('9fNpEj70wvf86dv5DeXPijTnkLVX5QZi', 'mapleapp.auth0.com', this.options);
   local: Storage = new Storage(LocalStorage);
   refreshSubscription: any;
   user: Object;
   zoneImpl: NgZone;
-  
+
   constructor(private authHttp: AuthHttp, zone: NgZone) {
     this.zoneImpl = zone;
     // Check if there is a profile saved in local storage
@@ -57,19 +62,19 @@ export class AuthService {
       this.local.set('refresh_token', authResult.refreshToken);
       this.zoneImpl.run(() => this.user = authResult.profile);
     });
-    
+
   }
-  
+
   public authenticated() {
     // Check if there's an unexpired JWT
     return tokenNotExpired();
   }
-  
+
   public login() {
     // Show the Auth0 Lock widget
-    this.lock.show();    
+    this.lock.show();
   }
-  
+
   public logout() {
     this.local.remove('profile');
     this.local.remove('id_token');

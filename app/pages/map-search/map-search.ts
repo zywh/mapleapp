@@ -307,13 +307,19 @@ export class MapSearchPage {
   }
 
 
-  itemTapped(item) {
+  itemTapped(item, type) {
 
     let center = new google.maps.LatLng(item.lat, item.lng);
+
     this.currentDiv = '';
     this.queryText = '';
     console.log("Set Center and clear text");
-    this.setLocation(center, this.defaultZoom, true);
+    if (type == 1) {
+      this.setLocation(center, this.defaultZoom, true);
+    } else if (type == 2) {
+      this.nav.push(HouseDetailPage, { id: item.id })
+    }
+
 
   }
   //auto complete REST CAll
@@ -709,7 +715,7 @@ export class MapSearchPage {
           // + '     <div><i padding-right secondary class="fa fa-building" aria-hidden="true"></i><span padding-right>' + house.HouseType + '</span>' + house.Beds + '卧' + house.Baths + '卫' + house.Kitchen + '厨</div>'
           // + '     <div><i padding-right secondary class="fa fa-location-arrow" aria-hidden="true"></i><span padding-right>' + house.Address + '</span>' + house.MunicipalityName + '</div>'
           + '<div>' + house.HouseType + '</div>'
-          + '<div>' + house.Address + ',' + house.MunicipalityName  + '</div>'
+          + '<div>' + house.Address + ',' + house.MunicipalityName + '</div>'
           + '</div></div>'
           + ' </ion-card> '
 
@@ -809,7 +815,7 @@ export class MapSearchPage {
     });
 
     popover.present();
-    
+
   }
 
 }
