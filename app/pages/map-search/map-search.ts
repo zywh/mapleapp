@@ -524,8 +524,6 @@ export class MapSearchPage {
 
   }
 
-
-
   changeMap(type) {
     console.log("Change Map");
     //google.maps.event.trigger(this.map, 'resize');

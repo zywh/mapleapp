@@ -11,7 +11,7 @@
     <div text-left text-nowrap>
 
 
-        <ion-badge item-left>MLS:{{house.MLS}} {{house.Price}}万</ion-badge>
+        <ion-badge item-left>MLS:{{house.MLS}} {{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
 
         <div text-left>
             <div><span>{{house.HouseType}}</span>{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨</div>

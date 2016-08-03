@@ -1,6 +1,7 @@
-import {NavParams,  NavController, Events} from 'ionic-angular';
+import {NavParams, NavController, Events} from 'ionic-angular';
 import {Component} from '@angular/core';
 import {HouseDetailPage} from '../house-detail/house-detail';
+import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 
 
 @Component({
@@ -14,8 +15,9 @@ export class MapHouselist {
 
     constructor(
         private params: NavParams,
-        private nav: NavController
-       
+        private nav: NavController,
+        private mapleConf: MapleConf
+
     ) {
         //this.viewCtrl = viewCtrl;
         console.log(this.params.data);
@@ -23,11 +25,12 @@ export class MapHouselist {
         this.imgHost = this.params.data.imgHost;
 
     }
-    
+
     gotoHouseDetail(mls) {
-        this.nav.pop().then(()=> this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList }))
-     
+        this.nav.pop().then(() => this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList }));
+      
     }
+
 
 
     close() {

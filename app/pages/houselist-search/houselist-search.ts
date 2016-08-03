@@ -3,6 +3,7 @@ import { NgZone, Component} from '@angular/core';;
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {SelectOptionModal} from '../map-search/map-option-modal';
+import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 
 interface selectOptionsObj {
     selectPrice?: String,
@@ -53,7 +54,8 @@ export class HouselistSearch {
     constructor(
         private nav: NavController,
         private mapleRestData: MapleRestData,
-        private parms: NavParams
+        private parms: NavParams,
+        private mapleConf: MapleConf
 
 
     ) {

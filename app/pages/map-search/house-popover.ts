@@ -1,6 +1,7 @@
 import {Component, ViewChild, ElementRef} from '@angular/core';
 import {NavParams, NavController} from 'ionic-angular';
 import {HouseDetailPage} from '../house-detail/house-detail';
+import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 
 @Component({
     templateUrl: 'build/pages/map-search/house-popover.html'
@@ -10,7 +11,7 @@ export class HousePopover {
     private house;
     private currentHouseList;
     private imgHost;
-    constructor(private navparms: NavParams, private nav: NavController) {
+    constructor(private navparms: NavParams, private nav: NavController,private mapleConf: MapleConf) {
         this.house = this.navparms.data.house;
         this.currentHouseList = this.navparms.data.list;
         this.imgHost = this.navparms.data.imgHost;

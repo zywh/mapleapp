@@ -11,7 +11,7 @@ import {TabsPage} from './pages/tabs/tabs';
 import {LoginPage} from './pages/login/login';
 import {SignupPage} from './pages/signup/signup';
 import {SettingsPage} from './pages/settings/settings';
-import {FavoritePage} from './pages/favorite/favorite'
+import {ProfilePage} from './pages/profile/profile';
 import {NetworkErrorPage} from './pages/network-error/network-error';
 import {HouselistSearch} from './pages/houselist-search/houselist-search'
 import {MapleConf} from './providers/maple-rest-data/maple-config';
@@ -51,18 +51,6 @@ class MapleApp {
 
   ];
 
-  loggedInPages: PageObj[] = [
-    { title: 'Account', component: AccountPage, icon: 'person' },
-    { title: 'Logout', component: TabsPage, icon: 'log-out' }
-  ];
-  loggedOutPages: PageObj[] = [
-    { title: 'Login', component: LoginPage, icon: 'log-in' },
-    { title: 'Signup', component: SignupPage, icon: 'person-add' }
-  ];
-  //rootPage: any = TutorialPage;
-  // rootPage: any = ProjectsPage;
-  //rootPage: any = HomePage;
-  //rootPage: any = TabsPage;
   rootPage: any = TabsPage;
   constructor(
     private events: Events,
@@ -84,11 +72,11 @@ class MapleApp {
     //confData.load();
 
     // decide which menu items should be hidden by current login status stored in local storage
-    this.userData.hasLoggedIn().then((hasLoggedIn) => {
-      this.enableMenu(hasLoggedIn == 'true');
-    });
+    // this.userData.hasLoggedIn().then((hasLoggedIn) => {
+    //   this.enableMenu(hasLoggedIn == 'true');
+    // });
 
-    this.listenToLoginEvents();
+    this.listenEvents();
     this.checkConnectivity();
   }
   
@@ -113,18 +101,18 @@ class MapleApp {
     }
   }
 
-  listenToLoginEvents() {
-    this.events.subscribe('user:login', () => {
-      this.enableMenu(true);
-    });
+  listenEvents() {
+    // this.events.subscribe('user:login', () => {
+    //   this.enableMenu(true);
+    // });
 
-    this.events.subscribe('user:signup', () => {
-      this.enableMenu(true);
-    });
+    // this.events.subscribe('user:signup', () => {
+    //   this.enableMenu(true);
+    // });
 
-    this.events.subscribe('user:logout', () => {
-      this.enableMenu(false);
-    });
+    // this.events.subscribe('user:logout', () => {
+    //   this.enableMenu(false);
+    // });
 
     this.events.subscribe('map:center', (data) => {
 

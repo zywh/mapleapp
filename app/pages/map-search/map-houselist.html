@@ -29,7 +29,7 @@
 
       <h2>{{house.Address}}</h2>
       <p>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
-        <ion-badge item-right>{{house.Price}}万</ion-badge>
+        <ion-badge item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
       </p>
       <p>{{house.MunicipalityName}},{{house.ProvinceCname}}</p>
 

@@ -118,7 +118,7 @@ export class MapleConf {
   getPrice2Scale(price) {
 
     //let wanPrice = Math.log2(price);
-    let wanPrice = Math.ceil(price / 10);
+    let wanPrice = Math.ceil(price / 100000);
     let hue = 0;
     let hueStart = 0;
     let hueEnd = 70;
@@ -147,6 +147,19 @@ export class MapleConf {
       window.open('geo:0,0?q=' + destination + '(' + label + ')', '_system');
     }
   }
+
+
+  getPriceTxt(sr, price) {
+    let priceTxt;
+    if (sr == "Sale")
+      priceTxt = Math.ceil(Number(price) / 10000) + "万";
+    else
+    console.log(price);
+      priceTxt = price + "/月";
+    return priceTxt;
+  }
+
+
 
 
 }
