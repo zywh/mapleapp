@@ -1,9 +1,11 @@
-import {Modal, Loading, NavController, NavParams, ViewController} from 'ionic-angular';
+import {Modal, Loading, NavController, AlertController, NavParams, ViewController} from 'ionic-angular';
 import { NgZone, Component} from '@angular/core';;
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
+import {UserData} from '../../providers/user-data'
 import {SelectOptionModal} from '../map-search/map-option-modal';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
+import {AuthService} from '../../providers/auth/auth'
 
 interface selectOptionsObj {
     selectPrice?: String,
@@ -55,14 +57,17 @@ export class HouselistSearch {
         private nav: NavController,
         private mapleRestData: MapleRestData,
         private parms: NavParams,
-        private mapleConf: MapleConf
+        private mapleConf: MapleConf,
+        private userData: UserData,
+        private auth: AuthService,
+        private alertc: AlertController
 
 
     ) {
 
         this.selectOptions = parms.data.opts;
         this.bounds = parms.data.bounds;
-        console.log(this.selectOptions);
+        //console.log(this.selectOptions);
 
     }
 
@@ -90,7 +95,7 @@ export class HouselistSearch {
 
 
     gotoHouseDetail(mls) {
-       this.nav.pop().then(()=> this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList }))
+        this.nav.pop().then(() => this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList }))
     }
     pagePre() {
         --this.pageIndex;
@@ -113,8 +118,8 @@ export class HouselistSearch {
             }
         }, 500);
     }
-
-
+    
+  
     getHouseList() {
 
         this.currentDiv = ''; //reset all popup

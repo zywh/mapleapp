@@ -409,33 +409,33 @@ export class MapSearchPage {
 
     marker.addListener('click', () => {
       if (count == 1) {
-        // let alert = this.alertc.create({
-        //   //title: 'Confirm purchase',
-        //   message: html,
-        //   cssClass: 'house_popup',
-        //   buttons: [
-        //     {
-        //       text: '取消',
-        //       role: 'cancel',
+        let alert = this.alertc.create({
+          //title: 'Confirm purchase',
+          message: html,
+          cssClass: 'house_popup',
+          buttons: [
+            {
+              text: '取消',
+              role: 'cancel',
 
-        //     },
-        //     {
-        //       text: '详情',
-        //       handler: () => {
-        //         let navTransition = alert.dismiss();
-        //         navTransition.then(() => {
-        //           this.nav.pop();
-        //           this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList });
-        //           //this.nav.push(HouseDetailPage, mls); 
-        //         });
-        //         return false;
-        //       }
-        //     }
-        //   ]
-        // });
-        // // this.nav.present(alert);
-        // alert.present();
-        this.housePopover(house);
+            },
+            {
+              text: '详情',
+              handler: () => {
+                let navTransition = alert.dismiss();
+                navTransition.then(() => {
+                  this.nav.pop();
+                  this.nav.push(HouseDetailPage, { id: house.MLS, list: this.currentHouseList });
+                  //this.nav.push(HouseDetailPage, mls); 
+                });
+                return false;
+              }
+            }
+          ]
+        });
+        // this.nav.present(alert);
+        alert.present();
+        //this.housePopover(house);
       } else {
         console.log("More than one");
         // this.listModal = Modal.create(MapHouselist, { list: houses, imgHost: this.imgHost });

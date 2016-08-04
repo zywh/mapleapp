@@ -153,9 +153,10 @@ export class MapleConf {
     let priceTxt;
     if (sr == "Sale")
       priceTxt = Math.ceil(Number(price) / 10000) + "万";
-    else
-    console.log(price);
+    else {
       priceTxt = price + "/月";
+    }
+
     return priceTxt;
   }
 

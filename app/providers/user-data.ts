@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Storage, LocalStorage, Events, SqlStorage} from 'ionic-angular';
+import {Storage, LocalStorage, Events, AlertController} from 'ionic-angular';
+import {AuthService} from './auth/auth';
 import * as PouchDB from 'pouchdb';
 //declare var PouchDB: any;
 
@@ -7,6 +8,10 @@ import * as PouchDB from 'pouchdb';
 @Injectable()
 export class UserData {
   _favorites = [];
+  _routes = [];
+  _defaultCenter: Object;
+  _houseSearchDefault: Object;
+  _schoolSearchDefault: Object;
   HAS_LOGGED_IN = 'hasLoggedIn';
   storage: Storage;
 
@@ -18,8 +23,11 @@ export class UserData {
   cloudantUsername: string;
   cloudantPassword: string;
   remote: string;
-  constructor(private events: Events) {
-    this.storage = new Storage(SqlStorage, { name: 'maplecity' });
+  constructor(
+    private events: Events,
+    private auth: AuthService,
+    private alertc: AlertController) {
+    //this.storage = new Storage(SqlStorage, { name: 'maplecity' });
 
     this.db = new PouchDB('mapleapp');
     this.cloudantUsername = 'heyedimedsoicknotheavalm';
@@ -40,7 +48,7 @@ export class UserData {
   addDocument(d) {
     console.log(d);
     this.db.put(d);
-    
+
   }
   getFavHouses(username): Promise<any> {
 
@@ -52,30 +60,30 @@ export class UserData {
       //   limit: 30,
       //   descending: true
 
-      this.db.query('_design/username',{username: username})
-       .then((result) => {
+      this.db.query('_design/username', { username: username })
+        .then((result) => {
 
-        this.data = [];
-        console.log(result);
+          this.data = [];
+          console.log(result);
 
-        let docs = result.rows.map((row) => {
-          this.data.push(row.doc);
-         
+          let docs = result.rows.map((row) => {
+            this.data.push(row.doc);
+
+          });
+
+          //this.data.reverse();
+
+          resolve(this.data);
+
+          this.db.changes({ live: true, since: 'now', include_docs: true }).on('change', (change) => {
+            this.handleChange(change);
+          });
+
+        }).catch((error) => {
+
+          console.log(error);
+
         });
-
-        //this.data.reverse();
-
-        resolve(this.data);
-
-        this.db.changes({ live: true, since: 'now', include_docs: true }).on('change', (change) => {
-          this.handleChange(change);
-        });
-
-      }).catch((error) => {
-
-        console.log(error);
-
-      });
 
     });
 
@@ -137,16 +145,39 @@ export class UserData {
   //   this.storage.set('fHouse', newData);
   // }
 
-  hasFavorite(sessionName) {
-    return (this._favorites.indexOf(sessionName) > -1);
+  loginAlert() {
+    let alert = this.alertc.create({
+      title: '提示',
+      subTitle: '请登录后使用此功能',
+      buttons: ['确定']
+    });
+    alert.present();
   }
 
-  addFavorite(sessionName) {
-    this._favorites.push(sessionName);
+  hasFavorite(mls, type) {
+    return (this._favorites.indexOf(mls) > -1);
   }
 
-  removeFavorite(sessionName) {
-    let index = this._favorites.indexOf(sessionName)
+  addFavorite(mls, type) {
+
+
+    if (this.auth.authenticated()) {
+      console.log("Authenticate. Allow add fav");
+      this._favorites.push(mls);
+
+
+    } else {
+      console.log("not login can't use add fav")
+      this.loginAlert();
+    }
+
+
+
+
+  }
+
+  removeFavorite(mls, type) {
+    let index = this._favorites.indexOf(mls)
     if (index > -1) {
       this._favorites.splice(index, 1);
     }

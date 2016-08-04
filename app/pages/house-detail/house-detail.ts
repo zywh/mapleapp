@@ -259,24 +259,31 @@ export class HouseDetailPage implements OnInit {
 
 	fav() {
 		this.isFav = !this.isFav;
-		//let doc = this.house;
-		let wan = Math.ceil(Number(this.house.lp_dol)/10000);
-		let img = this.photoUrl(this.photos[0]);
-		let doc = {
-			'_id': new Date().toJSON(),
-			'username': this.username,
-			'MLS': this.house.ml_num,
-			'CoverImg': img,
-			'HouseType': this.house_propertyType.name,
-			'Beds': this.house.br,
-			'Baths': this.house.bath_tot,
-			'Kitchen': this.house.num_kit,
-			'Price': wan,
-			'MunicipalityName': this.house_mname.municipality_cname,
-			'ProvinceCname': this.house.county
-		};
+		if (this.isFav == true){
+			console.log("isFav Ture . Add fav")	
+			this.userData.addFavorite(this.house.ml_num,1)
+		}else {
+			console.log("isFav False + remove from fav list")
+			this.userData.removeFavorite(this.house.ml_num,1)
+		}
+	
+		// let wan = Math.ceil(Number(this.house.lp_dol)/10000);
+		// let img = this.photoUrl(this.photos[0]);
+		// let doc = {
+		// 	'_id': new Date().toJSON(),
+		// 	'username': this.username,
+		// 	'MLS': this.house.ml_num,
+		// 	'CoverImg': img,
+		// 	'HouseType': this.house_propertyType.name,
+		// 	'Beds': this.house.br,
+		// 	'Baths': this.house.bath_tot,
+		// 	'Kitchen': this.house.num_kit,
+		// 	'Price': wan,
+		// 	'MunicipalityName': this.house_mname.municipality_cname,
+		// 	'ProvinceCname': this.house.county
+		// };
 
-		this.userData.addDocument(doc);
+		// this.userData.addDocument(doc);
 
 	}
 

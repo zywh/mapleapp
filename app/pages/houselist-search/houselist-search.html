@@ -1,24 +1,24 @@
 <ion-header>
-<ion-toolbar >
- <ion-buttons left>
-   <button class="bar-button-default" (click)="nav.pop()">
+  <ion-toolbar>
+    <ion-buttons left>
+      <button class="bar-button-default" (click)="nav.pop()">
     <ion-icon outline name="arrow-back" ></ion-icon>
   </button>
-  </ion-buttons>
-  <p text-left class="bar-button-default">房源总数：{{totalCount}}套 - {{pageIndex + 1}}/{{pageTotal}}页</p>
-  <ion-buttons end>
-    <button class="bar-button-default" (click)="pagePre()" *ngIf="pageIndex > 0">
+    </ion-buttons>
+    <p text-left class="bar-button-default">房源总数：{{totalCount}}套 - {{pageIndex + 1}}/{{pageTotal}}页</p>
+    <ion-buttons end>
+      <button class="bar-button-default" (click)="pagePre()" *ngIf="pageIndex > 0">
         <ion-icon name="arrow-dropleft"></ion-icon>
      </button>
-  </ion-buttons>
+    </ion-buttons>
 
-  <ion-buttons end>
-    <button class="bar-button-default" (click)="pageNext()" *ngIf="pageIndex < pageTotal-1">
+    <ion-buttons end>
+      <button class="bar-button-default" (click)="pageNext()" *ngIf="pageIndex < pageTotal-1">
         <ion-icon name="arrow-dropright"></ion-icon>
      </button>
-  </ion-buttons>
+    </ion-buttons>
 
-</ion-toolbar>
+  </ion-toolbar>
 </ion-header>
 
 
@@ -26,18 +26,30 @@
 <ion-content class="houselist-search">
 
   <ion-list>
-    <ion-item class="house_card" *ngFor="let house of currentHouseList" (click)="gotoHouseDetail(house.MLS)" >
-      <ion-thumbnail item-left>
-        <img [src]="imgHost + house.CoverImg" />
-      </ion-thumbnail>
+    <ion-item-sliding *ngFor="let house of currentHouseList">
+      <ion-item class="house_card" (click)="gotoHouseDetail(house.MLS)">
+        <ion-thumbnail item-left>
+          <img [src]="imgHost + house.CoverImg" />
+        </ion-thumbnail>
 
-      <h2>{{house.Address}}</h2>
-      <p>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
-        <ion-badge item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
-      </p>
-      <p>{{house.MunicipalityName}},{{house.ProvinceCname}}</p>
+        <h2>{{house.Address}}</h2>
+        <p>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
+          <ion-badge item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
+        </p>
+        <p>{{house.MunicipalityName}},{{house.ProvinceCname}}</p>
 
-    </ion-item>
+      </ion-item>
+      <ion-item-options>
+        <button clear (click)="userData.addFavorite(house.MLS,1)">
+        <ion-icon name="heart"></ion-icon>
+        收藏
+      </button>
+        <button clear (click)="userData.addFavorite(house.MLS,1)">
+        <ion-icon name="navigate"></ion-icon>
+        看房
+      </button>
+      </ion-item-options>
+    </ion-item-sliding>
 
   </ion-list>
   <!--<ion-infinite-scroll (ionInfinite)="doInfinite($event)">

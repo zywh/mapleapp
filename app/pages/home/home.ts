@@ -66,6 +66,7 @@ export class HomePage {
   profile(){
     this.nav.push(ProfilePage);
   }
+ 
 
   // ngOnInit() {
   ionViewWillEnter() {

@@ -1,5 +1,5 @@
 <ion-header>
-<!--<ion-toolbar>
+  <!--<ion-toolbar>
   <ion-buttons left>
    <button class="bar-button-default" (click)="close()">
     <ion-icon outline name="arrow-back" ></ion-icon>
@@ -7,33 +7,45 @@
   </ion-buttons>
   <ion-title>房源列表</ion-title>
 </ion-toolbar>-->
-<ion-toolbar >
-   <ion-buttons left>
-   <button class="bar-button-default" (click)="close()">
+  <ion-toolbar>
+    <ion-buttons left>
+      <button class="bar-button-default" (click)="close()">
     <ion-icon outline name="arrow-back" ></ion-icon>
   </button>
-  </ion-buttons>
-  <ion-title>房源列表</ion-title>
-</ion-toolbar>  
+    </ion-buttons>
+    <ion-title>房源列表</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 
 <ion-content class="houselist-search">
 
-  
+
   <ion-list>
-    <ion-item class="house_card" *ngFor="let house of currentHouseList" (click)="gotoHouseDetail(house.MLS)" >
-      <ion-thumbnail item-left>
-        <img [src]="imgHost + house.CoverImg" />
-      </ion-thumbnail>
+    <ion-item-sliding *ngFor="let house of currentHouseList">
+      <ion-item class="house_card" (click)="gotoHouseDetail(house.MLS)">
+        <ion-thumbnail item-left>
+          <img [src]="imgHost + house.CoverImg" />
+        </ion-thumbnail>
 
-      <h2>{{house.Address}}</h2>
-      <p>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
-        <ion-badge item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
-      </p>
-      <p>{{house.MunicipalityName}},{{house.ProvinceCname}}</p>
+        <h2>{{house.Address}}</h2>
+        <p>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
+          <ion-badge item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
+        </p>
+        <p>{{house.MunicipalityName}},{{house.ProvinceCname}}</p>
 
-    </ion-item>
+      </ion-item>
+      <ion-item-options>
+        <button clear (click)="userData.addFavorite(house.MLS,1)">
+        <ion-icon name="heart"></ion-icon>
+        收藏
+      </button>
+        <button clear (click)="userData.addFavorite(house.MLS,1)">
+        <ion-icon name="navigate"></ion-icon>
+        看房
+      </button>
+      </ion-item-options>
+    </ion-item-sliding>
 
   </ion-list>
 
@@ -52,8 +64,8 @@
       </div>
     
   </ion-card>-->
- 
- <!--<ion-slides [options]="swiperOptions" class="swiper-container">
+
+  <!--<ion-slides [options]="swiperOptions" class="swiper-container">
       <ion-slide *ngFor="let house of currentHouseList" class="swiper-slide" (click)="gotoHouseDetail(house.MLS)">
         <ion-card class="house_card">
          <img [src]="imgHost + house.CoverImg" />
@@ -75,4 +87,4 @@
     </ion-slides>-->
 
 </ion-content>
- <!--<button full (click)="close()">关闭窗口</button>-->
+<!--<button full (click)="close()">关闭窗口</button>-->
