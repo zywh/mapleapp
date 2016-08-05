@@ -154,6 +154,7 @@ export class UserData {
     });
     alert.present();
   }
+
   presentToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
@@ -180,11 +181,14 @@ export class UserData {
       //check if mls# is in list
       if (this.hasFavorite) {
         //remove fav
-
+        this.removeFavorite(mls, 1)
+        this.presentToast("删除收藏(" + mls + ")成功!")
         return "D";
       } else {
         //add fav
         this._favorites.push(mls);
+        console.log("Toaster Present");
+        this.presentToast("添加收藏(" + mls + ")成功!")
         return "C";
 
       }

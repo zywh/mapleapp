@@ -88,41 +88,35 @@ export class HomePage {
   }
   searchHouse(s) {
     console.log("Button is clicked for house search");
-    let range: number = 0.015;
-    //parm for recommendation
-    if (s == 'recommend') {
+    let range: number = (s == 'recommend')? 0.1: 0.015;
+   
 
-      range = 0.1;
+    this.mapleConf.getLocation().then(data => {
+      this.data = data;
+      let swLat = this.data['lat'] - range;
+      let swLng = this.data['lng'] - range;
+      let neLat = this.data['lat'] + range;
+      let neLng = this.data['lng'] + range;
+      let bounds = swLat + "," + swLng + "," + neLat + "," + neLng;
+      let mapParms = {
 
-    }
+        bounds: bounds,
+        centerLat: this.data['lat'],
+        centerLng: this.data['lng'],
+        type: s,
+        sr: 'Sale'
+      };
 
+      this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
+        data => {
+          console.log(data);
+          if (data.Data.Type == 'house') {
+            this.imgHost = data.Data.imgHost;
+            this.nearbyHouseList = data.Data.MapHouseList;
+          }
+        })
 
-    console.log(this.data);
-    let swLat = this.data['lat'] - range;
-    let swLng = this.data['lng'] - range;
-    let neLat = this.data['lat'] + range;
-    let neLng = this.data['lng'] + range;
-    let bounds = swLat + "," + swLng + "," + neLat + "," + neLng;
-    let mapParms = {
-
-      bounds: bounds,
-      centerLat: this.data['lat'],
-      centerLng: this.data['lng'],
-      type: s,
-      sr: 'Sale'
-    };
-
-
-
-
-    this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
-      data => {
-        console.log(data);
-        if (data.Data.Type == 'house') {
-          this.imgHost = data.Data.imgHost;
-          this.nearbyHouseList = data.Data.MapHouseList;
-        }
-      })
+    })
   }
 
 

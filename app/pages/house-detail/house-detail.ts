@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams, ToastController,Platform, Slides, Events} from 'ionic-angular';
+import {Page, NavController, NavParams, ToastController, Platform, Slides, Events, ActionSheetController} from 'ionic-angular';
 import {OnInit, Component, ViewChild} from '@angular/core';;
 //import {Geolocation} from 'ionic-native';
 import {SocialSharing} from 'ionic-native';
@@ -6,6 +6,7 @@ import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {UserData} from '../../providers/user-data';
 import {HouseCityStatsPage} from '../../pages/house-city-stats/house-city-stats';
+import {AuthService} from '../../providers/auth/auth';
 
 /*
   Generated class for the HouseDetailPage page.
@@ -229,7 +230,9 @@ export class HouseDetailPage implements OnInit {
 		private mapleConf: MapleConf,
 		private events: Events,
 		private userData: UserData,
+		private auth: AuthService,
 		private toastCtrl: ToastController,
+		private actionSheetCtrl: ActionSheetController,
 		private platform: Platform) {
 
 		this.nav = nav;
@@ -258,19 +261,51 @@ export class HouseDetailPage implements OnInit {
 		})
 	}
 
+	more() {
+		let actionSheet = this.actionSheetCtrl.create({
+			title: '更多',
+			buttons: [
+				{
+					text: '添加收藏列表',
+					role: 'destructive',
+					handler: () => {
+						this.fav();
+					}
+				},
+				{
+					text: '添加看房列表',
+					handler: () => {
+						console.log('Archive clicked');
+					}
+				},
+				{
+					text: '取消',
+					role: 'cancel',
+					handler: () => {
+						console.log('Cancel clicked');
+					}
+				}
+			]
+		});
+
+		actionSheet.present();
+	}
+
+
 	fav() {
 
 		let s = this.userData.addFavorite(this.house.ml_num, 1)
-		switch (s) {
-			case 'C': //mls doesn't exist .Add MLS into fav'
-				this.isFav = true;
-				break;
-			case 'D': //
-				this.isFav = false;
-				break;
-			default:
-				console.log("Add fav is aborted");
-		}
+		console.log("Add FAV" + this.house.ml_num + "Return:" + s);
+		// switch (s) {
+		// 	case 'C': //mls doesn't exist .Add MLS into fav'
+		// 		this.isFav = true;
+		// 		break;
+		// 	case 'D': //
+		// 		this.isFav = false;
+		// 		break;
+		// 	default:
+		// 		console.log("Add fav is aborted");
+		// }
 
 
 		// let wan = Math.ceil(Number(this.house.lp_dol)/10000);
@@ -295,7 +330,10 @@ export class HouseDetailPage implements OnInit {
 
 	getResult(url, id) {
 		this.parms.id = id;
-		this.mapleRestData.load(url, { 'id': id }).subscribe(
+
+		let email = (this.auth.authenticated()) ? this.auth.user['email'] : 'NO';
+		console.log(email);
+		this.mapleRestData.load(url, { 'id': id, 'email': email }).subscribe(
 			data => {
 				//console.log(data);
 				this.house = data.house;
