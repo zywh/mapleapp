@@ -11,7 +11,7 @@
     <ion-icon outline name="arrow-back" ></ion-icon>
   </button>
   </ion-buttons>
-  <ion-title>{{"MLS：" + parms.id}}</ion-title>
+  <ion-title>{{parms.id}}</ion-title>
 	<ion-buttons end>
   <button  (click)="fav()">
   <ion-icon [isActive]="isFav" name="star" ></ion-icon>
@@ -194,7 +194,7 @@
 <div id="houstList_control">
 <div *ngIf="houseList.prev">
 	<button fab fab-bottom  fab-left (click)="go2PrevHouse()" style="z-index: 12;opacity: 0.8;">
-		<ion-icon name="arrow-dropleft" is-active="true"></ion-icon>
+		<ion-icon name="arrow-back" is-active="true"></ion-icon>
 	</button>
 </div>
 <div *ngIf="houseList.total > 1">
@@ -204,7 +204,7 @@
 </div>
 <div *ngIf="houseList.next">  
 		<button fab  fab-bottom fab-right (click)="go2NextHouse()" style="z-index: 12;opacity: 0.8;">
-		<ion-icon name="arrow-dropright" is-active="true"></ion-icon>
+		<ion-icon name="arrow-forward" is-active="true"></ion-icon>
 	</button>
 </div> 
 </div>

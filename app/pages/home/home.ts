@@ -43,10 +43,12 @@ export class HomePage {
     private parms: NavParams,
     private mapleRestData: MapleRestData,
     private userData: UserData,
-    private mapleconf: MapleConf,
-    private auth: AuthService, 
+    private mapleConf: MapleConf,
+    private auth: AuthService,
     private events: Events
-  ) { }
+  ) {
+
+  }
 
   projectSwiperOptions = {
     loop: true,
@@ -54,23 +56,26 @@ export class HomePage {
     speed: 4000,
     autoplay: 300
   };
-  
-  fav(){
-    this.userData.getFavHouses(this.username).then(res=>{
+
+  fav() {
+    this.userData.getFavHouses(this.username).then(res => {
       this.favHouses = res;
-    
-     
+
+
     })
-    
+
   }
-  profile(){
+  profile() {
     this.nav.push(ProfilePage);
   }
- 
+
 
   // ngOnInit() {
   ionViewWillEnter() {
-    this.mapleconf.load().then(data => {
+    this.mapleConf.getLocation().then(data => {
+      this.data = data;
+    })
+    this.mapleConf.load().then(data => {
       //this.postListRest = data.postRest;
       this.houseRestURL = data.mapHouseRest;
       this.getProjects(data.projectRest);
@@ -78,9 +83,7 @@ export class HomePage {
 
 
     })
-    this.mapleconf.getLocation().then(data => {
-      this.data = data;
-    })
+
 
   }
   searchHouse(s) {
@@ -92,7 +95,8 @@ export class HomePage {
       range = 0.1;
 
     }
-    // this.mapleconf.getLocation().then(data => {
+
+
     console.log(this.data);
     let swLat = this.data['lat'] - range;
     let swLng = this.data['lng'] - range;
@@ -107,6 +111,7 @@ export class HomePage {
       type: s,
       sr: 'Sale'
     };
+
 
 
 
@@ -181,64 +186,9 @@ export class HomePage {
   //   }
   // }
 
-  itemTapped(item, type) {
-
-    let center = new google.maps.LatLng(item.lat, item.lng);
-
-    if (type == 1) {
-      this.events.publish('map:center', center);
-      this.hQueryText == '';
-      this.currentDiv = '';
-
-    }
-    if (type == 2) {
-      this.events.publish('schoolmap:center', center);
-      console.log(item.lat + ":" + item.lng)
-    }
-
-  }
-
-  searchFocus() {
-    this.hQueryText = '';
-    this.resetItems();
-    this.currentDiv = 'searchlist';
 
 
-  }
-
-  //auto complete REST CAll
-  hGetItems(ev) {
-
-    this.resetItems();
-    this.currentDiv = 'hSearchlist';
-    let val = ev.target.value;
-
-    if (val && val.trim() != '') {
-
-      //Call REST and generate item object
-      this.mapleconf.load().then(data => {
-        this.mapleRestData.load(data.getCitylistDataRest, { term: val }).subscribe(
-          data => {
-            if (data.hasOwnProperty("CITY")) {
-              this.cityItems = data.CITY;
-              console.log("CITY Autocomplete:" + this.cityItems);
-            };
-
-            if (data.hasOwnProperty("MLS")) {
-              this.mlsItems = data.MLS;
-              console.log("MLS Autocomplete:" + this.mlsItems);
-            }
-            if (data.hasOwnProperty("ADDRESS")) {
-              this.addressItems = data.ADDRESS;
-              console.log("ADDRESS Autocomplete:" + this.addressItems);
-            }
-            console.log(data);
-          }); //end of callback
-        //this.items = ["city", "address", "MLS"];
-      })
-    }
-  }
 
 
-  }
+}
 

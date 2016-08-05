@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Storage, LocalStorage, Events, AlertController} from 'ionic-angular';
+import {Storage, LocalStorage, Events, ToastController, AlertController} from 'ionic-angular';
 import {AuthService} from './auth/auth';
 import * as PouchDB from 'pouchdb';
 //declare var PouchDB: any;
@@ -26,6 +26,7 @@ export class UserData {
   constructor(
     private events: Events,
     private auth: AuthService,
+    private toastCtrl: ToastController,
     private alertc: AlertController) {
     //this.storage = new Storage(SqlStorage, { name: 'maplecity' });
 
@@ -153,6 +154,19 @@ export class UserData {
     });
     alert.present();
   }
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 2000,
+      position: 'bottom'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
+  }
 
   hasFavorite(mls, type) {
     return (this._favorites.indexOf(mls) > -1);
@@ -160,15 +174,26 @@ export class UserData {
 
   addFavorite(mls, type) {
 
-
+    //check if user is logged in
     if (this.auth.authenticated()) {
-      console.log("Authenticate. Allow add fav");
-      this._favorites.push(mls);
+
+      //check if mls# is in list
+      if (this.hasFavorite) {
+        //remove fav
+
+        return "D";
+      } else {
+        //add fav
+        this._favorites.push(mls);
+        return "C";
+
+      }
 
 
     } else {
-      console.log("not login can't use add fav")
+
       this.loginAlert();
+      return "L";
     }
 
 
@@ -217,4 +242,5 @@ export class UserData {
       return value;
     });
   }
+
 }

@@ -708,7 +708,7 @@ export class MapSearchPage {
           + '<div class="house_desc" text-left text-nowrap>'
           // + '<ion-item padding-left>'
           + '<ion-badge item-left>MLS:' + house.MLS + '</ion-badge>'
-          + '  <ion-badge item-right><i class="fa fa-usd" aria-hidden="true"></i>' + house.Price + '万</ion-badge>'
+          + '  <ion-badge item-right><i class="fa fa-usd" aria-hidden="true"></i>' +  this.mapleconf.getPriceTxt(house.SaleLease,house.Price) + '</ion-badge>'
           // + '   </ion-item>'
 
           + '    <div class="card-subtitle" text-left>'

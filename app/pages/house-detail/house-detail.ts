@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams, Platform, Slides, Events} from 'ionic-angular';
+import {Page, NavController, NavParams, ToastController,Platform, Slides, Events} from 'ionic-angular';
 import {OnInit, Component, ViewChild} from '@angular/core';;
 //import {Geolocation} from 'ionic-native';
 import {SocialSharing} from 'ionic-native';
@@ -28,7 +28,7 @@ export class HouseDetailPage implements OnInit {
 	private house_propertyType: any;
 	private photos: Array<string>;
 	private exchangeRate: number;
-	private username:String;
+	private username: String;
 	private house = {
 		id: '',  // => 'ID',
 		name: '', // => '名称',
@@ -229,6 +229,7 @@ export class HouseDetailPage implements OnInit {
 		private mapleConf: MapleConf,
 		private events: Events,
 		private userData: UserData,
+		private toastCtrl: ToastController,
 		private platform: Platform) {
 
 		this.nav = nav;
@@ -258,15 +259,20 @@ export class HouseDetailPage implements OnInit {
 	}
 
 	fav() {
-		this.isFav = !this.isFav;
-		if (this.isFav == true){
-			console.log("isFav Ture . Add fav")	
-			this.userData.addFavorite(this.house.ml_num,1)
-		}else {
-			console.log("isFav False + remove from fav list")
-			this.userData.removeFavorite(this.house.ml_num,1)
+
+		let s = this.userData.addFavorite(this.house.ml_num, 1)
+		switch (s) {
+			case 'C': //mls doesn't exist .Add MLS into fav'
+				this.isFav = true;
+				break;
+			case 'D': //
+				this.isFav = false;
+				break;
+			default:
+				console.log("Add fav is aborted");
 		}
-	
+
+
 		// let wan = Math.ceil(Number(this.house.lp_dol)/10000);
 		// let img = this.photoUrl(this.photos[0]);
 		// let doc = {
