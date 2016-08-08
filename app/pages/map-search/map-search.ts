@@ -251,7 +251,8 @@ export class MapSearchPage {
       } else {
 
         //this.nav.push(HouselistSearch, { opts: this.selectOptions, bounds: this._bounds });
-        let modal = this.modalc.create(HouselistSearch, { opts: this.selectOptions, bounds: this._bounds });
+        console.log(this.selectOptions);
+        let modal = this.modalc.create(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds });
         modal.present();
 
 

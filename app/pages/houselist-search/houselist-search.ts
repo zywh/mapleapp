@@ -27,29 +27,24 @@ interface selectOptionsObj {
 })
 export class HouselistSearch {
 
-
-    private queryText: String = '';
     private totalCount: number;
-    private cityItems: any;
-    private addressItems: any;
-    private mlsItems: any;
-    private currentDiv;
     private imgHost;
     private bounds;
     private pageIndex: number = 0;
     private pageTotal: number = 1;
-    private selectOptions = {
-        selectSR: true,
-        selectBaths: 0,
-        selectBeds: 0,
-        selectHousesize: { lower: 0, upper: 4000 },
-        selectLandsize: { lower: 0, upper: 43560 },
-        selectPrice: { lower: 0, upper: 600 },
-        selectType: '',
-        selectListType: true,
-        selectDate: 0
+//    // private selectOptions = {
+//         selectSR: true,
+//         selectBaths: 0,
+//         selectBeds: 0,
+//         selectHousesize: { lower: 0, upper: 4000 },
+//         selectLandsize: { lower: 0, upper: 43560 },
+//         selectPrice: { lower: 0, upper: 600 },
+//         selectType: '',
+//         selectListType: true,
+//         selectDate: 0
 
-    }
+//     }
+    private selectOptions;
 
     private currentHouseList; //Hold list of all houses on current map
 
@@ -65,9 +60,10 @@ export class HouselistSearch {
 
     ) {
 
-        this.selectOptions = parms.data.opts;
+        this.selectOptions = parms.data.searchOptions;
         this.bounds = parms.data.bounds;
-        //console.log(this.selectOptions);
+        
+    
 
     }
 
@@ -78,19 +74,9 @@ export class HouselistSearch {
         this.getHouseList();
     }
     ionViewDidEnter() {
-        console.log("Map View did entered");
-
-
+      
     }
 
-    // getResult(url) {
-    //     this.mapleRestData.load(url, this.parms).subscribe(
-    //         data => { this.currentHouseList = data.Data; }
-
-    //     )
-    // }
-
-    // initial view is loaded by tab page with 100ms delay
     ionViewLoaded() { }
 
 
@@ -122,14 +108,7 @@ export class HouselistSearch {
   
     getHouseList() {
 
-        this.currentDiv = ''; //reset all popup
-
-        // let loading = Loading.create({
-        //   content: '加载房源...'
-        // });
-        // this.nav.present(loading);
-
-
+    
         let HouseArray = [];
         let searchParms = {
             bounds: this.bounds,
@@ -157,11 +136,10 @@ export class HouselistSearch {
 
             });
 
-        //END of Data Subscribe
-
+      
     }
 
-    //End of MAP import function
+   
 
 
 

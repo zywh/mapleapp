@@ -8,6 +8,7 @@ import {Platform} from 'ionic-angular';
 @Injectable()
 export class MapleConf {
   data: any;
+  location;
   public restHost: String = 'http://r.maplecity.com.cn/';
   private confJson = "mapleconf.json";
 
@@ -40,6 +41,10 @@ export class MapleConf {
 
   getLocation() {
 
+   if (this.location) {
+      // already loaded data
+      return Promise.resolve(this.location);
+    }
 
     return new Promise(resolve => {
       let center = { lat: 43.6532, lng: -79.3832 };
@@ -49,13 +54,18 @@ export class MapleConf {
           let lat = position.coords.latitude;
           if (lat > 20) {
             center = { lat: lat, lng: position.coords.longitude };
+            this.location = center;
             return resolve(center);
           } else {
+             this.location = center;
             return resolve(center);
+
           }
 
         },
-        (error) => { return resolve(center); }, options
+        (error) => { 
+          this.location = center;
+          return resolve(center);  }, options
       );
 
     });

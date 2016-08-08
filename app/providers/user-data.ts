@@ -147,12 +147,34 @@ export class UserData {
   // }
 
   loginAlert() {
-    let alert = this.alertc.create({
-      title: '提示',
-      subTitle: '请登录后使用此功能',
-      buttons: ['确定']
-    });
-    alert.present();
+    // let alert = this.alertc.create({
+    //   title: '提示',
+    //   subTitle: '请登录后使用此功能',
+    //   buttons: ['确定']
+    // });
+    // alert.present();
+
+
+     let alert = this.alertc.create({
+     title: '提示',
+    message: '请登录后使用此功能',
+    buttons: [
+      {
+        text: '取消',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      },
+      {
+        text: '登录',
+        handler: () => {
+          console.log('login');
+        }
+      }
+    ]
+  });
+  alert.present();
   }
 
   presentToast(msg) {
@@ -196,7 +218,8 @@ export class UserData {
 
     } else {
 
-      this.loginAlert();
+      //this.loginAlert();
+      this.presentToast("请登录后使用此功能");
       return "L";
     }
 
