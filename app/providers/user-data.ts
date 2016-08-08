@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Storage, LocalStorage, Events, ToastController, AlertController} from 'ionic-angular';
 import {AuthService} from './auth/auth';
-import * as PouchDB from 'pouchdb';
+//import * as PouchDB from 'pouchdb';
 //declare var PouchDB: any;
 
 
@@ -30,30 +30,30 @@ export class UserData {
     private alertc: AlertController) {
     //this.storage = new Storage(SqlStorage, { name: 'maplecity' });
 
-    this.db = new PouchDB('mapleapp');
-    this.cloudantUsername = 'heyedimedsoicknotheavalm';
-    this.cloudantPassword = '9c84c07ba29b0747736acdf7d512d7e392f54eb6';
-    this.remote = 'https://ee4f85e1-81a5-40bf-ac41-a08248a11b18-bluemix.cloudant.com/mapleapp';
-    let options = {
-      live: true,
-      retry: true,
-      continuous: true,
-      auth: {
-        username: this.cloudantUsername,
-        password: this.cloudantPassword
-      }
-    };
-    this.db.sync(this.remote, options);
+    // this.db = new PouchDB('mapleapp');
+    // this.cloudantUsername = 'heyedimedsoicknotheavalm';
+    // this.cloudantPassword = '9c84c07ba29b0747736acdf7d512d7e392f54eb6';
+    // this.remote = 'https://ee4f85e1-81a5-40bf-ac41-a08248a11b18-bluemix.cloudant.com/mapleapp';
+    // let options = {
+    //   live: true,
+    //   retry: true,
+    //   continuous: true,
+    //   auth: {
+    //     username: this.cloudantUsername,
+    //     password: this.cloudantPassword
+    //   }
+    // };
+    // this.db.sync(this.remote, options);
   }
 
-  addDocument(d) {
-    console.log(d);
-    this.db.put(d);
+  // addDocument(d) {
+  //   console.log(d);
+  //   this.db.put(d);
 
-  }
-  getFavHouses(username): Promise<any> {
+  // }
+ // getFavHouses(username): Promise<any> {
 
-    return new Promise(resolve => {
+   // return new Promise(resolve => {
 
       // this.db.allDocs({
 
@@ -61,68 +61,68 @@ export class UserData {
       //   limit: 30,
       //   descending: true
 
-      this.db.query('_design/username', { username: username })
-        .then((result) => {
+      // this.db.query('_design/username', { username: username })
+      //   .then((result) => {
 
-          this.data = [];
-          console.log(result);
+      //     this.data = [];
+      //     console.log(result);
 
-          let docs = result.rows.map((row) => {
-            this.data.push(row.doc);
+      //     let docs = result.rows.map((row) => {
+      //       this.data.push(row.doc);
 
-          });
+      //     });
 
           //this.data.reverse();
 
-          resolve(this.data);
+    //       resolve(this.data);
 
-          this.db.changes({ live: true, since: 'now', include_docs: true }).on('change', (change) => {
-            this.handleChange(change);
-          });
+    //       this.db.changes({ live: true, since: 'now', include_docs: true }).on('change', (change) => {
+    //         this.handleChange(change);
+    //       });
 
-        }).catch((error) => {
+    //     }).catch((error) => {
 
-          console.log(error);
+    //       console.log(error);
 
-        });
+    //     });
 
-    });
+    // });
 
-  }
+ // }
 
-  handleChange(change): void {
+  // handleChange(change): void {
 
-    let changedDoc = null;
-    let changedIndex = null;
+  //   let changedDoc = null;
+  //   let changedIndex = null;
 
-    this.data.forEach((doc, index) => {
+  //   this.data.forEach((doc, index) => {
 
-      if (doc._id === change.id) {
-        changedDoc = doc;
-        changedIndex = index;
-      }
+  //     if (doc._id === change.id) {
+  //       changedDoc = doc;
+  //       changedIndex = index;
+  //     }
 
-    });
+  //   });
 
-    //A document was deleted
-    if (change.deleted) {
-      this.data.splice(changedIndex, 1);
-    }
-    else {
+  //   //A document was deleted
+  //   if (change.deleted) {
+  //     this.data.splice(changedIndex, 1);
+  //   }
+  //   else {
 
-      //A document was updated
-      if (changedDoc) {
-        this.data[changedIndex] = change.doc;
-      }
+  //     //A document was updated
+  //     if (changedDoc) {
+  //       this.data[changedIndex] = change.doc;
+  //     }
 
-      //A document was added
-      else {
-        this.data.push(change.doc);
-      }
+  //     //A document was added
+  //     else {
+  //       this.data.push(change.doc);
+  //     }
 
-    }
+  //   }
 
-  }
+  // }
 
 
   // getfHouse(): Promise<any> {

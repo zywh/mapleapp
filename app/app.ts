@@ -2,7 +2,7 @@ import {ViewChild, Component,Type,provide} from '@angular/core';
 import {Http} from '@angular/http'
 import {ionicBootstrap, Events, Platform, Nav, MenuController} from 'ionic-angular';
 import {StatusBar, Splashscreen} from 'ionic-native';
-import {ConferenceData} from './providers/conference-data';
+//import {ConferenceData} from './providers/conference-data';
 import {UserData} from './providers/user-data';
 import {MapleRestData} from './providers/maple-rest-data/maple-rest-data';
 import {Connectivity} from './providers/connectivity/connectivity';
@@ -152,8 +152,7 @@ class MapleApp {
 
 ionicBootstrap(
   MapleApp,
-  [ConferenceData, 
-  UserData, 
+  [UserData, 
   MapleRestData, 
   MapleConf, 
   Connectivity,

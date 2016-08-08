@@ -58,11 +58,11 @@ export class HomePage {
   };
 
   fav() {
-    this.userData.getFavHouses(this.username).then(res => {
-      this.favHouses = res;
+    // this.userData.getFavHouses(this.username).then(res => {
+    //   this.favHouses = res;
 
 
-    })
+    // })
 
   }
   profile() {
