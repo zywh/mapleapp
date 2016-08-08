@@ -32,18 +32,18 @@ export class HouselistSearch {
     private bounds;
     private pageIndex: number = 0;
     private pageTotal: number = 1;
-//    // private selectOptions = {
-//         selectSR: true,
-//         selectBaths: 0,
-//         selectBeds: 0,
-//         selectHousesize: { lower: 0, upper: 4000 },
-//         selectLandsize: { lower: 0, upper: 43560 },
-//         selectPrice: { lower: 0, upper: 600 },
-//         selectType: '',
-//         selectListType: true,
-//         selectDate: 0
+    //    // private selectOptions = {
+    //         selectSR: true,
+    //         selectBaths: 0,
+    //         selectBeds: 0,
+    //         selectHousesize: { lower: 0, upper: 4000 },
+    //         selectLandsize: { lower: 0, upper: 43560 },
+    //         selectPrice: { lower: 0, upper: 600 },
+    //         selectType: '',
+    //         selectListType: true,
+    //         selectDate: 0
 
-//     }
+    //     }
     private selectOptions;
 
     private currentHouseList; //Hold list of all houses on current map
@@ -62,8 +62,8 @@ export class HouselistSearch {
 
         this.selectOptions = parms.data.searchOptions;
         this.bounds = parms.data.bounds;
-        
-    
+
+
 
     }
 
@@ -74,7 +74,7 @@ export class HouselistSearch {
         this.getHouseList();
     }
     ionViewDidEnter() {
-      
+
     }
 
     ionViewLoaded() { }
@@ -104,11 +104,11 @@ export class HouselistSearch {
             }
         }, 500);
     }
-    
-  
+
+
     getHouseList() {
 
-    
+
         let HouseArray = [];
         let searchParms = {
             bounds: this.bounds,
@@ -122,24 +122,29 @@ export class HouselistSearch {
             housedate: this.selectOptions.selectDate
 
         };
-        //console.log("Map House Search Parms:" + mapParms);
-        this.mapleRestData.load('index.php?r=ngget/getHouseList', searchParms).subscribe(
-            data => {
-                //loading.dismiss();
-                this.totalCount = data.Data.Total;
-                this.pageTotal = Math.ceil(this.totalCount / 8);
-                let houses = [];
-                let totalprice = 0;
-                let totalhouse = data.Data.HouseList.length;
-                this.imgHost = data.Data.imgHost;
-                this.currentHouseList = data.Data.HouseList;
+     
+        this.mapleConf.load().then(data => {
+            let restUrl = data.getHouseList;
+            this.mapleRestData.load(restUrl, searchParms).subscribe(
+                data => {
+                    //loading.dismiss();
+                    this.totalCount = data.Data.Total;
+                    this.pageTotal = Math.ceil(this.totalCount / 8);
+                    let houses = [];
+                    let totalprice = 0;
+                    let totalhouse = data.Data.HouseList.length;
+                    this.imgHost = data.Data.imgHost;
+                    this.currentHouseList = data.Data.HouseList;
 
-            });
+                });
 
-      
+
+        })
+
+
     }
 
-   
+
 
 
 
