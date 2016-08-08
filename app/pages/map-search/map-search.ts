@@ -165,7 +165,9 @@ export class MapSearchPage {
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
-      google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(this.mapType); });
+    //  google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(this.mapType); });
+        google.maps.event.addListener(this.map, 'bounds_changed', () => { this.changeMap(this.mapType); });
+
 
 
       //Add marker if it's redirected from school page
