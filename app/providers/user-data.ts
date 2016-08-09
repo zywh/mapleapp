@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Storage, LocalStorage, Events, ToastController, AlertController} from 'ionic-angular';
 import {AuthService} from './auth/auth';
+import {MapleRestData} from './maple-rest-data/maple-rest-data';
+import {MapleConf} from './maple-rest-data/maple-config';
 //import * as PouchDB from 'pouchdb';
 //declare var PouchDB: any;
 
@@ -27,6 +29,8 @@ export class UserData {
     private events: Events,
     private auth: AuthService,
     private toastCtrl: ToastController,
+    private mapleRestData: MapleRestData,
+    private mapleConf: MapleConf,
     private alertc: AlertController) {
     //this.storage = new Storage(SqlStorage, { name: 'maplecity' });
 
@@ -229,7 +233,23 @@ export class UserData {
     // if (index > -1) {
     //   this._favorites.splice(index, 1);
     // }
+
+  }
+
+  getUserData(type){
     
+     this.mapleConf.load().then(res => {
+      
+      let rest = res.getUserDataRest;
+      let parms = {username: this.auth.user['email'],type:type}   
+      this.mapleRestData.load(rest, parms).subscribe(
+      data => { console.log(data);return data.houseFav; }
+    );
+
+
+    })
+    
+
   }
 
   login(username) {

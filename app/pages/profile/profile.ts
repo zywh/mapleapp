@@ -3,6 +3,7 @@ import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {AuthService} from '../../providers/auth/auth';
 import {AboutPage} from '../about/about';
+import {FavoritePage} from '../favorite/favorite'
 
 @Component({
   templateUrl: 'build/pages/profile/profile.html',
@@ -25,7 +26,8 @@ export class ProfilePage {
     
   }
   favorite(){
-
+    this.nav.push(FavoritePage);
+    
   }
   route(){
 
