@@ -51,44 +51,44 @@ export class UserData {
   //   this.db.put(d);
 
   // }
- // getFavHouses(username): Promise<any> {
+  // getFavHouses(username): Promise<any> {
 
-   // return new Promise(resolve => {
+  // return new Promise(resolve => {
 
-      // this.db.allDocs({
+  // this.db.allDocs({
 
-      //   include_docs: true,
-      //   limit: 30,
-      //   descending: true
+  //   include_docs: true,
+  //   limit: 30,
+  //   descending: true
 
-      // this.db.query('_design/username', { username: username })
-      //   .then((result) => {
+  // this.db.query('_design/username', { username: username })
+  //   .then((result) => {
 
-      //     this.data = [];
-      //     console.log(result);
+  //     this.data = [];
+  //     console.log(result);
 
-      //     let docs = result.rows.map((row) => {
-      //       this.data.push(row.doc);
+  //     let docs = result.rows.map((row) => {
+  //       this.data.push(row.doc);
 
-      //     });
+  //     });
 
-          //this.data.reverse();
+  //this.data.reverse();
 
-    //       resolve(this.data);
+  //       resolve(this.data);
 
-    //       this.db.changes({ live: true, since: 'now', include_docs: true }).on('change', (change) => {
-    //         this.handleChange(change);
-    //       });
+  //       this.db.changes({ live: true, since: 'now', include_docs: true }).on('change', (change) => {
+  //         this.handleChange(change);
+  //       });
 
-    //     }).catch((error) => {
+  //     }).catch((error) => {
 
-    //       console.log(error);
+  //       console.log(error);
 
-    //     });
+  //     });
 
-    // });
+  // });
 
- // }
+  // }
 
   // handleChange(change): void {
 
@@ -155,44 +155,50 @@ export class UserData {
     // alert.present();
 
 
-     let alert = this.alertc.create({
-     title: '提示',
-    message: '请登录后使用此功能',
-    buttons: [
-      {
-        text: '取消',
-        role: 'cancel',
-        handler: () => {
-          console.log('Cancel clicked');
+    let alert = this.alertc.create({
+      title: '提示',
+      message: '请登录后使用此功能',
+      buttons: [
+        {
+          text: '取消',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: '登录',
+          handler: () => {
+            alert.dismiss().then(res => {
+              this.events.publish('profile:login');
+
+            })
+
+          }
         }
-      },
-      {
-        text: '登录',
-        handler: () => {
-          console.log('login');
-        }
-      }
-    ]
-  });
-  alert.present();
+      ]
+    });
+    alert.present();
   }
 
   presentToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
-      duration: 2000,
-      position: 'bottom'
+      duration: 1000,
+      position: 'middle',
+      dismissOnPageChange: true
     });
 
-    toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
-    });
+    // toast.onDidDismiss(() => {
+    //   console.log('Dismissed toast');
+    // });
 
     toast.present();
   }
 
   hasFavorite(mls, type) {
-    return (this._favorites.indexOf(mls) > -1);
+    //return (this._favorites.indexOf(mls) > -1);
+    return false;
   }
 
   addFavorite(mls, type) {
@@ -201,25 +207,19 @@ export class UserData {
     if (this.auth.authenticated()) {
 
       //check if mls# is in list
-      if (this.hasFavorite) {
-        //remove fav
+      if (this.hasFavorite(mls, type)) {
         this.removeFavorite(mls, 1)
         this.presentToast("删除收藏(" + mls + ")成功!")
         return "D";
       } else {
-        //add fav
-        this._favorites.push(mls);
-        console.log("Toaster Present");
+
         this.presentToast("添加收藏(" + mls + ")成功!")
         return "C";
-
       }
-
 
     } else {
 
-      //this.loginAlert();
-      this.presentToast("请登录后使用此功能");
+      this.loginAlert();
       return "L";
     }
 

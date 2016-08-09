@@ -113,6 +113,12 @@ class MapleApp {
     // this.events.subscribe('user:logout', () => {
     //   this.enableMenu(false);
     // });
+     this.events.subscribe('profile:login', (data) => {
+
+      setTimeout(() => {
+        this.nav.setRoot(TabsPage, { tabIndex: 5});
+      }, 300);
+    });
 
     this.events.subscribe('map:center', (data) => {
 

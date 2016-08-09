@@ -27,7 +27,7 @@
 
   <ion-list>
     <ion-item-sliding *ngFor="let house of currentHouseList">
-      <ion-item class="house_card" (click)="gotoHouseDetail(house.MLS)">
+      <ion-item tappable class="house_card" (click)="gotoHouseDetail(house.MLS)">
         <ion-thumbnail item-left>
           <img [src]="imgHost + house.CoverImg" />
         </ion-thumbnail>

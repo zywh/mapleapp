@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams, ToastController, Platform, Slides, Events, ActionSheetController} from 'ionic-angular';
+import {Page, NavController, NavParams, AlertController, ToastController, Platform, Slides, Events, ActionSheetController} from 'ionic-angular';
 import {OnInit, Component, ViewChild} from '@angular/core';;
 //import {Geolocation} from 'ionic-native';
 import {SocialSharing} from 'ionic-native';
@@ -18,7 +18,8 @@ import {AuthService} from '../../providers/auth/auth';
 	templateUrl: 'build/pages/house-detail/house-detail.html',
 })
 export class HouseDetailPage implements OnInit {
-	private isFav: Boolean = false;
+	private isFav = [];
+	//private isFav[2]: Boolean = false;
 	private parms = { id: '', list: [] };
 	private houseList = { prev: '', next: '', index: 0, total: 0 };
 	private section: string = "summary";
@@ -230,6 +231,7 @@ export class HouseDetailPage implements OnInit {
 		private mapleConf: MapleConf,
 		private events: Events,
 		private userData: UserData,
+		private alertc: AlertController,
 		private auth: AuthService,
 		private toastCtrl: ToastController,
 		private actionSheetCtrl: ActionSheetController,
@@ -262,26 +264,36 @@ export class HouseDetailPage implements OnInit {
 	}
 
 	more() {
+		let s1 = (!this.isFav[1])? '添加收藏列表':'删除收藏列表';
+		let s2 = (!this.isFav[2])? '添加看房列表':'删除看房列表';
+
 		let actionSheet = this.actionSheetCtrl.create({
-			title: '更多',
+			title: '房源更多功能',
 			buttons: [
 				{
-					text: '添加收藏列表',
+					text: s1,
 					role: 'destructive',
 					handler: () => {
-						this.fav();
+						actionSheet.dismiss().then(res => {
+							this.fav(1);
+						})
+
 					}
 				},
 				{
-					text: '添加看房列表',
+					text: s2,
 					handler: () => {
-						console.log('Archive clicked');
+						actionSheet.dismiss().then(res => {
+							this.fav(2);
+						})
+
 					}
 				},
 				{
 					text: '取消',
 					role: 'cancel',
 					handler: () => {
+
 						console.log('Cancel clicked');
 					}
 				}
@@ -292,20 +304,20 @@ export class HouseDetailPage implements OnInit {
 	}
 
 
-	fav() {
+	fav(type) {
 
-		let s = this.userData.addFavorite(this.house.ml_num, 1)
+		let s = this.userData.addFavorite(this.house.ml_num, type);
 		console.log("Add FAV" + this.house.ml_num + "Return:" + s);
-		// switch (s) {
-		// 	case 'C': //mls doesn't exist .Add MLS into fav'
-		// 		this.isFav = true;
-		// 		break;
-		// 	case 'D': //
-		// 		this.isFav = false;
-		// 		break;
-		// 	default:
-		// 		console.log("Add fav is aborted");
-		// }
+		switch (s) {
+			case 'C': //mls doesn't exist .Add MLS into fav'
+				this.isFav[type] = true;
+				break;
+			case 'D': //
+				this.isFav[type] = false;
+				break;
+			default:
+				console.log("Add fav is aborted");
+		}
 
 
 		// let wan = Math.ceil(Number(this.house.lp_dol)/10000);

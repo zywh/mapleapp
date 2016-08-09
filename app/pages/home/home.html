@@ -55,7 +55,7 @@
   <div [ngSwitch]="homeSegment">
     <div *ngSwitchCase="'info'">
       <ion-list>
-        <a ion-item *ngFor="let post of post1" (click)="goToPost(post.id)"> {{post?.title}} </a>
+        <a ion-item tappable *ngFor="let post of post1" (click)="goToPost(post.id)"> {{post?.title}} </a>
       </ion-list>
     </div>
     <div *ngSwitchCase="'house1'">
