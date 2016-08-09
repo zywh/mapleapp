@@ -164,9 +164,9 @@ export class MapSearchPage {
       }
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+      google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(this.mapType);})
 
-    //  google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(this.mapType); });
-        google.maps.event.addListener(this.map, 'bounds_changed', () => { this.changeMap(this.mapType); });
+      // google.maps.event.addListener(this.map, 'bounds_changed', () => { this.changeMap(this.mapType); });
 
 
 
@@ -328,7 +328,7 @@ export class MapSearchPage {
   //auto complete REST CAll
   searchFocus() {
     console.log("Search box is focused");
-    this.queryText = '';
+   // this.queryText = '';
   }
   getItems(ev) {
 
@@ -711,7 +711,7 @@ export class MapSearchPage {
           + '<div class="house_desc" text-left text-nowrap>'
           // + '<ion-item padding-left>'
           + '<ion-badge item-left>MLS:' + house.MLS + '</ion-badge>'
-          + '  <ion-badge item-right><i class="fa fa-usd" aria-hidden="true"></i>' +  this.mapleconf.getPriceTxt(house.SaleLease,house.Price) + '</ion-badge>'
+          + '  <ion-badge item-right><i class="fa fa-usd" aria-hidden="true"></i>' + this.mapleconf.getPriceTxt(house.SaleLease, house.Price) + '</ion-badge>'
           // + '   </ion-item>'
 
           + '    <div class="card-subtitle" text-left>'

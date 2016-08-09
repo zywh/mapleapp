@@ -306,13 +306,13 @@ export class HouseDetailPage implements OnInit {
 
 	fav(type) {
 
-		let s = this.userData.addFavorite(this.house.ml_num, type);
-		console.log("Add FAV" + this.house.ml_num + "Return:" + s);
-		switch (s) {
+		let res = this.userData.favWrapper(this.house.ml_num, type);
+		console.log("Add FAV" + this.house.ml_num + "Return:" + res);
+		switch (res) {
 			case 'C': //mls doesn't exist .Add MLS into fav'
 				this.isFav[type] = true;
 				break;
-			case 'D': //
+			case 'D': //mls exist . Remove MLS from fav
 				this.isFav[type] = false;
 				break;
 			default:

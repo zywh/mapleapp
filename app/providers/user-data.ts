@@ -147,13 +147,7 @@ export class UserData {
   // }
 
   loginAlert() {
-    // let alert = this.alertc.create({
-    //   title: '提示',
-    //   subTitle: '请登录后使用此功能',
-    //   buttons: ['确定']
-    // });
-    // alert.present();
-
+   
 
     let alert = this.alertc.create({
       title: '提示',
@@ -185,13 +179,10 @@ export class UserData {
     let toast = this.toastCtrl.create({
       message: msg,
       duration: 1000,
-      position: 'middle',
-      dismissOnPageChange: true
+      position: 'bottom'
+      //dismissOnPageChange: true
     });
 
-    // toast.onDidDismiss(() => {
-    //   console.log('Dismissed toast');
-    // });
 
     toast.present();
   }
@@ -201,9 +192,8 @@ export class UserData {
     return false;
   }
 
-  addFavorite(mls, type) {
-
-    //check if user is logged in
+  favWrapper(mls,type){
+      //check if user is logged in
     if (this.auth.authenticated()) {
 
       //check if mls# is in list
@@ -225,14 +215,21 @@ export class UserData {
 
 
 
+  }
+
+  addFavorite(mls, type) {
+  
 
   }
 
+
+
   removeFavorite(mls, type) {
-    let index = this._favorites.indexOf(mls)
-    if (index > -1) {
-      this._favorites.splice(index, 1);
-    }
+    // let index = this._favorites.indexOf(mls)
+    // if (index > -1) {
+    //   this._favorites.splice(index, 1);
+    // }
+    
   }
 
   login(username) {
