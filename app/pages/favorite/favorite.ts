@@ -11,7 +11,7 @@ import {UserData} from '../../providers/user-data';
 })
 export class FavoritePage {
   private favList;
-  private imgHost;
+  private imgHost ='';
   private pageTitle;
   private pageType;
 
