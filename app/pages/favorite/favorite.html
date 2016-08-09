@@ -7,12 +7,41 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Favorite</ion-title>
+    <ion-title>{{pageTitle}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content class="houselist-search">
 
+
+  <ion-list >
+    <!--<ion-item-group  (ionItemReorder)="reorderItems($event)">-->
+      <ion-item-sliding *ngFor="let house of favList">
+        <ion-item tappable class="house_card" (click)="gotoHouseDetail(house.MLS)">
+          <ion-thumbnail item-left>
+            <img [src]="imgHost + house.CoverImg" />
+          </ion-thumbnail>
+
+          <h2>{{house.Address}}</h2>
+          <p>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
+            <ion-badge item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
+          </p>
+          <p>{{house.MunicipalityName}},{{house.ProvinceCname}}</p>
+
+        </ion-item>
+        <ion-item-options>
+          <button clear (click)="userData.removeFavorite(house.MLS,1)">
+        <ion-icon name="heart"></ion-icon>
+        收藏
+      </button>
+          <button clear (click)="userData.addFavorite(house.MLS,1)">
+        <ion-icon name="navigate"></ion-icon>
+        地图
+      </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    <!--</ion-item-group>-->
+  </ion-list>
 </ion-content>

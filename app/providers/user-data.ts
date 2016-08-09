@@ -151,7 +151,7 @@ export class UserData {
   // }
 
   loginAlert() {
-   
+
 
     let alert = this.alertc.create({
       title: '提示',
@@ -196,8 +196,8 @@ export class UserData {
     return false;
   }
 
-  favWrapper(mls,type){
-      //check if user is logged in
+  favWrapper(mls, type) {
+    //check if user is logged in
     if (this.auth.authenticated()) {
 
       //check if mls# is in list
@@ -222,7 +222,7 @@ export class UserData {
   }
 
   addFavorite(mls, type) {
-  
+
 
   }
 
@@ -236,19 +236,22 @@ export class UserData {
 
   }
 
-  getUserData(type){
-    
-     this.mapleConf.load().then(res => {
-      
-      let rest = res.getUserDataRest;
-      let parms = {username: this.auth.user['email'],type:type}   
-      this.mapleRestData.load(rest, parms).subscribe(
-      data => { console.log(data);return data.houseFav; }
-    );
+  getUserData(type): Promise<any> {
 
+    return new Promise(resolve => {
+      this.mapleConf.load().then(res => {
+        let rest = res.getUserDataRest;
+        let parms = { username: this.auth.user['email'], type: type }
+        this.mapleRestData.load(rest, parms).subscribe(
+          data => { 
+           // console.log(data.Data); 
+            return resolve(data.Data); }
+
+        );
+      })
 
     })
-    
+
 
   }
 

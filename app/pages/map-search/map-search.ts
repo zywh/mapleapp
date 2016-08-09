@@ -17,24 +17,6 @@ import {HousePopover} from './house-popover';
 declare var RichMarker: any;
 declare var google;
 
-// interface selectOptionsObj {
-//   selectPrice?: String,
-//   selectType?: Number,
-//   selectBeds?: Number,
-//   selectBaths?: Number,
-//   selectSR?: Boolean,
-//   selectHousesize?: String,
-//   selectLandsize?: String,
-//   selectListType?: Boolean,
-//   selectDate?: Number
-// }
-// interface schoolSelectOptionsObj {
-//   selectType?: Boolean,
-//   selectRank?: Number,
-//   selectPingfen?: Number,
-//   selectXingzhi?: String
-// }
-
 @Component({
   templateUrl: 'build/pages/map-search/map-search.html',
   // providers: [GoogleMaps]
@@ -118,8 +100,6 @@ export class MapSearchPage {
   ) {
 
 
-    //this.listenEvents(); //listen School map event
-    console.log(this.navparm.data);
     this.mapType = this.navparm.data.pageType;
     this.resetItems();
     this.setMapType(this.mapType);
@@ -677,23 +657,23 @@ export class MapSearchPage {
       let count = 1;
       let houses = [];
       let totalprice = 0;
-      let totalhouse = data.Data.MapHouseList.length;
+      let totalhouse = data.Data.HouseList.length;
       this.imgHost = data.Data.imgHost;
       let nextLat;
       let nextLng;
       let listAllHtml;
-      this.currentHouseList = data.Data.MapHouseList;
+      this.currentHouseList = data.Data.HouseList;
       let panelhtml;
       // console.log("Current House List Length:" + this.currentHouseList.length);
 
       // console.log('Image Host:' + this.imgHost);
       for (let index = 0, l = totalhouse; index < l; index++) {
-        let house = data.Data.MapHouseList[index];
+        let house = data.Data.HouseList[index];
 
 
         if (index < (totalhouse - 1)) {
-          nextLat = data.Data.MapHouseList[index + 1].GeocodeLat;
-          nextLng = data.Data.MapHouseList[index + 1].GeocodeLng;
+          nextLat = data.Data.HouseList[index + 1].GeocodeLat;
+          nextLng = data.Data.HouseList[index + 1].GeocodeLng;
 
         }
         //console.log("Current:" + this.GeocodeLng + "Next:" + nextLng + "Total:" + totalhouse + "index:" + index + "Count:" + count);

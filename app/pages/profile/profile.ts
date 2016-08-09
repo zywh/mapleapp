@@ -25,17 +25,12 @@ export class ProfilePage {
   help(){
     
   }
-  favorite(){
-    this.nav.push(FavoritePage);
+  favorite(type){
+    this.nav.push(FavoritePage,{type: type});
     
   }
-  route(){
-
-  }
-  houseSearchDefault(){
-
-  }
-  schoolSearchDefault(){
+  
+  searchDefault(type){
 
   }
 
