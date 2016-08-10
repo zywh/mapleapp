@@ -8,16 +8,21 @@
 
   <ion-navbar>
     <ion-title>{{pageTitle}}</ion-title>
+     <ion-buttons end>
+      <button (click)="toggleEdit()">{{editButton}}
+
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content class="houselist-search">
+<ion-content class="houselist-search" >
 
 
-  <ion-list >
-    <!--<ion-item-group  (ionItemReorder)="reorderItems($event)">-->
+  <ion-list [reorder]="editing" (ionItemReorder)="reorderItems($event)" >
+  
       <ion-item-sliding *ngFor="let house of favList">
         <ion-item tappable class="house_card" (click)="gotoHouseDetail(house.MLS)">
           <ion-thumbnail item-left>
@@ -32,16 +37,17 @@
 
         </ion-item>
         <ion-item-options>
-          <button clear (click)="userData.removeFavorite(house.MLS,1)">
-        <ion-icon name="heart"></ion-icon>
-        收藏
+          <button clear (click)="remove(house.MLS)">
+        <ion-icon name="trash"></ion-icon>
+        删除
       </button>
-          <button clear (click)="userData.addFavorite(house.MLS,1)">
+          <button clear (click)="map()">
         <ion-icon name="navigate"></ion-icon>
         地图
       </button>
         </ion-item-options>
       </ion-item-sliding>
-    <!--</ion-item-group>-->
+    
   </ion-list>
+
 </ion-content>
