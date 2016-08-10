@@ -8,10 +8,21 @@
 	<ion-toolbar no-border-bottom>
 		<ion-buttons left>
 			<button (click)="nav.pop()">
-    <ion-icon outline name="arrow-back" ></ion-icon>
-  </button>
+    		<ion-icon outline name="arrow-back" ></ion-icon>
+  			</button>
 		</ion-buttons>
-		<ion-title>{{parms.id}}</ion-title>
+		 <p text-left class="bar-button-default">房源({{houseList.index + 1}}/{{houseList.total}})</p>
+	<!--<ion-title>房源({{houseList.index + 1}}/{{houseList.total}})</ion-title>-->
+		<ion-buttons *ngIf="houseList.prev" end>
+			<button (click)="go2PrevHouse()">
+			<ion-icon  name="arrow-up" ></ion-icon>
+			</button>
+		</ion-buttons>
+		<ion-buttons *ngIf="houseList.next" end>
+			<button (click)="go2NextHouse()">
+			<ion-icon  name="arrow-down" ></ion-icon>
+			</button>
+		</ion-buttons>	
 		<!--<ion-buttons end>
   <button  (click)="fav()">
   <ion-icon [isActive]="isFav" name="star" ></ion-icon>
@@ -19,14 +30,15 @@
   </ion-buttons>-->
 		<ion-buttons end>
 			<button (click)="share()">
-  <ion-icon isActive="false" name="share" ></ion-icon>
-  </button>
+			<ion-icon isActive="false" name="share" ></ion-icon>
+			</button>
 		</ion-buttons>
 		<ion-buttons end>
-			<button (click)="more()">
-  <ion-icon  name="more" ></ion-icon>
-  </button>
+			<button [disabled]="!isMore" (click)="more()">
+			<ion-icon  name="more" ></ion-icon>
+			</button>
 		</ion-buttons>
+		
 	</ion-toolbar>
 
 	<ion-toolbar [attr.primary]="isAndroid ? '' : null" no-border-bottom>
@@ -274,7 +286,7 @@
 	<!--End-->
 
 </ion-content>
-<ion-footer>
+<!--<ion-footer>
 	<div id="houstList_control">
 		<div *ngIf="houseList.prev">
 			<button fab fab-bottom fab-left (click)="go2PrevHouse()" style="z-index: 12;opacity: 0.8;">
@@ -292,7 +304,7 @@
 	</button>
 		</div>
 	</div>
-</ion-footer>
+</ion-footer>-->
 <!--
 <div class="house_list" *ngIf="false">
 	<ion-slides [options]="swiperOptions" class="swiper-container">

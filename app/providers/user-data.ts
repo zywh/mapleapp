@@ -72,7 +72,10 @@ export class UserData {
       position: 'bottom'
       //dismissOnPageChange: true
     });
-
+    toast.onDidDismiss(() => {
+      console.log("Toast is dismissed publish event")
+      this.events.publish('toast:dismiss');
+    });
 
     toast.present();
   }
@@ -107,19 +110,19 @@ export class UserData {
       if (this.auth.authenticated()) {
 
         this.hasFavorite(mls).then(res => {
-          console.log("Has Fav return:" + res)
+          console.log(res)
           let result: Boolean = false;
           if (type == 'houseFav') { result = res.houseFav }
           if (type == 'routeFav') { result = res.routeFav }
 
           //check if mls# is in fav list
           if (result) { //result is 1, delete favorite
-            this.changeFavorite(mls, type, 1).then(res => {
+            this.changeFavorite(mls, type, "d").then(res => {
               this.presentToast("删除收藏(" + mls + ")成功!")
               resolve("D");
             });
-          } else {//result is 0, delete favorite
-            this.changeFavorite(mls, type, 2).then(res => {
+          } else {//result is 0, add favorite
+            this.changeFavorite(mls, type, "c").then(res => {
               this.presentToast("添加收藏(" + mls + ")成功!")
               resolve("C");
             })
@@ -145,15 +148,13 @@ export class UserData {
     //action = 1 (add), action = 2 (delete)
     return new Promise(resolve => {
       this.mapleConf.load().then(res => {
-        let rest: String;
-        if (action == 1) { rest = res.addUserDataRest; }
-        if (action == 2) { rest = res.deleteUserDataRest; }
-
-
-        let parms = { username: this.auth.user['email'], mls: mls, type: type }
+        let rest = res.updateUserDataRest;
+        // if (action == 1) { rest = res.addUserDataRest; }
+        // if (action == 2) { rest = res.deleteUserDataRest; }
+        let parms = { username: this.auth.user['email'], mls: mls, type: type, action: action }
         this.mapleRestData.load(rest, parms).subscribe(
           data => {
-            console.log(data); 
+            console.log("changefav action:" + action + ' type:' + type + " MLS:" + mls + " Return:" + data);
             return resolve(data);
           }
 

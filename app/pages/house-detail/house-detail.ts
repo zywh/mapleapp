@@ -19,6 +19,7 @@ import {AuthService} from '../../providers/auth/auth';
 })
 export class HouseDetailPage implements OnInit {
 	private isFav = { houseFav: false, routeFav: false };
+	private isMore: Boolean = true; //more buttom will be disabled before toast is dismiss
 	private parms = { id: '', list: [] };
 	private houseList = { prev: '', next: '', index: 0, total: 0 };
 	private section: string = "summary";
@@ -239,15 +240,24 @@ export class HouseDetailPage implements OnInit {
 		//this.nav = nav;
 		console.log(navParams);
 		this.parms = navParams.data;
+		this.listenEvents();
 		//this.username = this.auth.user['email'];//testing user
 		//this.isAndroid = platform.is('android');
+
+	}
+
+	listenEvents() {
+		this.events.subscribe('toast:dismiss', () => {
+			console.log("Toast dismiss event received")
+			this.isMore = true;
+		});
 	}
 
 	swiperOptions = {
 		//loop: true,
 		autoHeight: true,
 		pager: true,
-		speed: 100,
+		speed: 300,
 		autoplay: 3000
 	};
 
@@ -263,8 +273,11 @@ export class HouseDetailPage implements OnInit {
 	}
 
 	more() {
-		this.userData.hasFavorite(this.parms.id).then(res => {
-			this.isFav = res;
+		//this.userData.hasFavorite(this.parms.id).then(res => {
+		//this.isFav = res;
+		if (this.auth.authenticated()) {
+
+
 			console.log(this.isFav);
 			let s1 = (!this.isFav.houseFav) ? '添加收藏列表' : '删除收藏列表';
 			let s2 = (!this.isFav.routeFav) ? '添加看房列表' : '删除看房列表';
@@ -279,6 +292,7 @@ export class HouseDetailPage implements OnInit {
 						handler: () => {
 							actionSheet.dismiss().then(res => {
 								this.fav('houseFav');
+								this.isMore = false; //lock more button
 							})
 
 						}
@@ -288,6 +302,7 @@ export class HouseDetailPage implements OnInit {
 						handler: () => {
 							actionSheet.dismiss().then(res => {
 								this.fav('routeFav');
+								this.isMore = false;
 							})
 
 						}
@@ -304,8 +319,10 @@ export class HouseDetailPage implements OnInit {
 			});
 
 			actionSheet.present();
-		})
-
+			//})
+		} else {
+			this.userData.loginAlert();
+		}
 	}
 
 
@@ -335,9 +352,7 @@ export class HouseDetailPage implements OnInit {
 
 	getResult(url, id) {
 		this.parms.id = id;
-
 		let username = (this.auth.authenticated()) ? this.auth.user['email'] : 'NO';
-		console.log(username);
 		this.mapleRestData.load(url, { 'id': id, 'username': username }).subscribe(
 			data => {
 				//console.log(data);
@@ -347,9 +362,9 @@ export class HouseDetailPage implements OnInit {
 				this.exchangeRate = data.exchangeRate;
 				this.photos = data.photos;
 				this.houseRooms(this.house);
-				//this.isFav = data.isFav; 
-
+				this.isFav = data.isFav; //check if houseFav and routeFav
 				this.setHouseList();
+				console.log(this.isFav);
 				//console.log(this.slider); 
 				//this.slider.slideTo(0);
 			}
