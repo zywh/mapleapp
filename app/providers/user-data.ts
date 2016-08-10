@@ -31,124 +31,10 @@ export class UserData {
     private toastCtrl: ToastController,
     private mapleRestData: MapleRestData,
     private mapleConf: MapleConf,
-    private alertc: AlertController) {
-    //this.storage = new Storage(SqlStorage, { name: 'maplecity' });
-
-    // this.db = new PouchDB('mapleapp');
-    // this.cloudantUsername = 'heyedimedsoicknotheavalm';
-    // this.cloudantPassword = '9c84c07ba29b0747736acdf7d512d7e392f54eb6';
-    // this.remote = 'https://ee4f85e1-81a5-40bf-ac41-a08248a11b18-bluemix.cloudant.com/mapleapp';
-    // let options = {
-    //   live: true,
-    //   retry: true,
-    //   continuous: true,
-    //   auth: {
-    //     username: this.cloudantUsername,
-    //     password: this.cloudantPassword
-    //   }
-    // };
-    // this.db.sync(this.remote, options);
-  }
-
-  // addDocument(d) {
-  //   console.log(d);
-  //   this.db.put(d);
-
-  // }
-  // getFavHouses(username): Promise<any> {
-
-  // return new Promise(resolve => {
-
-  // this.db.allDocs({
-
-  //   include_docs: true,
-  //   limit: 30,
-  //   descending: true
-
-  // this.db.query('_design/username', { username: username })
-  //   .then((result) => {
-
-  //     this.data = [];
-  //     console.log(result);
-
-  //     let docs = result.rows.map((row) => {
-  //       this.data.push(row.doc);
-
-  //     });
-
-  //this.data.reverse();
-
-  //       resolve(this.data);
-
-  //       this.db.changes({ live: true, since: 'now', include_docs: true }).on('change', (change) => {
-  //         this.handleChange(change);
-  //       });
-
-  //     }).catch((error) => {
-
-  //       console.log(error);
-
-  //     });
-
-  // });
-
-  // }
-
-  // handleChange(change): void {
-
-  //   let changedDoc = null;
-  //   let changedIndex = null;
-
-  //   this.data.forEach((doc, index) => {
-
-  //     if (doc._id === change.id) {
-  //       changedDoc = doc;
-  //       changedIndex = index;
-  //     }
-
-  //   });
-
-  //   //A document was deleted
-  //   if (change.deleted) {
-  //     this.data.splice(changedIndex, 1);
-  //   }
-  //   else {
-
-  //     //A document was updated
-  //     if (changedDoc) {
-  //       this.data[changedIndex] = change.doc;
-  //     }
-
-  //     //A document was added
-  //     else {
-  //       this.data.push(change.doc);
-  //     }
-
-  //   }
-
-  // }
+    private alertc: AlertController)
+  { }
 
 
-  // getfHouse(): Promise<any> {
-  //   return this.storage.get('fHouse');
-  // }
-
-  // save(data): void {
-
-  //   let saveData = [];
-
-  //   //Remove observables
-  //   data.forEach((house) => {
-  //     saveData.push({
-  //       mls: house.mls,
-  //       lat: house.lat,
-  //       lng: house.lng
-  //     });
-  //   });
-
-  //   let newData = JSON.stringify(saveData);
-  //   this.storage.set('fHouse', newData);
-  // }
 
   loginAlert() {
 
@@ -191,50 +77,116 @@ export class UserData {
     toast.present();
   }
 
-  hasFavorite(mls, type) {
+  hasFavorite(mls): Promise<any> {
+    //type houseFav for houseFav and type routeFav for RouteFav, check boolean before update
     //return (this._favorites.indexOf(mls) > -1);
-    return false;
+    return new Promise(resolve => {
+
+      this.mapleConf.load().then(res => {
+        let rest = res.checkFavDataRest;
+        console.log(rest)
+
+        let parms = { username: this.auth.user['email'], mls: mls }
+        this.mapleRestData.load(rest, parms).subscribe(
+          data => {
+            // console.log(data.Data); 
+            console.log("HasFav: MLS:" + mls + "Result:" + data);
+            return resolve(data);
+          });
+
+      });
+    })
+
+
   }
 
   favWrapper(mls, type) {
     //check if user is logged in
-    if (this.auth.authenticated()) {
+    return new Promise(resolve => {
 
-      //check if mls# is in list
-      if (this.hasFavorite(mls, type)) {
-        this.removeFavorite(mls, 1)
-        this.presentToast("删除收藏(" + mls + ")成功!")
-        return "D";
-      } else {
+      if (this.auth.authenticated()) {
 
-        this.presentToast("添加收藏(" + mls + ")成功!")
-        return "C";
+        this.hasFavorite(mls).then(res => {
+          console.log("Has Fav return:" + res)
+          let result: Boolean = false;
+          if (type == 'houseFav') { result = res.houseFav }
+          if (type == 'routeFav') { result = res.routeFav }
+
+          //check if mls# is in fav list
+          if (result) { //result is 1, delete favorite
+            this.changeFavorite(mls, type, 1).then(res => {
+              this.presentToast("删除收藏(" + mls + ")成功!")
+              resolve("D");
+            });
+          } else {//result is 0, delete favorite
+            this.changeFavorite(mls, type, 2).then(res => {
+              this.presentToast("添加收藏(" + mls + ")成功!")
+              resolve("C");
+            })
+
+          }
+        })
+
+
+      } else { //not authenticated , present alert window
+
+        this.loginAlert();
+        resolve("L");
       }
 
-    } else {
+    })
 
-      this.loginAlert();
-      return "L";
-    }
 
 
 
   }
 
-  addFavorite(mls, type) {
+  changeFavorite(mls, type, action) {
+    //action = 1 (add), action = 2 (delete)
+    return new Promise(resolve => {
+      this.mapleConf.load().then(res => {
+        let rest: String;
+        if (action == 1) { rest = res.addUserDataRest; }
+        if (action == 2) { rest = res.deleteUserDataRest; }
 
+
+        let parms = { username: this.auth.user['email'], mls: mls, type: type }
+        this.mapleRestData.load(rest, parms).subscribe(
+          data => {
+            console.log(data); 
+            return resolve(data);
+          }
+
+        );
+      })
+
+    })
 
   }
 
 
 
-  removeFavorite(mls, type) {
-    // let index = this._favorites.indexOf(mls)
-    // if (index > -1) {
-    //   this._favorites.splice(index, 1);
-    // }
+  // removeFavorite(mls, type) {
+  //   // let index = this._favorites.indexOf(mls)
+  //   // if (index > -1) {
+  //   //   this._favorites.splice(index, 1);
+  //   // }
+  //      return new Promise(resolve => {
+  //     this.mapleConf.load().then(res => {
+  //       let rest = res.deleteUserDataRest;
+  //       let parms = { username: this.auth.user['email'],mls:mls, type: type }
+  //       this.mapleRestData.load(rest, parms).subscribe(
+  //         data => {
+  //           // console.log(data.Data); 
+  //           return resolve(data.Data);
+  //         }
 
-  }
+  //       );
+  //     })
+
+  //   })
+
+  // }
 
   getUserData(type): Promise<any> {
 
@@ -243,9 +195,10 @@ export class UserData {
         let rest = res.getUserDataRest;
         let parms = { username: this.auth.user['email'], type: type }
         this.mapleRestData.load(rest, parms).subscribe(
-          data => { 
-           // console.log(data.Data); 
-            return resolve(data.Data); }
+          data => {
+            // console.log(data.Data); 
+            return resolve(data.Data);
+          }
 
         );
       })

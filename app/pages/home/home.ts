@@ -112,7 +112,7 @@ export class HomePage {
           console.log(data);
           if (data.Data.Type == 'house') {
             this.imgHost = data.Data.imgHost;
-            this.nearbyHouseList = data.Data.MapHouseList;
+            this.nearbyHouseList = data.Data.HouseList;
           }
         })
 

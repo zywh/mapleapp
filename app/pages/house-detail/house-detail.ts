@@ -18,8 +18,7 @@ import {AuthService} from '../../providers/auth/auth';
 	templateUrl: 'build/pages/house-detail/house-detail.html',
 })
 export class HouseDetailPage implements OnInit {
-	private isFav = [];
-	//private isFav[2]: Boolean = false;
+	private isFav = { houseFav: false, routeFav: false };
 	private parms = { id: '', list: [] };
 	private houseList = { prev: '', next: '', index: 0, total: 0 };
 	private section: string = "summary";
@@ -237,10 +236,10 @@ export class HouseDetailPage implements OnInit {
 		private actionSheetCtrl: ActionSheetController,
 		private platform: Platform) {
 
-		this.nav = nav;
+		//this.nav = nav;
 		console.log(navParams);
 		this.parms = navParams.data;
-		this.username = 'david';//testing user
+		//this.username = this.auth.user['email'];//testing user
 		//this.isAndroid = platform.is('android');
 	}
 
@@ -264,88 +263,82 @@ export class HouseDetailPage implements OnInit {
 	}
 
 	more() {
-		let s1 = (!this.isFav[1])? '添加收藏列表':'删除收藏列表';
-		let s2 = (!this.isFav[2])? '添加看房列表':'删除看房列表';
+		this.userData.hasFavorite(this.parms.id).then(res => {
+			this.isFav = res;
+			console.log(this.isFav);
+			let s1 = (!this.isFav.houseFav) ? '添加收藏列表' : '删除收藏列表';
+			let s2 = (!this.isFav.routeFav) ? '添加看房列表' : '删除看房列表';
 
-		let actionSheet = this.actionSheetCtrl.create({
-			title: '房源更多功能',
-			buttons: [
-				{
-					text: s1,
-					role: 'destructive',
-					handler: () => {
-						actionSheet.dismiss().then(res => {
-							this.fav(1);
-						})
 
+			let actionSheet = this.actionSheetCtrl.create({
+				title: '房源更多功能',
+				buttons: [
+					{
+						text: s1,
+						role: 'destructive',
+						handler: () => {
+							actionSheet.dismiss().then(res => {
+								this.fav('houseFav');
+							})
+
+						}
+					},
+					{
+						text: s2,
+						handler: () => {
+							actionSheet.dismiss().then(res => {
+								this.fav('routeFav');
+							})
+
+						}
+					},
+					{
+						text: '取消',
+						role: 'cancel',
+						handler: () => {
+
+							console.log('Cancel clicked');
+						}
 					}
-				},
-				{
-					text: s2,
-					handler: () => {
-						actionSheet.dismiss().then(res => {
-							this.fav(2);
-						})
+				]
+			});
 
-					}
-				},
-				{
-					text: '取消',
-					role: 'cancel',
-					handler: () => {
+			actionSheet.present();
+		})
 
-						console.log('Cancel clicked');
-					}
-				}
-			]
-		});
-
-		actionSheet.present();
 	}
 
 
 	fav(type) {
+		//type = 0 for houseFav and 1 for RouteFav
+		this.userData.favWrapper(this.house.ml_num, type).then(res => {
+			console.log(this.house.ml_num + "Return:" + res);
+			switch (res) {
+				case 'C': //mls doesn't exist .Add MLS into fav'
+					if (type == 'houseFav') { this.isFav.houseFav = true; }
+					if (type == 'routeFav') { this.isFav.routeFav = true; }
+					break;
+				case 'D': //mls exist . Remove MLS from fav
+					if (type == 'houseFav') { this.isFav.houseFav = false; }
+					if (type == 'routeFav') { this.isFav.routeFav = false; }
+					break;
+				default:
+					console.log("Add fav is aborted");
+			}
 
-		let res = this.userData.favWrapper(this.house.ml_num, type);
-		console.log("Add FAV" + this.house.ml_num + "Return:" + res);
-		switch (res) {
-			case 'C': //mls doesn't exist .Add MLS into fav'
-				this.isFav[type] = true;
-				break;
-			case 'D': //mls exist . Remove MLS from fav
-				this.isFav[type] = false;
-				break;
-			default:
-				console.log("Add fav is aborted");
-		}
+		})
 
 
-		// let wan = Math.ceil(Number(this.house.lp_dol)/10000);
-		// let img = this.photoUrl(this.photos[0]);
-		// let doc = {
-		// 	'_id': new Date().toJSON(),
-		// 	'username': this.username,
-		// 	'MLS': this.house.ml_num,
-		// 	'CoverImg': img,
-		// 	'HouseType': this.house_propertyType.name,
-		// 	'Beds': this.house.br,
-		// 	'Baths': this.house.bath_tot,
-		// 	'Kitchen': this.house.num_kit,
-		// 	'Price': wan,
-		// 	'MunicipalityName': this.house_mname.municipality_cname,
-		// 	'ProvinceCname': this.house.county
-		// };
 
-		// this.userData.addDocument(doc);
 
 	}
 
 	getResult(url, id) {
 		this.parms.id = id;
 
-		let email = (this.auth.authenticated()) ? this.auth.user['email'] : 'NO';
-		console.log(email);
-		this.mapleRestData.load(url, { 'id': id, 'email': email }).subscribe(
+		let username = (this.auth.authenticated()) ? this.auth.user['email'] : 'NO';
+		console.log(username);
+		this.mapleRestData.load(url, { 'id': id, 'username': username }).subscribe(
 			data => {
 				//console.log(data);
 				this.house = data.house;
@@ -354,6 +347,8 @@ export class HouseDetailPage implements OnInit {
 				this.exchangeRate = data.exchangeRate;
 				this.photos = data.photos;
 				this.houseRooms(this.house);
+				//this.isFav = data.isFav; 
+
 				this.setHouseList();
 				//console.log(this.slider); 
 				//this.slider.slideTo(0);
