@@ -149,9 +149,9 @@ export class UserData {
     return new Promise(resolve => {
       this.mapleConf.load().then(res => {
         let rest = res.updateUserDataRest;
-        // if (action == 1) { rest = res.addUserDataRest; }
-        // if (action == 2) { rest = res.deleteUserDataRest; }
+
         let parms = { username: this.auth.user['email'], mls: mls, type: type, action: action }
+
         this.mapleRestData.load(rest, parms).subscribe(
           data => {
             console.log("changefav action:" + action + ' type:' + type + " MLS:" + mls + " Return:" + data);

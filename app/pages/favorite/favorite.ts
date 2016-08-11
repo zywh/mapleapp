@@ -53,9 +53,9 @@ export class FavoritePage {
     this.editing = !this.editing;
     if (this.editing) {
       this.editButton = '完成';
-      this.saveFavOrder();
     } else {
       this.editButton = '编辑';
+      this.saveFavOrder();
     }
   }
 
@@ -75,10 +75,17 @@ export class FavoritePage {
 
   reorderItems(indexes) {
     this.favList = reorderArray(this.favList, indexes);
+
   }
 
   saveFavOrder() {
-    
+
+    let list = this.favList.map(function (a) { return a.MLS; }).join();
+    console.log(list);
+    this.userData.changeFavorite(list, this.pageType, 'r').then(res => {
+      console.log("MLS Result Reorder:" + res);
+
+    });
   }
 
 }
