@@ -10,10 +10,12 @@ import {UserData} from '../../providers/user-data';
 import {PostPage} from '../post/post';
 import {ProfilePage} from '../profile/profile';
 import {AuthService} from '../../providers/auth/auth';
+import {HouseList} from '../../components/house-list/house-list';
 
 @Component({
+  //selector: 'house-list',
   templateUrl: 'build/pages/home/home.html',
-  // directives: [MapleFooter]
+  directives: [HouseList]
 })
 export class HomePage {
   private projects: Object;

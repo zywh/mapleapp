@@ -1,16 +1,15 @@
-
 <ion-header>
-  <ion-navbar  no-border-bottom>
-    
-  <button menuToggle>
+  <ion-navbar no-border-bottom>
+
+    <button menuToggle>
     <ion-icon name="menu"></ion-icon>
   </button>
-  <ion-title>枫之都</ion-title>
-  <ion-buttons end>
-    <button (click)="profile()">
+    <ion-title>枫之都</ion-title>
+    <ion-buttons end>
+      <button (click)="profile()">
         <ion-icon name="log-in"></ion-icon>
     </button>
-  </ion-buttons>
+    </ion-buttons>
 
   </ion-navbar>
 </ion-header>
@@ -59,41 +58,16 @@
       </ion-list>
     </div>
     <div *ngSwitchCase="'house1'">
-      <ion-list class="houselist-search">
-        <ion-item *ngFor="let house of nearbyHouseList" (click)="gotoHouseDetail(house.MLS,nearbyHouseList)">
-          <ion-thumbnail item-left>
-            <img [src]="imgHost + house.CoverImg" />
-          </ion-thumbnail>
-
-          <h2>{{house.Address}}</h2>
-          <p>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
-            <ion-badge item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
-          </p>
-          <p>{{house.MunicipalityName}},{{house.ProvinceCname}}</p>
-
-        </ion-item>
-
-      </ion-list>
+          <house-list [houselist]='nearbyHouseList' [imgHost]='imgHost'></house-list>
     </div>
+
+    
     <div *ngSwitchCase="'house2'">
-      <ion-list class="houselist-search">
-        <ion-item *ngFor="let house of nearbyHouseList" (click)="gotoHouseDetail(house.MLS,nearbyHouseList)">
-          <ion-thumbnail item-left>
-            <img [src]="imgHost + house.CoverImg" />
-          </ion-thumbnail>
-
-          <h2>{{house.Address}}</h2>
-          <p>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
-            <ion-badge item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
-          </p>
-          <p>{{house.MunicipalityName}},{{house.ProvinceCname}}</p>
-
-        </ion-item>
-
-      </ion-list>
+      <house-list [houselist]='nearbyHouseList' [imgHost]='imgHost'></house-list>
     </div>
     <div *ngSwitchCase="'house3'">
       <ion-list class="houselist-search">
+
         <ion-item *ngFor="let house of favHouses" (click)="gotoHouseDetail(house.MLS,favHouses)">
           <ion-thumbnail item-left>
             <img [src]="house.CoverImg" />
@@ -109,8 +83,8 @@
 
       </ion-list>
     </div>
- 
-  
+
+
   </div>
 
 </ion-content>

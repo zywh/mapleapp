@@ -5,7 +5,8 @@ import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {UserData} from '../../providers/user-data'
 import {SelectOptionModal} from '../map-search/map-option-modal';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
-import {AuthService} from '../../providers/auth/auth'
+import {AuthService} from '../../providers/auth/auth';
+import {HouseList} from '../../components/house-list/house-list';
 
 interface selectOptionsObj {
     selectPrice?: String,
@@ -22,7 +23,8 @@ interface selectOptionsObj {
 
 
 @Component({
-    templateUrl: 'build/pages/houselist-search/houselist-search.html'
+    templateUrl: 'build/pages/houselist-search/houselist-search.html',
+    directives: [HouseList]
 
 })
 export class HouselistSearch {
