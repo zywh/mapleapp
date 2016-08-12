@@ -14,6 +14,8 @@ import {MapHouselist} from './map-houselist';
 import {SchoolSelectOptionModal} from '../school-map/schoolmap-option-modal';
 import {SchoolListModal} from '../school-map/school-list-modal';
 import {HousePopover} from './house-popover';
+import {AuthService} from '../../providers/auth/auth';
+import {UserData} from '../../providers/user-data';
 declare var RichMarker: any;
 declare var google;
 
@@ -84,8 +86,10 @@ export class MapSearchPage {
 
   constructor(
     public nav: NavController,
+    private auth: AuthService,
     public platform: Platform,
     private mapleRestData: MapleRestData,
+    private userData: UserData,
     public connectivityService: Connectivity,
     private menu: MenuController,
     private mapleconf: MapleConf,
@@ -144,7 +148,7 @@ export class MapSearchPage {
       }
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-      google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(this.mapType);})
+      google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(this.mapType); })
 
       // google.maps.event.addListener(this.map, 'bounds_changed', () => { this.changeMap(this.mapType); });
 
@@ -194,16 +198,36 @@ export class MapSearchPage {
 
 
   openModal() {
-    console.log("Page:" + this.optionPage)
-    let modal = this.modalc.create(this.optionPage, { data: this.selectOptions });
-    modal.onDidDismiss(data => {
-      this.selectOptions = data;
-      this.changeMap(this.mapType);
 
-    });
-    modal.present();
+
+    if (this.auth.authenticated()) {
+      this.userData.getUserSelections("houseSearch").then(res => {
+        this.selectOptions = res;
+        let modal = this.modalc.create(this.optionPage, { data: this.selectOptions });
+        modal.onDidDismiss(data => {
+          this.selectOptions = data;
+          this.changeMap(this.mapType);
+
+        });
+
+        modal.present();
+
+      })
+    } else {
+      let modal = this.modalc.create(this.optionPage, { data: this.selectOptions });
+      modal.onDidDismiss(data => {
+        this.selectOptions = data;
+        this.changeMap(this.mapType);
+
+      });
+      modal.present();
+    }
+
+
+
 
   }
+
 
 
   getResult(url) {
@@ -308,7 +332,7 @@ export class MapSearchPage {
   //auto complete REST CAll
   searchFocus() {
     console.log("Search box is focused");
-   // this.queryText = '';
+    // this.queryText = '';
   }
   getItems(ev) {
 

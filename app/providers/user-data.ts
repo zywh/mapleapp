@@ -156,15 +156,29 @@ export class UserData {
           data => {
             console.log("changefav action:" + action + ' type:' + type + " MLS:" + mls + " Return:" + data);
             return resolve(data);
-          }
+          });
+      });
 
-        );
-      })
-
-    })
+    });
 
   }
 
+  saveSelectOption(options, type) {
+
+    return new Promise(resolve => {
+      this.mapleConf.load().then(res => {
+        let rest = res.saveOptionsDataRest;
+        let parms = { username: this.auth.user['email'], data: options, type: type };
+        console.log(parms);
+        this.mapleRestData.load(rest, parms).subscribe(data => {
+          console.log("save selection type:" + type + " Options:" + options + " Return:" + data);
+          return resolve(data);
+        });
+      });
+
+    });
+
+  }
 
 
   // removeFavorite(mls, type) {
@@ -188,6 +202,18 @@ export class UserData {
   //   })
 
   // }
+
+  getUserSelections(type) {
+   
+      return new Promise(resolve => {
+        this.getUserData(type).then(res => {
+          return resolve(JSON.parse(res));
+        })
+
+      })
+   
+  }
+
 
   getUserData(type): Promise<any> {
 

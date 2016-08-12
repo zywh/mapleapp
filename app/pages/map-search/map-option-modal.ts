@@ -1,5 +1,9 @@
 import {Modal, Range, NavParams, Page, ViewController} from 'ionic-angular';
-import {Component} from '@angular/core';;
+import {Component} from '@angular/core';
+import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
+import {MapleConf} from '../../providers/maple-rest-data/maple-config';
+import {UserData} from '../../providers/user-data';
+import {AuthService} from '../../providers/auth/auth';
 
 interface selectOptionsObj {
     selectPrice?: String,
@@ -22,24 +26,28 @@ export class SelectOptionModal {
     private selectUnit: Boolean = true;
     private unit;
     constructor(
-        //private platform: Platform,
+
         private params: NavParams,
-        //private nav: NavController,
-        private viewCtrl: ViewController
+        private auth: AuthService,
+        private viewCtrl: ViewController,
+        private mapleRestData: MapleRestData,
+        private mapleConf: MapleConf,
+        private userData: UserData
     ) {
-        //this.viewCtrl = viewCtrl;
-        //console.log(this.params);
+
         this.selectOptions = params.get('data');
         this.unit = 10;
+        //this.getUserSelections();
+
+    }
+
+
+    onChange(ev) {
+        this.unit = (this.selectUnit == true) ? 10 : 1;
 
     }
 
    
-    onChange(ev) {
-       
-        this.unit = (this.selectUnit == true)? 10: 1;
-
-    }
 
 
     resetSelections() {
@@ -56,7 +64,16 @@ export class SelectOptionModal {
 
         }
     }
+    saveSelections() {
+        let data = JSON.stringify(this.selectOptions);
+        console.log(data);
+        this.userData.saveSelectOption(data, 'houseSearch').then(res => {
+            console.log("save Selection Result:" + res);
 
+        });
+
+
+    }
 
     dismiss() {
         this.viewCtrl.dismiss(this.selectOptions);
