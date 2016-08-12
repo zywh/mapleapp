@@ -28,6 +28,7 @@ export class FavoritePage {
     this.pageType = parm.data.type;
     if (this.pageType == "houseFav") this.pageTitle = '我的房源收藏';
     if (this.pageType == "routeFav") this.pageTitle = '我的看房收藏';
+    if (this.pageType == "recentView") this.pageTitle = '最近浏览房源收藏';
 
   }
 
