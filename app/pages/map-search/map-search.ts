@@ -202,30 +202,30 @@ export class MapSearchPage {
 
     if (this.auth.authenticated()) {
       this.userData.getUserSelections("houseSearch").then(res => {
-        this.selectOptions = res;
-        let modal = this.modalc.create(this.optionPage, { data: this.selectOptions });
-        modal.onDidDismiss(data => {
-          this.selectOptions = data;
-          this.changeMap(this.mapType);
+        if (res != null) {
+          this.openSelection(res);
+        } else { this.openSelection(this.selectOptions); }
 
-        });
-
-        modal.present();
 
       })
     } else {
-      let modal = this.modalc.create(this.optionPage, { data: this.selectOptions });
-      modal.onDidDismiss(data => {
-        this.selectOptions = data;
-        this.changeMap(this.mapType);
-
-      });
-      modal.present();
+      this.openSelection(this.selectOptions);
     }
 
 
 
 
+  }
+
+  openSelection(selectOptions) {
+    let modal = this.modalc.create(this.optionPage, { data: selectOptions });
+    modal.onDidDismiss(data => {
+      this.selectOptions = data;
+      this.changeMap(this.mapType);
+
+    });
+
+    modal.present();
   }
 
 

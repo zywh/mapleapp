@@ -103,6 +103,21 @@ export class UserData {
 
   }
 
+  getFavCount() {
+    return new Promise(resolve => {
+      this.mapleConf.load().then(res => {
+        let rest = res.getFavCountDataRest;
+        let parms = { username: this.auth.user['email'] };
+        this.mapleRestData.load(rest, parms).subscribe(
+          data => {
+    
+            return resolve(data);
+          });
+      });
+    });
+
+  }
+
   favWrapper(mls, type) {
     //check if user is logged in
     return new Promise(resolve => {
@@ -181,37 +196,16 @@ export class UserData {
   }
 
 
-  // removeFavorite(mls, type) {
-  //   // let index = this._favorites.indexOf(mls)
-  //   // if (index > -1) {
-  //   //   this._favorites.splice(index, 1);
-  //   // }
-  //      return new Promise(resolve => {
-  //     this.mapleConf.load().then(res => {
-  //       let rest = res.deleteUserDataRest;
-  //       let parms = { username: this.auth.user['email'],mls:mls, type: type }
-  //       this.mapleRestData.load(rest, parms).subscribe(
-  //         data => {
-  //           // console.log(data.Data); 
-  //           return resolve(data.Data);
-  //         }
-
-  //       );
-  //     })
-
-  //   })
-
-  // }
 
   getUserSelections(type) {
-   
-      return new Promise(resolve => {
-        this.getUserData(type).then(res => {
-          return resolve(JSON.parse(res));
-        })
 
+    return new Promise(resolve => {
+      this.getUserData(type).then(res => {
+        return resolve(JSON.parse(res));
       })
-   
+
+    })
+
   }
 
 

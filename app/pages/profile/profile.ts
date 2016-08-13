@@ -14,6 +14,7 @@ import {SchoolSelectOptionModal} from '../school-map/schoolmap-option-modal';
 export class ProfilePage {
 
   private selectOptions;
+  private count;
 
   // We need to inject AuthService so that we can
   // use it in the view
@@ -85,5 +86,20 @@ export class ProfilePage {
   centerDefault() {
 
   }
+
+  ionViewWillEnter() {
+    console.log("profile page will enter");
+    //get count
+    this.userData.getFavCount().then(res=>{
+      this.count = res;
+    });
+
+
+    
+
+  }
+
+  
+
 
 }
