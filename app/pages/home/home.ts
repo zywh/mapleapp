@@ -21,6 +21,7 @@ export class HomePage {
   private projects: Object;
   private postListRest;
   private post1;
+  private favList;
   private hQueryText: String = '';
   private sQueryText: String = '';
   private cityItems: any;
@@ -36,9 +37,9 @@ export class HomePage {
   private imgHost;
   private houseRestURL;
   private data;
-  private favHouses;
-  private username;
-
+  private listHouse: Boolean = false;
+  private listFav: Boolean = true;
+ 
 
   constructor(
     private nav: NavController,
@@ -60,11 +61,18 @@ export class HomePage {
   };
 
   fav() {
-    // this.userData.getFavHouses(this.username).then(res => {
-    //   this.favHouses = res;
 
+    if (this.auth.authenticated()) {
+      this.userData.getUserData('houseFav').then(res => {
+        this.imgHost = res.imgHost;
+        this.favList = res.HouseList;
+        //console.log(this.favList);
 
-    // })
+      });
+    } else {
+      this.userData.loginAlert();
+    }
+
 
   }
   profile() {
@@ -90,8 +98,8 @@ export class HomePage {
   }
   searchHouse(s) {
     console.log("Button is clicked for house search");
-    let range: number = (s == 'recommend')? 0.1: 0.015;
-   
+    let range: number = (s == 'recommend') ? 0.1 : 0.015;
+
 
     this.mapleConf.getLocation().then(data => {
       this.data = data;

@@ -58,30 +58,15 @@
       </ion-list>
     </div>
     <div *ngSwitchCase="'house1'">
-          <house-list [houselist]='nearbyHouseList' [imgHost]='imgHost'></house-list>
+      <house-list [houselist]='nearbyHouseList' [imgHost]='imgHost' [fav]='listHouse'></house-list>
     </div>
 
-    
+
     <div *ngSwitchCase="'house2'">
-      <house-list [houselist]='nearbyHouseList' [imgHost]='imgHost'></house-list>
+      <house-list [houselist]='nearbyHouseList' [imgHost]='imgHost' [fav]='listHouse'></house-list>
     </div>
     <div *ngSwitchCase="'house3'">
-      <ion-list class="houselist-search">
-
-        <ion-item *ngFor="let house of favHouses" (click)="gotoHouseDetail(house.MLS,favHouses)">
-          <ion-thumbnail item-left>
-            <img [src]="house.CoverImg" />
-          </ion-thumbnail>
-
-          <h2>{{house.Address}}</h2>
-          <p>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
-            <ion-badge item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
-          </p>
-          <p>{{house.MunicipalityName}},{{house.ProvinceCname}}</p>
-
-        </ion-item>
-
-      </ion-list>
+      <house-list [houselist]='favList' [imgHost]='imgHost' [fav]='listFav'></house-list>
     </div>
 
 

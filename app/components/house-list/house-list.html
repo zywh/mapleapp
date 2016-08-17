@@ -13,13 +13,21 @@
 
     </ion-item>
     <ion-item-options>
-      <button clear (click)="userData.favWrapper(house.MLS,'houseFav')">
+      <button clear (click)="userData.favWrapper(house.MLS,'houseFav')" *ngIf="!fav">
         <ion-icon name="heart"></ion-icon>
         收藏
+      </button>
+      <button clear (click)="remove(house.MLS)" *ngIf="fav">
+        <ion-icon name="trash"></ion-icon>
+        删除
       </button>
       <button clear (click)="userData.favWrapper(house.MLS,'routeFav')">
         <ion-icon name="navigate"></ion-icon>
         看房
+      </button>
+      <button clear (click)="nearByHouses(house.GeocodeLat,house.GeocodeLng,house,MLS)">
+        <ion-icon name="locate"></ion-icon>
+        附近
       </button>
       <button clear (click)="mapleConf.mapDirection(house.GeocodeLat,house.GeocodeLng)">
         <ion-icon name="locate"></ion-icon>

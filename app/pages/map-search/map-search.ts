@@ -16,12 +16,13 @@ import {SchoolListModal} from '../school-map/school-list-modal';
 import {HousePopover} from './house-popover';
 import {AuthService} from '../../providers/auth/auth';
 import {UserData} from '../../providers/user-data';
+
 declare var RichMarker: any;
 declare var google;
 
 @Component({
   templateUrl: 'build/pages/map-search/map-search.html',
-  // providers: [GoogleMaps]
+  
 })
 
 

@@ -1,13 +1,20 @@
 import {NavParams, NavController, Events} from 'ionic-angular';
 import {Component} from '@angular/core';
 import {HouseDetailPage} from '../house-detail/house-detail';
+import {Modal, Loading, AlertController,  ViewController} from 'ionic-angular';
+import { NgZone} from '@angular/core';;
+import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
+import {UserData} from '../../providers/user-data'
+import {SelectOptionModal} from '../map-search/map-option-modal';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
+import {AuthService} from '../../providers/auth/auth';
 import {HouseList} from '../../components/house-list/house-list';
+
 
 
 @Component({
     templateUrl: 'build/pages/map-search/map-houselist.html',
-    directives: [HouseList]
+   // directives: [HouseList]
 
 })
 export class MapHouselist {
@@ -18,7 +25,8 @@ export class MapHouselist {
     constructor(
         private params: NavParams,
         private nav: NavController,
-        private mapleConf: MapleConf
+        private mapleConf: MapleConf,
+        private userData: UserData
 
     ) {
         //this.viewCtrl = viewCtrl;
@@ -30,7 +38,7 @@ export class MapHouselist {
 
     gotoHouseDetail(mls) {
         this.nav.pop().then(() => this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList }));
-      
+
     }
 
 
