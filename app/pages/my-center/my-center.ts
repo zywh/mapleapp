@@ -5,19 +5,22 @@ import {HouselistSearch} from '../houselist-search/houselist-search';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 // import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {UserData} from '../../providers/user-data';
+/*
+  Generated class for the MyCenterPage page.
 
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+*/
 @Component({
-  templateUrl: 'build/pages/favorite/favorite.html',
+  templateUrl: 'build/pages/my-center/my-center.html',
 })
-export class FavoritePage {
-  private favList;
-  private imgHost = '';
-  private pageTitle;
-  private pageType;
-  private editButton: string = '编辑';
-  private editing: boolean = false;
+export class MyCenterPage {
+private centerList;
   
 
+  private editButton: string = '编辑';
+  private editing: boolean = false;
+ 
   constructor(
     private nav: NavController,
     private mapleConf: MapleConf,
@@ -25,31 +28,23 @@ export class FavoritePage {
     private userData: UserData
 
   ) {
-    this.pageType = parm.data.type;
-    if (this.pageType == "houseFav") this.pageTitle = '我的房源收藏';
-    if (this.pageType == "routeFav") this.pageTitle = '我的看房收藏';
-    if (this.pageType == "recentView") this.pageTitle = '最近浏览房源';
+   
 
   }
 
   ionViewWillEnter() {
 
-    this.userData.getUserData(this.pageType).then(res => {
-      this.imgHost = res.imgHost;
-      this.favList = res.HouseList;
-      console.log(this.favList);
+    this.userData.getMyCenter().then(res => {
+      
+      this.centerList = res;
+      console.log(this.centerList);
 
     });
 
 
 
   }
-
-  gotoHouseDetail(mls) {
-    this.nav.pop().then(() => this.nav.push(HouseDetailPage, { id: mls, list: this.favList }))
-  }
-
-  toggleEdit() {
+   toggleEdit() {
     this.editing = !this.editing;
     if (this.editing) {
       this.editButton = '完成';

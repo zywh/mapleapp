@@ -4,6 +4,7 @@ import {NavController, ModalController} from 'ionic-angular';
 import {AuthService} from '../../providers/auth/auth';
 import {AboutPage} from '../about/about';
 import {FavoritePage} from '../favorite/favorite';
+import {MyCenterPage} from '../my-center/my-center'
 import {UserData} from '../../providers/user-data';
 import {SelectOptionModal} from '../map-search/map-option-modal';
 import {SchoolSelectOptionModal} from '../school-map/schoolmap-option-modal';
@@ -83,8 +84,8 @@ export class ProfilePage {
 
   }
 
-  centerDefault() {
-
+  myCenter() {
+    this.nav.push(MyCenterPage);
   }
 
   ionViewWillEnter() {

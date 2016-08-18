@@ -65,6 +65,36 @@ export class UserData {
     alert.present();
   }
 
+  addCenterAlert(center,msg) {
+    let prompt = this.alertc.create({
+
+      message: msg,
+      inputs: [
+        {
+          name: 'name',
+          placeholder: '我的位置'
+        },
+      ],
+      buttons: [
+        {
+          text: '取消',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: '保存',
+          handler: data => {
+            this.saveCenter(data.name, center);
+            console.log('Saved clicked');
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+
+
   presentToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
@@ -78,6 +108,43 @@ export class UserData {
     });
 
     toast.present();
+  }
+
+  getMyCenter(){
+     return new Promise(resolve => {
+      this.mapleConf.load().then(res => {
+        let rest = res.getMyCenterDataRest;
+        let parms = { username: this.auth.user['email'] };
+        this.mapleRestData.load(rest, parms).subscribe(
+          data => {
+
+            return resolve(data);
+          });
+      });
+    });
+  }
+
+  saveCenter(name, center) {
+    console.log("Save Center:" + name + "center:" + center);
+    this.mapleConf.load().then(res => {
+      let rest = res.addCenterDataRest;
+      let data = JSON.stringify({ name: name, center: center })
+
+      let parms = { username: this.auth.user['email'], data: data };
+      this.mapleRestData.load(rest, parms).subscribe(
+        data => {
+          // console.log(data.Data); 
+          if (data > 1) {
+            this.presentToast("我的位置:" + name + "保存成功");
+          }else {
+            this.addCenterAlert(center,"名字已经用过，请更改名字");
+          }
+
+
+        });
+
+    });
+
   }
 
   hasFavorite(mls): Promise<any> {
@@ -110,7 +177,7 @@ export class UserData {
         let parms = { username: this.auth.user['email'] };
         this.mapleRestData.load(rest, parms).subscribe(
           data => {
-    
+
             return resolve(data);
           });
       });
