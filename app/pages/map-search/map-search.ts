@@ -66,18 +66,7 @@ export class MapSearchPage {
     //loopedSlides: 10
     autoplay: 3000
   };
-  // private selectOptions = {
-  //   selectSR: true,
-  //   selectBaths: 0,
-  //   selectBeds: 0,
-  //   selectHousesize: { lower: 0, upper: 4000 },
-  //   selectLandsize: { lower: 0, upper: 43560 },
-  //   selectPrice: { lower: 0, upper: 600 },
-  //   selectType: '',
-  //   selectListType: true,
-  //   selectDate: 0
-
-  // }
+  
   private selectOptions;
   private optionPage;
   private currentHouseList; //Hold list of all houses on current map
@@ -158,7 +147,7 @@ export class MapSearchPage {
       //Add marker if it's redirected from school page
       console.log(this.navparm.data.parms.type);
       if (this.navparm.data.parms.type != 'NONE') {
-        console.log("SChool page switch over");
+        
         this.setLocation(this.defaultcenter, 13, this.navparm.data.parms.type)
       }
 
@@ -396,6 +385,11 @@ export class MapSearchPage {
         map: this.map,
         draggable: false,
       });
+
+    marker.addListener('click', () => {
+      this.userData.addCenterAlert(center,"输入中心位置名字");
+
+      })
     }
   }
 
