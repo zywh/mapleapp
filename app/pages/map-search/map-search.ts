@@ -34,6 +34,7 @@ export class MapSearchPage {
   mapInitialised: boolean = false;
   mapLoaded: any;
   mapLoadedObserver: any;
+  private searchInFocus: boolean = false;
   private cityItems: any;
   private addressItems: any;
   private mlsItems: any;
@@ -138,7 +139,13 @@ export class MapSearchPage {
       }
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-      google.maps.event.addListener(this.map, 'idle', () => { this.changeMap(this.mapType); })
+      google.maps.event.addListener(this.map, 'idle', () => { 
+          this.changeMap(this.mapType); 
+      });
+      // google.maps.event.addListener(this.map, 'bounds_changed', () => {
+      //   //this.userData.presentToast("Map bounds change is triggered");
+      //    //this.searchInFocus = false; 
+      //   })
 
       // google.maps.event.addListener(this.map, 'bounds_changed', () => { this.changeMap(this.mapType); });
 
@@ -305,7 +312,7 @@ export class MapSearchPage {
 
 
   itemTapped(item, type) {
-
+    this.searchInFocus = false;
     let center = new google.maps.LatLng(item.lat, item.lng);
 
     this.currentDiv = '';
@@ -320,10 +327,7 @@ export class MapSearchPage {
 
   }
   //auto complete REST CAll
-  searchFocus() {
-    console.log("Search box is focused");
-    // this.queryText = '';
-  }
+ 
   getItems(ev) {
 
     this.resetItems();
@@ -533,7 +537,11 @@ export class MapSearchPage {
   }
 
   changeMap(type) {
-    console.log("Change Map");
+    console.log("Change Map:" + this.searchInFocus);
+    if (this.searchInFocus == true ) {
+      console.log("search in focus don't change")
+      return;
+    }
     //google.maps.event.trigger(this.map, 'resize');
     this.currentDiv = ''; //reset all popup
     // let loading = Loading.create({

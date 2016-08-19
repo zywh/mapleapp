@@ -110,19 +110,6 @@ export class UserData {
     toast.present();
   }
 
-  getMyCenter(){
-     return new Promise(resolve => {
-      this.mapleConf.load().then(res => {
-        let rest = res.getMyCenterDataRest;
-        let parms = { username: this.auth.user['email'] };
-        this.mapleRestData.load(rest, parms).subscribe(
-          data => {
-
-            return resolve(data);
-          });
-      });
-    });
-  }
 
   saveCenter(name, center) {
     console.log("Save Center:" + name + "center:" + center);

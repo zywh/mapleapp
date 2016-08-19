@@ -34,7 +34,7 @@ private centerList;
 
   ionViewWillEnter() {
 
-    this.userData.getMyCenter().then(res => {
+    this.userData.getUserData('myCenter').then(res => {
       
       this.centerList = res;
       console.log(this.centerList);
