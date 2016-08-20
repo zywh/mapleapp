@@ -8,7 +8,7 @@ import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {Observable} from 'rxjs/Observable';
 //import {GoogleMaps} from '../../providers/google-maps/google-maps';
-import {GoogleMap, GoogleMapsEvent, GoogleMapsLatLng, GoogleMapsMarker} from 'ionic-native';
+//import {GoogleMap, GoogleMapsEvent, GoogleMapsLatLng, GoogleMapsMarker} from 'ionic-native';
 import {SelectOptionModal} from './map-option-modal';
 import {MapHouselist} from './map-houselist';
 //import {ConferenceData} from '../../providers/conference-data';
@@ -104,27 +104,27 @@ export class MapSearchPage {
   }
 
 
-  mapLatLng(lat, lng) {
-    if (this.mapLib == 0) {
-      return new google.maps.LatLng(lat, lng);
-    } else {
-      return new GoogleMapsLatLng(lat, lng);
-    }
+  // mapLatLng(lat, lng) {
+  //   if (this.mapLib == 0) {
+  //     return new google.maps.LatLng(lat, lng);
+  //   } else {
+  //     return new GoogleMapsLatLng(lat, lng);
+  //   }
     
-  }
+  // }
   initMap() {
 
     this.mapInitialised = true;
 
     //let mapEle = document.getElementById('map');
     this.mapleconf.getLocation().then(data => {
-      //this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
-      this.defaultcenter = this.mapLatLng(data['lat'], data['lng']);
+      this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
+      //this.defaultcenter = this.mapLatLng(data['lat'], data['lng']);
 
       if (this.navparm.data.parms.lat > 20) {
         console.log("Redirect from other page with center");
-        //this.defaultcenter = new google.maps.LatLng(this.navparm.data.parms.lat, this.navparm.data.parms.lng);
-        this.defaultcenter = this.mapLatLng(data['lat'], data['lng']);
+        this.defaultcenter = new google.maps.LatLng(this.navparm.data.parms.lat, this.navparm.data.parms.lng);
+        //this.defaultcenter = this.mapLatLng(data['lat'], data['lng']);
       }
 
 
@@ -165,10 +165,10 @@ export class MapSearchPage {
 
       } else {
 
-        this.map = new GoogleMap(this.mapElement.nativeElement, mapOptions);
-        this.map.on(GoogleMapsEvent.MAP_READY).subscribe( () => {
-          this.changeMap(this.mapType);
-        });
+        // this.map = new GoogleMap(this.mapElement.nativeElement, mapOptions);
+        // this.map.on(GoogleMapsEvent.MAP_READY).subscribe( () => {
+        //   this.changeMap(this.mapType);
+        // });
 
       }
 
@@ -560,17 +560,7 @@ export class MapSearchPage {
 
   changeMap(type) {
     console.log("Change Map:" + this.searchInFocus);
-<<<<<<< HEAD
-    // if (this.searchInFocus == true ) {
-    //   console.log("search in focus don't change")
-    //   return;
-    // }
-=======
-    if (this.searchInFocus == true) {
-      console.log("search in focus don't change")
-      return;
-    }
->>>>>>> 992e9d29347ed4e64dcc5ed7d54e486919637121
+
     //google.maps.event.trigger(this.map, 'resize');
     this.currentDiv = ''; //reset all popup
     // let loading = Loading.create({
