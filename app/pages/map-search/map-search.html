@@ -9,7 +9,7 @@
     <!--<ion-input  [(ngModel)]="queryText" type="text" clearInput (keyup)="getItems($event)"
     placeholder="城市/地址/MLS#"></ion-input>-->
 
-    <ion-searchbar primary  [(ngModel)]="queryText" (ionInput)="getItems($event)" (ionFocus)="searchInFocus = true" 
+    <ion-searchbar primary  [(ngModel)]="queryText" (ionInput)="getItems($event)" 
     [placeholder]="(mapType == 0)?'城市/地址/MLS#':'城市/学校'"></ion-searchbar>
   
   

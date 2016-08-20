@@ -312,7 +312,7 @@ export class MapSearchPage {
 
 
   itemTapped(item, type) {
-    this.searchInFocus = false;
+    //this.searchInFocus = false;
     let center = new google.maps.LatLng(item.lat, item.lng);
 
     this.currentDiv = '';
@@ -538,10 +538,10 @@ export class MapSearchPage {
 
   changeMap(type) {
     console.log("Change Map:" + this.searchInFocus);
-    if (this.searchInFocus == true ) {
-      console.log("search in focus don't change")
-      return;
-    }
+    // if (this.searchInFocus == true ) {
+    //   console.log("search in focus don't change")
+    //   return;
+    // }
     //google.maps.event.trigger(this.map, 'resize');
     this.currentDiv = ''; //reset all popup
     // let loading = Loading.create({

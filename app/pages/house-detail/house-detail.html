@@ -9,9 +9,10 @@
 		<ion-buttons left>
 			<button (click)="nav.pop()">
     		<ion-icon outline name="arrow-back" ></ion-icon>
-  			</button>
+  		
+		房源({{houseList.index + 1}}/{{houseList.total}})
+		 	</button>
 		</ion-buttons>
-		 <p text-left class="bar-button-default">房源({{houseList.index + 1}}/{{houseList.total}})</p>
 	<!--<ion-title>房源({{houseList.index + 1}}/{{houseList.total}})</ion-title>-->
 		<ion-buttons *ngIf="houseList.prev" end>
 			<button (click)="go2PrevHouse()">

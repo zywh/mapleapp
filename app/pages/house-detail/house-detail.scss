@@ -5,15 +5,19 @@
         //height: auto; //66.8vw;
         min-height: 66.8vw;
         max-height: 66.8vw;
+        //  min-height: 350px;
+        // max-height: 350px;
         display: block;
         .swiper-wrapper {
             margin-bottom: -5px;
             //height: auto;
             min-height: 66.8vw;
-            max-height: 66.8vw;
+           max-height: 66.8vw;
+        //      min-height: 350px;
+        // max-height: 350px;
             .swiper-slide {
-                min-height: 66.8vw;
-                max-height: 66.8vw;
+               min-height: 66.8vw;
+               max-height: 66.8vw;
             }
         }
     }

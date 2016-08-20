@@ -3,9 +3,10 @@
     <ion-buttons left>
       <button class="bar-button-default" (click)="nav.pop()">
     <ion-icon outline name="arrow-back" ></ion-icon>
+    房源总数：{{totalCount}}套 - {{pageIndex + 1}}/{{pageTotal}}页
   </button>
     </ion-buttons>
-    <p text-left class="bar-button-default">房源总数：{{totalCount}}套 - {{pageIndex + 1}}/{{pageTotal}}页</p>
+   
     <ion-buttons end>
       <button class="bar-button-default" (click)="pagePre()" *ngIf="pageIndex > 0">
         <ion-icon name="arrow-dropleft"></ion-icon>
