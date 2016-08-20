@@ -8,6 +8,7 @@ import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {Observable} from 'rxjs/Observable';
 //import {GoogleMaps} from '../../providers/google-maps/google-maps';
+import {GoogleMap, GoogleMapsEvent, GoogleMapsLatLng, GoogleMapsMarker} from 'ionic-native';
 import {SelectOptionModal} from './map-option-modal';
 import {MapHouselist} from './map-houselist';
 //import {ConferenceData} from '../../providers/conference-data';
@@ -22,14 +23,14 @@ declare var google;
 
 @Component({
   templateUrl: 'build/pages/map-search/map-search.html',
-  
+
 })
 
 
 export class MapSearchPage {
 
   @ViewChild('map') mapElement: ElementRef;
-
+  private mapLib = 1; // 0 is java and 1 is native google SDK
   private queryText: String = '';
   mapInitialised: boolean = false;
   mapLoaded: any;
@@ -40,7 +41,8 @@ export class MapSearchPage {
   private mlsItems: any;
   private schoolItems: any;
   private parms: Object;
-  private defaultcenter = new google.maps.LatLng(43.6532, -79.3832);
+  // private defaultcenter = new google.maps.LatLng(43.6532, -79.3832);
+  private defaultcenter;
   private houselist: any;
   private map = null;
   private center;
@@ -67,7 +69,7 @@ export class MapSearchPage {
     //loopedSlides: 10
     autoplay: 3000
   };
-  
+
   private selectOptions;
   private optionPage;
   private currentHouseList; //Hold list of all houses on current map
@@ -102,17 +104,27 @@ export class MapSearchPage {
   }
 
 
-
+  mapLatLng(lat, lng) {
+    if (this.mapLib == 0) {
+      return new google.maps.LatLng(lat, lng);
+    } else {
+      return new GoogleMapsLatLng(lat, lng);
+    }
+    
+  }
   initMap() {
 
     this.mapInitialised = true;
+
     //let mapEle = document.getElementById('map');
     this.mapleconf.getLocation().then(data => {
-      this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
+      //this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
+      this.defaultcenter = this.mapLatLng(data['lat'], data['lng']);
 
       if (this.navparm.data.parms.lat > 20) {
         console.log("Redirect from other page with center");
-        this.defaultcenter = new google.maps.LatLng(this.navparm.data.parms.lat, this.navparm.data.parms.lng);
+        //this.defaultcenter = new google.maps.LatLng(this.navparm.data.parms.lat, this.navparm.data.parms.lng);
+        this.defaultcenter = this.mapLatLng(data['lat'], data['lng']);
       }
 
 
@@ -120,6 +132,12 @@ export class MapSearchPage {
         //center: latLng,
         center: this.defaultcenter,
         minZoom: 4,
+        controls: {
+            'compass': true,
+            'myLocationButton': true,
+            'indoorPicker': true,
+            'zoom': true
+          },
         mapTypeControl: true,
         mapTypeControlOptions: {
           style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
@@ -138,23 +156,27 @@ export class MapSearchPage {
         mapTypeId: google.maps.MapTypeId.ROADMAP
       }
 
-      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-      google.maps.event.addListener(this.map, 'idle', () => { 
-          this.changeMap(this.mapType); 
-      });
-      // google.maps.event.addListener(this.map, 'bounds_changed', () => {
-      //   //this.userData.presentToast("Map bounds change is triggered");
-      //    //this.searchInFocus = false; 
-      //   })
 
-      // google.maps.event.addListener(this.map, 'bounds_changed', () => { this.changeMap(this.mapType); });
+      if (this.mapLib == 0) {
+        this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+        google.maps.event.addListener(this.map, 'idle', () => {
+          this.changeMap(this.mapType);
+        });
 
+      } else {
+
+        this.map = new GoogleMap(this.mapElement.nativeElement, mapOptions);
+        this.map.on(GoogleMapsEvent.MAP_READY).subscribe( () => {
+          this.changeMap(this.mapType);
+        });
+
+      }
 
 
       //Add marker if it's redirected from school page
       console.log(this.navparm.data.parms.type);
       if (this.navparm.data.parms.type != 'NONE') {
-        
+
         this.setLocation(this.defaultcenter, 13, this.navparm.data.parms.type)
       }
 
@@ -327,7 +349,7 @@ export class MapSearchPage {
 
   }
   //auto complete REST CAll
- 
+
   getItems(ev) {
 
     this.resetItems();
@@ -372,8 +394,8 @@ export class MapSearchPage {
   //SetCenter and Zoom if location button is clicked
   setCenter(isMarker) {
     this.mapleconf.getLocation().then(data => {
-      this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
-      // this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
+
+      this.defaultcenter = this.mapLatLng(data['lat'], data['lng']);
       this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
     })
   }
@@ -390,8 +412,8 @@ export class MapSearchPage {
         draggable: false,
       });
 
-    marker.addListener('click', () => {
-      this.userData.addCenterAlert(center,"输入中心位置名字");
+      marker.addListener('click', () => {
+        this.userData.addCenterAlert(center, "输入中心位置名字");
 
       })
     }
@@ -538,10 +560,17 @@ export class MapSearchPage {
 
   changeMap(type) {
     console.log("Change Map:" + this.searchInFocus);
+<<<<<<< HEAD
     // if (this.searchInFocus == true ) {
     //   console.log("search in focus don't change")
     //   return;
     // }
+=======
+    if (this.searchInFocus == true) {
+      console.log("search in focus don't change")
+      return;
+    }
+>>>>>>> 992e9d29347ed4e64dcc5ed7d54e486919637121
     //google.maps.event.trigger(this.map, 'resize');
     this.currentDiv = ''; //reset all popup
     // let loading = Loading.create({
