@@ -110,7 +110,7 @@ export class MapSearchPage {
   //   } else {
   //     return new GoogleMapsLatLng(lat, lng);
   //   }
-    
+
   // }
   initMap() {
 
@@ -133,11 +133,11 @@ export class MapSearchPage {
         center: this.defaultcenter,
         minZoom: 4,
         controls: {
-            'compass': true,
-            'myLocationButton': true,
-            'indoorPicker': true,
-            'zoom': true
-          },
+          'compass': true,
+          'myLocationButton': true,
+          'indoorPicker': true,
+          'zoom': true
+        },
         mapTypeControl: true,
         mapTypeControlOptions: {
           style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
@@ -157,20 +157,13 @@ export class MapSearchPage {
       }
 
 
-      if (this.mapLib == 0) {
-        this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-        google.maps.event.addListener(this.map, 'idle', () => {
-          this.changeMap(this.mapType);
-        });
 
-      } else {
+      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+      google.maps.event.addListener(this.map, 'idle', () => {
+        this.changeMap(this.mapType);
+      });
 
-        // this.map = new GoogleMap(this.mapElement.nativeElement, mapOptions);
-        // this.map.on(GoogleMapsEvent.MAP_READY).subscribe( () => {
-        //   this.changeMap(this.mapType);
-        // });
 
-      }
 
 
       //Add marker if it's redirected from school page
@@ -395,7 +388,8 @@ export class MapSearchPage {
   setCenter(isMarker) {
     this.mapleconf.getLocation().then(data => {
 
-      this.defaultcenter = this.mapLatLng(data['lat'], data['lng']);
+      this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
+
       this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
     })
   }
