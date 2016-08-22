@@ -118,7 +118,7 @@ export class UserData {
       let data = JSON.stringify({ name: name, center: center })
 
       let parms = { username: this.auth.user['email'], data: data };
-      this.mapleRestData.load(rest, parms).subscribe(
+      this.mapleRestData.authload(rest, parms).subscribe(
         data => {
           // console.log(data.Data); 
           if (data > 1) {
@@ -144,7 +144,7 @@ export class UserData {
         console.log(rest)
 
         let parms = { username: this.auth.user['email'], mls: mls }
-        this.mapleRestData.load(rest, parms).subscribe(
+        this.mapleRestData.authload(rest, parms).subscribe(
           data => {
             // console.log(data.Data); 
             console.log("HasFav: MLS:" + mls + "Result:" + data);
@@ -162,7 +162,7 @@ export class UserData {
       this.mapleConf.load().then(res => {
         let rest = res.getFavCountDataRest;
         let parms = { username: this.auth.user['email'] };
-        this.mapleRestData.load(rest, parms).subscribe(
+        this.mapleRestData.authload(rest, parms).subscribe(
           data => {
 
             return resolve(data);
@@ -221,7 +221,7 @@ export class UserData {
 
         let parms = { username: this.auth.user['email'], mls: mls, type: type, action: action }
 
-        this.mapleRestData.load(rest, parms).subscribe(
+        this.mapleRestData.authload(rest, parms).subscribe(
           data => {
             console.log("changefav action:" + action + ' type:' + type + " MLS:" + mls + " Return:" + data);
             return resolve(data);
@@ -239,7 +239,7 @@ export class UserData {
         let rest = res.saveOptionsDataRest;
         let parms = { username: this.auth.user['email'], data: options, type: type };
         console.log(parms);
-        this.mapleRestData.load(rest, parms).subscribe(data => {
+        this.mapleRestData.authload(rest, parms).subscribe(data => {
           console.log("save selection type:" + type + " Options:" + options + " Return:" + data);
           return resolve(data);
         });
@@ -269,7 +269,7 @@ export class UserData {
       this.mapleConf.load().then(res => {
         let rest = res.getUserDataRest;
         let parms = { username: this.auth.user['email'], type: type }
-        this.mapleRestData.load(rest, parms).subscribe(
+        this.mapleRestData.authload(rest, parms).subscribe(
           data => {
             // console.log(data.Data); 
             return resolve(data.Data);

@@ -42,6 +42,7 @@ export class AuthService {
     });
 
     this.lock.on('authenticated', authResult => {
+      // local save for authhttp use by maple-rest-data - default token name is id_token
       this.local.set('id_token', authResult.idToken);
 
       // Fetch profile information
