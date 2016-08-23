@@ -117,7 +117,8 @@ export class HomePage {
         sr: 'Sale'
       };
 
-      this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
+     // this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
+        this.mapleRestData._load(this.houseRestURL, mapParms).subscribe(
         data => {
           console.log(data);
           if (data.Data.Type == 'house') {

@@ -162,9 +162,9 @@ export class UserData {
       this.mapleConf.load().then(res => {
         let rest = res.getFavCountDataRest;
         let parms = { username: this.auth.user['email'] };
-        this.mapleRestData.authload(rest, parms).subscribe(
+        //this.mapleRestData.authload(rest, parms).subscribe(
+        this.mapleRestData._load(rest, parms,true).subscribe(   
           data => {
-
             return resolve(data);
           });
       });

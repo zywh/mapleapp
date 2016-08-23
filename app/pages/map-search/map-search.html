@@ -1,23 +1,21 @@
 
 <ion-header>
   <ion-navbar>
-    <ion-buttons left>
+    <!--<ion-buttons left>
       <button (click)="openModal()">
         <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
    </button>
-    </ion-buttons>
-    <!--<ion-input  [(ngModel)]="queryText" type="text" clearInput (keyup)="getItems($event)"
-    placeholder="城市/地址/MLS#"></ion-input>-->
-
+    </ion-buttons>-->
+   
     <ion-searchbar primary  [(ngModel)]="queryText" (ionInput)="getItems($event)" 
     [placeholder]="(mapType == 0)?'城市/地址/MLS#':'城市/学校'"></ion-searchbar>
   
-  
+<!--  
     <ion-buttons end>
       <button (click)="setCenter(true)">
         <ion-icon ios="ios-locate-outline" md="md-locate"></ion-icon>
     </button>
-    </ion-buttons>
+    </ion-buttons>-->
   </ion-navbar>
 </ion-header>
 
@@ -51,7 +49,14 @@
   <!--<div *ngIf="currentDiv == 'listButton'" style="z-index:100;opacity:0.8;">-->
   <div style="opacity:0.8;">
     <button fab fab-bottom fab-center (click)="openList($event)">
-    <ion-icon name="list" is-active="false"></ion-icon>
-  </button>
+      <ion-icon name="list" ></ion-icon>
+    </button>
+    <button fab fab-bottom fab-left (click)="openModal()">
+      <ion-icon ios="ios-options-outline" md="md-options" ></ion-icon>
+    </button>
+    <button fab fab-bottom fab-right (click)="setCenter(true)">
+      <ion-icon ios="ios-locate-outline" md="md-locate"></ion-icon>
+    </button>
+
   </div>
 </ion-footer>
