@@ -26,6 +26,38 @@ export class MapleRestData {
 
   }
 
+  load(restURL, parms: Object) {
+
+    let dataURL = this.mapleconf.restHost + restURL;
+    let body = JSON.stringify({ parms });
+    console.log("REST POST body:" + body);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    let url = dataURL;
+
+    return this.http.post(url, body, options)
+      .retryWhen(error => error.delay(500))
+      .timeout(5000, new Error('delay exceeded')) // <------
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
+  authload(restURL, parms: Object) {
+
+    let dataURL = this.mapleconf.restHost + restURL;
+    let body = JSON.stringify({ parms });
+    console.log("REST POST body:" + body);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    let url = dataURL;
+
+    return this.authhttp.post(url, body, options)
+      .retryWhen(error => error.delay(500))
+      .timeout(5000, new Error('delay exceeded')) // <------
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
   _load(restURL, parms: Object, isAuth: boolean = false) {
 
     let dataURL = this.mapleconf.restHost + restURL;
@@ -35,6 +67,8 @@ export class MapleRestData {
     let options = new RequestOptions({ headers: headers });
     let url = dataURL;
     let httpobj = (isAuth)? this.authhttp: this.http;
+    console.log(url);
+    console.log(httpobj);
 
     return httpobj.post(url, body, options)
       .retryWhen(error => error.delay(500))
@@ -48,12 +82,12 @@ export class MapleRestData {
     return Observable.throw(error.json().error || 'Server error');
   }
  
-    load(restURL, parms: Object) {
+    load1(restURL, parms: Object) {
       this._load(restURL, parms);
   }
 
 
-    authload(restURL, parms: Object) {
+    authload1(restURL, parms: Object) {
       this._load(restURL, parms, true);
   }
 
