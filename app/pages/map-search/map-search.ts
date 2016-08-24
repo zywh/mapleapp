@@ -72,6 +72,7 @@ export class MapSearchPage {
 
   private selectOptions;
   private optionPage;
+  private savedOptions;
   private currentHouseList; //Hold list of all houses on current map
   private currentHouses; //Hold array of houses for single marker
   private currentDiv;
@@ -104,14 +105,6 @@ export class MapSearchPage {
   }
 
 
-  // mapLatLng(lat, lng) {
-  //   if (this.mapLib == 0) {
-  //     return new google.maps.LatLng(lat, lng);
-  //   } else {
-  //     return new GoogleMapsLatLng(lat, lng);
-  //   }
-
-  // }
   initMap() {
 
     this.mapInitialised = true;
@@ -188,49 +181,41 @@ export class MapSearchPage {
 
 
   ionViewWillEnter() {
-    console.log("Mappage will enter");
-
-  }
-
-  ionViewDidEnter() {
-    console.log("Mappage did enter");
-  }
-
-  ionViewDidLeave() {
-    console.log("Mappage Did Leave");
-  }
-
-  ionViewWillLeave() {
-    console.log("Mappage will Leave");
-  }
-
-  ionViewWillUnload() {
-    console.log("Mappage will Unload");
-  }
-
-
-  openModal() {
 
 
     if (this.auth.authenticated()) {
       this.userData.getUserSelections("houseSearch").then(res => {
         if (res != null) {
-          this.openSelection(res);
-        } else { this.openSelection(this.selectOptions); }
-
+          this.selectOptions = res;
+        }
 
       })
-    } else {
-      this.openSelection(this.selectOptions);
     }
 
-
-
+    console.log("Mappage will enter");
 
   }
 
-  openSelection(selectOptions) {
-    let modal = this.modalc.create(this.optionPage, { data: selectOptions });
+  // ionViewDidEnter() {
+  //   console.log("Mappage did enter");
+  // }
+
+  // ionViewDidLeave() {
+  //   console.log("Mappage Did Leave");
+  // }
+
+  // ionViewWillLeave() {
+  //   console.log("Mappage will Leave");
+  // }
+
+  // ionViewWillUnload() {
+  //   console.log("Mappage will Unload");
+  // }
+
+
+  openModal() {
+
+    let modal = this.modalc.create(this.optionPage, { data: this.selectOptions });
     modal.onDidDismiss(data => {
       this.selectOptions = data;
       this.changeMap(this.mapType);
@@ -238,6 +223,8 @@ export class MapSearchPage {
     });
 
     modal.present();
+   
+
   }
 
 
@@ -335,6 +322,7 @@ export class MapSearchPage {
     console.log("Set Center and clear text");
     if (type == 1) {
       this.setLocation(center, this.defaultZoom, true);
+      this.userData.saveCenter(item.value, center);
     } else if (type == 2) {
       this.nav.push(HouseDetailPage, { id: item.id })
     }
@@ -389,7 +377,7 @@ export class MapSearchPage {
     this.mapleconf.getLocation().then(data => {
 
       this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
-
+      // this.userData.addCenterAlert(this.defaultcenter, "输入中心位置名字").then(data=>{});
       this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
     })
   }
@@ -403,13 +391,21 @@ export class MapSearchPage {
       let marker = new google.maps.Marker({
         position: center,
         map: this.map,
+        animation: google.maps.Animation.DROP,
         draggable: false,
       });
-
       marker.addListener('click', () => {
-        this.userData.addCenterAlert(center, "输入中心位置名字");
-
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
       })
+
+      // marker.addListener('click', () => {
+      //   this.userData.addCenterAlert(center, "输入中心位置名字");
+
+      // })
     }
   }
 
