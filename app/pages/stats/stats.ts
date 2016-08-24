@@ -4,10 +4,10 @@ import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 //import {gtaStats} from './gtaStats';
 import {chartStats} from './chartStats';
-import {Highcharts} from 'angular2-highcharts';
+//import {Highcharts} from 'angular2-highcharts';
 import {HouseCityStatsPage} from '../house-city-stats/house-city-stats'
 
-//declare var Highcharts: any;
+declare var Highcharts: any;
 
 
 @Component({
@@ -20,7 +20,8 @@ export class StatsPage {
 
     private section: string = "canada";
     private isAndroid: boolean = false;
-    private chart: HighchartsChartObject;
+    //private chart: HighchartsChartObject;
+    private chart;
     private mlsdata;
     private hpiData;
     private seriesOptions = [];
@@ -280,7 +281,7 @@ export class StatsPage {
 
     hpiStats(location, t) {
 
-        let options: HighstockOptions = {
+        let options = {
             credits: { enabled: false },
             chart: {
                 zoomType: 'x',
@@ -305,7 +306,7 @@ export class StatsPage {
 
     gtaStats(c, t) {
 
-        let options: HighstockOptions = {
+        let options = {
             credits: { enabled: false },
             chart: {
                 zoomType: 'x',
@@ -331,7 +332,7 @@ export class StatsPage {
     }
 
     houseStatsPie(name, tname, title) {
-        let options: HighchartsOptions = {
+        let options = {
             credits: { enabled: false },
             chart: {
                 plotBackgroundColor: null,
@@ -367,7 +368,7 @@ export class StatsPage {
     }
 
     houseStatsColumn(name, tname, title) {
-        let options: HighchartsOptions = {
+        let options = {
             credits: { enabled: false },
             chart: {
                 renderTo: 'chart',

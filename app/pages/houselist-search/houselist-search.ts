@@ -1,8 +1,12 @@
-import {Modal, Loading, NavController, NavParams, ViewController} from 'ionic-angular';
+import {Modal, Loading, NavController, AlertController, NavParams, ViewController} from 'ionic-angular';
 import { NgZone, Component} from '@angular/core';;
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
+import {UserData} from '../../providers/user-data'
 import {SelectOptionModal} from '../map-search/map-option-modal';
+import {MapleConf} from '../../providers/maple-rest-data/maple-config';
+import {AuthService} from '../../providers/auth/auth';
+import {HouseList} from '../../components/house-list/house-list';
 
 interface selectOptionsObj {
     selectPrice?: String,
@@ -19,48 +23,49 @@ interface selectOptionsObj {
 
 
 @Component({
-    templateUrl: 'build/pages/houselist-search/houselist-search.html'
+    templateUrl: 'build/pages/houselist-search/houselist-search.html',
+    directives: [HouseList]
 
 })
 export class HouselistSearch {
 
-
-    private queryText: String = '';
     private totalCount: number;
-    private cityItems: any;
-    private addressItems: any;
-    private mlsItems: any;
-    private currentDiv;
     private imgHost;
     private bounds;
     private pageIndex: number = 0;
     private pageTotal: number = 1;
-    private selectOptions = {
-        selectSR: true,
-        selectBaths: 0,
-        selectBeds: 0,
-        selectHousesize: { lower: 0, upper: 4000 },
-        selectLandsize: { lower: 0, upper: 43560 },
-        selectPrice: { lower: 0, upper: 600 },
-        selectType: '',
-        selectListType: true,
-        selectDate: 0
+    //    // private selectOptions = {
+    //         selectSR: true,
+    //         selectBaths: 0,
+    //         selectBeds: 0,
+    //         selectHousesize: { lower: 0, upper: 4000 },
+    //         selectLandsize: { lower: 0, upper: 43560 },
+    //         selectPrice: { lower: 0, upper: 600 },
+    //         selectType: '',
+    //         selectListType: true,
+    //         selectDate: 0
 
-    }
+    //     }
+    private selectOptions;
 
     private currentHouseList; //Hold list of all houses on current map
 
     constructor(
         private nav: NavController,
         private mapleRestData: MapleRestData,
-        private parms: NavParams
+        private parms: NavParams,
+        private mapleConf: MapleConf,
+        private userData: UserData,
+        private auth: AuthService,
+        private alertc: AlertController
 
 
     ) {
 
-        this.selectOptions = parms.data.opts;
+        this.selectOptions = parms.data.searchOptions;
         this.bounds = parms.data.bounds;
-        console.log(this.selectOptions);
+
+
 
     }
 
@@ -71,24 +76,14 @@ export class HouselistSearch {
         this.getHouseList();
     }
     ionViewDidEnter() {
-        console.log("Map View did entered");
-
 
     }
 
-    // getResult(url) {
-    //     this.mapleRestData.load(url, this.parms).subscribe(
-    //         data => { this.currentHouseList = data.Data; }
-
-    //     )
-    // }
-
-    // initial view is loaded by tab page with 100ms delay
     ionViewLoaded() { }
 
 
     gotoHouseDetail(mls) {
-       this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList });
+        this.nav.pop().then(() => this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList }))
     }
     pagePre() {
         --this.pageIndex;
@@ -115,13 +110,6 @@ export class HouselistSearch {
 
     getHouseList() {
 
-        this.currentDiv = ''; //reset all popup
-
-        // let loading = Loading.create({
-        //   content: '加载房源...'
-        // });
-        // this.nav.present(loading);
-
 
         let HouseArray = [];
         let searchParms = {
@@ -136,25 +124,29 @@ export class HouselistSearch {
             housedate: this.selectOptions.selectDate
 
         };
-        //console.log("Map House Search Parms:" + mapParms);
-        this.mapleRestData.load('index.php?r=ngget/getHouseList', searchParms).subscribe(
-            data => {
-                //loading.dismiss();
-                this.totalCount = data.Data.Total;
-                this.pageTotal = Math.ceil(this.totalCount / 8);
-                let houses = [];
-                let totalprice = 0;
-                let totalhouse = data.Data.HouseList.length;
-                this.imgHost = data.Data.imgHost;
-                this.currentHouseList = data.Data.HouseList;
+     
+        this.mapleConf.load().then(data => {
+            let restUrl = data.getHouseList;
+            this.mapleRestData.load(restUrl, searchParms).subscribe(
+                data => {
+                    //loading.dismiss();
+                    this.totalCount = data.Data.Total;
+                    this.pageTotal = Math.ceil(this.totalCount / 8);
+                    let houses = [];
+                    let totalprice = 0;
+                    let totalhouse = data.Data.HouseList.length;
+                    this.imgHost = data.Data.imgHost;
+                    this.currentHouseList = data.Data.HouseList;
 
-            });
+                });
 
-        //END of Data Subscribe
+
+        })
+
 
     }
 
-    //End of MAP import function
+
 
 
 

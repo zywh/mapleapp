@@ -1,11 +1,15 @@
-
 <ion-header>
-  <ion-navbar>
-    
-  <button menuToggle>
+  <ion-navbar no-border-bottom>
+
+    <button menuToggle>
     <ion-icon name="menu"></ion-icon>
   </button>
-  <ion-title>枫之都</ion-title>
+    <ion-title>枫之都</ion-title>
+    <ion-buttons end>
+      <button (click)="profile()">
+        <ion-icon name="log-in"></ion-icon>
+    </button>
+    </ion-buttons>
 
   </ion-navbar>
 </ion-header>
@@ -41,51 +45,31 @@
   </ion-slides>
   <ion-toolbar [attr.primary]="isAndroid ? '' : null">
     <ion-segment [(ngModel)]="homeSegment">
-      <ion-segment-button value="info">地产信息</ion-segment-button>
-      <ion-segment-button value="house1" (ionSelect)="searchHouse('nearby')">周边房源</ion-segment-button>
-      <ion-segment-button value="house2" (ionSelect)="searchHouse('recommend')">房源推荐</ion-segment-button>
+      <ion-segment-button value="info">信息</ion-segment-button>
+      <ion-segment-button value="house1" (ionSelect)="searchHouse('nearby')">周边</ion-segment-button>
+      <ion-segment-button value="house2" (ionSelect)="searchHouse('recommend')">推荐</ion-segment-button>
+      <ion-segment-button value="house3" (ionSelect)="fav()">收藏</ion-segment-button>
     </ion-segment>
   </ion-toolbar>
   <div [ngSwitch]="homeSegment">
     <div *ngSwitchCase="'info'">
       <ion-list>
-        <a ion-item *ngFor="let post of post1" (click)="goToPost(post.id)"> {{post?.title}} </a>
+        <a ion-item tappable *ngFor="let post of post1" (click)="goToPost(post.id)"> {{post?.title}} </a>
       </ion-list>
     </div>
     <div *ngSwitchCase="'house1'">
-      <ion-list class="houselist-search">
-        <ion-item *ngFor="let house of nearbyHouseList" (click)="gotoHouseDetail(house.MLS,nearbyHouseList)">
-          <ion-thumbnail item-left>
-            <img [src]="imgHost + house.CoverImg" />
-          </ion-thumbnail>
-
-          <h2>{{house.Address}}</h2>
-          <p>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
-            <ion-badge item-right>{{house.Price}}万</ion-badge>
-          </p>
-          <p>{{house.MunicipalityName}},{{house.ProvinceCname}}</p>
-
-        </ion-item>
-
-      </ion-list>
+      <house-list [houselist]='nearbyHouseList' [imgHost]='imgHost' [fav]='listHouse'></house-list>
     </div>
+
+
     <div *ngSwitchCase="'house2'">
-      <ion-list class="houselist-search">
-        <ion-item *ngFor="let house of nearbyHouseList" (click)="gotoHouseDetail(house.MLS,nearbyHouseList)">
-          <ion-thumbnail item-left>
-            <img [src]="imgHost + house.CoverImg" />
-          </ion-thumbnail>
-
-          <h2>{{house.Address}}</h2>
-          <p>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
-            <ion-badge item-right>{{house.Price}}万</ion-badge>
-          </p>
-          <p>{{house.MunicipalityName}},{{house.ProvinceCname}}</p>
-
-        </ion-item>
-
-      </ion-list>
+      <house-list [houselist]='nearbyHouseList' [imgHost]='imgHost' [fav]='listHouse'></house-list>
     </div>
+    <div *ngSwitchCase="'house3'">
+      <house-list [houselist]='favList' [imgHost]='imgHost' [fav]='listFav'></house-list>
+    </div>
+
+
   </div>
 
 </ion-content>

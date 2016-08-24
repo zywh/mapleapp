@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import { Http} from '@angular/http';
+import {Platform} from 'ionic-angular';
 //import {Observable} from 'rxjs/Observable';
 //import 'rxjs/Rx';
 
@@ -7,13 +8,14 @@ import { Http} from '@angular/http';
 @Injectable()
 export class MapleConf {
   data: any;
+  location;
   public restHost: String = 'http://r.maplecity.com.cn/';
   private confJson = "mapleconf.json";
 
   // static get parameters() {
   //   return [[Http]]
   // }
-  constructor(private http: Http) {
+  constructor(private http: Http, private platform: Platform) {
 
   }
 
@@ -28,9 +30,9 @@ export class MapleConf {
 
     // don't have the data yet
     return new Promise(resolve => {
-     
+
       this.http.get(dataURL).subscribe(res => {
-     
+
         this.data = res.json();
         resolve(this.data);
       });
@@ -39,7 +41,13 @@ export class MapleConf {
 
   getLocation() {
 
+  //  if (this.location) {
+  //     // already loaded data
+  //     return Promise.resolve(this.location);
+  //   }
 
+  //Important: This is safe guard for map init. This introudce delay which is required for map switch. Otherwise it cause blank map when switching
+ // below code need be commented out so if it's loaded and we still run geolocation code to introduce delay on purpose
     return new Promise(resolve => {
       let center = { lat: 43.6532, lng: -79.3832 };
       let options = { timeout: 10000, enableHighAccuracy: true };
@@ -48,13 +56,18 @@ export class MapleConf {
           let lat = position.coords.latitude;
           if (lat > 20) {
             center = { lat: lat, lng: position.coords.longitude };
+            this.location = center;
             return resolve(center);
           } else {
+             this.location = center;
             return resolve(center);
+
           }
 
         },
-        (error) => { return resolve(center); }, options
+        (error) => { 
+          this.location = center;
+          return resolve(center);  }, options
       );
 
     });
@@ -84,13 +97,13 @@ export class MapleConf {
 
   }
 
-   setSchoolMarkerCss(rating) {
-        var bg = this.getRating2Scale(rating).bg;
-        var font = this.getRating2Scale(rating).font;
-        var markercontent = "<i class='common_bg icon_map_mark2' style='background-color:" + bg + ";'><span style='color:" + font + ";'>" + rating + "</span></i>";
-        return markercontent;
+  setSchoolMarkerCss(rating) {
+    var bg = this.getRating2Scale(rating).bg;
+    var font = this.getRating2Scale(rating).font;
+    var markercontent = "<i class='common_bg icon_map_mark2' style='background-color:" + bg + ";'><span style='color:" + font + ";'>" + rating + "</span></i>";
+    return markercontent;
 
-    }
+  }
 
   getRating2Scale(rating) {
 
@@ -113,11 +126,11 @@ export class MapleConf {
 
     return color;
   }
-  
+
   getPrice2Scale(price) {
 
     //let wanPrice = Math.log2(price);
-    let wanPrice = Math.ceil(price / 10);
+    let wanPrice = Math.ceil(price / 100000);
     let hue = 0;
     let hueStart = 0;
     let hueEnd = 70;
@@ -136,7 +149,31 @@ export class MapleConf {
 
     return Math.floor(hue);
   }
+  mapDirection(lat, lng) {
 
-  
+    let destination = lat + ',' + lng;
+    if (this.platform.is('ios')) {
+      window.open('maps://?q=' + destination, '_system');
+    } else {
+      let label = encodeURI('目的地');
+      window.open('geo:0,0?q=' + destination + '(' + label + ')', '_system');
+    }
+  }
+
+
+  getPriceTxt(sr, price) {
+    let priceTxt;
+    if (sr == "Sale")
+      priceTxt = Math.ceil(Number(price) / 10000) + "万";
+    else {
+      priceTxt = price + "/月";
+    }
+
+    return priceTxt;
+  }
+
+
+
+
 }
 

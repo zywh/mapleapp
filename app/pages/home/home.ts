@@ -6,16 +6,22 @@ import {Http, Headers, RequestOptions} from '@angular/http';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {ProjectDetailPage} from '../project-detail/project-detail';
 import {HouseDetailPage} from '../house-detail/house-detail';
+import {UserData} from '../../providers/user-data';
 import {PostPage} from '../post/post';
+import {ProfilePage} from '../profile/profile';
+import {AuthService} from '../../providers/auth/auth';
+import {HouseList} from '../../components/house-list/house-list';
 
 @Component({
+  //selector: 'house-list',
   templateUrl: 'build/pages/home/home.html',
-  // directives: [MapleFooter]
+  directives: [HouseList]
 })
 export class HomePage {
   private projects: Object;
   private postListRest;
   private post1;
+  private favList;
   private hQueryText: String = '';
   private sQueryText: String = '';
   private cityItems: any;
@@ -31,15 +37,21 @@ export class HomePage {
   private imgHost;
   private houseRestURL;
   private data;
-
+  private listHouse: Boolean = false;
+  private listFav: Boolean = true;
+ 
 
   constructor(
     private nav: NavController,
     private parms: NavParams,
     private mapleRestData: MapleRestData,
-    private mapleconf: MapleConf,
+    private userData: UserData,
+    private mapleConf: MapleConf,
+    private auth: AuthService,
     private events: Events
-  ) { }
+  ) {
+
+  }
 
   projectSwiperOptions = {
     loop: true,
@@ -48,9 +60,32 @@ export class HomePage {
     autoplay: 300
   };
 
+  fav() {
+
+    if (this.auth.authenticated()) {
+      this.userData.getUserData('houseFav').then(res => {
+        this.imgHost = res.imgHost;
+        this.favList = res.HouseList;
+        //console.log(this.favList);
+
+      });
+    } else {
+      this.userData.loginAlert();
+    }
+
+
+  }
+  profile() {
+    this.nav.push(ProfilePage);
+  }
+
+
   // ngOnInit() {
   ionViewWillEnter() {
-    this.mapleconf.load().then(data => {
+    this.mapleConf.getLocation().then(data => {
+      this.data = data;
+    })
+    this.mapleConf.load().then(data => {
       //this.postListRest = data.postRest;
       this.houseRestURL = data.mapHouseRest;
       this.getProjects(data.projectRest);
@@ -58,46 +93,41 @@ export class HomePage {
 
 
     })
-    this.mapleconf.getLocation().then(data => {
-      this.data = data;
-    })
+
 
   }
   searchHouse(s) {
     console.log("Button is clicked for house search");
-    let range: number = 0.015;
-    //parm for recommendation
-    if (s == 'recommend') {
-
-      range = 0.1;
-
-    }
-    // this.mapleconf.getLocation().then(data => {
-    console.log(this.data);
-    let swLat = this.data['lat'] - range;
-    let swLng = this.data['lng'] - range;
-    let neLat = this.data['lat'] + range;
-    let neLng = this.data['lng'] + range;
-    let bounds = swLat + "," + swLng + "," + neLat + "," + neLng;
-    let mapParms = {
-
-      bounds: bounds,
-      centerLat: this.data['lat'],
-      centerLng: this.data['lng'],
-      type: s,
-      sr: 'Sale'
-    };
+    let range: number = (s == 'recommend') ? 0.1 : 0.015;
 
 
+    this.mapleConf.getLocation().then(data => {
+      this.data = data;
+      let swLat = this.data['lat'] - range;
+      let swLng = this.data['lng'] - range;
+      let neLat = this.data['lat'] + range;
+      let neLng = this.data['lng'] + range;
+      let bounds = swLat + "," + swLng + "," + neLat + "," + neLng;
+      let mapParms = {
 
-    this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
-      data => {
-        console.log(data);
-        if (data.Data.Type == 'house') {
-          this.imgHost = data.Data.imgHost;
-          this.nearbyHouseList = data.Data.MapHouseList;
-        }
-      })
+        bounds: bounds,
+        centerLat: this.data['lat'],
+        centerLng: this.data['lng'],
+        type: s,
+        sr: 'Sale'
+      };
+
+     // this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
+        this.mapleRestData._load(this.houseRestURL, mapParms).subscribe(
+        data => {
+          console.log(data);
+          if (data.Data.Type == 'house') {
+            this.imgHost = data.Data.imgHost;
+            this.nearbyHouseList = data.Data.HouseList;
+          }
+        })
+
+    })
   }
 
 
@@ -161,64 +191,9 @@ export class HomePage {
   //   }
   // }
 
-  itemTapped(item, type) {
-
-    let center = new google.maps.LatLng(item.lat, item.lng);
-
-    if (type == 1) {
-      this.events.publish('map:center', center);
-      this.hQueryText == '';
-      this.currentDiv = '';
-
-    }
-    if (type == 2) {
-      this.events.publish('schoolmap:center', center);
-      console.log(item.lat + ":" + item.lng)
-    }
-
-  }
-
-  searchFocus() {
-    this.hQueryText = '';
-    this.resetItems();
-    this.currentDiv = 'searchlist';
 
 
-  }
-
-  //auto complete REST CAll
-  hGetItems(ev) {
-
-    this.resetItems();
-    this.currentDiv = 'hSearchlist';
-    let val = ev.target.value;
-
-    if (val && val.trim() != '') {
-
-      //Call REST and generate item object
-      this.mapleconf.load().then(data => {
-        this.mapleRestData.load(data.getCitylistDataRest, { term: val }).subscribe(
-          data => {
-            if (data.hasOwnProperty("CITY")) {
-              this.cityItems = data.CITY;
-              console.log("CITY Autocomplete:" + this.cityItems);
-            };
-
-            if (data.hasOwnProperty("MLS")) {
-              this.mlsItems = data.MLS;
-              console.log("MLS Autocomplete:" + this.mlsItems);
-            }
-            if (data.hasOwnProperty("ADDRESS")) {
-              this.addressItems = data.ADDRESS;
-              console.log("ADDRESS Autocomplete:" + this.addressItems);
-            }
-            console.log(data);
-          }); //end of callback
-        //this.items = ["city", "address", "MLS"];
-      })
-    }
-  }
 
 
-  }
+}
 

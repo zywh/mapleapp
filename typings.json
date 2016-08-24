@@ -5,5 +5,8 @@
   "ambientDependencies": {
     "es6-shim": "registry:dt/es6-shim#0.31.2+20160317120654",
     "googlemaps": "github:DefinitelyTyped/DefinitelyTyped/googlemaps/google.maps.d.ts"
+  },
+  "globalDependencies": {
+    "pouchdb": "registry:dt/pouchdb#5.4.4+20160724064500"
   }
 }

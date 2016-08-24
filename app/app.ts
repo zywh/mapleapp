@@ -1,7 +1,8 @@
-import {ViewChild, Component} from '@angular/core';
+import {ViewChild, Component,Type,provide} from '@angular/core';
+import {Http} from '@angular/http'
 import {ionicBootstrap, Events, Platform, Nav, MenuController} from 'ionic-angular';
 import {StatusBar, Splashscreen} from 'ionic-native';
-import {ConferenceData} from './providers/conference-data';
+//import {ConferenceData} from './providers/conference-data';
 import {UserData} from './providers/user-data';
 import {MapleRestData} from './providers/maple-rest-data/maple-rest-data';
 import {Connectivity} from './providers/connectivity/connectivity';
@@ -9,9 +10,13 @@ import {AccountPage} from './pages/account/account';
 import {TabsPage} from './pages/tabs/tabs';
 import {LoginPage} from './pages/login/login';
 import {SignupPage} from './pages/signup/signup';
+import {SettingsPage} from './pages/settings/settings';
+import {ProfilePage} from './pages/profile/profile';
 import {NetworkErrorPage} from './pages/network-error/network-error';
 import {HouselistSearch} from './pages/houselist-search/houselist-search'
 import {MapleConf} from './providers/maple-rest-data/maple-config';
+import {AuthHttp, AuthConfig} from 'angular2-jwt';
+import {AuthService} from './providers/auth/auth';
 
 interface PageObj {
   title: string;
@@ -46,26 +51,15 @@ class MapleApp {
 
   ];
 
-  loggedInPages: PageObj[] = [
-    { title: 'Account', component: AccountPage, icon: 'person' },
-    { title: 'Logout', component: TabsPage, icon: 'log-out' }
-  ];
-  loggedOutPages: PageObj[] = [
-    { title: 'Login', component: LoginPage, icon: 'log-in' },
-    { title: 'Signup', component: SignupPage, icon: 'person-add' }
-  ];
-  //rootPage: any = TutorialPage;
-  // rootPage: any = ProjectsPage;
-  //rootPage: any = HomePage;
-  //rootPage: any = TabsPage;
   rootPage: any = TabsPage;
   constructor(
     private events: Events,
-    private userData: UserData,
+    public userData: UserData,
     private menu: MenuController,
     platform: Platform,
     mapleconf: MapleConf,
-    private connectivity: Connectivity
+    public connectivity: Connectivity,
+    private auth: AuthService
     //confData: ConferenceData
   ) {
     // Call any initial plugins when ready
@@ -78,13 +72,14 @@ class MapleApp {
     //confData.load();
 
     // decide which menu items should be hidden by current login status stored in local storage
-    this.userData.hasLoggedIn().then((hasLoggedIn) => {
-      this.enableMenu(hasLoggedIn == 'true');
-    });
+    // this.userData.hasLoggedIn().then((hasLoggedIn) => {
+    //   this.enableMenu(hasLoggedIn == 'true');
+    // });
 
-    this.listenToLoginEvents();
+    this.listenEvents();
     this.checkConnectivity();
   }
+  
 
   openPage(page: PageObj) {
     // the nav component was found using @ViewChild(Nav)
@@ -106,17 +101,23 @@ class MapleApp {
     }
   }
 
-  listenToLoginEvents() {
-    this.events.subscribe('user:login', () => {
-      this.enableMenu(true);
-    });
+  listenEvents() {
+    // this.events.subscribe('user:login', () => {
+    //   this.enableMenu(true);
+    // });
 
-    this.events.subscribe('user:signup', () => {
-      this.enableMenu(true);
-    });
+    // this.events.subscribe('user:signup', () => {
+    //   this.enableMenu(true);
+    // });
 
-    this.events.subscribe('user:logout', () => {
-      this.enableMenu(false);
+    // this.events.subscribe('user:logout', () => {
+    //   this.enableMenu(false);
+    // });
+     this.events.subscribe('profile:login', (data) => {
+
+      setTimeout(() => {
+        this.nav.setRoot(TabsPage, { tabIndex: 5});
+      }, 300);
     });
 
     this.events.subscribe('map:center', (data) => {
@@ -157,7 +158,17 @@ class MapleApp {
 
 ionicBootstrap(
   MapleApp,
-  [ConferenceData, UserData, MapleRestData, MapleConf, Connectivity],
+  [UserData, 
+  MapleRestData, 
+  MapleConf, 
+  Connectivity,
+  provide(AuthHttp, {
+    useFactory: (http) => {
+      return new AuthHttp(new AuthConfig({noJwtError: true}), http);
+    },
+    deps: [Http]
+  }),
+  AuthService],
   {
     tabbarPlacement: "bottom",
     //backButtonText: "返回",
