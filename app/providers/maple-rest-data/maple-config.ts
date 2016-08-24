@@ -41,11 +41,13 @@ export class MapleConf {
 
   getLocation() {
 
-   if (this.location) {
-      // already loaded data
-      return Promise.resolve(this.location);
-    }
+  //  if (this.location) {
+  //     // already loaded data
+  //     return Promise.resolve(this.location);
+  //   }
 
+  //Important: This is safe guard for map init. This introudce delay which is required for map switch. Otherwise it cause blank map when switching
+ // below code need be commented out so if it's loaded and we still run geolocation code to introduce delay on purpose
     return new Promise(resolve => {
       let center = { lat: 43.6532, lng: -79.3832 };
       let options = { timeout: 10000, enableHighAccuracy: true };
