@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, reorderArray } from 'ionic-angular';
+import { NavController, NavParams, reorderArray,Events } from 'ionic-angular';
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {HouselistSearch} from '../houselist-search/houselist-search';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
@@ -15,27 +15,29 @@ import {UserData} from '../../providers/user-data';
   templateUrl: 'build/pages/my-center/my-center.html',
 })
 export class MyCenterPage {
-private centerList;
-  
+  private centerList;
+  private pageType: String = "myCenter";
+
 
   private editButton: string = '编辑';
   private editing: boolean = false;
- 
+
   constructor(
     private nav: NavController,
     private mapleConf: MapleConf,
     private parm: NavParams,
-    private userData: UserData
+    private userData: UserData,
+    private events: Events
 
   ) {
-   
+
 
   }
 
   ionViewWillEnter() {
 
     this.userData.getUserData('myCenter').then(res => {
-      
+
       this.centerList = res;
       console.log(this.centerList);
 
@@ -44,7 +46,7 @@ private centerList;
 
 
   }
-   toggleEdit() {
+  toggleEdit() {
     this.editing = !this.editing;
     if (this.editing) {
       this.editButton = '完成';
@@ -53,12 +55,15 @@ private centerList;
       this.saveFavOrder();
     }
   }
+  gotoMap(lat,lng){
+          this.events.publish('map:center', { lat: lat, lng: lng, type: 'HOUSE' });
+  }
 
-  remove(mls) {
-    this.userData.changeFavorite(mls, this.pageType, 'd').then(res => {
+  remove(name) {
+    this.userData.changeFavorite(name, this.pageType, 'd').then(res => {
       console.log("Remove MLS Result:" + res);
-      this.favList = this.favList.filter(function (obj) {
-        return obj.MLS !== mls;
+      this.centerList = this.centerList.filter(function (obj) {
+        return obj.name !== name;
       });
     });
 
@@ -66,16 +71,16 @@ private centerList;
   }
 
   reorderItems(indexes) {
-    this.favList = reorderArray(this.favList, indexes);
+    this.centerList = reorderArray(this.centerList, indexes);
 
   }
 
   saveFavOrder() {
 
-    let list = this.favList.map(function (a) { return a.MLS; }).join();
+    let list = this.centerList.map(function (a) { return a.name; }).join();
     console.log(list);
     this.userData.changeFavorite(list, this.pageType, 'r').then(res => {
-      console.log("MLS Result Reorder:" + res);
+      console.log("My Center Result Reorder:" + res);
 
     });
   }

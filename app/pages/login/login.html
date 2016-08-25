@@ -1,46 +1,22 @@
+<!--
+  Generated template for the ProfilePage page.
 
-<ion-navbar *navbar>
-  <button menuToggle>
-    <ion-icon name="menu"></ion-icon>
-  </button>
-  <ion-title>Login</ion-title>
-</ion-navbar>
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
 
-<ion-content>
+  <ion-navbar>
+    <ion-title>登录</ion-title>
+  </ion-navbar>
 
-  <ion-list>
-    <div class="logo">
-      <img src="img/appicon.svg">
-    </div>
+</ion-header>
 
-    <form #loginForm="ngForm" novalidate>
-      <ion-item>
-        <ion-label floating primary>Username</ion-label>
-        <ion-input [(ngModel)]="login.username" ngControl="username" type="text" #username="ngForm" required>
-        </ion-input>
-      </ion-item>
-      <p [hidden]="username.valid || submitted == false" danger padding-left>
-        Username is required
-      </p>
+<ion-content padding>
 
-      <ion-item>
-        <ion-label floating primary>Password</ion-label>
-        <ion-input [(ngModel)]="login.password" ngControl="password" type="password" #password="ngForm" required>
-        </ion-input>
-      </ion-item>
-      <p [hidden]="password.valid || submitted == false" danger padding-left>
-        Password is required
-      </p>
+  <div padding *ngIf="!auth.authenticated()">
+    <button block (click)="auth.login()">登录</button>
+  </div>
 
-      <ion-row responsive-sm>
-        <ion-col>
-          <button (click)="onLogin(loginForm)" type="submit" primary block>Login</button>
-        </ion-col>
-        <ion-col>
-          <button (click)="onSignup()" light block>Signup</button>
-        </ion-col>
-      </ion-row>
-    </form>
-  </ion-list>
 
 </ion-content>
