@@ -322,7 +322,10 @@ export class MapSearchPage {
     console.log("Set Center and clear text");
     if (type == 1) {
       this.setLocation(center, this.defaultZoom, true);
-      this.userData.saveCenter(item.value, item.lat,item.lng);
+      if (this.auth.authenticated()){
+         this.userData.saveCenter(item.value, item.lat,item.lng);
+      }
+     
     } else if (type == 2) {
       this.nav.push(HouseDetailPage, { id: item.id })
     }

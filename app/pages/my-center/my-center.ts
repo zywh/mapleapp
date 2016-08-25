@@ -36,7 +36,7 @@ export class MyCenterPage {
 
   ionViewWillEnter() {
 
-    this.userData.getUserData('myCenter').then(res => {
+    this.userData.getUserSelections('myCenter').then(res => {
 
       this.centerList = res;
       console.log(this.centerList);
@@ -59,9 +59,10 @@ export class MyCenterPage {
           this.events.publish('map:center', { lat: lat, lng: lng, type: 'HOUSE' });
   }
 
-  remove(name) {
-    this.userData.changeFavorite(name, this.pageType, 'd').then(res => {
-      console.log("Remove MLS Result:" + res);
+  remove(center) {
+    let name = center.name;
+    this.userData.deleteCenter(center).then(res => {
+      console.log("Remove Center:" + res);
       this.centerList = this.centerList.filter(function (obj) {
         return obj.name !== name;
       });

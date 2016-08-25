@@ -34,8 +34,8 @@ export class UserData {
     private mapleConf: MapleConf,
     private alertc: AlertController
     //private nav: NavController
-    
-    )
+
+  )
   { }
 
 
@@ -59,7 +59,7 @@ export class UserData {
           handler: () => {
             alert.dismiss().then(res => {
               this.events.publish('profile:login');
-             // this.nav.push(LoginPage);
+              // this.nav.push(LoginPage);
 
 
             })
@@ -71,7 +71,7 @@ export class UserData {
     alert.present();
   }
 
-  addCenterAlert(center,msg) {
+  addCenterAlert(center, msg) {
     let prompt = this.alertc.create({
 
       message: msg,
@@ -117,28 +117,40 @@ export class UserData {
   }
 
 
-  saveCenter(name, lat,lng) {
-    console.log("Save Center:" + name + "center:" + lat +lng);
+  saveCenter(name, lat, lng) {
+    console.log("Save Center:" + name + "center:" + lat + lng);
     this.mapleConf.load().then(res => {
       let rest = res.updateMyCenterDataRest;
       console.log(rest);
-      let data = JSON.stringify({ name: name, lat:lat,lng:lng })
+      let data = JSON.stringify({ name: name, lat: lat, lng: lng })
 
-      let parms = { username: this.auth.user['email'], data: data,type: 'myCenter',action:'c' };
+      let parms = { username: this.auth.user['email'], data: data, type: 'myCenter', action: 'c' };
       this.mapleRestData.load(rest, parms).subscribe(
         data => {
           // console.log(data.Data); 
-          if (data > 1) {
-            this.presentToast("我的位置:" + name + "保存成功");
-          }else {
-            this.addCenterAlert(name,"名字已经用过，请更改名字");
-          }
+          console.log("SaveCenter Return:" + data)
+          // if (data > 0) {
+          //   this.presentToast("我的位置:" + name + "保存成功");
+          // } else {
+          //   this.addCenterAlert(name, "名字已经用过，请更改名字");
+          // }
 
 
         });
 
     });
 
+  }
+  deleteCenter(center) {
+    return new Promise(resolve => {
+      this.mapleConf.load().then(res => {
+        let rest = res.updateMyCenterDataRest;
+        let data = JSON.stringify(center);
+        let parms = { username: this.auth.user['email'], data: data, type: 'myCenter', action: 'd' };
+        this.mapleRestData.load(rest, parms).subscribe(data => { return resolve(data); });
+
+      });
+    })
   }
 
   hasFavorite(mls): Promise<any> {
@@ -240,25 +252,25 @@ export class UserData {
   }
 
   saveSelectOption(options, type) {
-    if (this.auth.authenticated()){
-       return new Promise(resolve => {
-      this.mapleConf.load().then(res => {
-        let rest = res.saveOptionsDataRest;
-        let parms = { username: this.auth.user['email'], data: options, type: type };
-        console.log(parms);
-        this.mapleRestData.load(rest, parms).subscribe(data => {
-         this.presentToast("搜索条件保存成功")
-          return resolve(data);
+    if (this.auth.authenticated()) {
+      return new Promise(resolve => {
+        this.mapleConf.load().then(res => {
+          let rest = res.saveOptionsDataRest;
+          let parms = { username: this.auth.user['email'], data: options, type: type };
+          console.log(parms);
+          this.mapleRestData.load(rest, parms).subscribe(data => {
+            this.presentToast("搜索条件保存成功")
+            return resolve(data);
+          });
         });
-      });
 
-    });
+      });
 
 
     } else {
       this.loginAlert();
     }
-   
+
   }
 
 
