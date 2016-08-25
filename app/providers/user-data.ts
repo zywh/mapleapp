@@ -3,6 +3,7 @@ import {Storage, LocalStorage, Events, ToastController, AlertController} from 'i
 import {AuthService} from './auth/auth';
 import {MapleRestData} from './maple-rest-data/maple-rest-data';
 import {MapleConf} from './maple-rest-data/maple-config';
+//import {LoginPage} from '../pages/login/login';
 //import * as PouchDB from 'pouchdb';
 //declare var PouchDB: any;
 
@@ -31,7 +32,10 @@ export class UserData {
     private toastCtrl: ToastController,
     private mapleRestData: MapleRestData,
     private mapleConf: MapleConf,
-    private alertc: AlertController)
+    private alertc: AlertController
+    //private nav: NavController
+    
+    )
   { }
 
 
@@ -55,6 +59,8 @@ export class UserData {
           handler: () => {
             alert.dismiss().then(res => {
               this.events.publish('profile:login');
+             // this.nav.push(LoginPage);
+
 
             })
 
@@ -232,20 +238,25 @@ export class UserData {
   }
 
   saveSelectOption(options, type) {
-
-    return new Promise(resolve => {
+    if (this.auth.authenticated()){
+       return new Promise(resolve => {
       this.mapleConf.load().then(res => {
         let rest = res.saveOptionsDataRest;
         let parms = { username: this.auth.user['email'], data: options, type: type };
         console.log(parms);
         this.mapleRestData.load(rest, parms).subscribe(data => {
-          console.log("save selection type:" + type + " Options:" + options + " Return:" + data);
+         this.presentToast("搜索条件保存成功")
           return resolve(data);
         });
       });
 
     });
 
+
+    } else {
+      this.loginAlert();
+    }
+   
   }
 
 

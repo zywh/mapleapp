@@ -181,10 +181,10 @@ export class MapSearchPage {
 
 
   ionViewWillEnter() {
-
+    let optionType = (this.mapType == 0)? 'houseSearch': 'schoolSearch';
 
     if (this.auth.authenticated()) {
-      this.userData.getUserSelections("houseSearch").then(res => {
+      this.userData.getUserSelections(optionType).then(res => {
         if (res != null) {
           this.selectOptions = res;
         }
@@ -212,7 +212,7 @@ export class MapSearchPage {
   //   console.log("Mappage will Unload");
   // }
 
-
+  
   openModal() {
 
     let modal = this.modalc.create(this.optionPage, { data: this.selectOptions });

@@ -1,4 +1,4 @@
-import {Modal, Range, NavParams, Page, ViewController} from 'ionic-angular';
+import {Modal, Range, NavParams, Page, ViewController, Events} from 'ionic-angular';
 import {Component} from '@angular/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
@@ -32,12 +32,14 @@ export class SelectOptionModal {
         private viewCtrl: ViewController,
         private mapleRestData: MapleRestData,
         private mapleConf: MapleConf,
-        private userData: UserData
+        private userData: UserData,
+        private events: Events
     ) {
 
         this.selectOptions = params.get('data');
         this.unit = 10;
         //this.getUserSelections();
+        this.listenEvents();
 
     }
 
@@ -47,7 +49,15 @@ export class SelectOptionModal {
 
     }
 
-   
+    getMySelections() {
+        this.userData.getUserSelections('houseSearch').then(res => {
+            if (res != null) {
+                this.selectOptions = res;
+            }
+
+        })
+    }
+
 
 
     resetSelections() {
@@ -79,5 +89,13 @@ export class SelectOptionModal {
         this.viewCtrl.dismiss(this.selectOptions);
     }
 
+    listenEvents() {
+        this.events.subscribe('profile:login', (data) => {
+
+            this.dismiss(); //dismiss once login page is presented
+
+
+        })
+    }
 
 }

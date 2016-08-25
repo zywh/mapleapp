@@ -1,28 +1,32 @@
-import {Page, NavController} from 'ionic-angular';
-import {TabsPage} from '../tabs/tabs';
-import {SignupPage} from '../signup/signup';
-import {UserData} from '../../providers/user-data';
+ 
+import {Component} from '@angular/core';
+import {NavController, ModalController} from 'ionic-angular';
+import {AuthService} from '../../providers/auth/auth';
+// import {AboutPage} from '../about/about';
+// import {FavoritePage} from '../favorite/favorite';
+// import {MyCenterPage} from '../my-center/my-center'
+// import {UserData} from '../../providers/user-data';
+// import {SelectOptionModal} from '../map-search/map-option-modal';
+// import {SchoolSelectOptionModal} from '../school-map/schoolmap-option-modal';
 
 
-@Page({
+@Component({
   templateUrl: 'build/pages/login/login.html'
 })
 export class LoginPage {
-  login: {username?: string, password?: string} = {};
-  submitted = false;
 
-  constructor(private nav: NavController, private userData: UserData) {}
 
-  onLogin(form) {
-    this.submitted = true;
+  // We need to inject AuthService so that we can
+  // use it in the view
+  constructor(
+    private auth: AuthService,
+    private nav: NavController
+   
+  ) {}
+ 
 
-    if (form.valid) {
-      this.userData.login(this.login.username);
-      this.nav.push(TabsPage);
-    }
   }
 
-  onSignup() {
-    this.nav.push(SignupPage);
-  }
-}
+  
+
+
