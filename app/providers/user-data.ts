@@ -91,7 +91,7 @@ export class UserData {
         {
           text: '保存',
           handler: data => {
-            this.saveCenter(data.name, center);
+            //this.saveCenter(data.name, );
             console.log('Saved clicked');
           }
         }
@@ -117,20 +117,20 @@ export class UserData {
   }
 
 
-  saveCenter(name, center) {
-    console.log("Save Center:" + name + "center:" + center);
+  saveCenter(name, lat,lng) {
+    console.log("Save Center:" + name + "center:" + lat +lng);
     this.mapleConf.load().then(res => {
-      let rest = res.addCenterDataRest;
-      let data = JSON.stringify({ name: name, center: center })
+      let rest = res.updateUserDataRest;;
+      let data = JSON.stringify({ name: name, lat:lat,lng:lng })
 
-      let parms = { username: this.auth.user['email'], data: data };
+      let parms = { username: this.auth.user['email'], mls: data,type: 'myCenter',action:'r' };
       this.mapleRestData.load(rest, parms).subscribe(
         data => {
           // console.log(data.Data); 
           if (data > 1) {
             this.presentToast("我的位置:" + name + "保存成功");
           }else {
-            this.addCenterAlert(center,"名字已经用过，请更改名字");
+            this.addCenterAlert(name,"名字已经用过，请更改名字");
           }
 
 
