@@ -120,10 +120,11 @@ export class UserData {
   saveCenter(name, lat,lng) {
     console.log("Save Center:" + name + "center:" + lat +lng);
     this.mapleConf.load().then(res => {
-      let rest = res.updateUserDataRest;;
+      let rest = res.updateMyCenterDataRest;
+      console.log(rest);
       let data = JSON.stringify({ name: name, lat:lat,lng:lng })
 
-      let parms = { username: this.auth.user['email'], mls: data,type: 'myCenter',action:'r' };
+      let parms = { username: this.auth.user['email'], data: data,type: 'myCenter',action:'c' };
       this.mapleRestData.load(rest, parms).subscribe(
         data => {
           // console.log(data.Data); 
