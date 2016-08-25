@@ -1,13 +1,17 @@
 
 <ion-header>
 <ion-toolbar>
-    <ion-buttons start>
+      
+    <ion-buttons left>
         <button (click)="resetSelections()"> 复位</button>
     </ion-buttons>
-
+     <ion-buttons left>
+        <button (click)="saveSelections()"> 保存</button>
+    </ion-buttons>
+    
     <ion-title>搜索条件</ion-title>
 
-    <ion-buttons end>
+    <ion-buttons right>
         <button (click)="dismiss()">确认</button>
     </ion-buttons>
 </ion-toolbar>
