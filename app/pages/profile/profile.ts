@@ -41,6 +41,7 @@ export class ProfilePage {
 
   searchDefault(type) {
     let optionPage: any;
+    let optionName;
 
 
     if (type == 0) {
@@ -58,6 +59,7 @@ export class ProfilePage {
 
       }
       optionPage = SelectOptionModal;
+      optionName = 'houseSearch';
     } else {
       //init school map parm
       this.selectOptions = {
@@ -68,9 +70,10 @@ export class ProfilePage {
 
       }
       optionPage = SchoolSelectOptionModal;
+      optionName = 'schoolSearch';
     }
 
-    this.userData.getUserSelections("houseSearch").then(res => {
+    this.userData.getUserSelections(optionName).then(res => {
       if (res != null) { this.selectOptions = res; }
       let modal = this.modalc.create(optionPage, { data: this.selectOptions });
       modal.onDidDismiss(data => {
@@ -91,16 +94,16 @@ export class ProfilePage {
   ionViewWillEnter() {
     console.log("profile page will enter");
     //get count
-    this.userData.getFavCount().then(res=>{
+    this.userData.getFavCount().then(res => {
       this.count = res;
     });
 
 
-    
+
 
   }
 
-  
+
 
 
 }
