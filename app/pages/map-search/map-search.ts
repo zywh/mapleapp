@@ -104,7 +104,7 @@ export class MapSearchPage {
     this.setMapType(this.mapType);
 
   }
-
+  
 
   initMap() {
 

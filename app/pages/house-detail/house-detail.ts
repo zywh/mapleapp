@@ -251,6 +251,11 @@ export class HouseDetailPage implements OnInit {
 			console.log("Toast dismiss event received")
 			this.isMore = true;
 		});
+	
+        this.events.subscribe('profile:login', (data) => {
+           this.nav.pop(); //dismiss once login page is presented
+        })
+  
 	}
 
 	swiperOptions = {
@@ -528,6 +533,8 @@ export class HouseDetailPage implements OnInit {
 		//     }
 		// });
 	}
+
+	
 
 
 
