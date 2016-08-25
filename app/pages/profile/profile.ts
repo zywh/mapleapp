@@ -4,6 +4,7 @@ import {NavController, ModalController} from 'ionic-angular';
 import {AuthService} from '../../providers/auth/auth';
 import {AboutPage} from '../about/about';
 import {FavoritePage} from '../favorite/favorite';
+import {HelpPage} from '../help/help';
 import {MyCenterPage} from '../my-center/my-center'
 import {UserData} from '../../providers/user-data';
 import {SelectOptionModal} from '../map-search/map-option-modal';
@@ -32,7 +33,7 @@ export class ProfilePage {
   }
 
   help() {
-
+     this.nav.push(HelpPage);
   }
   favorite(type) {
     this.nav.push(FavoritePage, { type: type });

@@ -9,6 +9,11 @@
   <ion-navbar>
     <ion-title>我的搜索位置</ion-title>
      <ion-buttons end>
+      <button (click)="addCenter()">
+        <ion-icon name="add"></ion-icon>
+    </button>
+    </ion-buttons>
+     <ion-buttons end>
       <button (click)="toggleEdit()">{{editButton}}
       </button>
     </ion-buttons>
@@ -24,10 +29,9 @@
   <ion-list [reorder]="editing" (ionItemReorder)="reorderItems($event)">
 
     <ion-item-sliding *ngFor="let center of centerList">
-      <ion-item (click)="gotoMap(center.lat,center.lng)">
-
-        <h2>{{center.name}}</h2>
-
+      <ion-item >
+        <ion-icon primary *ngIf="editing" name="remove-circle" item-left (click)="remove(center)"></ion-icon>
+           <h2 (click)="gotoMap(center.lat,center.lng)"> {{center.name}}</h2>
       </ion-item>
       <ion-item-options>
         <button clear (click)="remove(center)">

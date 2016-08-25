@@ -52,11 +52,15 @@ export class MyCenterPage {
       this.editButton = '完成';
     } else {
       this.editButton = '编辑';
-      this.saveFavOrder();
+       this.userData.centerReorder(this.centerList);
     }
   }
   gotoMap(lat,lng){
           this.events.publish('map:center', { lat: lat, lng: lng, type: 'HOUSE' });
+  }
+
+  addCenter(){
+
   }
 
   remove(center) {
@@ -74,16 +78,6 @@ export class MyCenterPage {
   reorderItems(indexes) {
     this.centerList = reorderArray(this.centerList, indexes);
 
-  }
-
-  saveFavOrder() {
-
-    let list = this.centerList.map(function (a) { return a.name; }).join();
-    console.log(list);
-    this.userData.changeFavorite(list, this.pageType, 'r').then(res => {
-      console.log("My Center Result Reorder:" + res);
-
-    });
   }
 
 }

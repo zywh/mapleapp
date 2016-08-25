@@ -71,14 +71,14 @@ export class UserData {
     alert.present();
   }
 
-  addCenterAlert(center, msg) {
+  addCenterAlert(lat, lng, msg) {
     let prompt = this.alertc.create({
 
       message: msg,
       inputs: [
         {
           name: 'name',
-          placeholder: '我的位置'
+          placeholder: '我的位置名称'
         },
       ],
       buttons: [
@@ -91,8 +91,7 @@ export class UserData {
         {
           text: '保存',
           handler: data => {
-            //this.saveCenter(data.name, );
-            console.log('Saved clicked');
+            this.saveCenter(data.name, lat, lng);
           }
         }
       ]
@@ -118,12 +117,9 @@ export class UserData {
 
 
   saveCenter(name, lat, lng) {
-    console.log("Save Center:" + name + "center:" + lat + lng);
     this.mapleConf.load().then(res => {
       let rest = res.updateMyCenterDataRest;
-      console.log(rest);
       let data = JSON.stringify({ name: name, lat: lat, lng: lng })
-
       let parms = { username: this.auth.user['email'], data: data, type: 'myCenter', action: 'c' };
       this.mapleRestData.load(rest, parms).subscribe(
         data => {
@@ -136,6 +132,22 @@ export class UserData {
           // }
 
 
+        });
+
+    });
+
+  }
+
+  centerReorder(list) {
+
+    this.mapleConf.load().then(res => {
+      let rest = res.updateMyCenterDataRest;
+      let data = JSON.stringify(list);
+      let parms = { username: this.auth.user['email'], data: data, type: 'myCenter', action: 'r' };
+      this.mapleRestData.load(rest, parms).subscribe(
+        data => {
+            console.log("SaveCenter Reroder:" + data)
+       
         });
 
     });

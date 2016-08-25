@@ -77,6 +77,7 @@ export class MapSearchPage {
   private currentHouses; //Hold array of houses for single marker
   private currentDiv;
   private mapType: Number = 1; // 0 for house and 1 for school
+  private markerDrop;
 
   constructor(
     public nav: NavController,
@@ -380,7 +381,10 @@ export class MapSearchPage {
     this.mapleconf.getLocation().then(data => {
 
       this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
-      // this.userData.addCenterAlert(this.defaultcenter, "输入中心位置名字").then(data=>{});
+      if (this.auth.authenticated()){
+        this.userData.addCenterAlert(data['lat'], data['lng'], "保存中心位置到我的收藏");
+      }
+      
       this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
     })
   }
@@ -390,25 +394,26 @@ export class MapSearchPage {
 
     this.map.setZoom(zoom);
     this.map.setCenter(center);
+    if (this.markerDrop != null){
+       this.markerDrop.setMap(null);
+    }
+    
     if (isMarker) {
-      let marker = new google.maps.Marker({
+      this.markerDrop = new google.maps.Marker({
         position: center,
         map: this.map,
         animation: google.maps.Animation.DROP,
         draggable: false,
       });
-      marker.addListener('click', () => {
-        if (marker.getAnimation() !== null) {
-          marker.setAnimation(null);
+      this.markerDrop.addListener('click', () => {
+        if ( this.markerDrop.getAnimation() !== null) {
+           this.markerDrop.setAnimation(null);
         } else {
-          marker.setAnimation(google.maps.Animation.BOUNCE);
+           this.markerDrop.setAnimation(google.maps.Animation.BOUNCE);
         }
       })
 
-      // marker.addListener('click', () => {
-      //   this.userData.addCenterAlert(center, "输入中心位置名字");
-
-      // })
+    
     }
   }
 
