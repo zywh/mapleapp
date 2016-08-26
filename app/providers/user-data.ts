@@ -216,13 +216,16 @@ export class UserData {
 
           //check if mls# is in fav list
           if (result) { //result is 1, delete favorite
-            this.changeFavorite(mls, type, "d").then(res => {
+            this.changeFavorite(mls, type, "d").then(ret => {
               this.presentToast("删除收藏(" + mls + ")成功!")
               resolve("D");
             });
           } else {//result is 0, add favorite
-            this.changeFavorite(mls, type, "c").then(res => {
-              this.presentToast("添加收藏(" + mls + ")成功!")
+            this.changeFavorite(mls, type, "c").then(ret => {
+              if (ret == 99)
+                this.presentToast("已超过最多可收藏数－－失败！")
+              else
+                this.presentToast("添加收藏(" + mls + ")成功!")
               resolve("C");
             })
 
@@ -253,9 +256,9 @@ export class UserData {
         let parms = { username: this.auth.user['email'], mls: data, type: type, action: action }
 
         this.mapleRestData.load(rest, parms).subscribe(
-          data => {
-            console.log("changefav action:" + action + ' type:' + type + " Data:" + data + " Return:" + data);
-            return resolve(data);
+          ret => {
+            console.log("changefav action:" + action + ' type:' + type + " Data:" + data + " Return:" + ret);
+            return resolve(ret);
           });
       });
 
