@@ -30,7 +30,7 @@ export class HomePage {
   private currentDiv;
   private scityItems;
   private schoolItems;
-  private homeSegment: string = "info";
+  private homeSegment: string = "house1";
   private isAndroid: boolean = false;
   private nearbyHouseList;
   private recommendHouseList;
@@ -39,7 +39,7 @@ export class HomePage {
   private data;
   private listHouse: Boolean = false;
   private listFav: Boolean = true;
- 
+
 
   constructor(
     private nav: NavController,
@@ -82,6 +82,21 @@ export class HomePage {
 
   // ngOnInit() {
   ionViewWillEnter() {
+
+    this.mapleConf.load().then(data => {
+      //this.postListRest = data.postRest;
+      this.houseRestURL = data.mapHouseRest;
+      this.getProjects(data.projectRest);
+      // this.getPosts(data.postListRest, 6);
+      this.searchHouse('nearby');
+
+
+    })
+
+
+
+  }
+  getPostList() {
     this.mapleConf.getLocation().then(data => {
       this.data = data;
     })
@@ -93,9 +108,8 @@ export class HomePage {
 
 
     })
-
-
   }
+
   searchHouse(s) {
     console.log("Button is clicked for house search");
     let range: number = (s == 'recommend') ? 0.1 : 0.015;
@@ -117,8 +131,8 @@ export class HomePage {
         sr: 'Sale'
       };
 
-     // this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
-        this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
+      // this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
+      this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
         data => {
           console.log(data);
           if (data.Data.Type == 'house') {

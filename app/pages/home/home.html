@@ -1,9 +1,9 @@
 <ion-header>
   <ion-navbar no-border-bottom>
 
-    <button menuToggle>
+    <!--<button menuToggle>
     <ion-icon name="menu"></ion-icon>
-  </button>
+  </button>-->
     <ion-title>枫之都</ion-title>
     <ion-buttons end>
       <button (click)="profile()">
@@ -45,7 +45,7 @@
   </ion-slides>
   <ion-toolbar [attr.primary]="isAndroid ? '' : null">
     <ion-segment [(ngModel)]="homeSegment">
-      <ion-segment-button value="info">信息</ion-segment-button>
+      <!--<ion-segment-button value="info">信息</ion-segment-button>-->
       <ion-segment-button value="house1" (ionSelect)="searchHouse('nearby')">周边</ion-segment-button>
       <ion-segment-button value="house2" (ionSelect)="searchHouse('recommend')">推荐</ion-segment-button>
       <ion-segment-button value="house3" (ionSelect)="fav()">收藏</ion-segment-button>

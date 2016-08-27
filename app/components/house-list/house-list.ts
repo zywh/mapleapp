@@ -77,7 +77,17 @@ export class HouseList {
 
   }
 
+  
+  remove(mls) {
+    this.userData.changeFavorite(mls, 'houseFav','d').then(res => {
+      console.log("Remove MLS Result:" + res);
+      this.houselist = this.houselist.filter(function (obj) {
+        return obj.MLS !== mls;
+      });
+    });
 
+
+  }
 
 
 }
