@@ -270,7 +270,7 @@ export class HouseDetailPage implements OnInit {
 	private S_R = { "Sale": "出售", "Lease": "出租" };
 	private F2M = { feet: "尺", meter: "米", sfeet: "平方英尺", smeter: "平方米" };
 
-	ngOnInit() {
+	ionViewDidEnter() {
 		this.mapleConf.load().then(data => {
 			//this.getResult('index.php?r=ngget/getHouseDetail');
 			this.getResult(data.houseDetailRest, this.parms.id);
