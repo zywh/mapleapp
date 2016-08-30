@@ -91,7 +91,7 @@ export class UserData {
         {
           text: '保存',
           handler: data => {
-            this.saveCenter(data.name, lat, lng);
+            this.saveCenter('myCenter', data.name, lat, lng);
           }
         }
       ]
@@ -116,11 +116,11 @@ export class UserData {
   }
 
 
-  saveCenter(name, lat, lng) {
+  saveCenter(type, name, lat, lng) {
     this.mapleConf.load().then(res => {
-      let rest = res.updateMyCenterDataRest;
+      let rest = res.updateCenterDataRest;
       let data = JSON.stringify({ name: name, lat: lat, lng: lng })
-      let parms = { username: this.auth.user['email'], data: data, type: 'myCenter', action: 'c' };
+      let parms = { username: this.auth.user['email'], data: data, type: type, action: 'c' };
       this.mapleRestData.load(rest, parms).subscribe(
         data => {
           // console.log(data.Data); 
@@ -138,12 +138,12 @@ export class UserData {
 
   }
 
-  centerReorder(list) {
+  centerReorder(type, list) {
 
     this.mapleConf.load().then(res => {
-      let rest = res.updateMyCenterDataRest;
+      let rest = res.updateCenterDataRest;
       let data = JSON.stringify(list);
-      let parms = { username: this.auth.user['email'], data: data, type: 'myCenter', action: 'r' };
+      let parms = { username: this.auth.user['email'], data: data, type: type, action: 'r' };
       this.mapleRestData.load(rest, parms).subscribe(
         data => {
             console.log("SaveCenter Reroder:" + data)
@@ -153,12 +153,12 @@ export class UserData {
     });
 
   }
-  deleteCenter(center) {
+  deleteCenter(type, center) {
     return new Promise(resolve => {
       this.mapleConf.load().then(res => {
-        let rest = res.updateMyCenterDataRest;
+        let rest = res.updateCenterDataRest;
         let data = JSON.stringify(center);
-        let parms = { username: this.auth.user['email'], data: data, type: 'myCenter', action: 'd' };
+        let parms = { username: this.auth.user['email'], data: data, type: type, action: 'd' };
         this.mapleRestData.load(rest, parms).subscribe(data => { return resolve(data); });
 
       });

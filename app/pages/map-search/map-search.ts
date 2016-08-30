@@ -324,7 +324,7 @@ export class MapSearchPage {
     if (type == 1) {
       this.setLocation(center, this.defaultZoom, true);
       if (this.auth.authenticated()){
-         this.userData.saveCenter(item.value, item.lat,item.lng);
+         this.userData.saveCenter('recentCenter', item.value, item.lat,item.lng);
       }
      
     } else if (type == 2) {

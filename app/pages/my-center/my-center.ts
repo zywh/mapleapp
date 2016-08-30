@@ -52,7 +52,7 @@ export class MyCenterPage {
       this.editButton = '完成';
     } else {
       this.editButton = '编辑';
-       this.userData.centerReorder(this.centerList);
+       this.userData.centerReorder('myCenter', this.centerList);
     }
   }
   gotoMap(lat,lng){
@@ -65,7 +65,7 @@ export class MyCenterPage {
 
   remove(center) {
     let name = center.name;
-    this.userData.deleteCenter(center).then(res => {
+    this.userData.deleteCenter('myCenter',center).then(res => {
       console.log("Remove Center:" + res);
       this.centerList = this.centerList.filter(function (obj) {
         return obj.name !== name;
