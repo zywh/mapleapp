@@ -69,7 +69,7 @@ export class MyCenterPage {
   remove(center) {
     let name = center.name;
     this.userData.deleteCenter(this.pageType,center).then(res => {
-      console.log("Remove" + this.pageType + ":" + res);
+      console.log("Remove " + this.pageType + ":" + res);
       this.centerList = this.centerList.filter(function (obj) {
         return obj.name !== name;
       });
