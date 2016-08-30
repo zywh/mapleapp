@@ -1,4 +1,4 @@
-<ion-list class="houselist-search">
+<ion-list class="houselist-search" *ngIf="isList">
   <ion-item-sliding *ngFor="let house of houselist">
     <ion-item class="house_card" (click)="gotoHouseDetail(house.MLS)">
       <ion-thumbnail item-left>
@@ -37,3 +37,26 @@
   </ion-item-sliding>
 
 </ion-list>
+
+
+
+<div *ngIf="!isList" >
+    
+    
+        <ion-card class="house_card" *ngFor="let house of houselist">
+         <img [src]="imgHost + house.CoverImg" />
+          <div class="house_desc" text-left text-nowrap>
+          
+            <ion-item>    
+             <ion-badge item-left>MLS:{{house.MLS}}</ion-badge>
+             <ion-badge item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
+            </ion-item>
+          
+             <div class="card-subtitle" text-left>
+              <div> <ion-icon padding-right secondary name="information-circle"></ion-icon><span padding-right>{{house.HouseType}}</span>{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨</div>
+              <div> <ion-icon padding-right secondary name="navigate"></ion-icon><span padding-right>{{house.Address}}</span>{{house.MunicipalityName}}</div>
+              </div>
+          </div>
+        </ion-card>
+    
+  </div>

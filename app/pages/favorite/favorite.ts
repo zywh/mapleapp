@@ -16,6 +16,8 @@ export class FavoritePage {
   private pageType;
   private editButton: string = '编辑';
   private editing: boolean = false;
+  private viewType: string = 'list';
+  private isList: boolean = true;
   
 
   constructor(
@@ -45,8 +47,11 @@ export class FavoritePage {
 
   }
 
-  gotoHouseDetail(mls) {
-    this.nav.pop().then(() => this.nav.push(HouseDetailPage, { id: mls, list: this.favList }))
+  gotoHouseDetail(mls,address) {
+    if (address){
+      this.nav.pop().then(() => this.nav.push(HouseDetailPage, { id: mls, list: this.favList }))
+    }
+    
   }
 
   toggleEdit() {
@@ -56,6 +61,15 @@ export class FavoritePage {
     } else {
       this.editButton = '编辑';
       this.saveFavOrder();
+    }
+  }
+
+   toggleView() {
+    this.isList = !this.isList;
+    if (this.isList) {
+      this.viewType ='list';
+    } else {
+     this.viewType = 'albums';
     }
   }
 

@@ -14,6 +14,7 @@ export class HouseList {
   @Input() houselist: any;
   @Input() imgHost: String;
   @Input() fav: Boolean;
+  @Input() isList: Boolean;
   private data;
   private nearbyHouseList;
   constructor(

@@ -5,11 +5,7 @@
     <ion-icon name="menu"></ion-icon>
   </button>-->
     <ion-title>枫之都</ion-title>
-    <ion-buttons end>
-      <button (click)="profile()">
-        <ion-icon name="log-in"></ion-icon>
-    </button>
-    </ion-buttons>
+  
 
   </ion-navbar>
 </ion-header>
@@ -58,15 +54,15 @@
       </ion-list>
     </div>
     <div *ngSwitchCase="'house1'">
-      <house-list [houselist]='nearbyHouseList' [imgHost]='imgHost' [fav]='listHouse'></house-list>
+      <house-list [houselist]='nearbyHouseList' [imgHost]='imgHost' [fav]='listHouse' [isList]='true'></house-list>
     </div>
 
 
     <div *ngSwitchCase="'house2'">
-      <house-list [houselist]='nearbyHouseList' [imgHost]='imgHost' [fav]='listHouse'></house-list>
+      <house-list [houselist]='nearbyHouseList' [imgHost]='imgHost' [fav]='listHouse' [isList]='true'></house-list>
     </div>
     <div *ngSwitchCase="'house3'">
-      <house-list [houselist]='favList' [imgHost]='imgHost' [fav]='listFav'></house-list>
+      <house-list [houselist]='favList' [imgHost]='imgHost' [fav]='listFav' [isList]='true'></house-list>
     </div>
 
 

@@ -7,8 +7,14 @@
 <ion-header>
 
   <ion-navbar>
+
     <ion-title>{{pageTitle}}</ion-title>
-     <ion-buttons end>
+    <ion-buttons end>
+      <button (click)="toggleView()">
+          <ion-icon [name]="viewType"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end *ngIf="isList">
       <button (click)="toggleEdit()">{{editButton}}
 
       </button>
@@ -18,44 +24,84 @@
 </ion-header>
 
 
-<ion-content class="houselist-search" >
+<ion-content class="houselist-search">
 
 
-  <ion-list [reorder]="editing" (ionItemReorder)="reorderItems($event)" >
-  
-      <ion-item-sliding *ngFor="let house of favList">
-        <ion-item tappable class="house_card" (click)="gotoHouseDetail(house.MLS)">
-          <ion-thumbnail item-left>
-            <img [src]="imgHost + house.CoverImg" />
-          </ion-thumbnail>
+  <ion-list [reorder]="editing" (ionItemReorder)="reorderItems($event)" *ngIf="isList">
 
-          <div *ngIf="!house.Address">          
-            <h2>{{house.MLS}}
-              <ion-badge item-right>SOLD</ion-badge>            
-            </h2>
-          </div>
-          <div *ngIf="house.Address">          
-            <h2>{{house.Address}}
-            </h2>
-            <p *ngIf="house.Address">{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
-              <ion-badge item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
-            </p>
-            <p *ngIf="house.Address">{{house.MLS}} {{house.MunicipalityName}},{{house.ProvinceCname}}</p>
-          </div>
+    <ion-item-sliding *ngFor="let house of favList">
+      <ion-item tappable class="house_card" (click)="gotoHouseDetail(house.MLS,house.Address)">
+        <ion-thumbnail item-left>
+          <img [src]="imgHost + house.CoverImg" />
+        </ion-thumbnail>
 
-        </ion-item>
-        <ion-item-options>
-          <button clear (click)="remove(house.MLS)">
+        <div *ngIf="!house.Address">
+          <h2>{{house.MLS}}
+            <ion-badge item-right>SOLD</ion-badge>
+          </h2>
+        </div>
+        <div *ngIf="house.Address">
+          <h2>{{house.Address}}
+          </h2>
+          <p *ngIf="house.Address">{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
+            <ion-badge item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
+          </p>
+          <p *ngIf="house.Address">{{house.MLS}} {{house.MunicipalityName}},{{house.ProvinceCname}}</p>
+        </div>
+
+      </ion-item>
+      <ion-item-options>
+        <button clear (click)="remove(house.MLS)">
         <ion-icon name="trash"></ion-icon>
         删除
       </button>
-          <button clear (click)="mapleConf.mapDirection(house.GeocodeLat,house.GeocodeLng)">
+        <button clear (click)="mapleConf.mapDirection(house.GeocodeLat,house.GeocodeLng)">
         <ion-icon name="navigate"></ion-icon>
         地图
       </button>
-        </ion-item-options>
-      </ion-item-sliding>
-    
+      </ion-item-options>
+    </ion-item-sliding>
+
   </ion-list>
+
+
+
+
+  <div *ngIf="!isList">
+
+
+    <ion-card class="house_card" *ngFor="let house of favList">
+      <div *ngIf="house.Address">
+        <img [src]="imgHost + house.CoverImg" (click)="gotoHouseDetail(house.MLS)" />
+        <div class="house_desc" text-left text-nowrap>
+
+          <ion-item>
+            <ion-badge item-left>MLS:{{house.MLS}}</ion-badge>
+            <ion-badge item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
+          </ion-item>
+          <div>
+            <button clear (click)="remove(house.MLS)">
+              <ion-icon name="trash"></ion-icon> 删除
+          </button>
+            <button clear (click)="mapleConf.mapDirection(house.GeocodeLat,house.GeocodeLng)">
+            <ion-icon name="navigate"></ion-icon>地图
+         </button>
+          </div>
+
+          <div class="card-subtitle" text-left>
+            <div padding-left>
+              <!--<ion-icon padding-right secondary name="information-circle"></ion-icon>-->
+              <span padding-right>{{house.HouseType}}</span>{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨</div>
+            <div padding-left>
+              <!--<ion-icon padding-right secondary name="navigate"></ion-icon>-->
+              <span padding-right>{{house.Address}}</span>{{house.MunicipalityName}}</div>
+          </div>
+        </div>
+
+      </div>
+    </ion-card>
+
+
+  </div>
 
 </ion-content>

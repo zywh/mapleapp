@@ -59,6 +59,8 @@ export class HomePage {
     speed: 4000,
     autoplay: 300
   };
+  
+  
 
   fav() {
 
