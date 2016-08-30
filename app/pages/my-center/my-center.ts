@@ -41,7 +41,8 @@ export class MyCenterPage {
     this.userData.getUserSelections(this.pageType).then(res => {
 
       this.centerList = res;
-      console.log(this.pageType + ":" + this.centerList);
+      console.log(this.pageType + ":");
+      console.log(this.centerList);
 
     });
 
