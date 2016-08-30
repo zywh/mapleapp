@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import {UserData} from '../../providers/user-data';
 import {HouseDetailPage} from '../../pages/house-detail/house-detail';
-import { NavController, reorderArray, ModalController} from 'ionic-angular';
+import { NavController, reorderArray, ModalController,Events} from 'ionic-angular';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapHouselist} from '../../pages/map-search/map-houselist';
@@ -22,6 +22,7 @@ export class HouseList {
     private mapleConf: MapleConf,
     private mapleRestData: MapleRestData,
     private modalc: ModalController,
+    private events: Events,
     private nav: NavController
   ) {
       //console.log("list type:" + this.fav + this.imgHost);
@@ -78,6 +79,9 @@ export class HouseList {
 
   }
 
+  mapSearch(lat,lng){
+      this.events.publish('map:center', { lat: lat, lng: lng, type: 'HOUSE' });
+  }
   
   remove(mls) {
     this.userData.changeFavorite(mls, 'houseFav','d').then(res => {

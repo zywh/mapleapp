@@ -1,5 +1,5 @@
 import {Page, NavController, NavParams, AlertController, ToastController, Platform, Slides, Events, ActionSheetController} from 'ionic-angular';
-import {OnInit, Component, ViewChild} from '@angular/core';;
+import {OnInit, Component, ViewChild,ElementRef} from '@angular/core';;
 //import {Geolocation} from 'ionic-native';
 import {SocialSharing} from 'ionic-native';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
@@ -17,7 +17,8 @@ import {AuthService} from '../../providers/auth/auth';
 @Component({
 	templateUrl: 'build/pages/house-detail/house-detail.html',
 })
-export class HouseDetailPage implements OnInit {
+export class HouseDetailPage  {
+	 @ViewChild('maphouse') mapElement: ElementRef;
 	private isFav = { houseFav: false, routeFav: false };
 	private isMore: Boolean = true; //more buttom will be disabled before toast is dismiss
 	private parms = { id: '', list: [] };
@@ -277,6 +278,28 @@ export class HouseDetailPage implements OnInit {
 		})
 	}
 
+	
+  initMap() {
+
+      let point = new google.maps.LatLng(this.house.latitude,this.house.longitude);
+      let mapOptions = {
+        //center: latLng,
+        center: point,
+        minZoom: 4,
+        zoom: 14,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      }
+      let map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+	   let markerDrop = new google.maps.Marker({
+        position: point,
+        map: map,
+        animation: google.maps.Animation.DROP,
+        draggable: false,
+      });
+     
+
+  }
+
 	more() {
 		//this.userData.hasFavorite(this.parms.id).then(res => {
 		//this.isFav = res;
@@ -372,6 +395,7 @@ export class HouseDetailPage implements OnInit {
 				console.log(this.isFav);
 				//console.log(this.slider); 
 				this.slider.slideTo(0);
+				this.initMap();
 			}
 		)
 	}
