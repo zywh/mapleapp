@@ -16,7 +16,8 @@ import {UserData} from '../../providers/user-data';
 })
 export class MyCenterPage {
   private centerList;
-  private pageType: String = "myCenter";
+  private pageType;
+  private pageTitle;
 
 
   private editButton: string = '编辑';
@@ -30,16 +31,17 @@ export class MyCenterPage {
     private events: Events
 
   ) {
-
-
+    this.pageType = parm.data.type;
+    if (this.pageType == "myCenter") this.pageTitle = '我的位置';
+    if (this.pageType == "recentCenter") this.pageTitle = '最近搜索位置';
   }
 
   ionViewWillEnter() {
 
-    this.userData.getUserSelections('myCenter').then(res => {
+    this.userData.getUserSelections(this.pageType).then(res => {
 
       this.centerList = res;
-      console.log(this.centerList);
+      console.log(this.pageType + ":" + this.centerList);
 
     });
 
@@ -52,7 +54,7 @@ export class MyCenterPage {
       this.editButton = '完成';
     } else {
       this.editButton = '编辑';
-       this.userData.centerReorder('myCenter', this.centerList);
+       this.userData.centerReorder(this.pageType, this.centerList);
     }
   }
   gotoMap(lat,lng){
@@ -65,8 +67,8 @@ export class MyCenterPage {
 
   remove(center) {
     let name = center.name;
-    this.userData.deleteCenter('myCenter',center).then(res => {
-      console.log("Remove Center:" + res);
+    this.userData.deleteCenter(this.pageType,center).then(res => {
+      console.log("Remove" + this.pageType + ":" + res);
       this.centerList = this.centerList.filter(function (obj) {
         return obj.name !== name;
       });

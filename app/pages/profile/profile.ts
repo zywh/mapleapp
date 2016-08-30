@@ -88,8 +88,8 @@ export class ProfilePage {
 
   }
 
-  myCenter() {
-    this.nav.push(MyCenterPage);
+  myCenter(type) {
+    this.nav.push(MyCenterPage, {type: type});
   }
 
   ionViewWillEnter() {
