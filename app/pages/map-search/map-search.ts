@@ -176,8 +176,8 @@ export class MapSearchPage {
 
 
   ngAfterViewInit(): void {
-    let mapLoaded = this.initMap();
-    console.log("NG Afterviewinit")
+    // let mapLoaded = this.initMap();
+    // console.log("NG Afterviewinit")
   }
 
 
@@ -197,9 +197,15 @@ export class MapSearchPage {
 
   }
 
-  // ionViewDidEnter() {
-  //   console.log("Mappage did enter");
-  // }
+  ionViewDidEnter() {
+    if (!this.mapInitialised){
+       let mapLoaded = this.initMap();
+  
+    }
+    console.log("Mappage did enter");
+     
+
+  }
 
   // ionViewDidLeave() {
   //   console.log("Mappage Did Leave");
