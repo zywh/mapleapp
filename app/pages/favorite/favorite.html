@@ -29,11 +29,19 @@
             <img [src]="imgHost + house.CoverImg" />
           </ion-thumbnail>
 
-          <h2>{{house.Address}}</h2>
-          <p>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
-            <ion-badge item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
-          </p>
-          <p>{{house.MunicipalityName}},{{house.ProvinceCname}}</p>
+          <div *ngIf="!house.Address">          
+            <h2>{{house.MLS}}
+              <ion-badge item-right>SOLD</ion-badge>            
+            </h2>
+          </div>
+          <div *ngIf="house.Address">          
+            <h2>{{house.Address}}
+            </h2>
+            <p *ngIf="house.Address">{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
+              <ion-badge item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
+            </p>
+            <p *ngIf="house.Address">{{house.MLS}} {{house.MunicipalityName}},{{house.ProvinceCname}}</p>
+          </div>
 
         </ion-item>
         <ion-item-options>
