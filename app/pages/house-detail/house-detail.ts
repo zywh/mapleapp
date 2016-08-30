@@ -371,7 +371,7 @@ export class HouseDetailPage implements OnInit {
 				this.setHouseList();
 				console.log(this.isFav);
 				//console.log(this.slider); 
-				//this.slider.slideTo(0);
+				this.slider.slideTo(0);
 			}
 		)
 	}
