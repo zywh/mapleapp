@@ -76,7 +76,9 @@
 		</div>
 		<div class="fyxq_ptss">
 			<div class="fyxq_ptssleft">{{(house.investType_id == 1)?"学区":"城市"}}：</div>
-			<div class="fyxq_ptssright">{{house_mname?.municipality_cname}}</div>
+			<div class="fyxq_ptssright">{{house_mname?.municipality_cname}}
+	        	<ion-badge item-right>{{mapleConf.getListDays(house.pix_updt)}}</ion-badge>
+			</div>
 		</div>
 		<div class="fyxq_ptss">
 			<div class="fyxq_ptssleft">户型：</div>

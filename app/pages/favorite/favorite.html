@@ -42,6 +42,7 @@
         </div>
         <div *ngIf="house.Address">
           <h2>{{house.Address}}
+            <ion-badge item-right>{{mapleConf.getListDays(house.ListDate)}}</ion-badge>
           </h2>
           <p *ngIf="house.Address">{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
             <ion-badge item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>

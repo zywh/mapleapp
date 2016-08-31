@@ -190,8 +190,12 @@ export class MapleConf {
     return priceTxt;
   }
 
-
-
+  getListDays(listDate) { // yyyy-mm-dd
+    let date1 = new Date(listDate);
+    let date2 = new Date();
+    let diffdays = date2.getDate() - date1.getDate();
+    return diffdays + "天";
+  }
 
 }
 
