@@ -42,7 +42,7 @@
             padding:1px 0;
 
             &::after {clear: both; }
-            .fyxq_ptssleft {
+        .fyxq_ptssleft {
                 float:left;
                 font-size:18px;
                 font-weight:bold;
@@ -75,20 +75,27 @@
                     }
                 }
         }
-        .fyxq_rx { 
-            clear: both;
-            &::after { clear: both; }
-            font-weight: bold;
-            float:left; 
-            line-height:30px; 
-            padding-top:5px;
-            span { 
-                padding-left:8px; 
-                font-weight:bold; 
-                font-size:20px;
-            }
-        }     
-    }
+
+      }
+        .fyxq_rx {
+                padding: 5px;
+                font-weight: bold;
+                font-size: 120%;
+        }
+    //     .fyxq_rx { 
+    //         clear: both;
+    //         &::after { clear: both; }
+    //         font-weight: bold;
+    //         float:left; 
+    //         line-height:30px; 
+    //         padding-top:5px;
+    //         span { 
+    //             padding-left:8px; 
+    //             font-weight:bold; 
+    //             font-size:20px;
+    //         }
+    //     }     
+    // }
 
     ion-card.fyxqlb_cont { 
         margin: 0;
