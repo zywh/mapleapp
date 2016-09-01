@@ -1,19 +1,19 @@
 <ion-list class="houselist-search" *ngIf="isList">
   <ion-item-sliding *ngFor="let house of houselist">
     <ion-item class="house_card" (click)="gotoHouseDetail(house.MLS)">
-      <ion-thumbnail item-left>
+       <ion-thumbnail item-left>
         <img [src]="imgHost + house.CoverImg" />
       </ion-thumbnail>
 
-      <h2>{{house.Address}}
-        <ion-badge item-right>{{mapleConf.getListDays(house.ListDate)}}</ion-badge>
-      </h2>
-      <p>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
-        <ion-badge item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
-      </p>
+      
+      <h2><ion-badge>{{mapleConf.getListDays(house.ListDate)}}</ion-badge>{{house.Address}}</h2>
+      
+      <p><ion-badge>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
+      </p> 
       <p>{{house.MLS}} {{house.MunicipalityName}},{{house.ProvinceCname}}</p>
 
     </ion-item>
+
     <ion-item-options>
       <button clear (click)="userData.favWrapper(house.MLS,'houseFav')" *ngIf="!fav">
         <ion-icon name="heart"></ion-icon>
@@ -42,23 +42,49 @@
 
 
 
-<div *ngIf="!isList" >
-    
-    
-        <ion-card class="house_card" *ngFor="let house of houselist">
-         <img [src]="imgHost + house.CoverImg" />
-          <div class="house_desc" text-left text-nowrap>
-          
-            <ion-item>    
-             <ion-badge item-left>MLS:{{house.MLS}}</ion-badge>
-             <ion-badge item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
-            </ion-item>
-          
-             <div class="card-subtitle" text-left>
-              <div> <ion-icon padding-right secondary name="information-circle"></ion-icon><span padding-right>{{house.HouseType}}</span>{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨</div>
-              <div> <ion-icon padding-right secondary name="navigate"></ion-icon><span padding-right>{{house.Address}}</span>{{house.MunicipalityName}}</div>
-              </div>
-          </div>
-        </ion-card>
-    
-  </div>
+
+<div *ngIf="!isList">
+
+
+  <ion-card class="house_card" *ngFor="let house of houselist">
+    <!--<img [src]="imgHost + house.CoverImg" />
+          <div class="house_desc" text-left text-nowrap>-->
+
+   
+    <img [src]="imgHost + house.CoverImg" (click)="gotoHouseDetail(house.MLS)" />
+     <ion-item>
+      <h2>MLS:{{house.MLS}}</h2>
+      <ion-badge item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
+      <p>{{house.Address}},{{house.MunicipalityName}}</p>
+      <p> {{house.HouseType}} {{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨</p>
+     
+    </ion-item>
+<!--    
+    <ion-card-content>
+   
+    </ion-card-content>-->
+    <ion-row>
+      <ion-col>
+        <button primary clear small (click)="userData.favWrapper(house.MLS,'houseFav')" *ngIf="!fav">
+         <ion-icon name="heart" active='false'></ion-icon> <div>收藏</div>
+        </button>
+        <button primary clear small (click)="remove(house.MLS)" *ngIf="fav">
+          <ion-icon name="trash"></ion-icon><div>删除</div>
+        </button>
+       
+      </ion-col>
+      <ion-col>
+        <button primary clear small (click)="mapleConf.mapDirection(house.GeocodeLat,house.GeocodeLng)">
+          <ion-icon name="navigate"></ion-icon><div>导航</div>
+        </button>
+      </ion-col>
+      <ion-col center text-center>
+        <ion-note>
+          {{mapleConf.getListDays(house.ListDate)}}
+        </ion-note>
+      </ion-col>
+    </ion-row>
+
+  </ion-card>
+
+</div>
