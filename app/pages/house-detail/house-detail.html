@@ -18,11 +18,12 @@
 			<ion-icon  name="arrow-down" ></ion-icon>
 			</button>
 		</ion-buttons>
-		<!--<ion-buttons end>
-  <button  (click)="fav()">
-  <ion-icon [isActive]="isFav" name="star" ></ion-icon>
-  </button>
-  </ion-buttons>-->
+		<ion-buttons end>
+  <!--<button  (click)="fav('houseFav')">
+  <ion-icon [isActive]="isFav.houseFav" name="heart" ></ion-icon>
+  </button>-->
+  
+  </ion-buttons>
 		<ion-buttons end>
 			<button (click)="share()">
 			<ion-icon isActive="false" name="share" ></ion-icon>
@@ -56,9 +57,14 @@
 
 <ion-content class="house-detail">
 
+	<button fab fab-top fab-right (click)="fav('houseFav')" style="z-index: 12;opacity: 0.7; ">
+		<ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon>
+	</button>
+
 	<ion-slides #photo_slider [options]="swiperOptions" class="swiper-container">
 		<ion-slide *ngFor="let photo of photos">
 			<img [src]="photoUrl(photo)" class="slide-image" />
+			
 		</ion-slide>
 	</ion-slides>
 	<div class="fyxq_rx">服务热线：
@@ -78,7 +84,7 @@
 		<div class="fyxq_ptss">
 			<div class="fyxq_ptssleft">{{(house.investType_id == 1)?"学区":"城市"}}：</div>
 			<div class="fyxq_ptssright">{{house_mname?.municipality_cname}}
-				<ion-badge item-right>{{mapleConf.getListDays(house.pix_updt)}}</ion-badge>
+			
 			</div>
 		</div>
 		<div class="fyxq_ptss">
@@ -165,7 +171,7 @@
 			</ion-item-divider>
 			<ion-item>
 				<ion-label fixed class="xqlb_label">MLS编号：</ion-label>
-				<ion-label>{{house.ml_num}}</ion-label>
+				<ion-label>	<ion-badge >{{mapleConf.getListDays(house.pix_updt)}}</ion-badge>{{house.ml_num}}</ion-label>
 			</ion-item>
 			<ion-item>
 				<ion-label fixed class="xqlb_label">交叉路口：</ion-label>

@@ -16,7 +16,7 @@ export class FavoritePage {
   private pageType;
   private editButton: string = '编辑';
   private editing: boolean = false;
-  private viewType: string = 'list';
+  private viewType: string = 'apps';
   private isList: boolean = true;
   
 
@@ -67,9 +67,9 @@ export class FavoritePage {
    toggleView() {
     this.isList = !this.isList;
     if (this.isList) {
-      this.viewType ='list';
+      this.viewType ='apps';
     } else {
-     this.viewType = 'albums';
+     this.viewType = 'list';
     }
   }
 
