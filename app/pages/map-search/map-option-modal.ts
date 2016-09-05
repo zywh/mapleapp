@@ -4,24 +4,29 @@ import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {UserData} from '../../providers/user-data';
 import {AuthService} from '../../providers/auth/auth';
+import {Search} from '../../components/search/search';
 
-interface selectOptionsObj {
-    selectPrice?: String,
-    selectType?: Number,
-    selectBeds?: Number,
-    selectBaths?: Number,
-    selectSR?: Boolean,
-    selectHousesize?: String,
-    selectLandsize?: String,
-    selectListType?: Boolean,
-    selectDate?: Number
-}
+// interface selectOptionsObj {
+    
+//     selectPrice?: String,
+//     selectType?: String,
+//     selectBeds?: Number,
+//     selectBaths?: Number,
+//     selectSR?: Boolean,
+//     selectHousesize?: Object,
+//     selectLandsize?: Object,
+//     selectListType?: Boolean,
+//     selectDate?: Number,
+//     selectSearch?: Object
+// }
 
 @Component({
-    templateUrl: 'build/pages/map-search/map-option-modal.html'
+    templateUrl: 'build/pages/map-search/map-option-modal.html',
+    directives: [Search]
 
 })
 export class SelectOptionModal {
+    //selectOptions: Object;
     selectOptions: Object;
     private selectUnit: Boolean = true;
     private unit;
@@ -49,6 +54,11 @@ export class SelectOptionModal {
 
     }
 
+    searchSelection(e){
+        console.log(e);
+        this.selectOptions['selectSearch'] = e;
+    }
+
     getMySelections() {
         this.userData.getUserSelections('houseSearch').then(res => {
             if (res != null) {
@@ -70,7 +80,8 @@ export class SelectOptionModal {
             selectPrice: { lower: 0, upper: 600 },
             selectType: '',
             selectListType: true,
-            selectDate: 0
+            selectDate: 0,
+            selectSearch: {}
 
         }
     }
@@ -97,5 +108,7 @@ export class SelectOptionModal {
 
         })
     }
+
+
 
 }

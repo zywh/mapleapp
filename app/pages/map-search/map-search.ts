@@ -33,8 +33,8 @@ export class MapSearchPage {
   private mapLib = 1; // 0 is java and 1 is native google SDK
   private queryText: String = '';
   mapInitialised: boolean = false;
-  mapLoaded: any;
-  mapLoadedObserver: any;
+  //mapLoaded: any;
+  //mapLoadedObserver: any;
   private searchInFocus: boolean = false;
   private cityItems: any;
   private addressItems: any;
@@ -79,6 +79,7 @@ export class MapSearchPage {
   private currentDiv;
   private mapType: Number = 1; // 0 for house and 1 for school
   private markerDrop;
+  private lockMapListener: Boolean = false;
 
   constructor(
     public nav: NavController,
@@ -101,7 +102,7 @@ export class MapSearchPage {
 
 
     this.mapType = this.navparm.data.pageType;
-    this.resetItems();
+    //this.resetItems();
     this.setMapType(this.mapType);
    	this.listenEvents();
 
@@ -231,10 +232,17 @@ export class MapSearchPage {
 
 
   openModal() {
-
+    this.lockMapListener = true;
     let modal = this.modalc.create(this.optionPage, { data: this.selectOptions });
     modal.onDidDismiss(data => {
       this.selectOptions = data;
+      this.lockMapListener = false;
+      console.log(data);
+      if (this.selectOptions.selectSearch.type == 'CITY') {
+        let center = new google.maps.LatLng(this.selectOptions.selectSearch.lat, this.selectOptions.selectSearch.lng);
+        this.setLocation(center, this.defaultZoom, true);
+      }
+
       this.changeMap(this.mapType);
 
     });
@@ -321,76 +329,76 @@ export class MapSearchPage {
 
   }
 
-  resetItems() {
-    this.cityItems = [];
-    this.addressItems = [];
-    this.mlsItems = [];
-    this.schoolItems = [];
+  // resetItems() {
+  //   this.cityItems = [];
+  //   this.addressItems = [];
+  //   this.mlsItems = [];
+  //   this.schoolItems = [];
 
-  }
-
-
-  itemTapped(item, type) {
-    //this.searchInFocus = false;
-    let center = new google.maps.LatLng(item.lat, item.lng);
-
-    this.currentDiv = '';
-    this.queryText = '';
-    console.log("Set Center and clear text");
-    if (type == 1) {
-      this.setLocation(center, this.defaultZoom, true);
-      if (this.auth.authenticated()) {
-        this.userData.saveCenter('recentCenter', item.value, item.lat, item.lng);
-      }
-
-    } else if (type == 2) {
-      this.nav.push(HouseDetailPage, { id: item.id })
-    }
+  // }
 
 
-  }
-  //auto complete REST CAll
+  // itemTapped(item, type) {
+  //   //this.searchInFocus = false;
+  //   let center = new google.maps.LatLng(item.lat, item.lng);
 
-  getItems(ev) {
+  //   this.currentDiv = '';
+  //   this.queryText = '';
+  //   console.log("Set Center and clear text");
+  //   if (type == 1) {
+  //     this.setLocation(center, this.defaultZoom, true);
+  //     if (this.auth.authenticated()) {
+  //       this.userData.saveCenter('recentCenter', item.value, item.lat, item.lng);
+  //     }
 
-    this.resetItems();
-    let val = ev.target.value;
+  //   } else if (type == 2) {
+  //     this.nav.push(HouseDetailPage, { id: item.id })
+  //   }
 
-    if (val && val.trim() != '') {
-      this.currentDiv = 'searchlist';
-      //Call REST and generate item object
-      this.mapleconf.load().then(data => {
-        let restUrl = data.getCitylistDataRest;
-        if (this.mapType == 1) {
-          restUrl = data.getSchoolAcDataRest
-        }
-        this.mapleRestData.load(restUrl, { term: val }).subscribe(
 
-          data => {
-            if (data.hasOwnProperty("CITY")) {
-              this.cityItems = data.CITY;
+  // }
+  // //auto complete REST CAll
 
-            };
+  // getItems(ev) {
 
-            if (data.hasOwnProperty("MLS")) {
-              this.mlsItems = data.MLS;
+  //   this.resetItems();
+  //   let val = ev.target.value;
 
-            }
-            if (data.hasOwnProperty("ADDRESS")) {
-              this.addressItems = data.ADDRESS;
+  //   if (val && val.trim() != '') {
+  //     this.currentDiv = 'searchlist';
+  //     //Call REST and generate item object
+  //     this.mapleconf.load().then(data => {
+  //       let restUrl = data.getCitylistDataRest;
+  //       if (this.mapType == 1) {
+  //         restUrl = data.getSchoolAcDataRest
+  //       }
+  //       this.mapleRestData.load(restUrl, { term: val }).subscribe(
 
-            }
-            if (data.hasOwnProperty("SCHOOL")) {
-              this.schoolItems = data.SCHOOL;
+  //         data => {
+  //           if (data.hasOwnProperty("CITY")) {
+  //             this.cityItems = data.CITY;
 
-            }
+  //           };
 
-          }); //end of callback
+  //           if (data.hasOwnProperty("MLS")) {
+  //             this.mlsItems = data.MLS;
 
-        //}
-      })
-    }
-  }
+  //           }
+  //           if (data.hasOwnProperty("ADDRESS")) {
+  //             this.addressItems = data.ADDRESS;
+
+  //           }
+  //           if (data.hasOwnProperty("SCHOOL")) {
+  //             this.schoolItems = data.SCHOOL;
+
+  //           }
+
+  //         }); //end of callback
+
+  //       //}
+  //     })
+  //   }
+  // }
 
   //SetCenter and Zoom if location button is clicked
   setCenter(isMarker) {
@@ -578,6 +586,7 @@ export class MapSearchPage {
 
   changeMap(type) {
     console.log("Change Map:" + this.searchInFocus);
+    if (this.lockMapListener == true) { return; } //if option menu is opened. Prevent map reload when search is in focus on Android
 
     //google.maps.event.trigger(this.map, 'resize');
     this.currentDiv = ''; //reset all popup
