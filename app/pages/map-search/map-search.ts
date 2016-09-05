@@ -58,6 +58,7 @@ export class MapSearchPage {
   private listModal: ViewController;
   private defaultZoom: Number = 14;
   private _bounds;
+  private locateLock: Boolean = false; //lock location button if there is input popup
 
   private schoolList: Array<any>;
   private swiperOptions = {
@@ -102,9 +103,18 @@ export class MapSearchPage {
     this.mapType = this.navparm.data.pageType;
     this.resetItems();
     this.setMapType(this.mapType);
+   	this.listenEvents();
 
   }
-  
+
+  listenEvents() {
+    this.events.subscribe('locate:dismiss', () => {
+      this.locateLock = false;
+    });
+
+
+
+  }
 
   initMap() {
 
@@ -182,7 +192,7 @@ export class MapSearchPage {
 
 
   ionViewWillEnter() {
-    let optionType = (this.mapType == 0)? 'houseSearch': 'schoolSearch';
+    let optionType = (this.mapType == 0) ? 'houseSearch' : 'schoolSearch';
 
     if (this.auth.authenticated()) {
       this.userData.getUserSelections(optionType).then(res => {
@@ -198,12 +208,12 @@ export class MapSearchPage {
   }
 
   ionViewDidEnter() {
-    if (!this.mapInitialised){
-       let mapLoaded = this.initMap();
-  
+    if (!this.mapInitialised) {
+      let mapLoaded = this.initMap();
+
     }
     console.log("Mappage did enter");
-     
+
 
   }
 
@@ -219,7 +229,7 @@ export class MapSearchPage {
   //   console.log("Mappage will Unload");
   // }
 
-  
+
   openModal() {
 
     let modal = this.modalc.create(this.optionPage, { data: this.selectOptions });
@@ -230,7 +240,7 @@ export class MapSearchPage {
     });
 
     modal.present();
-   
+
 
   }
 
@@ -329,10 +339,10 @@ export class MapSearchPage {
     console.log("Set Center and clear text");
     if (type == 1) {
       this.setLocation(center, this.defaultZoom, true);
-      if (this.auth.authenticated()){
-         this.userData.saveCenter('recentCenter', item.value, item.lat,item.lng);
+      if (this.auth.authenticated()) {
+        this.userData.saveCenter('recentCenter', item.value, item.lat, item.lng);
       }
-     
+
     } else if (type == 2) {
       this.nav.push(HouseDetailPage, { id: item.id })
     }
@@ -384,14 +394,18 @@ export class MapSearchPage {
 
   //SetCenter and Zoom if location button is clicked
   setCenter(isMarker) {
+
+    this.locateLock = true; //lock locate click to prevent frozen from double click
     this.mapleconf.getLocation().then(data => {
 
       this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
-      if (this.auth.authenticated()){
+      if (this.auth.authenticated()) {
         this.userData.addCenterAlert(data['lat'], data['lng'], "保存中心位置到我的收藏");
+      } else {
+        this.locateLock = false;
       }
-      
       this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
+
     })
   }
 
@@ -400,10 +414,10 @@ export class MapSearchPage {
 
     this.map.setZoom(zoom);
     this.map.setCenter(center);
-    if (this.markerDrop != null){
-       this.markerDrop.setMap(null);
+    if (this.markerDrop != null) {
+      this.markerDrop.setMap(null);
     }
-    
+
     if (isMarker) {
       this.markerDrop = new google.maps.Marker({
         position: center,
@@ -412,14 +426,14 @@ export class MapSearchPage {
         draggable: false,
       });
       this.markerDrop.addListener('click', () => {
-        if ( this.markerDrop.getAnimation() !== null) {
-           this.markerDrop.setAnimation(null);
+        if (this.markerDrop.getAnimation() !== null) {
+          this.markerDrop.setAnimation(null);
         } else {
-           this.markerDrop.setAnimation(google.maps.Animation.BOUNCE);
+          this.markerDrop.setAnimation(google.maps.Animation.BOUNCE);
         }
       })
 
-    
+
     }
   }
 

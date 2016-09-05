@@ -12,7 +12,7 @@
   
   
     <ion-buttons end>
-      <button (click)="setCenter(true)">
+      <button [disabled]="locateLock" (click)="setCenter(true)">
         <ion-icon ios="ios-locate-outline" md="md-locate"></ion-icon>
     </button>
     </ion-buttons>

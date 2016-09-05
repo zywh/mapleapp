@@ -86,12 +86,14 @@ export class UserData {
           text: '取消',
           handler: data => {
             console.log('Cancel clicked');
+            this.events.publish('locate:dismiss');
           }
         },
         {
           text: '保存',
           handler: data => {
             this.saveCenter('myCenter', data.name, lat, lng);
+             this.events.publish('locate:dismiss');
           }
         }
       ]

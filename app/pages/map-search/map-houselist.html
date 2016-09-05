@@ -20,8 +20,9 @@
 
 <ion-content >
 
+ 
 <!--<house-list [houselist]='currentHouseList' [imgHost]='imgHost' ></house-list>-->
-<ion-list class="houselist-search">
+<!--<ion-list class="houselist-search">
   <ion-item-sliding *ngFor="let house of currentHouseList">
     <ion-item class="house_card" (click)="gotoHouseDetail(house.MLS)">
       <ion-thumbnail item-left>
@@ -56,6 +57,47 @@
     </ion-item-options>
   </ion-item-sliding>
 
+</ion-list>-->
+
+
+<ion-list class="houselist-search" >
+  <ion-item-sliding *ngFor="let house of currentHouseList">
+    <ion-item class="house_card" (click)="gotoHouseDetail(house.MLS)">
+       <ion-thumbnail item-left>
+        <img [src]="imgHost + house.CoverImg" />
+      </ion-thumbnail>
+
+      
+      <h2><ion-badge>{{mapleConf.getListDays(house.ListDate)}}</ion-badge>{{house.Address}}</h2>
+      
+      <p><ion-badge>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
+      </p> 
+      <p>{{house.MLS}} {{house.MunicipalityName}},{{house.ProvinceCname}}</p>
+
+    </ion-item>
+
+    <ion-item-options>
+      <button clear (click)="addFav(house.MLS,'houseFav')" >
+        <ion-icon name="heart"></ion-icon>
+        收藏
+      </button>
+      
+      <button clear (click)="addFav(house.MLS,'routeFav')">
+        <ion-icon name="navigate"></ion-icon>
+        看房
+      </button>
+      <button clear (click)="mapSearch(house.GeocodeLat,house.GeocodeLng)">
+        <ion-icon name="locate"></ion-icon>
+        附近
+      </button>
+      <button clear (click)="mapleConf.mapDirection(house.GeocodeLat,house.GeocodeLng)">
+        <ion-icon name="locate"></ion-icon>
+        导航
+      </button>
+    </ion-item-options>
+  </ion-item-sliding>
+
 </ion-list>
+
 
 </ion-content>
