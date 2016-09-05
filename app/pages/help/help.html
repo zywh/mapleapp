@@ -13,6 +13,30 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+
+  <ion-item-group>
+    <ion-item><ion-icon primary name="help" item-left></ion-icon>帮助</ion-item>
+    <ion-list>
+      <ion-item> 地图搜索 </ion-item>
+      <ion-item> 地图搜索 </ion-item>
+      <ion-item> 地图搜索 </ion-item>
+      <ion-item> 地图搜索 </ion-item>
+    </ion-list>
+  </ion-item-group>
+  <ion-item-group>
+    <ion-item-divider divider><ion-icon primary name="information" item-left></ion-icon>常见问题</ion-item-divider>
+    <ion-list>
+      <ion-item> 地图搜索 </ion-item>
+      <ion-item> 地图搜索 </ion-item>
+      <ion-item> 地图搜索 </ion-item>
+    </ion-list>
+  </ion-item-group>
+
+
+  <ion-list>
+    <a ion-item (click)="feedback()">
+      <ion-icon primary name="mail" item-left></ion-icon>反馈</a>
+  </ion-list>
 
 </ion-content>

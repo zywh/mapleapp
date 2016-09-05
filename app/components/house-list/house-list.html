@@ -6,11 +6,11 @@
       </ion-thumbnail>
 
       
-      <h2><ion-badge>{{mapleConf.getListDays(house.ListDate)}}</ion-badge>{{house.Address}}</h2>
+      <h2 text-left><ion-badge>{{mapleConf.getListDays(house.ListDate)}}</ion-badge>{{house.Address}}</h2>
       
-      <p><ion-badge>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
+      <p text-left><ion-badge>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
       </p> 
-      <p>{{house.MLS}} {{house.MunicipalityName}},{{house.ProvinceCname}}</p>
+      <p text-left>{{house.MLS}} {{house.MunicipalityName}},{{house.ProvinceCname}}</p>
 
     </ion-item>
 
