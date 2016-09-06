@@ -19,7 +19,7 @@
     <ion-list-header>
     {{project.name}}
   </ion-list-header>
-    <img [src]="project.room_type_image" (click)="goToProject(project.id)"/>
+    <img tappable  [src]="project.room_type_image" (click)="goToProject(project.id)"/>
     
     <div class="card-subtitle">城市：{{project.cityname}}</div>
   </ion-card>

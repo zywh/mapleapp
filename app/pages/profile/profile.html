@@ -20,7 +20,7 @@
 
   <div *ngIf="auth.authenticated()">
 
-    <ion-card (click)="auth.logout()">
+    <ion-card tappable  (click)="auth.logout()">
      
       <ion-item *ngIf="auth.user">
         <ion-avatar item-left>
@@ -52,7 +52,7 @@
       </ion-list>
     </ion-item-group>
      <ion-list>
-     <a ion-item (click)="auth.logout()"><ion-icon primary  name="log-out" item-left></ion-icon>退出登录</a>
+     <a ion-item  (click)="auth.logout()"><ion-icon primary  name="log-out" item-left></ion-icon>退出登录</a>
      </ion-list>
    
   </div>

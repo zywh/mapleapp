@@ -6,7 +6,7 @@
         <button (click)="gotoHouseDetail(house.MLS)" ion-item detail-none class="text-button text-larger">详情</button>
     </ion-col>
 </ion-row>
-<ion-card  (click)="gotoHouseDetail(house.MLS)">
+<ion-card tappable  (click)="gotoHouseDetail(house.MLS)">
     <img [src]="imgHost + house.CoverImg" />
     <div text-left text-nowrap>
 

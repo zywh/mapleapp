@@ -49,7 +49,9 @@ export class FavoritePage {
 
   gotoHouseDetail(mls,address) {
     if (address){
-      this.nav.pop().then(() => this.nav.push(HouseDetailPage, { id: mls, list: this.favList }))
+      //this.nav.pop().then(() => this.nav.push(HouseDetailPage, { id: mls, list: this.favList }))
+      this.nav.push(HouseDetailPage, { id: mls, list: this.favList });
+      //this.nav.pop();
     }
     
   }
