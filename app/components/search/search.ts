@@ -26,6 +26,7 @@ export class Search {
   private schoolItems;
   private currentDiv;
   private queryText;
+  private searchPlaceHolder;
 
 
   constructor(
@@ -36,7 +37,7 @@ export class Search {
     private events: Events
 
   ) {
-
+    this.searchPlaceHolder = (this.mapType == 0)?'城市/地址/MLS#':'城市/学校'
   }
   resetItems() {
     this.cityItems = [];
@@ -52,23 +53,17 @@ export class Search {
     let center = new google.maps.LatLng(item.lat, item.lng);
 
     this.currentDiv = '';
-    this.queryText = item.value;
+    this.queryText = '';
+    this.searchPlaceHolder = item.value;
     this.searchInput.emit(item);
-    console.log("Set Center and clear text");
-    // if (type == 1) {
-    //   this.setLocation(center, this.defaultZoom, true);
-    //   if (this.auth.authenticated()) {
-    //     this.userData.saveCenter('recentCenter', item.value, item.lat, item.lng);
-    //   }
-
-    // } else if (type == 2) {
-    //   this.nav.push(HouseDetailPage, { id: item.id })
-    // }
-
+   
+   
 
   }
   //auto complete REST CAll
-
+ searchInFocus(){
+    this.queryText ='';
+ }
   getItems(ev) {
 
     this.resetItems();

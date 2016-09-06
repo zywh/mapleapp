@@ -585,92 +585,94 @@ export class MapSearchPage {
   }
 
   changeMap(type) {
-    console.log("Change Map:" + this.searchInFocus);
-    if (this.lockMapListener == true) { return; } //if option menu is opened. Prevent map reload when search is in focus on Android
+    
+    if (this.lockMapListener == false) { 
 
-    //google.maps.event.trigger(this.map, 'resize');
-    this.currentDiv = ''; //reset all popup
-    // let loading = Loading.create({
-    let loading = this.loadingc.create({
-      content: '加载数据...'
-    });
-    // this.nav.present(loading);
-    loading.present();
+      //this.currentDiv = ''; //reset all popup
+      // let loading = Loading.create({
+      let loading = this.loadingc.create({
+        content: '加载数据...'
+      });
+      // this.nav.present(loading);
+      loading.present();
 
-    this.clearAll(); //clear marker
-
+      this.clearAll(); //clear marker
 
 
-    let gridSize = 60;	//60px
-    //get element size to calcute number of grid
-    let mapHeight = window.innerHeight;
-    let mapWidth = window.innerWidth;
-    let gridx = Math.ceil(mapWidth / gridSize);
-    let gridy = Math.ceil(mapHeight / gridSize);
-    let _sw = this.map.getBounds().getSouthWest();
-    let _ne = this.map.getBounds().getNorthEast();
-    let centerlat = (_ne.lat() + _sw.lat()) / 2;
-    let centerlng = (_ne.lng() + _sw.lng()) / 2;
-    let HouseArray = [];
 
-    let marker;
-    let mapParms;
-    this._bounds = _sw.lat() + "," + _sw.lng() + "," + _ne.lat() + "," + _ne.lng();
-    if (type == 1) {
-      mapParms = {
-        bounds: this._bounds,
-        gridx: gridx,
-        gridy: gridy,
-        type: this.selectOptions.selectType,
-        rank: this.selectOptions.selectRank,
-        xingzhi: this.selectOptions.selectXingzhi,
-        pingfen: this.selectOptions.selectPingfen
+      let gridSize = 60;	//60px
+      //get element size to calcute number of grid
+      let mapHeight = window.innerHeight;
+      let mapWidth = window.innerWidth;
+      let gridx = Math.ceil(mapWidth / gridSize);
+      let gridy = Math.ceil(mapHeight / gridSize);
+      let _sw = this.map.getBounds().getSouthWest();
+      let _ne = this.map.getBounds().getNorthEast();
+      let centerlat = (_ne.lat() + _sw.lat()) / 2;
+      let centerlng = (_ne.lng() + _sw.lng()) / 2;
+      let HouseArray = [];
+
+      let marker;
+      let mapParms;
+      this._bounds = _sw.lat() + "," + _sw.lng() + "," + _ne.lat() + "," + _ne.lng();
+      if (type == 1) {
+        mapParms = {
+          bounds: this._bounds,
+          gridx: gridx,
+          gridy: gridy,
+          type: this.selectOptions.selectType,
+          rank: this.selectOptions.selectRank,
+          xingzhi: this.selectOptions.selectXingzhi,
+          pingfen: this.selectOptions.selectPingfen
 
 
-      };
-    } else {
-      mapParms = {
-        bounds: this._bounds,
-        gridx: gridx,
-        gridy: gridy,
-        sr: (this.selectOptions.selectSR == true) ? 'Sale' : 'Lease',
-        housetype: this.selectOptions.selectType,
-        houseprice: this.selectOptions.selectPrice,
-        houseroom: this.selectOptions.selectBeds,
-        housearea: this.selectOptions.selectHousesize,
-        houseground: this.selectOptions.selectLandsize,
-        housedate: this.selectOptions.selectDate
+        };
+      } else {
+        mapParms = {
+          bounds: this._bounds,
+          gridx: gridx,
+          gridy: gridy,
+          sr: (this.selectOptions.selectSR == true) ? 'Sale' : 'Lease',
+          housetype: this.selectOptions.selectType,
+          houseprice: this.selectOptions.selectPrice,
+          houseroom: this.selectOptions.selectBeds,
+          housearea: this.selectOptions.selectHousesize,
+          houseground: this.selectOptions.selectLandsize,
+          housedate: this.selectOptions.selectDate
 
-      };
+        };
+      }
+
+      //console.log("Map House Search Parms:" + mapParms);
+      this.mapleconf.load().then(data => {
+
+        let restUrl = data.mapHouseRest;
+        if (type == 1) {
+          restUrl = data.getSchoolmapDataRest;
+        }
+        this.mapleRestData.load(restUrl, mapParms).subscribe(
+          data => {
+            console.log("MapType:" + type)
+            loading.dismiss();
+            if (type == 0) {
+              this.processHouseData(data);
+            } else {
+              this.processSchoolData(data);
+            }
+
+
+          },
+          error => {
+
+            this.restError(loading);
+          }
+        );
+
+        //END of Data Subscribe
+      })
+
     }
 
-    //console.log("Map House Search Parms:" + mapParms);
-    this.mapleconf.load().then(data => {
-
-      let restUrl = data.mapHouseRest;
-      if (type == 1) {
-        restUrl = data.getSchoolmapDataRest;
-      }
-      this.mapleRestData.load(restUrl, mapParms).subscribe(
-        data => {
-          console.log("MapType:" + type)
-          loading.dismiss();
-          if (type == 0) {
-            this.processHouseData(data);
-          } else {
-            this.processSchoolData(data);
-          }
-
-
-        },
-        error => {
-
-          this.restError(loading);
-        }
-      );
-
-      //END of Data Subscribe
-    })
   }
 
   restError(loading) {

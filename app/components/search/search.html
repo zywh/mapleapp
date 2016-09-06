@@ -6,8 +6,8 @@
 -->
 <div>
       
-    <ion-searchbar primary  [(ngModel)]="queryText" (ionInput)="getItems($event)" 
-    [placeholder]="(mapType == 0)?'城市/地址/MLS#':'城市/学校'"></ion-searchbar>
+    <ion-searchbar primary  [(ngModel)]="queryText"  (ionInput)="getItems($event)" (ionFocus)="searchInFocus()"
+    [placeholder]="searchPlaceHolder"></ion-searchbar>
   
     <div class="search_list" *ngIf="currentDiv == 'searchlist'">
     <ion-item padding *ngFor="let item of cityItems" (click)="itemTapped(item,1)">
