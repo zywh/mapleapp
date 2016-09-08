@@ -12,11 +12,8 @@ export class MapleConf {
   public restHost: String = 'http://r.maplecity.com.cn/';
   //private confJson = "mapleconf.json"; //production
   private confJson = "mapleconf_dev.json"; //development
-  private currentVersion: String = '0.1';
+  private localVersion: String = '1.0.0';
 
-  // static get parameters() {
-  //   return [[Http]]
-  // }
   constructor(private http: Http, private platform: Platform) {
 
   }

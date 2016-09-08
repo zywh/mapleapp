@@ -120,6 +120,11 @@ export class MapSearchPage {
   initMap() {
 
     this.mapInitialised = true;
+    let loading = this.loadingc.create({
+      content: '加载地图...'
+    });
+    loading.present();
+
 
     //let mapEle = document.getElementById('map');
     this.mapleconf.getLocation().then(data => {
@@ -164,6 +169,7 @@ export class MapSearchPage {
 
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+      loading.dismiss();
       google.maps.event.addListener(this.map, 'idle', () => {
         this.changeMap(this.mapType);
       });
@@ -585,8 +591,8 @@ export class MapSearchPage {
   }
 
   changeMap(type) {
-    
-    if (this.lockMapListener == false) { 
+
+    if (this.lockMapListener == false) {
 
       //this.currentDiv = ''; //reset all popup
       // let loading = Loading.create({
