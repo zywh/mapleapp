@@ -1,4 +1,4 @@
-import {Modal, Loading, NavController, AlertController, NavParams, ViewController} from 'ionic-angular';
+import {Modal, Loading, NavController, AlertController, NavParams, ViewController, ActionSheetController} from 'ionic-angular';
 import { NgZone, Component} from '@angular/core';;
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
@@ -58,7 +58,8 @@ export class HouselistSearch {
         private mapleConf: MapleConf,
         private userData: UserData,
         private auth: AuthService,
-        private alertc: AlertController
+        private alertc: AlertController,
+        private actionc: ActionSheetController
 
 
     ) {
@@ -67,7 +68,7 @@ export class HouselistSearch {
         this.bounds = parms.data.bounds;
         this.currentHouseList = parms.data.list;
         this.imgHost = parms.data.imgHost;
-        
+
 
 
 
@@ -77,10 +78,12 @@ export class HouselistSearch {
 
     //first time view is entered. add listener
     ionViewWillEnter() {
-        if (!this.imgHost){
+        if (!this.imgHost) {
             this.getHouseList();
+        } else {
+            this.totalCount = this.currentHouseList.length;
         }
-       
+
     }
     ionViewDidEnter() {
 
@@ -102,6 +105,93 @@ export class HouselistSearch {
 
         this.getHouseList();
     }
+    sortAction() {
+
+
+        let actionSheet = this.actionc.create({
+            title: '排序',
+            buttons: [
+                {
+                    text: '价格降序',
+                    role: 'destructive',
+                    handler: () => {
+                        actionSheet.dismiss().then(res => {
+                            this.sort('Price', 1);
+                        })
+
+                    }
+                },
+                {
+                    text: '价格升序',
+                    role: 'destructive',
+                    handler: () => {
+                        actionSheet.dismiss().then(res => {
+                            this.sort('Price', 0);
+                        })
+
+                    }
+                },
+                {
+                    text: '上市日期降序',
+                    role: 'destructive',
+                    handler: () => {
+                        actionSheet.dismiss().then(res => {
+                            this.sort('ListDate', 1);
+                        })
+
+                    }
+                },
+                {
+                    text: '卧室降序',
+                    role: 'destructive',
+                    handler: () => {
+                        actionSheet.dismiss().then(res => {
+                            this.sort('Beds', 1);
+                        })
+
+                    }
+                },
+
+
+                {
+                    text: '取消',
+                    role: 'cancel',
+                    handler: () => {
+
+                    }
+                }
+            ]
+        });
+
+        actionSheet.present();
+
+
+    }
+
+    sort(type, order) {
+
+        this.currentHouseList.sort(function (a, b) {
+            let an, bn;
+            if (type == 'ListDate') {
+                an = new Date(a.ListDate);
+                bn = new Date(b.ListDate);
+            } else {
+                an = parseFloat(a[type]);
+                bn = parseFloat(b[type])
+            }
+            if (order == 0) { //ascend
+
+                return an - bn;
+            } else {
+                return bn - an;
+            }
+
+
+        });
+
+    }
+
+
     doInfinite(infiniteScroll) {
         setTimeout(() => {
             if (this.pageIndex < this.pageTotal - 1) {
@@ -114,14 +204,14 @@ export class HouselistSearch {
         }, 500);
     }
 
-   toggleView() {
-    this.isList = !this.isList;
-    if (this.isList) {
-      this.viewType ='apps';
-    } else {
-     this.viewType = 'list';
+    toggleView() {
+        this.isList = !this.isList;
+        if (this.isList) {
+            this.viewType = 'apps';
+        } else {
+            this.viewType = 'list';
+        }
     }
-  }
 
     getHouseList() {
 
@@ -139,7 +229,7 @@ export class HouselistSearch {
             housedate: this.selectOptions.selectDate
 
         };
-     
+
         this.mapleConf.load().then(data => {
             let restUrl = data.getHouseList;
             this.mapleRestData.load(restUrl, searchParms).subscribe(
