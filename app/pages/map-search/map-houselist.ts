@@ -8,13 +8,13 @@ import {UserData} from '../../providers/user-data'
 import {SelectOptionModal} from '../map-search/map-option-modal';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {AuthService} from '../../providers/auth/auth';
-//import {HouseList} from '../../components/house-list/house-list';
+import {HouseList} from '../../components/house-list/house-list';
 
 
 
 @Component({
     templateUrl: 'build/pages/map-search/map-houselist.html',
-    
+     //directives: [HouseList]
 
 })
 export class MapHouselist {
@@ -23,6 +23,8 @@ export class MapHouselist {
     private imgHost;
     private listHouse: Boolean = false;
     private listFav: Boolean = true;
+    private isList: boolean = true;
+    private viewType: string = 'apps';
 
 
     constructor(
@@ -49,9 +51,19 @@ export class MapHouselist {
     close() {
         this.nav.pop();
     }
-    
-    addFav(mls,type){
-        this.userData.favWrapper(mls,type).then(res=>{
+
+
+    toggleView() {
+        this.isList = !this.isList;
+        if (this.isList) {
+            this.viewType = 'apps';
+        } else {
+            this.viewType = 'list';
+        }
+    }
+
+    addFav(mls, type) {
+        this.userData.favWrapper(mls, type).then(res => {
             //this.nav.pop();
         });
     }

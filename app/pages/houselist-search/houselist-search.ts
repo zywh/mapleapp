@@ -34,6 +34,7 @@ export class HouselistSearch {
     private bounds;
     private pageIndex: number = 0;
     private pageTotal: number = 1;
+    private isList: boolean = true;
     //    // private selectOptions = {
     //         selectSR: true,
     //         selectBaths: 0,
@@ -47,7 +48,7 @@ export class HouselistSearch {
 
     //     }
     private selectOptions;
-
+    private viewType: string = 'apps';
     private currentHouseList; //Hold list of all houses on current map
 
     constructor(
@@ -64,6 +65,9 @@ export class HouselistSearch {
 
         this.selectOptions = parms.data.searchOptions;
         this.bounds = parms.data.bounds;
+        this.currentHouseList = parms.data.list;
+        this.imgHost = parms.data.imgHost;
+        
 
 
 
@@ -73,7 +77,10 @@ export class HouselistSearch {
 
     //first time view is entered. add listener
     ionViewWillEnter() {
-        this.getHouseList();
+        if (!this.imgHost){
+            this.getHouseList();
+        }
+       
     }
     ionViewDidEnter() {
 
@@ -107,6 +114,14 @@ export class HouselistSearch {
         }, 500);
     }
 
+   toggleView() {
+    this.isList = !this.isList;
+    if (this.isList) {
+      this.viewType ='apps';
+    } else {
+     this.viewType = 'list';
+    }
+  }
 
     getHouseList() {
 
@@ -145,9 +160,6 @@ export class HouselistSearch {
 
 
     }
-
-
-
 
 
 

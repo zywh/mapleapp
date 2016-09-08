@@ -5,9 +5,11 @@ import {HouselistSearch} from '../houselist-search/houselist-search';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 // import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {UserData} from '../../providers/user-data';
+import {HouseList} from '../../components/house-list/house-list';
 
 @Component({
   templateUrl: 'build/pages/favorite/favorite.html',
+  directives: [HouseList]
 })
 export class FavoritePage {
   private favList;

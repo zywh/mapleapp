@@ -46,10 +46,8 @@
 <div *ngIf="!isList">
 
 
-  <ion-card class="house_card" *ngFor="let house of houselist">
-    <!--<img [src]="imgHost + house.CoverImg" />
-          <div class="house_desc" text-left text-nowrap>-->
- 
+  <ion-card  class="house_card" *ngFor="let house of houselist">
+   
    
     <img tappable  [src]="imgHost + house.CoverImg" (click)="gotoHouseDetail(house.MLS)" />
      <ion-item>
@@ -59,10 +57,7 @@
       <p> {{house.HouseType}} {{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨</p>
      
     </ion-item>
-<!--    
-    <ion-card-content>
-   
-    </ion-card-content>-->
+
     <ion-row>
       <ion-col>
         <button primary clear small (click)="userData.favWrapper(house.MLS,'houseFav')" *ngIf="!fav">

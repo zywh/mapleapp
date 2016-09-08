@@ -280,8 +280,10 @@ export class MapSearchPage {
 
 
       if ((this.markerType == 'house') && (this.totalCount > 0)) {
-        //this.nav.push(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost })
-        let modal = this.modalc.create(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost });
+       
+        //let modal = this.modalc.create(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost });
+        let modal = this.modalc.create(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost });
+       
         modal.present();
 
       } else {
