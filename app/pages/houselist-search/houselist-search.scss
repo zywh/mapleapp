@@ -6,8 +6,13 @@
         min-height: 7.6rem;
     }
 
-ion-col {  padding: 0 0 0 5px;}
+    ion-col {  padding: 0 0 0 5px;}
 
-ion-label {  margin: 5px 5px 0px 0; }
+    ion-label {  margin: 5px 5px 0px 0; }
+
+
+    ion-card img {
+            max-height: 200px;
+    }
 
 }
