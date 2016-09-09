@@ -120,6 +120,7 @@ export class MapSearchPage {
   initMap() {
 
     this.mapInitialised = true;
+   
     let loading = this.loadingc.create({
       content: '加载地图...'
     });
@@ -192,12 +193,6 @@ export class MapSearchPage {
 
 
 
-  ngAfterViewInit(): void {
-    // let mapLoaded = this.initMap();
-    // console.log("NG Afterviewinit")
-  }
-
-
   ionViewWillEnter() {
     let optionType = (this.mapType == 0) ? 'houseSearch' : 'schoolSearch';
 
@@ -215,11 +210,16 @@ export class MapSearchPage {
   }
 
   ionViewDidEnter() {
+    
     if (!this.mapInitialised) {
-      let mapLoaded = this.initMap();
+    
+      setTimeout(() => {
+       let mapLoaded = this.initMap();
+     }, 300);
+      
 
     }
-    console.log("Mappage did enter");
+   
 
 
   }
@@ -239,7 +239,7 @@ export class MapSearchPage {
 
   openModal() {
     this.lockMapListener = true;
-    let modal = this.modalc.create(this.optionPage, { data: this.selectOptions });
+    let modal = this.modalc.create(this.optionPage, { data: this.selectOptions ,type: this.mapType});
     modal.onDidDismiss(data => {
       this.selectOptions = data;
       this.lockMapListener = false;
@@ -337,76 +337,8 @@ export class MapSearchPage {
 
   }
 
-  // resetItems() {
-  //   this.cityItems = [];
-  //   this.addressItems = [];
-  //   this.mlsItems = [];
-  //   this.schoolItems = [];
-
-  // }
-
-
-  // itemTapped(item, type) {
-  //   //this.searchInFocus = false;
-  //   let center = new google.maps.LatLng(item.lat, item.lng);
-
-  //   this.currentDiv = '';
-  //   this.queryText = '';
-  //   console.log("Set Center and clear text");
-  //   if (type == 1) {
-  //     this.setLocation(center, this.defaultZoom, true);
-  //     if (this.auth.authenticated()) {
-  //       this.userData.saveCenter('recentCenter', item.value, item.lat, item.lng);
-  //     }
-
-  //   } else if (type == 2) {
-  //     this.nav.push(HouseDetailPage, { id: item.id })
-  //   }
-
-
-  // }
-  // //auto complete REST CAll
-
-  // getItems(ev) {
-
-  //   this.resetItems();
-  //   let val = ev.target.value;
-
-  //   if (val && val.trim() != '') {
-  //     this.currentDiv = 'searchlist';
-  //     //Call REST and generate item object
-  //     this.mapleconf.load().then(data => {
-  //       let restUrl = data.getCitylistDataRest;
-  //       if (this.mapType == 1) {
-  //         restUrl = data.getSchoolAcDataRest
-  //       }
-  //       this.mapleRestData.load(restUrl, { term: val }).subscribe(
-
-  //         data => {
-  //           if (data.hasOwnProperty("CITY")) {
-  //             this.cityItems = data.CITY;
-
-  //           };
-
-  //           if (data.hasOwnProperty("MLS")) {
-  //             this.mlsItems = data.MLS;
-
-  //           }
-  //           if (data.hasOwnProperty("ADDRESS")) {
-  //             this.addressItems = data.ADDRESS;
-
-  //           }
-  //           if (data.hasOwnProperty("SCHOOL")) {
-  //             this.schoolItems = data.SCHOOL;
-
-  //           }
-
-  //         }); //end of callback
-
-  //       //}
-  //     })
-  //   }
-  // }
+ 
+ 
 
   //SetCenter and Zoom if location button is clicked
   setCenter(isMarker) {

@@ -11,11 +11,12 @@ import {PostPage} from '../post/post';
 import {ProfilePage} from '../profile/profile';
 import {AuthService} from '../../providers/auth/auth';
 import {HouseList} from '../../components/house-list/house-list';
+import {Search} from '../../components/search/search';
 
 @Component({
   //selector: 'house-list',
   templateUrl: 'build/pages/home/home.html',
-  directives: [HouseList]
+  directives: [HouseList,Search]
 })
 export class HomePage {
   private projects: Object;
@@ -180,32 +181,16 @@ export class HomePage {
     //this.searchQuery = '';
   }
 
-  // sGetItems(searchbar) {
-
-  //   this.resetItems();
-  //   this.currentDiv = 'sSearchlist';
-
-  //   if (this.sQueryText == '') {
-  //     return;
-  //   } else {
-  //     let parm = { term: this.sQueryText };
-  //     //Call REST and generate item object
-  //     this.mapleRestData.load('index.php?r=ngget/getSchoolAutoComplete', parm).subscribe(
-  //       data => {
-  //         if (data.hasOwnProperty("CITY")) {
-  //           this.scityItems = data.CITY;
-
-  //         };
-
-  //         if (data.hasOwnProperty("SCHOOL")) {
-  //           this.schoolItems = data.SCHOOL;
-
-  //         }
-
-  //       }); //end of callback
-  //     //this.items = ["city", "address", "MLS"];
-  //   }
-  // }
+   searchSelection(e){
+        console.log(e);
+        if (e.type == 'CITY'){
+          this.events.publish('map:center', { lat: e.lat, lng: e.lng, type: 'SCHOOL' });
+        }else {
+           this.nav.push(HouseDetailPage, { id: e.id });
+        }
+      
+       
+    }
 
 
 

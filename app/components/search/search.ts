@@ -37,7 +37,9 @@ export class Search {
     private events: Events
 
   ) {
-    this.searchPlaceHolder = (this.mapType == 0)?'城市/地址/MLS#':'城市/学校'
+    console.log("maptype:" + this.mapType);
+    this.mapType = 0;
+    this.searchPlaceHolder = (this.mapType == 0)?'城市/地址/MLS#':'城市/学校';
   }
   resetItems() {
     this.cityItems = [];

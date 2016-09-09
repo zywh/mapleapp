@@ -29,6 +29,7 @@ export class SelectOptionModal {
     //selectOptions: Object;
     selectOptions: Object;
     private selectUnit: Boolean = true;
+    private mapType;
     private unit;
     constructor(
 
@@ -42,6 +43,7 @@ export class SelectOptionModal {
     ) {
 
         this.selectOptions = params.get('data');
+        this.mapType = params.get('type');
         this.unit = 10;
         //this.getUserSelections();
         this.listenEvents();
