@@ -1,4 +1,4 @@
-import { Component, Input,Output,EventEmitter } from '@angular/core';
+import { Component,Input,Output,EventEmitter } from '@angular/core';
 import {UserData} from '../../providers/user-data';
 import {HouseDetailPage} from '../../pages/house-detail/house-detail';
 import { NavController, ModalController, Events} from 'ionic-angular';
@@ -37,10 +37,15 @@ export class Search {
     private events: Events
 
   ) {
-    console.log("maptype:" + this.mapType);
-    this.mapType = 0;
-    this.searchPlaceHolder = (this.mapType == 0)?'城市/地址/MLS#':'城市/学校';
+   
   }
+
+
+  ngOnInit() { //Need wait after constructor
+      this.searchPlaceHolder = (this.mapType == 0)?'城市/地址/MLS#':'城市/学校';
+  }
+
+
   resetItems() {
     this.cityItems = [];
     this.addressItems = [];

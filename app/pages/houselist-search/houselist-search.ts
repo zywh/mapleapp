@@ -8,19 +8,6 @@ import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {AuthService} from '../../providers/auth/auth';
 import {HouseList} from '../../components/house-list/house-list';
 
-interface selectOptionsObj {
-    selectPrice?: String,
-    selectType?: Number,
-    selectBeds?: Number,
-    selectBaths?: Number,
-    selectSR?: Boolean,
-    selectHousesize?: String,
-    selectLandsize?: String,
-    selectListType?: Boolean,
-    selectDate?: Number
-}
-
-
 
 @Component({
     templateUrl: 'build/pages/houselist-search/houselist-search.html',
@@ -35,20 +22,11 @@ export class HouselistSearch {
     private pageIndex: number = 0;
     private pageTotal: number = 1;
     private isList: boolean = true;
-    //    // private selectOptions = {
-    //         selectSR: true,
-    //         selectBaths: 0,
-    //         selectBeds: 0,
-    //         selectHousesize: { lower: 0, upper: 4000 },
-    //         selectLandsize: { lower: 0, upper: 43560 },
-    //         selectPrice: { lower: 0, upper: 600 },
-    //         selectType: '',
-    //         selectListType: true,
-    //         selectDate: 0
-
-    //     }
     private selectOptions;
     private viewType: string = 'apps';
+    private sortType: string = 'Price';
+    private sortOrder: number = 0;
+    private listType: string;
     private currentHouseList; //Hold list of all houses on current map
 
     constructor(
@@ -62,15 +40,14 @@ export class HouselistSearch {
         private actionc: ActionSheetController
 
 
+
     ) {
 
         this.selectOptions = parms.data.searchOptions;
         this.bounds = parms.data.bounds;
         this.currentHouseList = parms.data.list;
         this.imgHost = parms.data.imgHost;
-
-
-
+        this.listType = parms.data.listType;
 
     }
 
@@ -78,19 +55,14 @@ export class HouselistSearch {
 
     //first time view is entered. add listener
     ionViewWillEnter() {
-        if (!this.imgHost) {
+        if (this.listType = 'grid') {
             this.getHouseList();
         } else {
             this.totalCount = this.currentHouseList.length;
         }
 
     }
-    ionViewDidEnter() {
-
-    }
-
-    ionViewLoaded() { }
-
+ 
 
     gotoHouseDetail(mls) {
         this.nav.pop().then(() => this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList }))
@@ -116,7 +88,9 @@ export class HouselistSearch {
                     role: 'destructive',
                     handler: () => {
                         actionSheet.dismiss().then(res => {
-                            this.sort('Price', 1);
+                            this.sortType = 'Price';
+                            this.sortOrder = 1;
+                            this.sort();
                         })
 
                     }
@@ -126,7 +100,9 @@ export class HouselistSearch {
                     role: 'destructive',
                     handler: () => {
                         actionSheet.dismiss().then(res => {
-                            this.sort('Price', 0);
+                            this.sortType = 'Price';
+                            this.sortOrder = 0;
+                            this.sort();
                         })
 
                     }
@@ -136,7 +112,9 @@ export class HouselistSearch {
                     role: 'destructive',
                     handler: () => {
                         actionSheet.dismiss().then(res => {
-                            this.sort('ListDate', 1);
+                            this.sortType = 'ListDate';
+                            this.sortOrder = 1;
+                            this.sort();
                         })
 
                     }
@@ -146,7 +124,9 @@ export class HouselistSearch {
                     role: 'destructive',
                     handler: () => {
                         actionSheet.dismiss().then(res => {
-                            this.sort('Beds', 1);
+                            this.sortType = 'Beds';
+                            this.sortOrder = 1;
+                            this.sort();
                         })
 
                     }
@@ -168,26 +148,30 @@ export class HouselistSearch {
 
     }
 
-    sort(type, order) {
+    sort() {
+        if (this.listType == 'house') {
+            this.currentHouseList.sort(function (a, b) {
+                let an, bn;
+                if (this.sortType == 'ListDate') {
+                    an = new Date(a.ListDate);
+                    bn = new Date(b.ListDate);
+                } else {
+                    an = parseFloat(a[this.sortType]);
+                    bn = parseFloat(b[this.sortType])
+                }
+                if (this.sortOrder == 0) { //ascend
 
-        this.currentHouseList.sort(function (a, b) {
-            let an, bn;
-            if (type == 'ListDate') {
-                an = new Date(a.ListDate);
-                bn = new Date(b.ListDate);
-            } else {
-                an = parseFloat(a[type]);
-                bn = parseFloat(b[type])
-            }
-            if (order == 0) { //ascend
-
-                return an - bn;
-            } else {
-                return bn - an;
-            }
+                    return an - bn;
+                } else {
+                    return bn - an;
+                }
 
 
-        });
+            });
+        } else { //grid view . Need run gethouse
+            this.pageIndex = 0;  //reset pageIndex
+            this.getHouseList();
+        }
 
     }
 
@@ -215,7 +199,7 @@ export class HouselistSearch {
 
     getHouseList() {
 
-
+        console.log(this.sortType);
         let HouseArray = [];
         let searchParms = {
             bounds: this.bounds,
@@ -226,7 +210,9 @@ export class HouselistSearch {
             houseroom: this.selectOptions.selectBeds,
             housearea: this.selectOptions.selectHousesize,
             houseground: this.selectOptions.selectLandsize,
-            housedate: this.selectOptions.selectDate
+            housedate: this.selectOptions.selectDate,
+            sortType: this.sortType,
+            sortOrder: this.sortOrder
 
         };
 

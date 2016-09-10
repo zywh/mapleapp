@@ -6,6 +6,7 @@ import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {UserData} from '../../providers/user-data';
 import {AuthService} from '../../providers/auth/auth';
+import {Search} from '../../components/search/search';
 
 interface selectOptionsObj {
     selectType?: Boolean,
@@ -15,7 +16,8 @@ interface selectOptionsObj {
 }
 
 @Component({
-    templateUrl: 'build/pages/school-map/schoolmap-option-modal.html'
+    templateUrl: 'build/pages/school-map/schoolmap-option-modal.html',
+    directives: [Search]
 
 })
 export class SchoolSelectOptionModal {
@@ -38,7 +40,10 @@ export class SchoolSelectOptionModal {
 
     }
 
-
+    searchSelection(e){
+        console.log(e);
+        this.selectOptions['selectSearch'] = e;
+    }
 
     resetSelections() {
         this.selectOptions = {

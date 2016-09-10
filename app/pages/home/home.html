@@ -7,30 +7,12 @@
      </ion-buttons>-->
     <!--<ion-title>枫之都</ion-title>-->
   
-  <search mapType="0" (searchInput)="searchSelection($event)"></search>
+  <search mapType='0'  (searchInput)="searchSelection($event)"></search>
   
   </ion-navbar>
 </ion-header>
 
 <ion-content class="home">
-
-  <!--<ion-searchbar 
-    (ionInput)="hGetItems($event)" placeholder="房源搜索:城市/地址/MLS#"></ion-searchbar>
-
-  <div class="search_list" *ngIf="currentDiv == 'hSearchlist'">
-    <ion-item padding *ngFor="let item of cityItems" (click)="itemTapped(item,1)">
-      <button light clear> <ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }}</span></button>
-      <ion-badge item-right>城市</ion-badge>
-    </ion-item>
-    <ion-item padding *ngFor="let item of mlsItems" (click)="itemTapped(item,1)">
-      <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }},{{item.city}}</span></button>
-      <ion-badge item-right>MLS:{{item.price}}万</ion-badge>
-    </ion-item>
-    <ion-item padding *ngFor="let item of addressItems" (click)="itemTapped(item,1)">
-      <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }},{{item.city}}</span></button>
-      <ion-badge item-right>地址:{{item.price}}万</ion-badge>
-    </ion-item>
-  </div>-->
 
 
 

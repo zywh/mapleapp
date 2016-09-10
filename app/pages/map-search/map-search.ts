@@ -120,7 +120,7 @@ export class MapSearchPage {
   initMap() {
 
     this.mapInitialised = true;
-   
+
     let loading = this.loadingc.create({
       content: '加载地图...'
     });
@@ -210,16 +210,16 @@ export class MapSearchPage {
   }
 
   ionViewDidEnter() {
-    
+
     if (!this.mapInitialised) {
-    
+
       setTimeout(() => {
-       let mapLoaded = this.initMap();
-     }, 300);
-      
+        let mapLoaded = this.initMap();
+      }, 300);
+
 
     }
-   
+
 
 
   }
@@ -239,16 +239,18 @@ export class MapSearchPage {
 
   openModal() {
     this.lockMapListener = true;
-    let modal = this.modalc.create(this.optionPage, { data: this.selectOptions ,type: this.mapType});
+    let modal = this.modalc.create(this.optionPage, { data: this.selectOptions, type: this.mapType });
     modal.onDidDismiss(data => {
       this.selectOptions = data;
       this.lockMapListener = false;
+      console.log("Option Modal is dismissed");
       console.log(data);
       if (this.selectOptions.selectSearch.type == 'CITY') {
         let center = new google.maps.LatLng(this.selectOptions.selectSearch.lat, this.selectOptions.selectSearch.lng);
         this.setLocation(center, this.defaultZoom, true);
+        console.log("Set city center");
       }
-
+      console.log("change map" + this.mapType);
       this.changeMap(this.mapType);
 
     });
@@ -280,17 +282,17 @@ export class MapSearchPage {
 
 
       if ((this.markerType == 'house') && (this.totalCount > 0)) {
-       
+
         //let modal = this.modalc.create(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost });
-        let modal = this.modalc.create(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost });
-       
+        let modal = this.modalc.create(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost, listType: 'house' });
+
         modal.present();
 
       } else {
 
         //this.nav.push(HouselistSearch, { opts: this.selectOptions, bounds: this._bounds });
         console.log(this.selectOptions);
-        let modal = this.modalc.create(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds });
+        let modal = this.modalc.create(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds, listType: 'grid' });
         modal.present();
 
 
@@ -337,8 +339,8 @@ export class MapSearchPage {
 
   }
 
- 
- 
+
+
 
   //SetCenter and Zoom if location button is clicked
   setCenter(isMarker) {
@@ -527,9 +529,7 @@ export class MapSearchPage {
   changeMap(type) {
 
     if (this.lockMapListener == false) {
-
-      //this.currentDiv = ''; //reset all popup
-      // let loading = Loading.create({
+      console.log("change map" + type);
       let loading = this.loadingc.create({
         content: '加载数据...'
       });
