@@ -9,7 +9,7 @@
     <ion-searchbar primary  [(ngModel)]="queryText"  (ionInput)="getItems($event)" (ionFocus)="searchInFocus()"
     [placeholder]="searchPlaceHolder"></ion-searchbar>
   
-    <div class="search_list" *ngIf="currentDiv == 'searchlist'">
+    <div class="map-search" *ngIf="currentDiv == 'searchlist'">
     <ion-item tappable  padding *ngFor="let item of cityItems" (click)="itemTapped(item,1)">
       <button light clear> <ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }}</span></button>
       <ion-badge item-right>城市</ion-badge>
@@ -23,7 +23,7 @@
       <ion-badge item-right>{{item.price}}</ion-badge>
     </ion-item>
     <ion-item tappable  padding *ngFor="let item of schoolItems" (click)="itemTapped(item,1)">
-      <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.school }}</span></button>
+      <button light clear><ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }}</span></button>
       <ion-badge item-right>排名:{{item.paiming}}</ion-badge>
     </ion-item>
   </div>

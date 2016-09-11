@@ -17,7 +17,6 @@
   <allow-intent href="geo:*"/>
   <allow-intent href="maps:*"/>
   <allow-navigation href="http://*/*"/>
-  
   <platform name="android">
     <allow-intent href="market:*"/>
     <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png"/>
@@ -68,7 +67,6 @@
   <feature name="StatusBar">
     <param name="ios-package" onload="true" value="CDVStatusBar"/>
   </feature>
- 
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
@@ -89,5 +87,4 @@
   <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
   <plugin name="cordova-plugin-whitelist" spec="~1.0.0"/>
   <plugin name="cordova-plugin-splashscreen" spec="https://github.com/apache/cordova-plugin-splashscreen.git"/>
- 
 </widget>

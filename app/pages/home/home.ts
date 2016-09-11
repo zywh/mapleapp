@@ -16,11 +16,12 @@ import {Search} from '../../components/search/search';
 @Component({
   //selector: 'house-list',
   templateUrl: 'build/pages/home/home.html',
-  directives: [HouseList,Search]
+  directives: [HouseList, Search]
 })
 export class HomePage {
   private projects: Object;
   private postListRest;
+  private projectRest;
   private post1;
   private favList;
   private hQueryText: String = '';
@@ -60,8 +61,8 @@ export class HomePage {
     speed: 4000,
     autoplay: 300
   };
-  
-  
+
+
 
   fav() {
 
@@ -89,7 +90,9 @@ export class HomePage {
     this.mapleConf.load().then(data => {
       //this.postListRest = data.postRest;
       this.houseRestURL = data.mapHouseRest;
-      this.getProjects(data.projectRest);
+      this.projectRest = data.projectRest;
+
+      //this.getProjects();
       // this.getPosts(data.postListRest, 6);
       this.searchHouse('nearby');
 
@@ -106,8 +109,8 @@ export class HomePage {
     this.mapleConf.load().then(data => {
       //this.postListRest = data.postRest;
       this.houseRestURL = data.mapHouseRest;
-      this.getProjects(data.projectRest);
-      this.getPosts(data.postListRest, 6);
+     // this.getProjects(data.projectRest);
+     // this.getPosts(data.postListRest, 6);
 
 
     })
@@ -151,10 +154,12 @@ export class HomePage {
   gotoHouseDetail(mls, list) {
     this.nav.push(HouseDetailPage, { id: mls, list: list });
   }
-  getProjects(url) {
-    this.mapleRestData.load(url, this.parms).subscribe(
-      data => { this.projects = data; }
-    );
+  getProjects() {
+    this.mapleRestData.load(this.projectRest, this.parms).subscribe(
+      data => { this.projects = data; 
+        console.log("get projects");
+        console.log(data);
+      } );
 
   }
 
@@ -181,16 +186,17 @@ export class HomePage {
     //this.searchQuery = '';
   }
 
-   searchSelection(e){
-        console.log(e);
-        if (e.type == 'CITY'){
-          this.events.publish('map:center', { lat: e.lat, lng: e.lng, type: 'SCHOOL' });
-        }else {
-           this.nav.push(HouseDetailPage, { id: e.id });
-        }
-      
-       
+  searchSelection(e) {
+    console.log(e);
+    if (e.type == 'CITY') {
+     this.events.publish('map:center', { lat: e.lat, lng: e.lng });
+
+    } else {
+      this.nav.push(HouseDetailPage, { id: e.id });
     }
+
+
+  }
 
 
 

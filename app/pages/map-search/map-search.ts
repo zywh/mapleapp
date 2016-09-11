@@ -124,7 +124,7 @@ export class MapSearchPage {
     let loading = this.loadingc.create({
       content: '加载地图...'
     });
-    loading.present();
+    //loading.present();
 
 
     //let mapEle = document.getElementById('map');
@@ -170,7 +170,7 @@ export class MapSearchPage {
 
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-      loading.dismiss();
+      //loading.dismiss();
       google.maps.event.addListener(this.map, 'idle', () => {
         this.changeMap(this.mapType);
       });
@@ -209,14 +209,12 @@ export class MapSearchPage {
 
   }
 
-  ionViewDidEnter() {
+
+ ionViewDidEnter() {
 
     if (!this.mapInitialised) {
 
-      setTimeout(() => {
         let mapLoaded = this.initMap();
-      }, 300);
-
 
     }
 
@@ -224,17 +222,7 @@ export class MapSearchPage {
 
   }
 
-  // ionViewDidLeave() {
-  //   console.log("Mappage Did Leave");
-  // }
-
-  // ionViewWillLeave() {
-  //   console.log("Mappage will Leave");
-  // }
-
-  // ionViewWillUnload() {
-  //   console.log("Mappage will Unload");
-  // }
+ 
 
 
   openModal() {
@@ -245,12 +233,12 @@ export class MapSearchPage {
       this.lockMapListener = false;
       console.log("Option Modal is dismissed");
       console.log(data);
-      if (this.selectOptions.selectSearch.type == 'CITY') {
+      if ( this.selectOptions.hasOwnProperty('selectSearch')) {
         let center = new google.maps.LatLng(this.selectOptions.selectSearch.lat, this.selectOptions.selectSearch.lng);
         this.setLocation(center, this.defaultZoom, true);
         console.log("Set city center");
       }
-      console.log("change map" + this.mapType);
+      
       this.changeMap(this.mapType);
 
     });
