@@ -233,7 +233,8 @@ export class MapSearchPage {
       this.lockMapListener = false;
       console.log("Option Modal is dismissed");
       console.log(data);
-      if ( this.selectOptions.hasOwnProperty('selectSearch')) {
+      //if ( this.selectOptions.hasOwnProperty('selectSearch')) {
+      if ( this.selectOptions.selectSearch.type == 'CITY') {
         let center = new google.maps.LatLng(this.selectOptions.selectSearch.lat, this.selectOptions.selectSearch.lng);
         this.setLocation(center, this.defaultZoom, true);
         console.log("Set city center");

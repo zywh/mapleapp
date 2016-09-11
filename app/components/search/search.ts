@@ -1,4 +1,4 @@
-import { Component,Input,Output,EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import {UserData} from '../../providers/user-data';
 import {HouseDetailPage} from '../../pages/house-detail/house-detail';
 import { NavController, ModalController, Events} from 'ionic-angular';
@@ -27,6 +27,7 @@ export class Search {
   private currentDiv;
   private queryText;
   private searchPlaceHolder;
+  //private defaultItems;
 
 
   constructor(
@@ -37,12 +38,12 @@ export class Search {
     private events: Events
 
   ) {
-   
+
   }
 
 
   ngOnInit() { //Need wait after constructor
-      this.searchPlaceHolder = (this.mapType == 0)?'城市/地址/MLS#':'城市/学校';
+    this.searchPlaceHolder = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
   }
 
 
@@ -63,14 +64,38 @@ export class Search {
     this.queryText = '';
     this.searchPlaceHolder = item.value;
     this.searchInput.emit(item);
-   
-   
+
+
 
   }
   //auto complete REST CAll
- searchInFocus(){
-    this.queryText ='';
- }
+  searchInFocus() {
+    this.queryText = '';
+    this.currentDiv = 'searchlist';
+    this.resetItems();
+   // this.defaultItems();
+
+  }
+  searchBlur(){
+     this.currentDiv = '';
+  }
+
+  defaultItems() {
+    this.cityItems = [
+      {
+
+        id: "Mississauga",
+        lat: "43.589045",
+        lng: "-79.644120",
+        type: "CITY",
+        value: "Mississauga, Ontario"
+      }
+
+    ]
+
+
+
+  }
   getItems(ev) {
 
     this.resetItems();
@@ -89,6 +114,7 @@ export class Search {
           data => {
             if (data.hasOwnProperty("CITY")) {
               this.cityItems = data.CITY;
+              console.log(this.cityItems);
 
             };
 
