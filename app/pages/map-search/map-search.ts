@@ -339,11 +339,15 @@ export class MapSearchPage {
 
       this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
       if (this.auth.authenticated()) {
-        this.userData.addCenterAlert(data['lat'], data['lng'], "保存中心位置到我的收藏");
+        this.userData.addCenterAlert(data['lat'], data['lng'], "保存中心位置到我的收藏").then(res=>{
+           this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
+
+        });
       } else {
         this.locateLock = false;
+         this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
       }
-      this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
+     
 
     })
   }

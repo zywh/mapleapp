@@ -98,7 +98,13 @@ export class UserData {
         }
       ]
     });
-    prompt.present();
+
+    return new Promise(resolve => {
+    prompt.present().then(res=>{
+      console.log("alert is dismissed");
+      return resolve(res);
+    });
+    })
   }
 
 

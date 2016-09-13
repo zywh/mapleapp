@@ -84,8 +84,8 @@ export class HomePage {
   }
 
 
-  // ngOnInit() {
-  ionViewWillEnter() {
+  ngOnInit() {
+ // ionViewWillEnter() {
 
     this.mapleConf.load().then(data => {
       //this.postListRest = data.postRest;

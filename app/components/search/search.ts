@@ -58,11 +58,12 @@ export class Search {
 
   itemTapped(item, type) {
     //this.searchInFocus = false;
-    let center = new google.maps.LatLng(item.lat, item.lng);
+    //let center = new google.maps.LatLng(item.lat, item.lng);
 
     this.currentDiv = '';
-    this.queryText = '';
-    this.searchPlaceHolder = item.value;
+    //this.queryText = '';
+    //this.searchPlaceHolder = item.value;
+    console.log("item tapped");
     this.searchInput.emit(item);
 
 
@@ -73,11 +74,11 @@ export class Search {
     this.queryText = '';
     this.currentDiv = 'searchlist';
     this.resetItems();
-   // this.defaultItems();
+   //this.defaultItems();
 
   }
   searchBlur(){
-     this.currentDiv = '';
+      //this.resetItems();
   }
 
   defaultItems() {
