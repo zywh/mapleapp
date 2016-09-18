@@ -190,8 +190,8 @@ export class MapleConf {
   }
 
   getListDays(listDate) { // yyyy-mm-dd
-    let date1 = new Date(listDate);
-    let date2 = new Date();
+    let date1:any = new Date(listDate);
+    let date2:any = new Date();
     let diffdays = Math.floor((date2 - date1) / (1000*60*60*24));
  
     return diffdays + "天";
