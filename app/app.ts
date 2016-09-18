@@ -17,6 +17,15 @@ import {HouselistSearch} from './pages/houselist-search/houselist-search'
 import {MapleConf} from './providers/maple-rest-data/maple-config';
 import {AuthHttp, AuthConfig} from 'angular2-jwt';
 import {AuthService} from './providers/auth/auth';
+import {UpdateService} from './providers/update/update';
+import {provideCloud, CloudSettings} from '@ionic/cloud-angular';
+
+const cloudSettings: CloudSettings = {
+  // "枫之都" @ionic.io
+  'core': {
+    'app_id': 'aab7d6de'
+  }
+};
 
 interface PageObj {
   title: string;
@@ -59,13 +68,15 @@ class MapleApp {
     platform: Platform,
     mapleconf: MapleConf,
     public connectivity: Connectivity,
-    private auth: AuthService
+    private auth: AuthService,
+    private update: UpdateService
     //confData: ConferenceData
   ) {
     // Call any initial plugins when ready
     platform.ready().then(() => {
       StatusBar.styleDefault();
       Splashscreen.hide();
+      update.newUpdate();
     });
 
     // load the conference data
@@ -168,7 +179,9 @@ ionicBootstrap(
     },
     deps: [Http]
   }),
-  AuthService],
+  AuthService,
+  provideCloud(cloudSettings),
+  UpdateService],
   {
     tabbarPlacement: "bottom",
     //backButtonText: "返回",

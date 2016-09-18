@@ -15,7 +15,7 @@ export class UpdateService {
       private alertc: AlertController) {
   }
 
-  loadNewSnapshotAlert() {
+  newUpdateAlert() {
     let alert = this.alertc.create({
       title: '软件更新可用',
       message: '新版本已下载，重启应用？',
@@ -41,12 +41,12 @@ export class UpdateService {
   }
 
 
-  loadNewSnapshot() {
+  newUpdate() {
     this.deploy.check().then((snapshotAvailable: boolean) => {
         if (snapshotAvailable) {
           this.deploy.download().then(() => {
             this.deploy.extract().then(() => {
-              this.loadNewSnapshotAlert();
+              this.newUpdateAlert();
             });
           });
         }
