@@ -76,7 +76,7 @@ class MapleApp {
     platform.ready().then(() => {
       StatusBar.styleDefault();
       Splashscreen.hide();
-      update.newUpdate();
+      this.update.newUpdate();
     });
 
     // load the conference data
