@@ -24,7 +24,7 @@ export class UpdateService {
           text: '取消',
           role: 'cancel',
           handler: () => {
-            console.log('loadSnapshotAlert Cancel clicked');
+            console.log('newUpdateAlert Cancel clicked');
           }
         },
         {
