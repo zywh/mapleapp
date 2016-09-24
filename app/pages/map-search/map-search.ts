@@ -55,7 +55,8 @@ export class MapSearchPage {
   public isListShow: boolean = false;
   private markerType;
   private imgHost: String;
-  private listModal: ViewController;
+  //private listModal: ViewController;
+  private listModal;
   private defaultZoom: Number = 14;
   private _bounds;
   private locateLock: Boolean = false; //lock location button if there is input popup
@@ -80,6 +81,7 @@ export class MapSearchPage {
   private mapType: Number = 1; // 0 for house and 1 for school
   private markerDrop;
   private lockMapListener: Boolean = false;
+  
 
   constructor(
     public nav: NavController,
@@ -112,6 +114,11 @@ export class MapSearchPage {
     this.events.subscribe('locate:dismiss', () => {
       this.locateLock = false;
     });
+     this.events.subscribe('schoolmap:center', () => {
+       console.log("List modal dismiss")
+      this.listModal.dismiss();
+    });
+
 
 
 
@@ -267,22 +274,26 @@ export class MapSearchPage {
 
   openList(ev) {
 
+
     if (this.mapType == 0) {
 
 
       if ((this.markerType == 'house') && (this.totalCount > 0)) {
 
         //let modal = this.modalc.create(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost });
-        let modal = this.modalc.create(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost, listType: 'house' });
+        //let modal = this.modalc.create(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost, listType: 'house' });
+        this.listModal = this.modalc.create(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost, listType: 'house' });
 
-        modal.present();
+        this.listModal.present();
 
       } else {
 
         //this.nav.push(HouselistSearch, { opts: this.selectOptions, bounds: this._bounds });
         console.log(this.selectOptions);
-        let modal = this.modalc.create(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds, listType: 'grid' });
-        modal.present();
+        //let modal = this.modalc.create(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds, listType: 'grid' });
+        //modal.present();
+       this.listModal = this.modalc.create(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds, listType: 'grid' });
+        this.listModal.present();
 
 
       }

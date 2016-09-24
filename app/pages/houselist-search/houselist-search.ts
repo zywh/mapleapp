@@ -1,4 +1,4 @@
-import {Modal, Loading, NavController, AlertController, NavParams, ViewController, ActionSheetController} from 'ionic-angular';
+import {Modal, Loading, NavController, AlertController, NavParams, ViewController, ActionSheetController, Events} from 'ionic-angular';
 import { NgZone, Component} from '@angular/core';;
 import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
@@ -37,6 +37,7 @@ export class HouselistSearch {
         private userData: UserData,
         private auth: AuthService,
         private alertc: AlertController,
+        private events: Events,
         private actionc: ActionSheetController
 
 
@@ -48,9 +49,19 @@ export class HouselistSearch {
         this.currentHouseList = parms.data.list;
         this.imgHost = parms.data.imgHost;
         this.listType = parms.data.listType;
+        this.listenEvents();
 
     }
+    listenEvents() {
 
+        this.events.subscribe('schoolmap:center', () => {
+            this.nav.pop;
+        });
+
+
+
+
+    }
 
 
     //first time view is entered. add listener
@@ -62,7 +73,7 @@ export class HouselistSearch {
         }
 
     }
- 
+
 
     gotoHouseDetail(mls) {
         this.nav.pop().then(() => this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList }))

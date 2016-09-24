@@ -61,12 +61,10 @@ export class Search {
     //let center = new google.maps.LatLng(item.lat, item.lng);
 
     this.currentDiv = '';
-    //this.queryText = '';
-    //this.searchPlaceHolder = item.value;
-    console.log("item tapped");
+    this.queryText = '';
+    this.searchPlaceHolder = item.value;
+    console.log("item tapped:"+this.searchPlaceHolder);
     this.searchInput.emit(item);
-
-
 
   }
   //auto complete REST CAll
