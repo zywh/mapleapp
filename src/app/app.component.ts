@@ -6,14 +6,14 @@ import {StatusBar, Splashscreen} from 'ionic-native';
 import {UserData} from './providers/user-data';
 import {MapleRestData} from './providers/maple-rest-data/maple-rest-data';
 import {Connectivity} from './providers/connectivity/connectivity';
-import {AccountPage} from './pages/account/account';
-import {TabsPage} from './pages/tabs/tabs';
-import {LoginPage} from './pages/login/login';
-import {SignupPage} from './pages/signup/signup';
-import {SettingsPage} from './pages/settings/settings';
-import {ProfilePage} from './pages/profile/profile';
-import {NetworkErrorPage} from './pages/network-error/network-error';
-import {HouselistSearch} from './pages/houselist-search/houselist-search'
+import {AccountPage} from '../pages/account/account';
+import {TabsPage} from '../pages/tabs/tabs';
+import {LoginPage} from '../pages/login/login';
+import {SignupPage} from '../pages/signup/signup';
+import {SettingsPage} from '../pages/settings/settings';
+import {ProfilePage} from '../pages/profile/profile';
+import {NetworkErrorPage} from '../pages/network-error/network-error';
+import {HouselistSearch} from '../pages/houselist-search/houselist-search'
 import {MapleConf} from './providers/maple-rest-data/maple-config';
 import {AuthHttp, AuthConfig} from 'angular2-jwt';
 import {AuthService} from './providers/auth/auth';
