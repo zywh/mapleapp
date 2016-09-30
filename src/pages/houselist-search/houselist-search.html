@@ -1,31 +1,31 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons left>
-      <button class="bar-button-default" (click)="nav.pop()">
+      <button ion-button  (click)="nav.pop()">
     <ion-icon outline name="arrow-back" ></ion-icon>
     {{totalCount}}套 - {{pageIndex + 1}}/{{pageTotal}}页
   </button>
     </ion-buttons>
 
     <ion-buttons end>
-      <button class="bar-button-default" (click)="pagePre()" *ngIf="pageIndex > 0">
+      <button ion-button icon-only  (click)="pagePre()" *ngIf="pageIndex > 0">
         <ion-icon name="arrow-dropleft"></ion-icon>
      </button>
     </ion-buttons>
 
     <ion-buttons end>
-      <button class="bar-button-default" (click)="pageNext()" *ngIf="pageIndex < pageTotal-1">
+      <button ion-button  icon-only (click)="pageNext()" *ngIf="pageIndex < pageTotal-1">
         <ion-icon name="arrow-dropright"></ion-icon>
      </button>
     </ion-buttons>
      <ion-buttons end>
-      <button (click)="sortAction()">
+      <button ion-button icon-only (click)="sortAction()">
           <ion-icon name="swap"></ion-icon>
       </button>
     </ion-buttons>
 
     <ion-buttons end>
-      <button (click)="toggleView()">
+      <button ion-button icon-only (click)="toggleView()">
           <ion-icon [name]="viewType"></ion-icon>
       </button>
     </ion-buttons>
