@@ -1,4 +1,4 @@
-import {Modal, Range, NavParams, Page, ViewController, Events} from 'ionic-angular';
+import {Modal, Range, NavParams, ViewController, Events} from 'ionic-angular';
 import {Component} from '@angular/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
@@ -21,9 +21,7 @@ import {Search} from '../../components/search/search';
 // }
 
 @Component({
-    templateUrl: 'build/pages/map-search/map-option-modal.html',
-    directives: [Search]
-
+    templateUrl: 'map-option-modal.html'
 })
 export class SelectOptionModal {
     //selectOptions: Object;

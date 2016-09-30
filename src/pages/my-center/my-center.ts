@@ -12,7 +12,7 @@ import {UserData} from '../../providers/user-data';
   Ionic pages and navigation.
 */
 @Component({
-  templateUrl: 'build/pages/my-center/my-center.html',
+  templateUrl: 'my-center.html',
 })
 export class MyCenterPage {
   private centerList;

@@ -13,7 +13,7 @@ import {HouseList} from '../../components/house-list/house-list';
 
 
 @Component({
-    templateUrl: 'build/pages/map-search/map-houselist.html',
+    templateUrl: 'map-houselist.html',
      //directives: [HouseList]
 
 })

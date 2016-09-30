@@ -8,7 +8,7 @@ import {cityStats} from './cityStats';
 declare var Highcharts: any;
 
 @Component({
-  templateUrl: 'build/pages/house-city-stats/house-city-stats.html',
+  templateUrl: 'house-city-stats.html',
 })
 export class HouseCityStatsPage {
 

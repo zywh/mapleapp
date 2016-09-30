@@ -1,4 +1,4 @@
-import {ModalController, LoadingController, Events, AlertController, PopoverController, ActionSheet, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
+import {ModalController, LoadingController, Events, AlertController, PopoverController, ActionSheet, MenuController, Platform, NavController, NavParams, ViewController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 import { NgZone, Component, ElementRef, ViewChild} from '@angular/core';;
 import {Connectivity} from '../../providers/connectivity/connectivity';
@@ -22,7 +22,7 @@ declare var RichMarker: any;
 declare var google;
 
 @Component({
-  templateUrl: 'build/pages/map-search/map-search.html',
+  templateUrl: 'map-search.html',
 
 })
 

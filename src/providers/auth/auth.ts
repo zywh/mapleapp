@@ -1,5 +1,5 @@
 
-import {Storage, LocalStorage} from 'ionic-angular';
+import {Storage} from '@ionic/storage';
 import {AuthHttp, JwtHelper, tokenNotExpired} from 'angular2-jwt';
 import {Injectable, NgZone} from '@angular/core';
 import {Observable} from 'rxjs/Rx';
@@ -27,13 +27,14 @@ export class AuthService {
     }
   }
   lock = new Auth0Lock('9fNpEj70wvf86dv5DeXPijTnkLVX5QZi', 'mapleapp.auth0.com', this.options);
-  local: Storage = new Storage(LocalStorage);
   refreshSubscription: any;
   user: Object;
   zoneImpl: NgZone;
+  local: Storage;
 
-  constructor(private authHttp: AuthHttp, zone: NgZone) {
+  constructor(private authHttp: AuthHttp, zone: NgZone, storage: Storage) {
     this.zoneImpl = zone;
+    this.local = storage;
     // Check if there is a profile saved in local storage
     this.local.get('profile').then(profile => {
       this.user = JSON.parse(profile);

@@ -9,7 +9,7 @@ import {ProjectDetailPage} from '../project-detail/project-detail';
 
 //let projects = {};
 @Component({
-    templateUrl: 'build/pages/projects/projects.html'
+    templateUrl: 'projects.html'
 })
 export class ProjectsPage implements OnInit {
     //private nav;

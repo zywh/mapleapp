@@ -11,7 +11,7 @@ import {AuthService} from '../../providers/auth/auth';
 
 
 @Component({
-  templateUrl: 'build/pages/login/login.html'
+  templateUrl: 'login.html'
 })
 export class LoginPage {
 

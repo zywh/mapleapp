@@ -7,7 +7,7 @@ declare var Wechat: any;
 //declare var WeChat: any; //tx-wechat
 
 @Component({
-  templateUrl: 'build/pages/project-detail/project-detail.html'
+  templateUrl: 'project-detail.html'
 })
 export class ProjectDetailPage implements OnInit {
 

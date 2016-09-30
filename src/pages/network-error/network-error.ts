@@ -10,7 +10,7 @@ import {Connectivity} from '../../providers/connectivity/connectivity';
   Ionic pages and navigation.
 */
 @Component({
-  templateUrl: 'build/pages/network-error/network-error.html',
+  templateUrl: 'network-error.html',
 })
 export class NetworkErrorPage {
   constructor(public nav: NavController,

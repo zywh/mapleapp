@@ -10,9 +10,7 @@ import {HouseList} from '../../components/house-list/house-list';
 
 
 @Component({
-    templateUrl: 'build/pages/houselist-search/houselist-search.html',
-    directives: [HouseList]
-
+    templateUrl: 'houselist-search.html'
 })
 export class HouselistSearch {
 

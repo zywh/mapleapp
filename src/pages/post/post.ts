@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams, Platform} from 'ionic-angular';
+import {NavController, NavParams, Platform} from 'ionic-angular';
 import {OnInit, Component} from '@angular/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
@@ -12,8 +12,7 @@ interface Post {
 
 }
 @Component({
-  templateUrl: 'build/pages/post/post.html',
-
+  templateUrl: 'post.html'
 })
 export class PostPage implements OnInit {
   private postRest;
@@ -90,9 +89,5 @@ export class PostPage implements OnInit {
     console.log("Nextpost" + this.nextPost);
     this.getResult(this.postRest, this.nextPost)
   }
-
-
-
-
-
+  
 }

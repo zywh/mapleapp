@@ -1,5 +1,5 @@
-import {Page, NavController, NavParams, AlertController, ToastController, Platform, Slides, Events, ActionSheetController} from 'ionic-angular';
-import {OnInit, Component, ViewChild,ElementRef} from '@angular/core';;
+import {NavController, NavParams, AlertController, ToastController, Platform, Slides, Events, ActionSheetController} from 'ionic-angular';
+import {OnInit, Component, ViewChild,ElementRef} from '@angular/core';
 //import {Geolocation} from 'ionic-native';
 import {SocialSharing} from 'ionic-native';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
@@ -15,7 +15,7 @@ import {AuthService} from '../../providers/auth/auth';
   Ionic pages and navigation.
 */
 @Component({
-	templateUrl: 'build/pages/house-detail/house-detail.html',
+	templateUrl: 'house-detail.html',
 })
 export class HouseDetailPage  {
 	 @ViewChild('maphouse') mapElement: ElementRef;

@@ -4,7 +4,7 @@ import {HouseDetailPage} from '../house-detail/house-detail';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 
 @Component({
-    templateUrl: 'build/pages/map-search/house-popover.html'
+    templateUrl: 'house-popover.html'
 })
 
 export class HousePopover {

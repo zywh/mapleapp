@@ -1,5 +1,5 @@
 //import {Page, NavController} from 'ionic-angular';
-import {Page, NavController, NavParams, Events} from 'ionic-angular';
+import {NavController, NavParams, Events} from 'ionic-angular';
 import {OnInit, Component} from '@angular/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {Http, Headers, RequestOptions} from '@angular/http';
@@ -15,8 +15,7 @@ import {Search} from '../../components/search/search';
 
 @Component({
   //selector: 'house-list',
-  templateUrl: 'build/pages/home/home.html',
-  directives: [HouseList, Search]
+  templateUrl: 'home.html'
 })
 export class HomePage {
   private projects: Object;

@@ -8,8 +8,7 @@ import {UserData} from '../../providers/user-data';
 import {HouseList} from '../../components/house-list/house-list';
 
 @Component({
-  templateUrl: 'build/pages/favorite/favorite.html',
-  directives: [HouseList]
+  templateUrl: 'favorite.html'
 })
 export class FavoritePage {
   private favList;

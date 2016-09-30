@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams, Platform} from 'ionic-angular';
+import {NavController, NavParams, Platform} from 'ionic-angular';
 import {OnInit,Component} from '@angular/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
@@ -12,7 +12,7 @@ interface Post {
 
 }
 @Component({
-  templateUrl: 'build/pages/about/about.html',
+  templateUrl: 'about.html',
  
 })
 export class AboutPage  {

@@ -10,7 +10,7 @@ import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
   Ionic pages and navigation.
 */
 @Component({
-  templateUrl: 'build/pages/help/help.html',
+  templateUrl: 'help.html',
 })
 export class HelpPage {
 

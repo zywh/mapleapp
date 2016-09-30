@@ -15,7 +15,7 @@ interface MapParmObj {
   type?: String
 }
 @Component({
-  templateUrl: 'build/pages/tabs/tabs.html'
+  templateUrl: 'tabs.html'
 })
 export class TabsPage {
   @ViewChild('mcTabs') tabRef: Tabs;
@@ -29,7 +29,7 @@ export class TabsPage {
   stats: any = StatsPage;
   about: any = AboutPage;
   mySelectedIndex: number;
-  mapParms: MapParmObj;
+  private mapParms: MapParmObj;
   private tabMapParms;
   private tabSchoolParms;
   private preload: Boolean = true;

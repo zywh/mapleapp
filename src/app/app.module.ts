@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 import { MapleApp } from './app.component';
 import { Http } from '@angular/http'
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
@@ -15,8 +16,6 @@ import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { HouseList } from '../components/house-list/house-list';
 import { Search } from '../components/search/search';
 
-import { HomePage } from '../pages/home/home';
-
 const cloudSettings: CloudSettings = {
   // "枫之都" @ionic.io
   'core': {
@@ -24,11 +23,9 @@ const cloudSettings: CloudSettings = {
   }
 };
 
-
 @NgModule({
   declarations: [
-    MapleApp,
-    HomePage
+    MapleApp
   ],
   imports: [
     IonicModule.forRoot(MapleApp,   {
@@ -52,10 +49,11 @@ const cloudSettings: CloudSettings = {
       ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MapleApp,
-    HomePage
+    MapleApp
   ],
-  providers: [UserData, 
+  providers: [
+    Storage,
+    UserData, 
     MapleRestData, 
     MapleConf, 
     Connectivity,

@@ -1,6 +1,6 @@
 
 
-import {Modal, Range, NavParams, Page, ViewController, Events} from 'ionic-angular';
+import {Modal, Range, NavParams, ViewController, Events} from 'ionic-angular';
 import {Component} from '@angular/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
@@ -16,9 +16,7 @@ interface selectOptionsObj {
 }
 
 @Component({
-    templateUrl: 'build/pages/school-map/schoolmap-option-modal.html',
-    directives: [Search]
-
+    templateUrl: 'schoolmap-option-modal.html'
 })
 export class SchoolSelectOptionModal {
     private selectOptions: selectOptionsObj;

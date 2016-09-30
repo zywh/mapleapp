@@ -1,4 +1,4 @@
-import {Page, NavController, Modal} from 'ionic-angular';
+import {NavController, Modal} from 'ionic-angular';
 import {OnInit, Component} from '@angular/core';;
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
@@ -11,8 +11,7 @@ declare var Highcharts: any;
 
 
 @Component({
-    templateUrl: 'build/pages/stats/stats.html',
-
+    templateUrl: 'stats.html'
 })
 
 

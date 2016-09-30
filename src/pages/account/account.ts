@@ -1,9 +1,10 @@
-import {Page, NavController, AlertController} from 'ionic-angular';
+import {NavController, AlertController} from 'ionic-angular';
+import {Component} from '@angular/core';
 import {UserData} from '../../providers/user-data';
 import {LoginPage} from '../login/login';
 
-@Page({
-  templateUrl: 'build/pages/account/account.html',
+@Component({
+  templateUrl: 'account.html',
 })
 export class AccountPage {
   username: string;

@@ -1,9 +1,9 @@
 import {ViewController, NavParams, Events} from 'ionic-angular';
-import {Component} from '@angular/core';;
+import {Component} from '@angular/core';
 
 
 @Component({
-    templateUrl: 'build/pages/school-map/school-list-modal.html'
+    templateUrl: 'school-list-modal.html'
 
 })
 export class SchoolListModal {

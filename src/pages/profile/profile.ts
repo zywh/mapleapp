@@ -11,7 +11,7 @@ import {SelectOptionModal} from '../map-search/map-option-modal';
 import {SchoolSelectOptionModal} from '../school-map/schoolmap-option-modal';
 
 @Component({
-  templateUrl: 'build/pages/profile/profile.html',
+  templateUrl: 'profile.html',
 })
 export class ProfilePage {
 

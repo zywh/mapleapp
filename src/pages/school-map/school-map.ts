@@ -1,4 +1,4 @@
-import {ModalController, LoadingController, AlertController, Events, MenuController, Platform, NavController, NavParams, Page, ViewController} from 'ionic-angular';
+import {ModalController, LoadingController, AlertController, Events, MenuController, Platform, NavController, NavParams, ViewController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 import { NgZone, Component, ElementRef, ViewChild} from '@angular/core';;
 import {Connectivity} from '../../providers/connectivity/connectivity';
