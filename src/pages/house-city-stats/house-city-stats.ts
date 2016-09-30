@@ -12,12 +12,12 @@ declare var Highcharts: any;
 })
 export class HouseCityStatsPage {
 
-  //private chart: HighchartsChartObject;
-  private chart;
-  private seriesOptions = [];
-  private topics = [];
-  private data;
-  private city: String;
+  //public chart: HighchartsChartObject;
+  public chart;
+  public seriesOptions = [];
+  public topics = [];
+  public data;
+  public city: String;
   
 
   constructor(

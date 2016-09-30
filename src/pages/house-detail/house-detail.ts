@@ -19,20 +19,20 @@ import {AuthService} from '../../providers/auth/auth';
 })
 export class HouseDetailPage  {
 	 @ViewChild('maphouse') mapElement: ElementRef;
-	private isFav = { houseFav: false, routeFav: false };
-	private isMore: Boolean = true; //more buttom will be disabled before toast is dismiss
-	private parms = { id: '', list: [] };
-	private houseList = { prev: '', next: '', index: 0, total: 0 };
-	private section: string = "summary";
-	private isAndroid: boolean = false;
-	private switchF2M: Boolean = true; //"英尺"
-	private rooms: Array<Object> = [];
-	private house_mname: any;
-	private house_propertyType: any;
-	private photos: Array<string>;
-	private exchangeRate: number;
-	private username: String;
-	private house = {
+	public isFav = { houseFav: false, routeFav: false };
+	public isMore: Boolean = true; //more buttom will be disabled before toast is dismiss
+	public parms = { id: '', list: [] };
+	public houseList = { prev: '', next: '', index: 0, total: 0 };
+	public section: string = "summary";
+	public isAndroid: boolean = false;
+	public switchF2M: Boolean = true; //"英尺"
+	public rooms: Array<Object> = [];
+	public house_mname: any;
+	public house_propertyType: any;
+	public photos: Array<string>;
+	public exchangeRate: number;
+	public username: String;
+	public house = {
 		id: '',  // => 'ID',
 		name: '', // => '名称',
 		prepay: '', // => '首付',

@@ -17,21 +17,21 @@ declare var Highcharts: any;
 
 export class StatsPage {
 
-    private section: string = "canada";
-    private isAndroid: boolean = false;
-    //private chart: HighchartsChartObject;
-    private chart;
-    private mlsdata;
-    private hpiData;
-    private seriesOptions = [];
-    private city;
-    private province;
-    private property_type;
-    private price;
-    private housearea;
-    private landarea;
-    //private today;
-    private locationName = {
+    public section: string = "canada";
+    public isAndroid: boolean = false;
+    //public chart: HighchartsChartObject;
+    public chart;
+    public mlsdata;
+    public hpiData;
+    public seriesOptions = [];
+    public city;
+    public province;
+    public property_type;
+    public price;
+    public housearea;
+    public landarea;
+    //public today;
+    public locationName = {
         "Composite6": '全国综合指数6',
         "Composite11": '全国综合指数11',
         "Victoria": '维多利亚',
@@ -46,7 +46,7 @@ export class StatsPage {
         "Halifax": '哈利法克斯',
 
     }
-    private cnnames = {
+    public cnnames = {
         'all_avgprice': '所有房源：平均房价',
         'condo_avgprice': '楼房：平均房价',
         'detach_avgprice': '独立房：平均房价',
@@ -73,7 +73,7 @@ export class StatsPage {
         'detach_snlr': '独立房：售出/新盘比'
 
     };
-    private mlsChartList = [
+    public mlsChartList = [
         { data: 'price', tip: '价格', title: '价格分布图' },
         //{ data: 'property_type', tip: '房型', title: '房型分布饼图' },
         { data: 'housearea', tip: '房屋面积', title: '房屋面积分布图' },
@@ -82,7 +82,7 @@ export class StatsPage {
         { data: 'province', tip: '省房源', title: '省房源分布图' }
 
     ];
-    private gtaChartList = [
+    public gtaChartList = [
         { data: 'avgdom', title: '平均售出日' },
         { data: 'moi', title: '存量月份' },
         { data: 'avgprice', title: '平均房价' },
@@ -95,7 +95,7 @@ export class StatsPage {
 
 
 
-    private hpiChartList = [
+    public hpiChartList = [
         { location: "Composite11", title: "全国综合指数11" },
         { location: "Toronto", title: "多伦多房屋指数图表" },
         { location: "Vancouver", title: "温哥华房屋指数图表" },
@@ -109,7 +109,7 @@ export class StatsPage {
         { location: "Hamilton", title: "哈密尔顿房屋指数图表" },
     ]
 
-    private highchartsOptions = Highcharts.setOptions({
+    public highchartsOptions = Highcharts.setOptions({
         lang: {
             loading: '加载中...',
             months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],

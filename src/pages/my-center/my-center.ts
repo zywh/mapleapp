@@ -12,16 +12,14 @@ import {UserData} from '../../providers/user-data';
   Ionic pages and navigation.
 */
 @Component({
-  templateUrl: 'my-center.html',
+  templateUrl: 'my-center.html'
 })
 export class MyCenterPage {
-  private centerList;
-  private pageType;
-  private pageTitle;
-
-
-  private editButton: string = '编辑';
-  private editing: boolean = false;
+  public centerList;
+  public pageType;
+  public pageTitle;
+  public editButton: string = '编辑';
+  public editing: boolean = false;
 
   constructor(
     private nav: NavController,

@@ -13,18 +13,16 @@ import {HouseList} from '../../components/house-list/house-list';
 
 
 @Component({
-    templateUrl: 'map-houselist.html',
-     //directives: [HouseList]
-
+    templateUrl: 'map-houselist.html'
 })
 export class MapHouselist {
 
-    private currentHouseList;
-    private imgHost;
-    private listHouse: Boolean = false;
-    private listFav: Boolean = true;
-    private isList: boolean = true;
-    private viewType: string = 'apps';
+    public currentHouseList;
+    public imgHost;
+    public listHouse: Boolean = false;
+    public listFav: Boolean = true;
+    public isList: boolean = true;
+    public viewType: string = 'apps';
 
 
     constructor(

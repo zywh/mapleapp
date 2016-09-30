@@ -9,7 +9,7 @@ import {HomePage} from '../home/home';
 import {ProfilePage} from '../profile/profile';
 //import {MapleConf} from './providers/maple-rest-data/maple-config';
 
-interface MapParmObj {
+export interface MapParmObj {
   lat?: Number,
   lng?: Number
   type?: String
@@ -18,21 +18,21 @@ interface MapParmObj {
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
-  @ViewChild('mcTabs') tabRef: Tabs;
+  @ViewChild('mcTabs') public tabRef: Tabs;
   // set the root pages for each tab
-  home: any = HomePage;
-  map: any = MapSearchPage;
-  project: any = ProjectsPage;
-  profile: any = ProfilePage;
- // school: any = SchoolMapPage;
-  school: any = MapSearchPage;
-  stats: any = StatsPage;
-  about: any = AboutPage;
-  mySelectedIndex: number;
-  private mapParms: MapParmObj;
-  private tabMapParms;
-  private tabSchoolParms;
-  private preload: Boolean = true;
+  public home: any = HomePage;
+  public map: any = MapSearchPage;
+  public project: any = ProjectsPage;
+  public profile: any = ProfilePage;
+ // public school: any = SchoolMapPage;
+  public school: any = MapSearchPage;
+  public stats: any = StatsPage;
+  public about: any = AboutPage;
+  public mySelectedIndex: number;
+  public mapParms: MapParmObj;
+  public tabMapParms;
+  public tabSchoolParms;
+  public preload: Boolean = true;
 
 
 

@@ -25,10 +25,10 @@ import {Search} from '../../components/search/search';
 })
 export class SelectOptionModal {
     //selectOptions: Object;
-    selectOptions: Object;
-    private selectUnit: Boolean = true;
-    private mapType;
-    private unit;
+    public selectOptions: Object;
+    public selectUnit: Boolean = true;
+    public mapType;
+    public unit;
     constructor(
 
         private params: NavParams,

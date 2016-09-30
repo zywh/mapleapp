@@ -3,7 +3,7 @@ import {OnInit, Component} from '@angular/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 
-interface Post {
+export interface Post {
   id: number;
   title?: String;
   content?: String;
@@ -15,14 +15,14 @@ interface Post {
   templateUrl: 'post.html'
 })
 export class PostPage implements OnInit {
-  private postRest;
-  private postpicHost;
-  private postId;
-  private post: Post;
-  private nextPost: Number;
-  private prePost: Number;
-  private preButton: Boolean = true;
-  private nextButton: Boolean = true;
+  public postRest;
+  public postpicHost;
+  public postId;
+  public post: Post;
+  public nextPost: Number;
+  public prePost: Number;
+  public preButton: Boolean = true;
+  public nextButton: Boolean = true;
 
 
   static get parameters() {

@@ -8,9 +8,9 @@ import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 })
 
 export class HousePopover {
-    private house;
-    private currentHouseList;
-    private imgHost;
+    public house;
+    public currentHouseList;
+    public imgHost;
     constructor(private navparms: NavParams, private nav: NavController,private mapleConf: MapleConf) {
         this.house = this.navparms.data.house;
         this.currentHouseList = this.navparms.data.list;

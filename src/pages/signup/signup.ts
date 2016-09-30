@@ -8,8 +8,8 @@ import {UserData} from '../../providers/user-data';
   templateUrl: 'signup.html'
 })
 export class SignupPage {
-  signup: {username?: string, password?: string} = {};
-  submitted = false;
+  public signup: {username?: string, password?: string} = {};
+  public submitted = false;
 
   constructor(private nav: NavController, private userData: UserData) {}
 

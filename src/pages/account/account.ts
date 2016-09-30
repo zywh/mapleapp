@@ -7,7 +7,7 @@ import {LoginPage} from '../login/login';
   templateUrl: 'account.html',
 })
 export class AccountPage {
-  username: string;
+  public username: string;
 
   constructor(private nav: NavController, private userData: UserData,private alertc: AlertController) {
 

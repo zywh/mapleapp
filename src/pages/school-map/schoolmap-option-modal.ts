@@ -8,7 +8,7 @@ import {UserData} from '../../providers/user-data';
 import {AuthService} from '../../providers/auth/auth';
 import {Search} from '../../components/search/search';
 
-interface selectOptionsObj {
+export interface selectOptionsObj {
     selectType?: Boolean,
     selectRank?: Number,
     selectPingfen?: Number,
@@ -19,7 +19,7 @@ interface selectOptionsObj {
     templateUrl: 'schoolmap-option-modal.html'
 })
 export class SchoolSelectOptionModal {
-    private selectOptions: selectOptionsObj;
+    public selectOptions: selectOptionsObj;
 
     constructor(
 

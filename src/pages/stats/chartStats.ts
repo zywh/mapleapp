@@ -22,11 +22,11 @@ declare var Highcharts: any;
 
 })
 export class chartStats {
-    //private options: Object;
-    private options: Object;
-    private type: Number; // 0 for chart and 1 for highstock
-    private pagetitle: String;
-    private chart;
+    //public options: Object;
+    public options: Object;
+    public type: Number; // 0 for chart and 1 for highstock
+    public pagetitle: String;
+    public chart;
     constructor(private parm: NavParams, private view: ViewController) {
         this.type = this.parm.data.type;
         this.options = this.parm.data.options;
@@ -47,9 +47,5 @@ export class chartStats {
     dismiss() {
         this.view.dismiss();
     }
-
-
-
-
 
 }

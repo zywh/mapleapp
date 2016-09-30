@@ -12,8 +12,8 @@ import {ProjectDetailPage} from '../project-detail/project-detail';
     templateUrl: 'projects.html'
 })
 export class ProjectsPage implements OnInit {
-    //private nav;
-    private parms = {};
+    //public nav;
+    public parms = {};
     projects: Object;
 
     static get parameters() {

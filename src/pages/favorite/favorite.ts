@@ -11,14 +11,14 @@ import {HouseList} from '../../components/house-list/house-list';
   templateUrl: 'favorite.html'
 })
 export class FavoritePage {
-  private favList;
-  private imgHost = '';
-  private pageTitle;
-  private pageType;
-  private editButton: string = '编辑';
-  private editing: boolean = false;
-  private viewType: string = 'apps';
-  private isList: boolean = true;
+  public favList;
+  public imgHost = '';
+  public pageTitle;
+  public pageType;
+  public editButton: string = '编辑';
+  public editing: boolean = false;
+  public viewType: string = 'apps';
+  public isList: boolean = true;
   
 
   constructor(

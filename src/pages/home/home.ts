@@ -18,28 +18,28 @@ import {Search} from '../../components/search/search';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  private projects: Object;
-  private postListRest;
-  private projectRest;
-  private post1;
-  private favList;
-  private hQueryText: String = '';
-  private sQueryText: String = '';
-  private cityItems: any;
-  private addressItems: any;
-  private mlsItems: any;
-  private currentDiv;
-  private scityItems;
-  private schoolItems;
-  private homeSegment: string = "house1";
-  private isAndroid: boolean = false;
-  private nearbyHouseList;
-  private recommendHouseList;
-  private imgHost;
-  private houseRestURL;
-  private data;
-  private listHouse: Boolean = false;
-  private listFav: Boolean = true;
+  public projects: Object;
+  public postListRest;
+  public projectRest;
+  public post1;
+  public favList;
+  public hQueryText: String = '';
+  public sQueryText: String = '';
+  public cityItems: any;
+  public addressItems: any;
+  public mlsItems: any;
+  public currentDiv;
+  public scityItems;
+  public schoolItems;
+  public homeSegment: string = "house1";
+  public isAndroid: boolean = false;
+  public nearbyHouseList;
+  public recommendHouseList;
+  public imgHost;
+  public houseRestURL;
+  public data;
+  public listHouse: Boolean = false;
+  public listFav: Boolean = true;
 
 
   constructor(

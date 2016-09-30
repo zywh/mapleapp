@@ -4,10 +4,9 @@ import {Component} from '@angular/core';
 
 @Component({
     templateUrl: 'school-list-modal.html'
-
 })
 export class SchoolListModal {
-    private schoolList;
+    public schoolList;
 
     constructor(
         private parm: NavParams,

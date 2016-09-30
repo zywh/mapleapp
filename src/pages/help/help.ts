@@ -14,9 +14,9 @@ import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 })
 export class HelpPage {
 
-  private data;
-  private emailURL;
-  private faqs;
+  public data;
+  public emailURL;
+  public faqs;
 
   constructor(
     private mapleConf: MapleConf, 

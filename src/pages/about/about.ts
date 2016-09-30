@@ -3,7 +3,7 @@ import {OnInit,Component} from '@angular/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 
-interface Post {
+export interface Post {
   id: number;
   title: String;
   content: String;
@@ -17,15 +17,15 @@ interface Post {
 })
 export class AboutPage  {
  
-  private section: string = "about";
-  private isAndroid: boolean = false;
+  public section: string = "about";
+  public isAndroid: boolean = false;
   
-  private postAbout: Post;
-  private postAdvantage: Post;
-  private postContact: Post;
-  private postHire: Post;
-  private imgHost;
- // private postAbout: Post;
+  public postAbout: Post;
+  public postAdvantage: Post;
+  public postContact: Post;
+  public postHire: Post;
+  public imgHost;
+ // public postAbout: Post;
 
   // static get parameters() {
   //   return [[MapleRestData],[MapleConf]];

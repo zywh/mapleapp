@@ -15,8 +15,8 @@ import {SchoolSelectOptionModal} from '../school-map/schoolmap-option-modal';
 })
 export class ProfilePage {
 
-  private selectOptions;
-  private count;
+  public selectOptions;
+  public count;
 
   // We need to inject AuthService so that we can
   // use it in the view

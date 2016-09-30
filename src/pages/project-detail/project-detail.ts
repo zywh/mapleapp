@@ -11,10 +11,10 @@ declare var Wechat: any;
 })
 export class ProjectDetailPage implements OnInit {
 
-  private parms: Object;
-  private section: string = "summary";
-  private isAndroid: boolean = false;
-  private project = {
+  public parms: Object;
+  public section: string = "summary";
+  public isAndroid: boolean = false;
+  public project = {
     id: '',
     name: '',
     image_list: {},

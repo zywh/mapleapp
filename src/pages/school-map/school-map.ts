@@ -12,7 +12,7 @@ import {SchoolListModal} from './school-list-modal';
 
 declare var RichMarker: any;
 
-interface schoolSelectOptionsObj {
+export interface schoolSelectOptionsObj {
     selectType?: Boolean,
     selectRank?: Number,
     selectPingfen?: Number,
@@ -28,33 +28,33 @@ interface schoolSelectOptionsObj {
 export class SchoolMapPage {
 
 
-    @ViewChild('schoolmap') mapElement: ElementRef;
+    @ViewChild('schoolmap') public mapElement: ElementRef;
 
 
-    mapInitialised: boolean = false;
-    mapLoaded: any;
-    mapLoadedObserver: any;
-    private searchQuery: String = '';
-    private cityItems: any;
-    private schoolItems: any;
-    private parms: Object;
-    private map;
-    private center;
-    private schoolDropMarker;
-    private defaultcenter = new google.maps.LatLng(43.6532, -79.3832);
-    private markerArray = [];
-    private sMarkerArray = [];
-    private sviewLoaded: Boolean = false;
-    private defaultZoom: Number = 13;
-    //private htmlArray = [];
-    private htmlArrayPosition = 0;
-    //private totalCount: Number; //Returned House
+    public mapInitialised: boolean = false;
+    public mapLoaded: any;
+    public mapLoadedObserver: any;
+    public searchQuery: String = '';
+    public cityItems: any;
+    public schoolItems: any;
+    public parms: Object;
+    public map;
+    public center;
+    public schoolDropMarker;
+    public defaultcenter = new google.maps.LatLng(43.6532, -79.3832);
+    public markerArray = [];
+    public sMarkerArray = [];
+    public sviewLoaded: Boolean = false;
+    public defaultZoom: Number = 13;
+    //public htmlArray = [];
+    public htmlArrayPosition = 0;
+    //public totalCount: Number; //Returned House
 
-    private schoolList: Array<any>;
-    private markerType;
+    public schoolList: Array<any>;
+    public markerType;
 
 
-    private selectSchool: schoolSelectOptionsObj = {
+    public selectSchool: schoolSelectOptionsObj = {
         selectPingfen: 0,
         selectRank: 0,
         selectType: false,

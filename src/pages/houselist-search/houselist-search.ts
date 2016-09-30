@@ -14,18 +14,18 @@ import {HouseList} from '../../components/house-list/house-list';
 })
 export class HouselistSearch {
 
-    private totalCount: number;
-    private imgHost;
-    private bounds;
-    private pageIndex: number = 0;
-    private pageTotal: number = 1;
-    private isList: boolean = true;
-    private selectOptions;
-    private viewType: string = 'apps';
-    private sortType: string = 'Price';
-    private sortOrder: number = 0;
-    private listType: string;
-    private currentHouseList; //Hold list of all houses on current map
+    public totalCount: number;
+    public imgHost;
+    public bounds;
+    public pageIndex: number = 0;
+    public pageTotal: number = 1;
+    public isList: boolean = true;
+    public selectOptions;
+    public viewType: string = 'apps';
+    public sortType: string = 'Price';
+    public sortOrder: number = 0;
+    public listType: string;
+    public currentHouseList; //Hold list of all houses on current map
 
     constructor(
         private nav: NavController,

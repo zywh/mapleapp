@@ -22,47 +22,46 @@ declare var RichMarker: any;
 declare var google;
 
 @Component({
-  templateUrl: 'map-search.html',
-
+  templateUrl: 'map-search.html'
 })
 
 
 export class MapSearchPage {
 
-  @ViewChild('map') mapElement: ElementRef;
-  private mapLib = 1; // 0 is java and 1 is native google SDK
-  private queryText: String = '';
-  mapInitialised: boolean = false;
+  @ViewChild('map') public mapElement: ElementRef;
+  public mapLib = 1; // 0 is java and 1 is native google SDK
+  public queryText: String = '';
+  public mapInitialised: boolean = false;
   //mapLoaded: any;
   //mapLoadedObserver: any;
-  private searchInFocus: boolean = false;
-  private cityItems: any;
-  private addressItems: any;
-  private mlsItems: any;
-  private schoolItems: any;
-  private parms: Object;
-  // private defaultcenter = new google.maps.LatLng(43.6532, -79.3832);
-  private defaultcenter;
-  private houselist: any;
-  private map = null;
-  private center;
-  private markerArray = [];
-  private htmlArray = [];
-  private mviewLoaded: Boolean = false;
-  private htmlArrayPosition = 0;
-  private totalCount: Number; //Returned House
-  private listAllHtml = ''; //hold houses on current map
+  public searchInFocus: boolean = false;
+  public cityItems: any;
+  public addressItems: any;
+  public mlsItems: any;
+  public schoolItems: any;
+  public parms: Object;
+  // public defaultcenter = new google.maps.LatLng(43.6532, -79.3832);
+  public defaultcenter;
+  public houselist: any;
+  public map = null;
+  public center;
+  public markerArray = [];
+  public htmlArray = [];
+  public mviewLoaded: Boolean = false;
+  public htmlArrayPosition = 0;
+  public totalCount: Number; //Returned House
+  public listAllHtml = ''; //hold houses on current map
   public isListShow: boolean = false;
-  private markerType;
-  private imgHost: String;
-  //private listModal: ViewController;
-  private listModal;
-  private defaultZoom: Number = 14;
-  private _bounds;
-  private locateLock: Boolean = false; //lock location button if there is input popup
+  public markerType;
+  public imgHost: String;
+  //public listModal: ViewController;
+  public listModal;
+  public defaultZoom: Number = 14;
+  public _bounds;
+  public locateLock: Boolean = false; //lock location button if there is input popup
 
-  private schoolList: Array<any>;
-  private swiperOptions = {
+  public schoolList: Array<any>;
+  public swiperOptions = {
     //loop: true,
     //pager: true,
     //speed: 4000,
@@ -72,15 +71,15 @@ export class MapSearchPage {
     autoplay: 3000
   };
 
-  private selectOptions;
-  private optionPage;
-  private savedOptions;
-  private currentHouseList; //Hold list of all houses on current map
-  private currentHouses; //Hold array of houses for single marker
-  private currentDiv;
-  private mapType: Number = 1; // 0 for house and 1 for school
-  private markerDrop;
-  private lockMapListener: Boolean = false;
+  public selectOptions;
+  public optionPage;
+  public savedOptions;
+  public currentHouseList; //Hold list of all houses on current map
+  public currentHouses; //Hold array of houses for single marker
+  public currentDiv;
+  public mapType: Number = 1; // 0 for house and 1 for school
+  public markerDrop;
+  public lockMapListener: Boolean = false;
   
 
   constructor(

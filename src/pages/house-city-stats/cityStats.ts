@@ -20,13 +20,13 @@ declare var Highcharts: any;
 
 })
 export class cityStats {
-    //private options: Object;
-    private options: Object;
-    private type: Number; // 0 for chart and 1 for highstock
-    private pagetitle: String;
-    private city;
-    //private chart: HighchartsChartObject;
-    private chart;
+    //public options: Object;
+    public options: Object;
+    public type: Number; // 0 for chart and 1 for highstock
+    public pagetitle: String;
+    public city;
+    //public chart: HighchartsChartObject;
+    public chart;
     constructor(private parm: NavParams, private view: ViewController) {
         this.city = this.parm.data.city;
         this.options = this.parm.data.options;
