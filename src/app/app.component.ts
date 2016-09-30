@@ -2,10 +2,6 @@ import {ViewChild, Component,Type,provide} from '@angular/core';
 import {Http} from '@angular/http'
 import {ionicBootstrap, Events, Platform, Nav, MenuController} from 'ionic-angular';
 import {StatusBar, Splashscreen} from 'ionic-native';
-//import {ConferenceData} from './providers/conference-data';
-import {UserData} from './providers/user-data';
-import {MapleRestData} from './providers/maple-rest-data/maple-rest-data';
-import {Connectivity} from './providers/connectivity/connectivity';
 import {AccountPage} from '../pages/account/account';
 import {TabsPage} from '../pages/tabs/tabs';
 import {LoginPage} from '../pages/login/login';
@@ -14,18 +10,15 @@ import {SettingsPage} from '../pages/settings/settings';
 import {ProfilePage} from '../pages/profile/profile';
 import {NetworkErrorPage} from '../pages/network-error/network-error';
 import {HouselistSearch} from '../pages/houselist-search/houselist-search'
-import {MapleConf} from './providers/maple-rest-data/maple-config';
+//import {ConferenceData} from './providers/conference-data';
+import {UserData} from '../providers/user-data';
+import {MapleRestData} from '../providers/maple-rest-data/maple-rest-data';
+import {Connectivity} from '../providers/connectivity/connectivity';
+import {MapleConf} from '../providers/maple-rest-data/maple-config';
 import {AuthHttp, AuthConfig} from 'angular2-jwt';
-import {AuthService} from './providers/auth/auth';
-import {UpdateService} from './providers/update/update';
-import {provideCloud, CloudSettings} from '@ionic/cloud-angular';
+import {AuthService} from '../providers/auth/auth';
+import {UpdateService} from '../providers/update/update';
 
-const cloudSettings: CloudSettings = {
-  // "枫之都" @ionic.io
-  'core': {
-    'app_id': 'aab7d6de'
-  }
-};
 
 interface PageObj {
   title: string;
@@ -35,11 +28,11 @@ interface PageObj {
 }
 
 @Component({
-  templateUrl: 'build/app.html',
+  templateUrl: 'app.html',
 
 })
 
-class MapleApp {
+export class MapleApp {
 
   // the root nav is a child of the root app component
   // @ViewChild(Nav) gets a reference to the app's root nav
@@ -169,19 +162,13 @@ class MapleApp {
 
 ionicBootstrap(
   MapleApp,
-  [UserData, 
-  MapleRestData, 
-  MapleConf, 
-  Connectivity,
+  [
   provide(AuthHttp, {
     useFactory: (http) => {
       return new AuthHttp(new AuthConfig({noJwtError: true}), http);
     },
     deps: [Http]
-  }),
-  AuthService,
-  provideCloud(cloudSettings),
-  UpdateService],
+  })],
   {
     tabbarPlacement: "bottom",
     //backButtonText: "返回",

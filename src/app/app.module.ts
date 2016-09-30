@@ -1,21 +1,64 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
-import { MyApp } from './app.component';
+import { MapleApp } from './app.component';
+//import {ConferenceData} from './providers/conference-data';
+import { UserData } from '../providers/user-data';
+import { MapleConf } from '../providers/maple-rest-data/maple-config';
+import { MapleRestData } from '../providers/maple-rest-data/maple-rest-data';
+import { Connectivity } from '../providers/connectivity/connectivity';
+import { AuthService } from '../providers/auth/auth';
+import { UpdateService } from '../providers/update/update';
+import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+
 import { HomePage } from '../pages/home/home';
+
+const cloudSettings: CloudSettings = {
+  // "枫之都" @ionic.io
+  'core': {
+    'app_id': 'aab7d6de'
+  }
+};
+
 
 @NgModule({
   declarations: [
-    MyApp,
+    MapleApp,
     HomePage
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
-  ],
+    IonicModule.forRoot(MapleApp,   {
+        tabbarPlacement: "bottom",
+        //backButtonText: "返回",
+        backButtonText: "",
+        prodMode: true,
+        //tabSubPages: false, //android house detail has two header bar
+        //mode: 'ios',
+        //temp padding to fix ionic view status bar overlapping
+        platforms: {
+            ios: {
+                statusbarPadding: false
+
+            },
+        }
+      } ),
+    CloudModule.forRoot(cloudSettings)
+      ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
+    MapleApp,
     HomePage
   ],
-  providers: []
+  providers: [UserData, 
+    MapleRestData, 
+    MapleConf, 
+    Connectivity,
+    provide(AuthHttp, {
+        useFactory: (http) => {
+        return new AuthHttp(new AuthConfig({noJwtError: true}), http);
+        },
+        deps: [Http]
+    }),
+    AuthService,
+    UpdateService],
 })
 export class AppModule {}
