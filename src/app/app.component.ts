@@ -1,5 +1,4 @@
 import {ViewChild, Component,Type} from '@angular/core';
-import {Http} from '@angular/http'
 import {Events, Platform, Nav, MenuController} from 'ionic-angular';
 import {StatusBar, Splashscreen} from 'ionic-native';
 import {AccountPage} from '../pages/account/account';
@@ -15,7 +14,6 @@ import {UserData} from '../providers/user-data';
 import {MapleRestData} from '../providers/maple-rest-data/maple-rest-data';
 import {Connectivity} from '../providers/connectivity/connectivity';
 import {MapleConf} from '../providers/maple-rest-data/maple-config';
-import {AuthHttp, AuthConfig} from 'angular2-jwt';
 import {AuthService} from '../providers/auth/auth';
 import {UpdateService} from '../providers/update/update';
 

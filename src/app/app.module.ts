@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MapleApp } from './app.component';
+import { Http } from '@angular/http'
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
+
 //import {ConferenceData} from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 import { MapleConf } from '../providers/maple-rest-data/maple-config';
@@ -56,12 +59,12 @@ const cloudSettings: CloudSettings = {
     MapleRestData, 
     MapleConf, 
     Connectivity,
-    provide(AuthHttp, {
+    { provide: AuthHttp, 
         useFactory: (http) => {
         return new AuthHttp(new AuthConfig({noJwtError: true}), http);
         },
         deps: [Http]
-    }),
+    },
     AuthService,
     UpdateService],
 })
