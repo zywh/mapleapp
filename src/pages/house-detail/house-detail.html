@@ -1,41 +1,48 @@
+
+
+
 <ion-header>
-	<ion-toolbar no-border-bottom>
+	<ion-navbar no-border-bottom>
 		<ion-buttons left>
-			<button (click)="nav.pop()">
+			<button ion-botton ion-left (click)="nav.pop()">
     		<ion-icon outline name="arrow-back" ></ion-icon>
   		
 		房源({{houseList.index + 1}}/{{houseList.total}})
 		 	</button>
 		</ion-buttons>
-		<!--<ion-title>房源({{houseList.index + 1}}/{{houseList.total}})</ion-title>-->
+
 		<ion-buttons *ngIf="houseList.prev" end>
-			<button (click)="go2PrevHouse()">
+			<button ion-button icon-only (click)="go2PrevHouse()">
 			<ion-icon  name="arrow-up" ></ion-icon>
 			</button>
 		</ion-buttons>
 		<ion-buttons *ngIf="houseList.next" end>
-			<button (click)="go2NextHouse()">
+			<button ion-button icon-only (click)="go2NextHouse()">
 			<ion-icon  name="arrow-down" ></ion-icon>
 			</button>
 		</ion-buttons>
 		<ion-buttons end>
-  <!--<button  (click)="fav('houseFav')">
-  <ion-icon [isActive]="isFav.houseFav" name="heart" ></ion-icon>
-  </button>-->
-  
-  </ion-buttons>
+
+
+		</ion-buttons>
 		<ion-buttons end>
-			<button (click)="share()">
+			<button ion-button icon-only (click)="share()">
 			<ion-icon isActive="false" name="share" ></ion-icon>
 			</button>
 		</ion-buttons>
 		<ion-buttons end>
-			<button [disabled]="!isMore" (click)="more()">
+			<button ion-button icon-only [disabled]="!isMore" (click)="more()">
 			<ion-icon  name="more" ></ion-icon>
 			</button>
 		</ion-buttons>
 
-	</ion-toolbar>
+
+		<ion-buttons end>
+			<button ion-button icon-only (click)="presentFilter()">
+        <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
+      </button>
+		</ion-buttons>
+	</ion-navbar>
 
 	<ion-toolbar [attr.primary]="isAndroid ? '' : null" no-border-bottom>
 		<ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
@@ -55,6 +62,7 @@
 	</ion-toolbar>
 </ion-header>
 
+
 <ion-content class="house-detail">
 
 	<button fab fab-top fab-right (click)="fav('houseFav')" style="z-index: 12;opacity: 0.7; ">
@@ -64,11 +72,11 @@
 	<ion-slides #photo_slider [options]="swiperOptions" class="swiper-container">
 		<ion-slide *ngFor="let photo of photos">
 			<img [src]="photoUrl(photo)" class="slide-image" />
-			
+
 		</ion-slide>
 	</ion-slides>
 	<div class="fyxq_rx">服务热线：
-			<img src="img/maple/plat.jpg " /><a href="tel:{{mapleConf.data.phone}} "><span>{{mapleConf.data.phone}}</span></a>
+		<img src="img/maple/plat.jpg " /><a href="tel:{{mapleConf.data.phone}} "><span>{{mapleConf.data.phone}}</span></a>
 	</div>
 	<ion-card class="fyxq_cont">
 		<div class="fyxq_ptss">
@@ -84,7 +92,7 @@
 		<div class="fyxq_ptss">
 			<div class="fyxq_ptssleft">{{(house.investType_id == 1)?"学区":"城市"}}：</div>
 			<div class="fyxq_ptssright">{{house_mname?.municipality_cname}}
-			
+
 			</div>
 		</div>
 		<div class="fyxq_ptss">
@@ -140,26 +148,26 @@
 				</div>
 				<div *ngIf="house.bsmt1_out !='None' || !house.bsmt2_out">
 					<span><b></b><font color="#FF3300 ">地下室</font></span>
-					
+
 				</div>
 				<div *ngIf="house.pool.toString().includes( 'pool') ">
 					<span><b></b><font color="#FF3300 ">泳池</font></span>
-					
+
 				</div>
 				<div *ngIf="house.fpl_num=='Y' ">
 					<span><b></b><font color="#FF3300 ">壁炉</font></span>
-					
+
 				</div>
 
 			</div>
 		</div>
-	
+
 
 	</ion-card>
 
 	<!--End-->
 	<!--Map Start-->
-	 <div #maphouse id="maphouse"></div>
+	<div #maphouse id="maphouse"></div>
 	<!--Map End-->
 	<!--START-->
 	<ion-card class="fyxqlb_cont">
@@ -171,7 +179,8 @@
 			</ion-item-divider>
 			<ion-item>
 				<ion-label fixed class="xqlb_label">MLS编号：</ion-label>
-				<ion-label>	<ion-badge >{{mapleConf.getListDays(house.pix_updt)}}</ion-badge>{{house.ml_num}}</ion-label>
+				<ion-label>
+					<ion-badge>{{mapleConf.getListDays(house.pix_updt)}}</ion-badge>{{house.ml_num}}</ion-label>
 			</ion-item>
 			<ion-item>
 				<ion-label fixed class="xqlb_label">交叉路口：</ion-label>
