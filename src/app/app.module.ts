@@ -41,6 +41,7 @@ import {ProjectsPage} from '../pages/projects/projects';
 import {SettingsPage} from '../pages/settings/settings';
 import {StatsPage} from '../pages/stats/stats';
 import { TabsPage } from '../pages/tabs/tabs';
+import {chartStats} from '../pages/stats/chartStats';
 
 
 const cloudSettings: CloudSettings = {
@@ -76,7 +77,8 @@ const cloudSettings: CloudSettings = {
     ProjectsPage,
     SettingsPage,
     StatsPage,
-    TabsPage
+    TabsPage,
+    chartStats
 
   ],
   imports: [
@@ -115,8 +117,7 @@ const cloudSettings: CloudSettings = {
     HouselistSearch,
     SelectOptionModal,
     MapHouselist,
-    SchoolSelectOptionModal,
-    
+    SchoolSelectOptionModal,    
     SchoolListModal,
     MyCenterPage,
     NetworkErrorPage,
@@ -126,7 +127,8 @@ const cloudSettings: CloudSettings = {
     ProjectsPage,
     SettingsPage,
     StatsPage,
-    TabsPage
+    TabsPage,
+    chartStats
   ],
   providers: [
     Storage,

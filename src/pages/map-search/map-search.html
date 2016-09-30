@@ -61,26 +61,19 @@
     </button>
   </ion-fab>-->
 
-  <ion-fab left bottom #fab4>
-    <button ion-fab color="dark"><ion-icon name="arrow-dropup"></ion-icon></button>
-    <ion-fab-list side="top">
-      <button ion-fab (click)="openSocial('facebook', fab4)"><ion-icon name="logo-facebook"></ion-icon></button>
-      <button ion-fab (click)="openSocial('twitter', fab4)"><ion-icon name="logo-twitter"></ion-icon></button>
-      <button ion-fab (click)="openSocial('vimeo', fab4)"><ion-icon name="logo-vimeo"></ion-icon></button>
-      <button ion-fab (click)="openSocial('googleplus', fab4)"><ion-icon name="logo-googleplus"></ion-icon></button>
-    </ion-fab-list>
+  <ion-fab center bottom >
+    <button ion-fab (click)="openList($event)"><ion-icon name="list"></ion-icon></button>
+   
   </ion-fab>
 
+ <ion-fab left bottom >
+    <button ion-fab (click)="openModal()"><ion-icon ios="ios-options-outline" md="md-options"></ion-icon></button>
+ </ion-fab>
 
-  <ion-fab right bottom #fab2>
-    <button ion-fab color="light"><ion-icon name="arrow-dropleft"></ion-icon></button>
-    <ion-fab-list side="left">
-      <button ion-fab (click)="openSocial('facebook', fab2)"><ion-icon name="logo-facebook"></ion-icon></button>
-      <button ion-fab (click)="openSocial('twitter', fab2)"><ion-icon name="logo-twitter"></ion-icon></button>
-      <button ion-fab (click)="openSocial('vimeo', fab2)"><ion-icon name="logo-vimeo"></ion-icon></button>
-      <button ion-fab (click)="openSocial('googleplus', fab2)"><ion-icon name="logo-googleplus"></ion-icon></button>
-    </ion-fab-list>
-  </ion-fab>
+ <ion-fab right bottom >
+    <button ion-fab (click)="setCenter(true)"><ion-icon ios="ios-locate-outline" md="md-locate"></ion-icon></button>
+ </ion-fab>
+ 
 
 
 </ion-content>
