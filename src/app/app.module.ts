@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MapleApp } from './app.component';
-//import {ConferenceData} from './providers/conference-data';
+//import {ConferenceData} from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 import { MapleConf } from '../providers/maple-rest-data/maple-config';
 import { MapleRestData } from '../providers/maple-rest-data/maple-rest-data';
@@ -9,6 +9,8 @@ import { Connectivity } from '../providers/connectivity/connectivity';
 import { AuthService } from '../providers/auth/auth';
 import { UpdateService } from '../providers/update/update';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+import { HouseList } from '../components/house-list/house-list';
+import { Search } from '../components/search/search';
 
 import { HomePage } from '../pages/home/home';
 
@@ -41,7 +43,9 @@ const cloudSettings: CloudSettings = {
             },
         }
       } ),
-    CloudModule.forRoot(cloudSettings)
+    CloudModule.forRoot(cloudSettings),
+    HouseList,
+    Search
       ],
   bootstrap: [IonicApp],
   entryComponents: [
