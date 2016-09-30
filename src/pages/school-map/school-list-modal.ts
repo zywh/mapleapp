@@ -1,6 +1,6 @@
 import {ViewController, NavParams, Events} from 'ionic-angular';
 import {Component} from '@angular/core';
-
+declare var google: any;
 
 @Component({
     templateUrl: 'school-list-modal.html'

@@ -3,6 +3,7 @@ import {Events, ToastController, AlertController} from 'ionic-angular';
 import {AuthService} from './auth/auth';
 import {MapleRestData} from './maple-rest-data/maple-rest-data';
 import {MapleConf} from './maple-rest-data/maple-config';
+import { Storage } from '@ionic/storage';
 //import {LoginPage} from '../pages/login/login';
 //import * as PouchDB from 'pouchdb';
 //declare var PouchDB: any;
@@ -16,7 +17,7 @@ export class UserData {
   _houseSearchDefault: Object;
   _schoolSearchDefault: Object;
   HAS_LOGGED_IN = 'hasLoggedIn';
-  storage: Storage;
+ 
 
   //fbid: number;
   username: string;
@@ -32,7 +33,8 @@ export class UserData {
     private toastCtrl: ToastController,
     private mapleRestData: MapleRestData,
     private mapleConf: MapleConf,
-    private alertc: AlertController
+    private alertc: AlertController,
+    public storage: Storage
     //private nav: NavController
 
   )

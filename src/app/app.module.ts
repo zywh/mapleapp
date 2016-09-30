@@ -91,9 +91,9 @@ const cloudSettings: CloudSettings = {
         },
       }
     }),
-    CloudModule.forRoot(cloudSettings),
-    HouseList,
-    Search
+    CloudModule.forRoot(cloudSettings)
+    // HouseList,
+    //Search
   ],
   bootstrap: [IonicApp],
   entryComponents: [
