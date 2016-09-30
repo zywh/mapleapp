@@ -1,6 +1,6 @@
-import {ViewChild, Component,Type,provide} from '@angular/core';
+import {ViewChild, Component,Type} from '@angular/core';
 import {Http} from '@angular/http'
-import {ionicBootstrap, Events, Platform, Nav, MenuController} from 'ionic-angular';
+import {Events, Platform, Nav, MenuController} from 'ionic-angular';
 import {StatusBar, Splashscreen} from 'ionic-native';
 import {AccountPage} from '../pages/account/account';
 import {TabsPage} from '../pages/tabs/tabs';
@@ -20,7 +20,7 @@ import {AuthService} from '../providers/auth/auth';
 import {UpdateService} from '../providers/update/update';
 
 
-interface PageObj {
+export interface PageObj {
   title: string;
   component: any;
   icon: string;
@@ -156,33 +156,4 @@ export class MapleApp {
     }
   }
 
-
 }
-
-
-ionicBootstrap(
-  MapleApp,
-  [
-  provide(AuthHttp, {
-    useFactory: (http) => {
-      return new AuthHttp(new AuthConfig({noJwtError: true}), http);
-    },
-    deps: [Http]
-  })],
-  {
-    tabbarPlacement: "bottom",
-    //backButtonText: "返回",
-    backButtonText: "",
-    prodMode: true,
-    //tabSubPages: false, //android house detail has two header bar
-    //mode: 'ios',
-    //temp padding to fix ionic view status bar overlapping
-    platforms: {
-      ios: {
-        statusbarPadding: false
-
-      },
-    }
-
-  }
-);
