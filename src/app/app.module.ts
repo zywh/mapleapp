@@ -29,6 +29,7 @@ import {HouseDetailPage} from '../pages/house-detail/house-detail';
 import {HouselistSearch} from '../pages/houselist-search/houselist-search';
 import {SelectOptionModal} from '../pages/map-search/map-option-modal';
 import {MapHouselist} from '../pages/map-search/map-houselist';
+import {MapSearchPage} from '../pages/map-search/map-search';
 import {SchoolSelectOptionModal} from '../pages/school-map/schoolmap-option-modal';
 import {SchoolListModal} from '../pages/school-map/school-list-modal';
 import {MyCenterPage} from '../pages/my-center/my-center';
@@ -51,6 +52,8 @@ const cloudSettings: CloudSettings = {
 
 @NgModule({
   declarations: [
+    HouseList,
+    Search,
     MapleApp,
     AboutPage,
     FavoritePage,
@@ -59,6 +62,7 @@ const cloudSettings: CloudSettings = {
     HouseCityStatsPage,
     LoginPage,
     HouseDetailPage,
+    MapSearchPage,
     HouselistSearch,
     SelectOptionModal,
     MapHouselist,
@@ -91,12 +95,14 @@ const cloudSettings: CloudSettings = {
         },
       }
     }),
-    CloudModule.forRoot(cloudSettings)
-    // HouseList,
+    CloudModule.forRoot(cloudSettings),
+    //HouseList,
     //Search
   ],
   bootstrap: [IonicApp],
   entryComponents: [
+    HouseList,
+    Search,
     MapleApp,
     AboutPage,
     FavoritePage,
@@ -105,10 +111,12 @@ const cloudSettings: CloudSettings = {
     HouseCityStatsPage,
     LoginPage,
     HouseDetailPage,
+    MapSearchPage,
     HouselistSearch,
     SelectOptionModal,
     MapHouselist,
     SchoolSelectOptionModal,
+    
     SchoolListModal,
     MyCenterPage,
     NetworkErrorPage,

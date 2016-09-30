@@ -46,7 +46,7 @@
   </ion-toolbar>
   <div class="spacer" style="width: 284.545px; height: 17.9886px;"></div>
   <div [ngSwitch]="section">
-    <div *ngSwitchWhen="'summary'">
+    <div *ngSwitchCase="'summary'">
       <h4>城 市：{{project.cityname}}</h4>
       <h4>开发商：{{project.developer_intro}}</h4>
       <p> {{project.summary}} </p>
@@ -61,11 +61,11 @@
     </div>
 
    
-    <div *ngSwitchWhen="'point'">
+    <div *ngSwitchCase="'point'">
       <p>{{project.point}}</p>
     </div>
 
-    <div *ngSwitchWhen="'layout'">
+    <div *ngSwitchCase="'layout'">
       <ion-slides [options]="swiperOptions" class="swiper-container">
         <ion-slide *ngFor="let image of converto2a(project.layout_list)">
           <img [src]="smallImg(image.file)" class="slide-image" />
@@ -73,7 +73,7 @@
       </ion-slides>
     </div>
 
-    <div *ngSwitchWhen="'amenities'">
+    <div *ngSwitchCase="'amenities'">
       <p> {{project.amenities}} </p>
     </div>
   </div>
