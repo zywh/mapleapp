@@ -9,12 +9,12 @@
   <ion-navbar>
     <ion-title>{{pageTitle}}</ion-title>
      <!--<ion-buttons end>
-      <button (click)="addCenter()">
+      <button ion-button (click)="addCenter()">
         <ion-icon name="add"></ion-icon>
     </button>
     </ion-buttons>-->
      <ion-buttons end>
-      <button (click)="toggleEdit()">{{editButton}}
+      <button ion-button (click)="toggleEdit()">{{editButton}}
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -35,11 +35,11 @@
            <h2 tappable  (click)="gotoMap(center.lat,center.lng)"> {{center.name}}</h2>
       </ion-item>
       <ion-item-options>
-        <button clear (click)="remove(center)">
+        <button ion-button clear (click)="remove(center)">
         <ion-icon name="trash"></ion-icon>
         删除
       </button>
-        <button clear (click)="gotoMap(center.lat,center.lng)">
+        <button ion-button clear (click)="gotoMap(center.lat,center.lng)">
         <ion-icon name="navigate"></ion-icon>
         地图
       </button>

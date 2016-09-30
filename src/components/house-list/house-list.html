@@ -15,23 +15,23 @@
     </ion-item>
 
     <ion-item-options>
-      <button clear (click)="userData.favWrapper(house.MLS,'houseFav')" *ngIf="!fav">
+      <button ion-button clear (click)="userData.favWrapper(house.MLS,'houseFav')" *ngIf="!fav">
         <ion-icon name="heart"></ion-icon>
         收藏
       </button>
-      <button clear (click)="remove(house.MLS)" *ngIf="fav">
+      <button ion-button clear (click)="remove(house.MLS)" *ngIf="fav">
         <ion-icon name="trash"></ion-icon>
         删除
       </button>
-      <button clear (click)="userData.favWrapper(house.MLS,'routeFav')">
+      <button ion-button clear (click)="userData.favWrapper(house.MLS,'routeFav')">
         <ion-icon name="navigate"></ion-icon>
         看房
       </button>
-      <button clear (click)="mapSearch(house.GeocodeLat,house.GeocodeLng)">
+      <button ion-button clear (click)="mapSearch(house.GeocodeLat,house.GeocodeLng)">
         <ion-icon name="locate"></ion-icon>
         附近
       </button>
-      <button clear (click)="mapleConf.mapDirection(house.GeocodeLat,house.GeocodeLng)">
+      <button ion-button clear (click)="mapleConf.mapDirection(house.GeocodeLat,house.GeocodeLng)">
         <ion-icon name="locate"></ion-icon>
         导航
       </button>
@@ -60,16 +60,16 @@
 
     <ion-row>
       <ion-col>
-        <button primary clear small (click)="userData.favWrapper(house.MLS,'houseFav')" *ngIf="!fav">
+        <button ion-button primary clear small (click)="userData.favWrapper(house.MLS,'houseFav')" *ngIf="!fav">
          <ion-icon name="heart" active='false'></ion-icon> <div>收藏</div>
         </button>
-        <button primary clear small (click)="remove(house.MLS)" *ngIf="fav">
+        <button ion-button primary clear small (click)="remove(house.MLS)" *ngIf="fav">
           <ion-icon name="trash"></ion-icon><div>删除</div>
         </button>
        
       </ion-col>
       <ion-col>
-        <button primary clear small (click)="mapleConf.mapDirection(house.GeocodeLat,house.GeocodeLng)">
+        <button ion-button primary clear small (click)="mapleConf.mapDirection(house.GeocodeLat,house.GeocodeLng)">
           <ion-icon name="navigate"></ion-icon><div>导航</div>
         </button>
       </ion-col>

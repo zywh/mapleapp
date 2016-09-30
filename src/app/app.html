@@ -8,7 +8,7 @@
   <ion-content class="outer-content">
 
     <ion-list>
-      <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">
+      <button ion-button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">
         <ion-icon primary item-left [name]="p.icon"></ion-icon>
         {{p.title}}
       </button>
@@ -18,11 +18,11 @@
       <ion-list-header>
         账户管理
       </ion-list-header>
-      <button ion-item menuClose (click)="settings()">
+      <button ion-button ion-item menuClose (click)="settings()">
        <ion-icon primary item-left name='settings'></ion-icon>
         设置
       </button>
-      <button ion-item menuClose (click)="auth.logout()">
+      <button ion-button ion-item menuClose (click)="auth.logout()">
        <ion-icon primary item-left name='settings'></ion-icon>
         退出
       </button>
@@ -31,7 +31,7 @@
       <ion-list-header>
         账户管理
       </ion-list-header>
-      <button ion-item menuClose (click)="nav.setRoot('ProfilePage')">
+      <button ion-button ion-item menuClose (click)="nav.setRoot('ProfilePage')">
        <ion-icon primary item-left name='log-in'></ion-icon>
        登录
       </button>

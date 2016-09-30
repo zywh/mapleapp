@@ -4,18 +4,18 @@
       
     
      <ion-buttons left>
-        <button (click)="saveSelections()"> 保存条件</button>
+        <button ion-button (click)="saveSelections()"> 保存条件</button>
     </ion-buttons>
       <ion-buttons left *ngIf="auth.authenticated()">
-        <button (click)="getMySelections()"> 我的条件</button>
+        <button ion-button (click)="getMySelections()"> 我的条件</button>
     </ion-buttons>
     
     <!--<ion-title>搜索条件</ion-title>-->
     <ion-buttons right>
-        <button (click)="resetSelections()">缺省</button>
+        <button ion-button (click)="resetSelections()">缺省</button>
     </ion-buttons>
     <ion-buttons right>
-        <button (click)="dismiss()">确认</button>
+        <button ion-button (click)="dismiss()">确认</button>
     </ion-buttons>
 </ion-toolbar>
 </ion-header>

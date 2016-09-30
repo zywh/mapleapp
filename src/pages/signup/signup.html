@@ -1,6 +1,6 @@
 
 <ion-navbar *navbar>
-  <button menuToggle>
+  <button ion-button menuToggle>
     <ion-icon name="menu"></ion-icon>
   </button>
   <ion-title>Signup</ion-title>
@@ -33,7 +33,7 @@
       </p>
 
       <div padding>
-        <button (click)="onSignup(signupForm)" type="submit" primary block>Create</button>
+        <button ion-button (click)="onSignup(signupForm)" type="submit" primary block>Create</button>
       </div>
     </form>
   </ion-list>

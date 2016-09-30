@@ -10,12 +10,12 @@
 
     <ion-title>{{pageTitle}}</ion-title>
     <ion-buttons end>
-      <button (click)="toggleView()">
+      <button ion-button (click)="toggleView()">
           <ion-icon [name]="viewType"></ion-icon>
       </button>
     </ion-buttons>
     <ion-buttons end *ngIf="isList">
-      <button (click)="toggleEdit()">{{editButton}}
+      <button ion-button (click)="toggleEdit()">{{editButton}}
 
       </button>
     </ion-buttons>
@@ -59,11 +59,11 @@
 
       </ion-item>
       <ion-item-options>
-        <button clear (click)="remove(house.MLS)">
+        <button ion-button clear (click)="remove(house.MLS)">
         <ion-icon name="trash"></ion-icon>
         删除
       </button>
-        <button clear (click)="mapleConf.mapDirection(house.GeocodeLat,house.GeocodeLng)">
+        <button ion-button clear (click)="mapleConf.mapDirection(house.GeocodeLat,house.GeocodeLng)">
         <ion-icon name="navigate"></ion-icon>
         地图
       </button>
