@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {NavController,AlertController} from 'ionic-angular';
 import {TabsPage} from '../tabs/tabs';
 import {Connectivity} from '../../providers/connectivity/connectivity';
+declare var google: any;
 
 /*
   Generated class for the NetworkErrorPage page.

@@ -11,6 +11,7 @@ import {SchoolSelectOptionModal} from './schoolmap-option-modal';
 import {SchoolListModal} from './school-list-modal';
 
 declare var RichMarker: any;
+declare var google: any;
 
 export interface schoolSelectOptionsObj {
     selectType?: Boolean,

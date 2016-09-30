@@ -15,7 +15,7 @@ import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 */
 @Component({
   selector: 'search',
-  templateUrl: 'build/components/search/search.html'
+  templateUrl: 'search.html'
 })
 export class Search {
   @Input() mapType: any;

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Storage, LocalStorage, Events, ToastController, AlertController} from 'ionic-angular';
+import {Events, ToastController, AlertController} from 'ionic-angular';
 import {AuthService} from './auth/auth';
 import {MapleRestData} from './maple-rest-data/maple-rest-data';
 import {MapleConf} from './maple-rest-data/maple-config';

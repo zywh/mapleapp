@@ -7,6 +7,7 @@ import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {UserData} from '../../providers/user-data';
 import {HouseCityStatsPage} from '../../pages/house-city-stats/house-city-stats';
 import {AuthService} from '../../providers/auth/auth';
+declare var google: any;
 
 /*
   Generated class for the HouseDetailPage page.
@@ -19,6 +20,7 @@ import {AuthService} from '../../providers/auth/auth';
 })
 export class HouseDetailPage  {
 	 @ViewChild('maphouse') mapElement: ElementRef;
+	 
 	public isFav = { houseFav: false, routeFav: false };
 	public isMore: Boolean = true; //more buttom will be disabled before toast is dismiss
 	public parms = { id: '', list: [] };

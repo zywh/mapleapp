@@ -8,7 +8,7 @@ import {MapHouselist} from '../../pages/map-search/map-houselist';
 
 @Component({
   selector: 'house-list',
-  templateUrl: 'build/components/house-list/house-list.html'
+  templateUrl: 'house-list.html'
 })
 export class HouseList {
   @Input() houselist: any;
