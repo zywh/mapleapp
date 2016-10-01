@@ -39,13 +39,13 @@ export class MapleRestData {
       .retryWhen(error => error.delay(500))
       .timeout(5000, new Error('delay exceeded')) // <------
       .map(res => res.json())
-      .catch(this.handleError);
+      //.catch(this.handleError);
   }
 
-  handleError(error: any) {
-    console.error(error);
-    return Observable.throw(error.json().error || 'Server error');
-  }
+  // handleError(error: any) {
+  //   console.error(error);
+  //   return Observable.throw(error.json().error || 'Server error');
+  // }
  
 }
 
