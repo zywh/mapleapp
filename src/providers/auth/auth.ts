@@ -1,6 +1,6 @@
 
 import {Storage} from '@ionic/storage';
-import {AuthHttp, JwtHelper, tokenNotExpired} from 'angular2-jwt';
+import {JwtHelper, tokenNotExpired} from 'angular2-jwt';
 import {Injectable, NgZone} from '@angular/core';
 import {Observable} from 'rxjs/Rx';
 import {CN} from './cn';
@@ -30,13 +30,11 @@ export class AuthService {
   refreshSubscription: any;
   user: Object;
   zoneImpl: NgZone;
-  local: Storage;
 
-  constructor(private authHttp: AuthHttp, zone: NgZone, storage: Storage) {
+  constructor(zone: NgZone, public storage: Storage) {
     this.zoneImpl = zone;
-    this.local = storage;
     // Check if there is a profile saved in local storage
-    this.local.get('profile').then(profile => {
+    this.storage.get('profile').then(profile => {
       this.user = JSON.parse(profile);
     }).catch(error => {
       console.log(error);
@@ -44,7 +42,8 @@ export class AuthService {
 
     this.lock.on('authenticated', authResult => {
       // local save for authhttp use by maple-rest-data - default token name is id_token
-      this.local.set('id_token', authResult.idToken);
+      this.storage.set('id_token', authResult.idToken);
+      localStorage.setItem('id_token', authResult.idToken);
 
       // Fetch profile information
       this.lock.getProfile(authResult.idToken, (error, profile) => {
@@ -55,13 +54,13 @@ export class AuthService {
         }
 
         profile.user_metadata = profile.user_metadata || {};
-        this.local.set('profile', JSON.stringify(profile));
+        this.storage.set('profile', JSON.stringify(profile));
         this.user = profile;
       });
 
       this.lock.hide();
 
-      this.local.set('refresh_token', authResult.refreshToken);
+      this.storage.set('refresh_token', authResult.refreshToken);
       this.zoneImpl.run(() => this.user = authResult.profile);
     });
 
@@ -78,9 +77,9 @@ export class AuthService {
   }
 
   public logout() {
-    this.local.remove('profile');
-    this.local.remove('id_token');
-    this.local.remove('refresh_token');
+    this.storage.remove('profile');
+    this.storage.remove('id_token');
+    this.storage.remove('refresh_token');
     this.zoneImpl.run(() => this.user = null);
   }
   
