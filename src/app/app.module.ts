@@ -19,6 +19,7 @@ import { Search } from '../components/search/search';
 
 //import pages
 import {AboutPage} from '../pages/about/about';
+import {AccountPage} from '../pages/account/account';
 import {FavoritePage} from '../pages/favorite/favorite';
 import {HelpPage} from '../pages/help/help';
 import {HomePage} from '../pages/home/home';
@@ -51,8 +52,14 @@ const cloudSettings: CloudSettings = {
   }
 };
 
+
+export function authFactory(http: any) {
+   return new AuthHttp(new AuthConfig({ noJwtError: true }), http);
+};
+
 @NgModule({
   declarations: [
+    AccountPage,
     HouseList,
     Search,
     MapleApp,
@@ -104,6 +111,7 @@ const cloudSettings: CloudSettings = {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
+    AccountPage,
     HouseList,
     Search,
     MapleApp,
@@ -140,9 +148,10 @@ const cloudSettings: CloudSettings = {
     Connectivity,
     {
       provide: AuthHttp,
-      useFactory: (http) => {
-        return new AuthHttp(new AuthConfig({ noJwtError: true }), http);
-      },
+      // useFactory: (http) => {
+      //   return new AuthHttp(new AuthConfig({ noJwtError: true }), http);
+      // },
+      useFactory: authFactory,
       deps: [Http]
     },
     AuthService,
