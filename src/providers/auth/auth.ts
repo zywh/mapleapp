@@ -79,6 +79,7 @@ export class AuthService {
   public logout() {
     this.storage.remove('profile');
     this.storage.remove('id_token');
+    localStorage.removeItem('id_token');
     this.storage.remove('refresh_token');
     this.zoneImpl.run(() => this.user = null);
   }
