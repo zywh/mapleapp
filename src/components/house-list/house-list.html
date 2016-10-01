@@ -60,16 +60,16 @@
 
     <ion-row>
       <ion-col>
-        <button ion-button primary clear small (click)="userData.favWrapper(house.MLS,'houseFav')" *ngIf="!fav">
+        <button ion-button color="primary" clear small (click)="userData.favWrapper(house.MLS,'houseFav')" *ngIf="!fav">
          <ion-icon name="heart" active='false'></ion-icon> <div>收藏</div>
         </button>
-        <button ion-button primary clear small (click)="remove(house.MLS)" *ngIf="fav">
+        <button ion-button color="primary" clear small (click)="remove(house.MLS)" *ngIf="fav">
           <ion-icon name="trash"></ion-icon><div>删除</div>
         </button>
        
       </ion-col>
       <ion-col>
-        <button ion-button primary clear small (click)="mapleConf.mapDirection(house.GeocodeLat,house.GeocodeLng)">
+        <button ion-button color="primary" clear small (click)="mapleConf.mapDirection(house.GeocodeLat,house.GeocodeLng)">
           <ion-icon name="navigate"></ion-icon><div>导航</div>
         </button>
       </ion-col>
