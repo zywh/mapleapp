@@ -23,7 +23,7 @@ import {FavoritePage} from '../pages/favorite/favorite';
 import {HelpPage} from '../pages/help/help';
 import {HomePage} from '../pages/home/home';
 import {HouseCityStatsPage} from '../pages/house-city-stats/house-city-stats';
-import {cityStats} from '../pages/house-city-stats/citystats';
+import {CityStats} from '../pages/house-city-stats/city-stats';
 import {LoginPage} from '../pages/login/login';
 import {HouseDetailPage} from '../pages/house-detail/house-detail';
 import {HouselistSearch} from '../pages/houselist-search/houselist-search';
@@ -61,7 +61,6 @@ const cloudSettings: CloudSettings = {
     HelpPage,
     HomePage,
     HouseCityStatsPage,
-    cityStats,
     LoginPage,
     HouseDetailPage,
     MapSearchPage,
@@ -79,7 +78,8 @@ const cloudSettings: CloudSettings = {
     SettingsPage,
     StatsPage,
     TabsPage,
-    chartStats
+    chartStats,
+    CityStats
 
   ],
   imports: [
@@ -112,7 +112,6 @@ const cloudSettings: CloudSettings = {
     HelpPage,
     HomePage,
     HouseCityStatsPage,
-    cityStats,
     LoginPage,
     HouseDetailPage,
     MapSearchPage,
@@ -130,7 +129,8 @@ const cloudSettings: CloudSettings = {
     SettingsPage,
     StatsPage,
     TabsPage,
-    chartStats
+    chartStats,
+    CityStats,
   ],
   providers: [
     Storage,

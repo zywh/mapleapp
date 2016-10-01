@@ -19,7 +19,7 @@ declare var Highcharts: any;
 
 
 })
-export class cityStats {
+export class CityStats {
     //public options: Object;
     public options: Object;
     public type: Number; // 0 for chart and 1 for highstock
