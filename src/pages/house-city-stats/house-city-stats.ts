@@ -136,8 +136,10 @@ export class HouseCityStatsPage {
         //pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}<br/>'
       },
 
-      series: eval("this.data." + topic + ".series"),
-      drilldown: eval("this.data." + topic + ".drilldown"),
+     series: eval("this.data." + topic + ".series"),
+     drilldown: eval("this.data." + topic + ".drilldown"),
+      // drilldown: this.data[topic]['drilldown'],
+      //   series: this.data[topic]['series'],
 
     };
     console.log(this.data[topic]);

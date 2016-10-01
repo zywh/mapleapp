@@ -5,7 +5,7 @@ import { MapleApp } from './app.component';
 import { Http } from '@angular/http'
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 
-//import {ConferenceData} from '../providers/conference-data';
+//import service and compoment
 import { UserData } from '../providers/user-data';
 import { MapleConf } from '../providers/maple-rest-data/maple-config';
 import { MapleRestData } from '../providers/maple-rest-data/maple-rest-data';
@@ -23,8 +23,8 @@ import {FavoritePage} from '../pages/favorite/favorite';
 import {HelpPage} from '../pages/help/help';
 import {HomePage} from '../pages/home/home';
 import {HouseCityStatsPage} from '../pages/house-city-stats/house-city-stats';
+import {cityStats} from '../pages/house-city-stats/citystats';
 import {LoginPage} from '../pages/login/login';
-
 import {HouseDetailPage} from '../pages/house-detail/house-detail';
 import {HouselistSearch} from '../pages/houselist-search/houselist-search';
 import {SelectOptionModal} from '../pages/map-search/map-option-modal';
@@ -61,6 +61,7 @@ const cloudSettings: CloudSettings = {
     HelpPage,
     HomePage,
     HouseCityStatsPage,
+    cityStats,
     LoginPage,
     HouseDetailPage,
     MapSearchPage,
@@ -111,6 +112,7 @@ const cloudSettings: CloudSettings = {
     HelpPage,
     HomePage,
     HouseCityStatsPage,
+    cityStats,
     LoginPage,
     HouseDetailPage,
     MapSearchPage,

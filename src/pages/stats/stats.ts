@@ -331,6 +331,10 @@ export class StatsPage {
     }
 
     houseStatsPie(name, tname, title) {
+
+
+        var f = new Function('x', 'return "this." + x');
+        console.log(f(name));
         let options = {
             credits: { enabled: false },
             chart: {
@@ -357,7 +361,8 @@ export class StatsPage {
             },
             series: [{
                 name: tname,
-                data: eval("this." + name)
+               //data: eval("this." + name)
+               data: this[name]
             }]
 
 
@@ -367,6 +372,8 @@ export class StatsPage {
     }
 
     houseStatsColumn(name, tname, title) {
+         var f = new Function('x', 'return "this." + x');
+         console.log(f(name));
         let options = {
             credits: { enabled: false },
             chart: {
@@ -405,7 +412,9 @@ export class StatsPage {
 
             series: [{
                 name: tname,
-                data: eval("this." + name)
+                //data: eval("this." + name)
+                data: this[name]
+              
             }]
 
 
