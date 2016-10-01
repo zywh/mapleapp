@@ -1,29 +1,20 @@
 <ion-header>
 <ion-toolbar>
-<!--    
-    
-    <ion-buttons left>
-        <button outline [solid]="selectOptions.selectListType" (click)="selectOptions.selectListType = true"> <ion-icon name="map"></ion-icon>地图</button>
-    </ion-buttons>
 
-    <ion-buttons left>
-        <button  outline [solid]="!selectOptions.selectListType" (click)="selectOptions.selectListType = false"><ion-icon name="list"></ion-icon>列表</button>
-    </ion-buttons>-->
-    
     
      <ion-buttons left>
-        <button  (click)="saveSelections()"> 保存条件</button>
+        <button ion-button  (click)="saveSelections()"> 保存条件</button>
     </ion-buttons>
       <ion-buttons left *ngIf="auth.authenticated()">
-        <button (click)="getMySelections()"> 我的条件</button>
+        <button ion-button  (click)="getMySelections()"> 我的条件</button>
     </ion-buttons>
     
     <!--<ion-title>搜索条件</ion-title>-->
     <ion-buttons right>
-        <button (click)="resetSelections()">缺省</button>
+        <button ion-button (click)="resetSelections()">缺省</button>
     </ion-buttons>
     <ion-buttons right>
-        <button (click)="dismiss()">确认</button>
+        <button ion-button (click)="dismiss()">确认</button>
     </ion-buttons>
 
 </ion-toolbar>
