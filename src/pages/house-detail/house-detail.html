@@ -3,13 +3,10 @@
 
 <ion-header>
 	<ion-navbar no-border-bottom>
-		<ion-buttons left>
-			<button ion-botton ion-left (click)="nav.pop()">
-    		<ion-icon outline name="arrow-back" ></ion-icon>
+		
   		
-		房源({{houseList.index + 1}}/{{houseList.total}})
-		 	</button>
-		</ion-buttons>
+			房源({{houseList.index + 1}}/{{houseList.total}})
+		
 
 		<ion-buttons *ngIf="houseList.prev" end>
 			<button ion-button icon-only (click)="go2PrevHouse()">
@@ -37,11 +34,6 @@
 		</ion-buttons>
 
 
-		<ion-buttons end>
-			<button ion-button icon-only (click)="presentFilter()">
-        <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
-      </button>
-		</ion-buttons>
 	</ion-navbar>
 
 	<ion-toolbar [attr.primary]="isAndroid ? '' : null" no-border-bottom>
@@ -65,9 +57,13 @@
 
 <ion-content class="house-detail">
 
-	<button fab fab-top fab-right (click)="fav('houseFav')" style="z-index: 12;opacity: 0.7; ">
+	<!--<button fab fab-top fab-right (click)="fav('houseFav')" style="z-index: 12;opacity: 0.7; ">
 		<ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon>
-	</button>
+	</button>-->
+	 <ion-fab top right >
+    <button  ion-fab mini (click)="fav('houseFav')"><ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon></button>
+   	 </ion-fab>
+
 
 	<ion-slides #photo_slider [options]="swiperOptions" class="swiper-container">
 		<ion-slide *ngFor="let photo of photos">
@@ -76,7 +72,7 @@
 		</ion-slide>
 	</ion-slides>
 	<div class="fyxq_rx">服务热线：
-		<img src="img/maple/plat.jpg " /><a href="tel:{{mapleConf.data.phone}} "><span>{{mapleConf.data.phone}}</span></a>
+		<img src="assets/img/maple/plat.jpg " /><a href="tel:{{mapleConf.data.phone}} "><span>{{mapleConf.data.phone}}</span></a>
 	</div>
 	<ion-card class="fyxq_cont">
 		<div class="fyxq_ptss">
@@ -97,7 +93,7 @@
 		</div>
 		<div class="fyxq_ptss">
 			<div class="fyxq_ptssleft">户型：</div>
-			<div class="fyxq_ptssright"><img src="img/maple/1s.jpg" />&nbsp;&nbsp;{{house.br}}&nbsp;&nbsp;<img src="img/maple/1t.jpg" />&nbsp;&nbsp;{{house.bath_tot}}</div>
+			<div class="fyxq_ptssright"><img src="assets/img/maple/1s.jpg" />&nbsp;&nbsp;{{house.br}}&nbsp;&nbsp;<img src="assets/img/maple/1t.jpg" />&nbsp;&nbsp;{{house.bath_tot}}</div>
 		</div>
 		<div class="fyxq_ptss">
 			<div class="fyxq_ptssleft">配套：</div>

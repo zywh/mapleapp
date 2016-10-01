@@ -83,7 +83,7 @@ const cloudSettings: CloudSettings = {
   ],
   imports: [
     IonicModule.forRoot(MapleApp, {
-      tabbarPlacement: "bottom",
+      tabPlacement: "bottom",
       //backButtonText: "返回",
       backButtonText: "",
       prodMode: true,
