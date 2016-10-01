@@ -24,7 +24,7 @@ export class SchoolSelectOptionModal {
     constructor(
 
         private params: NavParams,
-        private auth: AuthService,
+        public auth: AuthService,
         private viewCtrl: ViewController,
         private mapleRestData: MapleRestData,
         private mapleConf: MapleConf,

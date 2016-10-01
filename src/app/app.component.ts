@@ -1,10 +1,10 @@
 import {ViewChild, Component,Type} from '@angular/core';
 import {Events, Platform, Nav, MenuController} from 'ionic-angular';
 import {StatusBar, Splashscreen} from 'ionic-native';
-import {AccountPage} from '../pages/account/account';
+//import {AccountPage} from '../pages/account/account';
 import {TabsPage} from '../pages/tabs/tabs';
-import {LoginPage} from '../pages/login/login';
-import {SignupPage} from '../pages/signup/signup';
+//import {LoginPage} from '../pages/login/login';
+//import {SignupPage} from '../pages/signup/signup';
 import {SettingsPage} from '../pages/settings/settings';
 import {ProfilePage} from '../pages/profile/profile';
 import {NetworkErrorPage} from '../pages/network-error/network-error';

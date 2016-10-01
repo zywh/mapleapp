@@ -7,8 +7,8 @@ import {AuthService} from '../../providers/auth/auth';
 import {Search} from '../../components/search/search';
 
 // interface selectOptionsObj {
-    
-//     selectPrice?: String,
+
+//     selectPrice?: Object,
 //     selectType?: String,
 //     selectBeds?: Number,
 //     selectBaths?: Number,
@@ -24,15 +24,43 @@ import {Search} from '../../components/search/search';
     templateUrl: 'map-option-modal.html'
 })
 export class SelectOptionModal {
-    //selectOptions: Object;
-    public selectOptions: Object;
+
+    // public selectOptions: Object;
+    //public selectOptions: selectOptionsObj;
+    //  public selectOptions: {
+
+    //     selectPrice?: Object,
+    //     selectType?: String,
+    //     selectBeds?: Number,
+    //     selectBaths?: Number,
+    //     selectSR?: Boolean,
+    //     selectHousesize?: Object,
+    //     selectLandsize?: Object,
+    //     selectListType?: Boolean,
+    //     selectDate?: Number,
+    //     selectSearch?: Object
+    // };
+    public selectOptions = {
+        selectSR: true,
+        selectBaths: 0,
+        selectBeds: 0,
+        selectHousesize: { lower: 0, upper: 4000 },
+        selectLandsize: { lower: 0, upper: 43560 },
+        selectPrice: { lower: 0, upper: 600 },
+        selectType: '',
+        selectListType: true,
+        selectDate: 0,
+        //selectSearch: ''
+
+    }
+
     public selectUnit: Boolean = true;
     public mapType;
     public unit;
     constructor(
 
         private params: NavParams,
-        private auth: AuthService,
+        public auth: AuthService,
         private viewCtrl: ViewController,
         private mapleRestData: MapleRestData,
         private mapleConf: MapleConf,
@@ -54,7 +82,7 @@ export class SelectOptionModal {
 
     }
 
-    searchSelection(e){
+    searchSelection(e) {
         console.log(e);
         this.selectOptions['selectSearch'] = e;
     }
@@ -62,7 +90,7 @@ export class SelectOptionModal {
     getMySelections() {
         this.userData.getUserSelections('houseSearch').then(res => {
             if (res != null) {
-                this.selectOptions = res;
+               // this.selectOptions = res;
             }
 
         })
@@ -81,7 +109,7 @@ export class SelectOptionModal {
             selectType: '',
             selectListType: true,
             selectDate: 0,
-            selectSearch: {}
+           // selectSearch: ''
 
         }
     }

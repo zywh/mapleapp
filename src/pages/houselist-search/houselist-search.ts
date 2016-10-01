@@ -28,7 +28,7 @@ export class HouselistSearch {
     public currentHouseList; //Hold list of all houses on current map
 
     constructor(
-        private nav: NavController,
+        public nav: NavController,
         private mapleRestData: MapleRestData,
         private parms: NavParams,
         private mapleConf: MapleConf,

@@ -24,9 +24,9 @@ export class Search {
   private addressItems;
   private mlsItems;
   private schoolItems;
-  private currentDiv;
-  private queryText;
-  private searchPlaceHolder;
+  public currentDiv;
+  public queryText;
+  public searchPlaceHolder;
   //private defaultItems;
 
 

@@ -19,13 +19,13 @@ import { Search } from '../components/search/search';
 
 //import pages
 import {AboutPage} from '../pages/about/about';
-import {AccountPage} from '../pages/account/account';
+
 import {FavoritePage} from '../pages/favorite/favorite';
 import {HelpPage} from '../pages/help/help';
 import {HomePage} from '../pages/home/home';
 import {HouseCityStatsPage} from '../pages/house-city-stats/house-city-stats';
 import {CityStats} from '../pages/house-city-stats/city-stats';
-import {LoginPage} from '../pages/login/login';
+
 import {HouseDetailPage} from '../pages/house-detail/house-detail';
 import {HouselistSearch} from '../pages/houselist-search/houselist-search';
 import {SelectOptionModal} from '../pages/map-search/map-option-modal';
@@ -59,7 +59,7 @@ export function authFactory(http: any) {
 
 @NgModule({
   declarations: [
-    AccountPage,
+   
     HouseList,
     Search,
     MapleApp,
@@ -68,7 +68,7 @@ export function authFactory(http: any) {
     HelpPage,
     HomePage,
     HouseCityStatsPage,
-    LoginPage,
+   
     HouseDetailPage,
     MapSearchPage,
     HouselistSearch,
@@ -111,7 +111,7 @@ export function authFactory(http: any) {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    AccountPage,
+   
     HouseList,
     Search,
     MapleApp,
@@ -120,7 +120,7 @@ export function authFactory(http: any) {
     HelpPage,
     HomePage,
     HouseCityStatsPage,
-    LoginPage,
+   
     HouseDetailPage,
     MapSearchPage,
     HouselistSearch,

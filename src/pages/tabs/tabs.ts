@@ -4,7 +4,7 @@ import {AboutPage} from '../about/about';
 import {MapSearchPage} from '../map-search/map-search';
 import {ProjectsPage} from '../projects/projects';
 import {StatsPage} from '../stats/stats';
-import {SchoolMapPage} from '../school-map/school-map';
+//import {SchoolMapPage} from '../school-map/school-map';
 import {HomePage} from '../home/home';
 import {ProfilePage} from '../profile/profile';
 //import {MapleConf} from './providers/maple-rest-data/maple-config';

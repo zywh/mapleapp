@@ -14,7 +14,7 @@ import {MapHouselist} from './map-houselist';
 //import {ConferenceData} from '../../providers/conference-data';
 import {SchoolSelectOptionModal} from '../school-map/schoolmap-option-modal';
 import {SchoolListModal} from '../school-map/school-list-modal';
-import {HousePopover} from './house-popover';
+//import {HousePopover} from './house-popover';
 import {AuthService} from '../../providers/auth/auth';
 import {UserData} from '../../providers/user-data';
 
@@ -808,16 +808,16 @@ export class MapSearchPage {
 
   //End of MAP import function
 
-  housePopover(house) {
-    let popover = this.popoverc.create(HousePopover, {
-      house: house,
-      list: this.currentHouseList,
-      imgHost: this.imgHost
-    });
+  // housePopover(house) {
+  //   let popover = this.popoverc.create(HousePopover, {
+  //     house: house,
+  //     list: this.currentHouseList,
+  //     imgHost: this.imgHost
+  //   });
 
-    popover.present();
+  //   popover.present();
 
-  }
+  // }
 
 }
 

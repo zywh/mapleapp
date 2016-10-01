@@ -21,7 +21,7 @@ export class ProfilePage {
   // We need to inject AuthService so that we can
   // use it in the view
   constructor(
-    private auth: AuthService,
+    public auth: AuthService,
     private nav: NavController,
     private modalc: ModalController,
     private userData: UserData

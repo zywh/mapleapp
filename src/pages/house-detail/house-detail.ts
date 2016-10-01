@@ -51,7 +51,7 @@ export class HouseDetailPage  {
 		city_id: '', // => '城市',
 		district_id: '', // => '地区',
 		community: '', // => '社区',
-		investType_id: '', // => '投资类型',
+		investType_id: 0, // => '投资类型',
 		propertyType_id: '', // => '物业类型',
 		land_area: '', // => '土地面积',
 		house_area: '', // => '房屋面积',
@@ -77,7 +77,7 @@ export class HouseDetailPage  {
 		is_sell: '', // => '是否售卖',
 		a_c: '', // => '是否中央空调',
 		central_vac: '', // => '是否中央吸尘',
-		gar_spaces: '', // => '是否配套家具',
+		gar_space: '', // => '是否配套家具',
 		basement: '', // => '是否地下室',
 		pool: '', // => '是否游泳池',
 		fireplace_stove: '', // => '是否壁炉',
@@ -231,7 +231,7 @@ export class HouseDetailPage  {
 		private nav: NavController,
 		private navParams: NavParams,
 		private mapleRestData: MapleRestData,
-		private mapleConf: MapleConf,
+		public mapleConf: MapleConf,
 		private events: Events,
 		private userData: UserData,
 		private alertc: AlertController,
@@ -269,9 +269,9 @@ export class HouseDetailPage  {
 		autoplay: 3000
 	};
 
-	private COMP_PTS = { "N": "北", "S": "南", "W": "西", "E": "东" };
-	private S_R = { "Sale": "出售", "Lease": "出租" };
-	private F2M = { feet: "尺", meter: "米", sfeet: "平方英尺", smeter: "平方米" };
+	public COMP_PTS = { "N": "北", "S": "南", "W": "西", "E": "东" };
+	public S_R = { "Sale": "出售", "Lease": "出租" };
+	public F2M = { feet: "尺", meter: "米", sfeet: "平方英尺", smeter: "平方米" };
 
 	ionViewDidEnter() {
 		this.mapleConf.load().then(data => {
