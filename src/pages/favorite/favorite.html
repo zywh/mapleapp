@@ -34,7 +34,7 @@
         <ion-thumbnail item-left *ngIf="!editing">
           <img [src]="imgHost + house.CoverImg" />
         </ion-thumbnail>
-        <ion-icon primary *ngIf="editing" name="remove-circle" item-left (click)="remove(house.MLS)"></ion-icon>
+        <ion-icon color="primary" *ngIf="editing" name="remove-circle" item-left (click)="remove(house.MLS)"></ion-icon>
 
         <div *ngIf="!house.Address">
           <h2>

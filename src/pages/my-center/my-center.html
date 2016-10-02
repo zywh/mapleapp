@@ -30,8 +30,8 @@
 
     <ion-item-sliding *ngFor="let center of centerList">
       <ion-item >
-        <ion-icon tappable  primary *ngIf="editing" name="remove-circle" item-left (click)="remove(center)"></ion-icon>
-         <ion-icon primary *ngIf="!editing" name="locate" item-left></ion-icon>
+        <ion-icon tappable  color="primary" *ngIf="editing" name="remove-circle" item-left (click)="remove(center)"></ion-icon>
+         <ion-icon color="primary" *ngIf="!editing" name="locate" item-left></ion-icon>
            <h2 tappable  (click)="gotoMap(center.lat,center.lng)"> {{center.name}}</h2>
       </ion-item>
       <ion-item-options>

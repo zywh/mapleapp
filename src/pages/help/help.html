@@ -26,7 +26,7 @@
   </ion-item-group>-->
   <ion-item-group>
     <ion-item>
-      <ion-icon primary name="information-circle" item-left></ion-icon>常见问题</ion-item>
+      <ion-icon color="primary" name="information-circle" item-left></ion-icon>常见问题</ion-item>
     <ion-list>
       <a ion-item tappable *ngFor="let faq of faqs" (click)="faqPopup(faq.id)"> {{faq.subject}} </a>
     </ion-list>
@@ -35,7 +35,7 @@
 
   <ion-list>
     <a tappable ion-item [href]="emailURL" target="_top">
-      <ion-icon primary name="mail" item-left></ion-icon>反馈</a>
+      <ion-icon color="primary" name="mail" item-left></ion-icon>反馈</a>
   </ion-list>
 
 </ion-content>

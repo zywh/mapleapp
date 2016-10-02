@@ -37,18 +37,18 @@
     <ion-item-group>
       <ion-item-divider divider>收藏</ion-item-divider>
       <ion-list>
-        <a ion-item (click)="favorite('houseFav')"><ion-icon primary name="home" item-left></ion-icon>我的房源<ion-badge item-right>{{count?.houseFav}}</ion-badge></a>
-        <a ion-item (click)="favorite('routeFav')"><ion-icon primary  name="compass" item-left></ion-icon>看房列表<ion-badge item-right>{{count?.routeFav}}</ion-badge></a>
-         <a ion-item (click)="favorite('recentView')"><ion-icon primary name="eye" item-left></ion-icon>最近浏览<ion-badge item-right>{{count?.recentView}}</ion-badge></a>
+        <a ion-item (click)="favorite('houseFav')"><ion-icon color="primary" name="home" item-left></ion-icon>我的房源<ion-badge item-right>{{count?.houseFav}}</ion-badge></a>
+        <a ion-item (click)="favorite('routeFav')"><ion-icon color="primary"  name="compass" item-left></ion-icon>看房列表<ion-badge item-right>{{count?.routeFav}}</ion-badge></a>
+         <a ion-item (click)="favorite('recentView')"><ion-icon color="primary" name="eye" item-left></ion-icon>最近浏览<ion-badge item-right>{{count?.recentView}}</ion-badge></a>
       </ion-list>
     </ion-item-group>
     <ion-item-group>
       <ion-item-divider divider>设置</ion-item-divider>
       <ion-list>
-        <a ion-item (click)="searchDefault(0)"> <ion-icon primary name="home" item-left></ion-icon>缺省房源搜索条件</a>
-        <a ion-item (click)="searchDefault(1)"> <ion-icon primary name="school" item-left></ion-icon>缺省学校搜索条件</a>
-        <a ion-item (click)="myCenter('myCenter')"> <ion-icon primary  name="locate" item-left></ion-icon>我的位置</a>
-        <a ion-item (click)="myCenter('recentCenter')"> <ion-icon primary  name="locate" item-left></ion-icon>最近搜索位置</a>
+        <a ion-item (click)="searchDefault(0)"> <ion-icon color="primary" name="home" item-left></ion-icon>缺省房源搜索条件</a>
+        <a ion-item (click)="searchDefault(1)"> <ion-icon color="primary" name="school" item-left></ion-icon>缺省学校搜索条件</a>
+        <a ion-item (click)="myCenter('myCenter')"> <ion-icon color="primary" name="locate" item-left></ion-icon>我的位置</a>
+        <a ion-item (click)="myCenter('recentCenter')"> <ion-icon color="primary"  name="locate" item-left></ion-icon>最近搜索位置</a>
       </ion-list>
     </ion-item-group>
      <!--<ion-list>
@@ -58,8 +58,8 @@
   </div>
   <ion-item-group>
     <ion-list>
-        <a ion-item (click)="aboutUs()"> <ion-icon primary name="information-circle" item-left></ion-icon>关于我们</a>
-        <a ion-item (click)="help()"> <ion-icon primary name="help" item-left></ion-icon>帮助与反馈</a>
+        <a ion-item (click)="aboutUs()"> <ion-icon color="primary" name="information-circle" item-left></ion-icon>关于我们</a>
+        <a ion-item (click)="help()"> <ion-icon color="primary" name="help" item-left></ion-icon>帮助与反馈</a>
         
       </ion-list>
   

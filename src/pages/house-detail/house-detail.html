@@ -168,7 +168,7 @@
 	<!--START-->
 	<ion-card class="fyxqlb_cont">
 		<ion-list class="xqlb_list">
-			<ion-item-divider id="housedivider" divider primary>
+			<ion-item-divider id="housedivider" divider color="primary">
 				<ion-label>详情列表</ion-label>
 				<ion-label class="switchF2M">{{(switchF2M == true)? F2M.feet: F2M.meter}}</ion-label>
 				<ion-toggle [(ngModel)]="switchF2M"></ion-toggle>
@@ -270,7 +270,7 @@
 				<ion-label fixed class="xqlb_label">出售/出租：</ion-label>
 				<ion-label>{{S_R[house.s_r]}}</ion-label>
 			</ion-item>
-			<ion-item-divider id="housedivider" divider primary>房屋布局</ion-item-divider>
+			<ion-item-divider id="housedivider" divider color="primary">房屋布局</ion-item-divider>
 			<ion-item>
 				<div class="fwbj_table">
 					<table>
@@ -297,9 +297,9 @@
 					</table>
 				</div>
 			</ion-item>
-			<ion-item-divider id="housedivider" divider primary>房屋周边</ion-item-divider>
+			<ion-item-divider id="housedivider" divider color="primary">房屋周边</ion-item-divider>
 			<div class="fwms_item ">{{getPropertyTxt()}}</div>
-			<ion-item-divider id="housedivider" divider primary>房屋描述</ion-item-divider>
+			<ion-item-divider id="housedivider" divider color="primary">房屋描述</ion-item-divider>
 			<div class="fwms_item ">{{house.ad_text}}
 				<BR/>
 				<B>Extras:</B>
