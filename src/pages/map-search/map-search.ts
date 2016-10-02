@@ -421,12 +421,13 @@ export class MapSearchPage {
             {
               text: '详情',
               handler: () => {
-                let navTransition = alert.dismiss();
-                navTransition.then(() => {
-                  this.nav.pop();
-                  this.nav.push(HouseDetailPage, { id: house.MLS, list: this.currentHouseList });
+                //let navTransition = alert.dismiss();
+               // navTransition.then(() => {
+                 //this.nav.pop();
+                 alert.dismiss();
+                 this.nav.push(HouseDetailPage, { id: house.MLS, list: this.currentHouseList });
                   //this.nav.push(HouseDetailPage, mls); 
-                });
+                //});
                 return false;
               }
             }
