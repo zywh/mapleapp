@@ -42,7 +42,7 @@ export class MapleConf {
 
    if (this.location) {
       // already loaded data
-      return Promise.resolve(this.location);
+     // return Promise.resolve(this.location);
     }
 
   //Important: This is safe guard for map init. This introudce delay which is required for map switch. Otherwise it cause blank map when switching
