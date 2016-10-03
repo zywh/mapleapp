@@ -25,7 +25,7 @@ import {Search} from '../../components/search/search';
 })
 export class SelectOptionModal {
 
-    // public selectOptions: Object;
+    public selectOptions;
     //public selectOptions: selectOptionsObj;
     //  public selectOptions: {
 
@@ -40,19 +40,19 @@ export class SelectOptionModal {
     //     selectDate?: Number,
     //     selectSearch?: Object
     // };
-    public selectOptions = {
-        selectSR: true,
-        selectBaths: 0,
-        selectBeds: 0,
-        selectHousesize: { lower: 0, upper: 4000 },
-        selectLandsize: { lower: 0, upper: 43560 },
-        selectPrice: { lower: 0, upper: 600 },
-        selectType: '',
-        selectListType: true,
-        selectDate: 0,
-        //selectSearch: ''
+    // public selectOptions = {
+    //     selectSR: true,
+    //     selectBaths: 0,
+    //     selectBeds: 0,
+    //     selectHousesize: { lower: 0, upper: 4000 },
+    //     selectLandsize: { lower: 0, upper: 43560 },
+    //     selectPrice: { lower: 0, upper: 600 },
+    //     selectType: '',
+    //     selectListType: true,
+    //     selectDate: 0,
+    //     //selectSearch: ''
 
-    }
+    // }
 
     public selectUnit: Boolean = true;
     public mapType;
@@ -90,7 +90,7 @@ export class SelectOptionModal {
     getMySelections() {
         this.userData.getUserSelections('houseSearch').then(res => {
             if (res != null) {
-               // this.selectOptions = res;
+               this.selectOptions = res;
             }
 
         })
@@ -109,7 +109,7 @@ export class SelectOptionModal {
             selectType: '',
             selectListType: true,
             selectDate: 0,
-           // selectSearch: ''
+            selectSearch: ''
 
         }
     }
