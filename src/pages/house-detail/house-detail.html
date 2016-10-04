@@ -8,13 +8,13 @@
 			房源({{houseList.index + 1}}/{{houseList.total}})
 		
 
-		<ion-buttons *ngIf="houseList.prev" end>
-			<button ion-button icon-only (click)="go2PrevHouse()">
+		<ion-buttons end>
+			<button ion-button icon-only [disabled]="!houseList.prev" (click)="go2PrevHouse()">
 			<ion-icon  name="arrow-up" ></ion-icon>
 			</button>
 		</ion-buttons>
-		<ion-buttons *ngIf="houseList.next" end>
-			<button ion-button icon-only (click)="go2NextHouse()">
+		<ion-buttons end>
+			<button ion-button icon-only [disabled]="!houseList.next" (click)="go2NextHouse()">
 			<ion-icon  name="arrow-down" ></ion-icon>
 			</button>
 		</ion-buttons>
