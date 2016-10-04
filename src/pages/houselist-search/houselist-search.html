@@ -8,13 +8,13 @@
     </ion-buttons>
 
     <ion-buttons end>
-      <button ion-button icon-only  (click)="pagePre()" *ngIf="pageIndex > 0">
+      <button ion-button icon-only  (click)="pagePre()" [disabled]="pageIndex <= 0">
         <ion-icon name="arrow-dropleft"></ion-icon>
      </button>
     </ion-buttons>
 
     <ion-buttons end>
-      <button ion-button  icon-only (click)="pageNext()" *ngIf="pageIndex < pageTotal-1">
+      <button ion-button  icon-only (click)="pageNext()" [disabled]="(pageIndex + 1) >= pageTotal">
         <ion-icon name="arrow-dropright"></ion-icon>
      </button>
     </ion-buttons>
