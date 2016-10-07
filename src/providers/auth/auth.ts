@@ -19,6 +19,7 @@ export class AuthService {
       primaryColor: "#FF5722"
     },
    languageDictionary: CN,
+   rememberLastLogin: false,
     auth: {
       redirect: false,
       params: {
