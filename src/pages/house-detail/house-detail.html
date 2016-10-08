@@ -1,12 +1,15 @@
-
-
-
 <ion-header>
 	<ion-navbar no-border-bottom>
-		
-  		
-			房源({{houseList.index + 1}}/{{houseList.total}})
-		
+
+
+	<ion-buttons left>
+		<button ion-button (click)="nav.pop()">
+    
+  	 	房源({{houseList.index + 1}}/{{houseList.total}})
+  	</button>
+	</ion-buttons>
+
+
 
 		<ion-buttons end>
 			<button ion-button icon-only [disabled]="!houseList.prev" (click)="go2PrevHouse()">
@@ -60,9 +63,9 @@
 	<!--<button fab fab-top fab-right (click)="fav('houseFav')" style="z-index: 12;opacity: 0.7; ">
 		<ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon>
 	</button>-->
-	 <ion-fab top right >
-    <button  ion-fab  (click)="fav('houseFav')"><ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon></button>
-   	 </ion-fab>
+	<ion-fab top right>
+		<button ion-fab (click)="fav('houseFav')"><ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon></button>
+	</ion-fab>
 
 
 	<ion-slides #photo_slider [options]="swiperOptions" class="swiper-container">
