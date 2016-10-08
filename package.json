@@ -53,6 +53,7 @@
     "cordova-plugin-geolocation",
     "cordova-plugin-x-socialsharing",
     "cordova-plugin-network-information",
+    "cordova-plugin-inappbrowser",
     {
       "variables": {
         "APP_ID": "wx223b36a9265ba2d5"
