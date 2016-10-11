@@ -1,11 +1,16 @@
 
 
-
 <ion-header>
 	<ion-navbar no-border-bottom>
-		
-  		
+
+	<ion-buttons left>
+		<button ion-button  (click)="nav.pop()">
 			房源({{houseList.index + 1}}/{{houseList.total}})
+		</button>
+	</ion-buttons>
+
+  		
+		
 		
 
 		<ion-buttons end>
