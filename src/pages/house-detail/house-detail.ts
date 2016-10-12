@@ -228,7 +228,7 @@ export class HouseDetailPage  {
 	@ViewChild('photo_slider') slider: Slides;
 
 	constructor(
-		private nav: NavController,
+		public nav: NavController,
 		private navParams: NavParams,
 		private mapleRestData: MapleRestData,
 		public mapleConf: MapleConf,
