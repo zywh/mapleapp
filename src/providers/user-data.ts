@@ -1,9 +1,11 @@
-import {Injectable} from '@angular/core';
-import {Events, ToastController, AlertController} from 'ionic-angular';
-import {AuthService} from './auth/auth';
-import {MapleRestData} from './maple-rest-data/maple-rest-data';
-import {MapleConf} from './maple-rest-data/maple-config';
+import { Injectable } from '@angular/core';
+import { Events, Platform, ToastController, AlertController } from 'ionic-angular';
+import { SocialSharing } from 'ionic-native';
+import { AuthService } from './auth/auth';
+import { MapleRestData } from './maple-rest-data/maple-rest-data';
+import { MapleConf } from './maple-rest-data/maple-config';
 import { Storage } from '@ionic/storage';
+declare var Wechat: any;
 //import {LoginPage} from '../pages/login/login';
 //import * as PouchDB from 'pouchdb';
 //declare var PouchDB: any;
@@ -17,7 +19,7 @@ export class UserData {
   _houseSearchDefault: Object;
   _schoolSearchDefault: Object;
   HAS_LOGGED_IN = 'hasLoggedIn';
- 
+
 
   //fbid: number;
   username: string;
@@ -34,6 +36,7 @@ export class UserData {
     private mapleRestData: MapleRestData,
     private mapleConf: MapleConf,
     private alertc: AlertController,
+    private platform: Platform,
     public storage: Storage
     //private nav: NavController
 
@@ -95,17 +98,17 @@ export class UserData {
           text: '保存',
           handler: data => {
             this.saveCenter('myCenter', data.name, lat, lng);
-             this.events.publish('locate:dismiss');
+            this.events.publish('locate:dismiss');
           }
         }
       ]
     });
 
     return new Promise(resolve => {
-    prompt.present().then(res=>{
-      console.log("alert is dismissed");
-      return resolve(res);
-    });
+      prompt.present().then(res => {
+        console.log("alert is dismissed");
+        return resolve(res);
+      });
     })
   }
 
@@ -156,8 +159,8 @@ export class UserData {
       let parms = { username: this.auth.user['email'], data: data, type: type, action: 'r' };
       this.mapleRestData.load(rest, parms).subscribe(
         data => {
-            console.log("SaveCenter Reroder:" + data)
-       
+          console.log("SaveCenter Reroder:" + data)
+
         });
 
     });
@@ -330,6 +333,59 @@ export class UserData {
     })
 
 
+  }
+
+
+  share(link, img, title, des) {
+    if (this.platform.is('android')) {
+      this.shareWechat(link, img, title, des);
+    } else {
+      this.shareSocial(link, img, title, des);
+    }
+  }
+  
+  shareWechat(link, img, title, des) {
+
+    Wechat.share({
+      message: {
+        title: title,
+        description: des,
+        thumb: img,
+        media: {
+          type: Wechat.Type.WEBPAGE,   // webpage
+          webpageUrl: link    // webpage
+        }
+      },
+      scene: Wechat.Scene.TIMELINE   // share to Timeline
+    }, function () {
+      alert("Success");
+    }, function (reason) {
+      alert("Failed: " + reason);
+    });
+
+
+
+
+  }
+
+  shareSocial(link, img, title, des) {
+
+
+    var onSuccess = function (result) {
+      console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true
+      console.log("Shared to app: " + result.app); // On Android result.app is currently empty. On iOS it's empty when sharing is cancelled (result.completed=false)
+    }
+    var options = {
+      message: des, // not supported on some apps (Facebook, Instagram)
+      subject: title, // fi. for email
+      files: [img], // an array of filenames either locally or remotely
+      url: link,
+      chooserTitle: '分享' // Android only, you can override the default share sheet title
+    }
+    var onError = function (msg) {
+      console.log("Sharing failed with message: " + msg);
+    }
+    SocialSharing.shareWithOptions(options);
   }
 
   login(username) {
