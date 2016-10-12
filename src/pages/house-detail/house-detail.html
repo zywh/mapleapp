@@ -3,13 +3,15 @@
 
 
 	<ion-buttons left>
-		<button ion-button (click)="nav.pop()">
-    
-  	 	房源({{houseList.index + 1}}/{{houseList.total}})
-  	</button>
+		<button ion-button  (click)="nav.pop()">
+			房源({{houseList.index + 1}}/{{houseList.total}})
+		</button>
 	</ion-buttons>
 
-
+  		
+		
+		
+>>>>>>> 2acde396fb21dd8f30c680ef5c0b3cb468733bdf
 
 		<ion-buttons end>
 			<button ion-button icon-only [disabled]="!houseList.prev" (click)="go2PrevHouse()">
