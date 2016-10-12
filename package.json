@@ -54,13 +54,6 @@
     "cordova-plugin-x-socialsharing",
     "cordova-plugin-network-information",
     "cordova-plugin-inappbrowser",
-    {
-      "variables": {
-        "APP_ID": "wx223b36a9265ba2d5"
-      },
-      "locator": "cordova-plugin-tx-wechat",
-      "id": "cordova-plugin-tx-wechat"
-    },
     "ionic-plugin-deploy"
   ],
   "cordovaPlatforms": [
