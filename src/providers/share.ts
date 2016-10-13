@@ -7,16 +7,16 @@ declare var Wechat: any;
 @Component({
   template: `
     <ion-list>
-     <ion-item (click)="userData.shareWechat(0,link,img,title,des)">
+     <ion-item (click)="userData.shareWechat('SESSION')">
       <ion-icon color='primary' name="share-alt" item-left></ion-icon>
       发送给朋友
   
      </ion-item>
-       <ion-item (click)="userData.shareWechat(1,link,img,title,des)">
+       <ion-item (click)="userData.shareWechat('1',link,img,title,des)">
     <ion-icon color='primary' name="refresh-circle" item-left></ion-icon>
      分享到朋友圈
       </ion-item>
-   <ion-item (click)="userData.shareWechat(2,link,img,title,des)">
+   <ion-item (click)="userData.shareWechat('2',link,img,title,des)">
       <ion-icon color='primary' name="bookmark" item-left></ion-icon>
       收藏
   
@@ -33,7 +33,7 @@ export class SharePage {
   public title;
   public des;
 
-  constructor(private navParams: NavParams, public userData: UserData) {
+  constructor( private navParams: NavParams, public userData: UserData) {
 
   }
 

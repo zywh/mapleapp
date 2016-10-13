@@ -46,7 +46,7 @@ export class UserData {
   { }
 
 
-
+ 
   loginAlert() {
 
 
@@ -343,11 +343,11 @@ export class UserData {
     let type = 0;
     if (this.platform.is('android')) {
     
-   // this.shareWechat(0,link, img, title, des);
+   this.shareWechat(type,link, img, title, des);
      
-   let popover = this.popoverCtrl.create(SharePage,{link:link,img:img,title:title,des:des});
+   //let popover = this.popoverCtrl.create(SharePage,{link:link,img:img,title:title,des:des});
 
-    popover.present();
+   // popover.present();
 
     } else {
       this.shareSocial(link, img, title, des);
