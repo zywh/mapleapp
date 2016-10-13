@@ -89,4 +89,7 @@
     <plugin name="cordova-plugin-splashscreen" spec="https://github.com/apache/cordova-plugin-splashscreen.git" />
     <plugin name="ionic-plugin-deploy" spec="~0.6.4" />
     <plugin name="cordova-plugin-inappbrowser" spec="~1.5.0" />
+    <plugin name="cordova-plugin-wechat" spec="~1.3.0">
+        <variable name="WECHATAPPID" value="wx98c2bc19d0082863" />
+    </plugin>
 </widget>

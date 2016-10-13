@@ -534,30 +534,19 @@ export class HouseDetailPage  {
 	}
 
 	share() {
-		//share(message, subject, file, link) {
-		//	 'House Title', 'House Detail', null, 'https://m.maplecity.com.cn'
-		// this.platform.ready().then(() => {
-		//window.plugins.socialsharing.share(message, subject, file, link);
+		
 		let subject = "枫之都房产：MLS" + this.parms.id;
 		let message = this.getPriceTxt() + " - " + this.house.addr + " " + this.house.municipality;
 		let img = this.photoUrl(this.photos[0]);
 		let link = "http://m.maplecity.com.cn/index.php?r=mhouse/view&id=" + this.parms.id;
-		console.log("socialshare", message, subject, img, link);
-		SocialSharing.share(message, subject, img, link);
+		//console.log("socialshare", message, subject, img, link);
+		//SocialSharing.share(message, subject, img, link);
 
-		// });
-	}
 
-	shareViaTwitter(message, image, link) {
-		// this.platform.ready().then(() => {
-		//     if(window.plugins.socialsharing) {
-		//         window.plugins.socialsharing.canShareVia("twitter", message, null, image, link, function(result) {
-		//             window.plugins.socialsharing.shareViaTwitter(message, image, link);
-		//         }, function(error) {
-		//             console.error(error);
-		//         });
-		//     }
-		// });
+		this.userData.share(link,img,subject,message);
+
+
+		
 	}
 
 	

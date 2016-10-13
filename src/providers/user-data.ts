@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Events, Platform, ToastController, AlertController } from 'ionic-angular';
+import { Events, Platform, ToastController, AlertController ,PopoverController} from 'ionic-angular';
 import { SocialSharing } from 'ionic-native';
 import { AuthService } from './auth/auth';
 import { MapleRestData } from './maple-rest-data/maple-rest-data';
 import { MapleConf } from './maple-rest-data/maple-config';
 import { Storage } from '@ionic/storage';
+import { SharePage } from './share';
 declare var Wechat: any;
 //import {LoginPage} from '../pages/login/login';
 //import * as PouchDB from 'pouchdb';
@@ -37,7 +38,8 @@ export class UserData {
     private mapleConf: MapleConf,
     private alertc: AlertController,
     private platform: Platform,
-    public storage: Storage
+    public storage: Storage,
+    public popoverCtrl: PopoverController
     //private nav: NavController
 
   )
@@ -337,36 +339,57 @@ export class UserData {
 
 
   share(link, img, title, des) {
+    //console.log(link + "," + img +","+title +":" + des);
+    let type = 0;
     if (this.platform.is('android')) {
-      this.shareWechat(link, img, title, des);
+    
+   // this.shareWechat(0,link, img, title, des);
+     
+   let popover = this.popoverCtrl.create(SharePage,{link:link,img:img,title:title,des:des});
+
+    popover.present();
+
     } else {
       this.shareSocial(link, img, title, des);
+      //this.shareWechat(type,link, img, title, des);
+     
     }
   }
-  
-  shareWechat(link, img, title, des) {
 
+
+
+  shareWechat(type,link,img,title,des) {
+
+    //  Scene: {
+    //     SESSION:  0, // 聊天界面
+    //     TIMELINE: 1, // 朋友圈
+    //     FAVORITE: 2  // 收藏
+    // },
+    
     Wechat.share({
       message: {
-        title: title,
+        title: img,
         description: des,
-        thumb: img,
+        thumb: title,
         media: {
-          type: Wechat.Type.WEBPAGE,   // webpage
+          type: Wechat.Type.LINK,   // webpage
           webpageUrl: link    // webpage
         }
       },
-      scene: Wechat.Scene.TIMELINE   // share to Timeline
+     // scene: Wechat.Scene.SESSION   // share to Timeline
+     scene: type
     }, function () {
-      alert("Success");
-    }, function (reason) {
-      alert("Failed: " + reason);
+      alert("success");
+    }, function () {
+      alert("Failed");
     });
 
 
 
 
   }
+
+
 
   shareSocial(link, img, title, des) {
 
