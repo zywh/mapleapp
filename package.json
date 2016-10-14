@@ -20,14 +20,14 @@
     "highcharts": "^4.2.5"
   },
   "dependencies": {
-    "ionic-angular": "^2.0.0-rc.0",
+    "ionic-angular": "^2.0.0-rc.1",
     "ionicons": "^3.0.0",
-    "@ionic/storage": "^1.0.3",
-    "ionic-native": "^2.0.3",
-    "@ionic/cloud": "^0.10.0",
-    "@ionic/cloud-angular": "^0.5.0",
-    "angular2-highcharts": "^0.3.2",
-    "angular2-jwt": "^0.1.23"
+    "@ionic/storage": "^1.1.6",
+    "ionic-native": "^2.2.3",
+    "@ionic/cloud": "^0.11.0",
+    "@ionic/cloud-angular": "^0.6.0",
+    "angular2-highcharts": "^0.3.4",
+    "angular2-jwt": "^0.1.24"
   },
   "devDependencies": {
     "@ionic/app-scripts": "^0.0.23",
