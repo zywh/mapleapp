@@ -5,7 +5,7 @@ import { AuthService } from './auth/auth';
 import { MapleRestData } from './maple-rest-data/maple-rest-data';
 import { MapleConf } from './maple-rest-data/maple-config';
 import { Storage } from '@ionic/storage';
-import { SharePage } from './share';
+//import { SharePage } from './share';
 declare var Wechat: any;
 //import {LoginPage} from '../pages/login/login';
 //import * as PouchDB from 'pouchdb';
@@ -368,9 +368,9 @@ export class UserData {
     
     Wechat.share({
       message: {
-        title: img,
+        title: title,
         description: des,
-        thumb: title,
+        thumb: img,
         media: {
           type: Wechat.Type.LINK,   // webpage
           webpageUrl: link    // webpage
