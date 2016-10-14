@@ -42,7 +42,9 @@
     "angular2-jwt": "^0.1.24"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "^0.0.23",
+   "@ionic/app-scripts": "^0.0.34",
+
+    "@types/js-base64": "^2.1.4",
     "typescript": "^2.0.3"
   },
   "cordovaPlugins": [
