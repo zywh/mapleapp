@@ -14,7 +14,6 @@ import {HouseList} from '../../components/house-list/house-list';
 import {Search} from '../../components/search/search';
 
 @Component({
-  //selector: 'house-list',
   templateUrl: 'home.html'
 })
 export class HomePage {
