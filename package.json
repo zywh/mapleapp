@@ -39,7 +39,7 @@
     "@ionic/cloud": "^0.11.0",
     "@ionic/cloud-angular": "^0.6.0",
     "angular2-highcharts": "^0.3.4",
-    "angular2-jwt": "^0.1.24"
+    "angular2-jwt": "0.1.23"
   },
   "devDependencies": {
    "@ionic/app-scripts": "^0.0.34",
