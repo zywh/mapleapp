@@ -25,7 +25,7 @@ export class Search {
   private mlsItems;
   private schoolItems;
   public currentDiv;
-  public queryText;
+  public queryText ='';
   public searchPlaceHolder;
   //private defaultItems;
 
