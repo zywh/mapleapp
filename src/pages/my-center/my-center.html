@@ -1,0 +1,50 @@
+<!--
+  Generated template for the MyCenterPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{pageTitle}}</ion-title>
+     <!--<ion-buttons end>
+      <button ion-button (click)="addCenter()">
+        <ion-icon name="add"></ion-icon>
+    </button>
+    </ion-buttons>-->
+     <ion-buttons end>
+      <button ion-button (click)="toggleEdit()">{{editButton}}
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+ 
+
+</ion-header>
+
+
+<ion-content>
+
+
+  <ion-list [reorder]="editing" (ionItemReorder)="reorderItems($event)">
+
+    <ion-item-sliding *ngFor="let center of centerList">
+      <ion-item >
+        <ion-icon tappable  color="primary" *ngIf="editing" name="remove-circle" item-left (click)="remove(center)"></ion-icon>
+         <ion-icon color="primary" *ngIf="!editing" name="locate" item-left></ion-icon>
+           <h2 tappable  (click)="gotoMap(center.lat,center.lng)"> {{center.name}}</h2>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button clear (click)="remove(center)">
+        <ion-icon name="trash"></ion-icon>
+        删除
+      </button>
+        <button ion-button clear (click)="gotoMap(center.lat,center.lng)">
+        <ion-icon name="navigate"></ion-icon>
+        地图
+      </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+</ion-content>
