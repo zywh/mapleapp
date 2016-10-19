@@ -1,0 +1,52 @@
+import {NavController, NavParams} from 'ionic-angular';
+import {OnInit,Component} from '@angular/core';
+import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
+import {MapleConf} from '../../providers/maple-rest-data/maple-config';
+import {ProjectDetailPage} from '../project-detail/project-detail';
+
+//projects: Object;
+
+
+//let projects = {};
+@Component({
+    templateUrl: 'projects.html'
+})
+export class ProjectsPage implements OnInit {
+    //public nav;
+    public parms = {};
+    projects: Object;
+
+    static get parameters() {
+        return [[NavController], [MapleRestData],[MapleConf]];
+    }
+
+    constructor(private nav: NavController, private mapleRestData: MapleRestData,private mapleconf: MapleConf) {
+        //this.nav = nav;
+    }
+    
+    private swiperOptions = {
+        loop: true,
+        //pager: true,
+        speed: 4000,
+        autoplay: 300
+    };
+
+    ngOnInit() {
+        this.getResult('index.php?r=ngget/getProjects');
+        console.log("Page projects: picURL" + this.mapleconf.data.picHost); //for testing purpose to be removed
+    }
+
+    getResult(url) {
+        this.mapleRestData.load(url, this.parms).subscribe(
+            data => { this.projects = data; console.log(this.projects); }
+        );
+    }
+
+    goToProject(id) {
+        this.nav.push(ProjectDetailPage, id);
+    }
+
+
+
+
+}
