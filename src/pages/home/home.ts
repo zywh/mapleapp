@@ -188,6 +188,7 @@ export class HomePage {
     console.log(e);
     if (e.type == 'CITY') {
      this.events.publish('map:center', { lat: e.lat, lng: e.lng });
+     this.userData.saveCenter('recentCenter',e.id,e.lat,e.lng);
 
     } else {
       this.nav.push(HouseDetailPage, { id: e.id });

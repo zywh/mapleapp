@@ -85,6 +85,7 @@ export class SelectOptionModal {
     searchSelection(e) {
         console.log(e);
         this.selectOptions['selectSearch'] = e;
+        this.userData.saveCenter('recentCenter',e.id,e.lat,e.lng);
     }
 
     getMySelections() {
