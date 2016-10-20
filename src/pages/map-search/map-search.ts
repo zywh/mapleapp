@@ -112,6 +112,8 @@ export class MapSearchPage {
   listenEvents() {
     this.events.subscribe('locate:dismiss', () => {
       this.locateLock = false;
+      this.lockMapListener = false;
+      this.setLocation(this.defaultcenter, this.defaultZoom, true);
     });
      this.events.subscribe('schoolmap:center', () => {
        console.log("List modal dismiss")
@@ -343,19 +345,24 @@ export class MapSearchPage {
 
   //SetCenter and Zoom if location button is clicked
   setCenter(isMarker) {
-
+    this.lockMapListener = true; // lock listener to prevent Android map listener trigger
     this.locateLock = true; //lock locate click to prevent frozen from double click
     this.mapleconf.getLocation().then(data => {
 
       this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
       if (this.auth.authenticated()) {
-        this.userData.addCenterAlert(data['lat'], data['lng'], "保存中心位置到我的收藏").then(res=>{
-           this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
+        this.userData.addCenterAlert(data['lat'], data['lng'], "保存中心位置到我的收藏");
+       
+       
+       // this.userData.addCenterAlert(data['lat'], data['lng'], "保存中心位置到我的收藏").then(res=>{
+         //  this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
+         //  this.lockMapListener = false;
 
-        });
+        //});
       } else {
         this.locateLock = false;
          this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
+         this.lockMapListener = false;
       }
      
 
