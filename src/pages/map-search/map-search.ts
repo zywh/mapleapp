@@ -1,22 +1,22 @@
-import {ModalController, LoadingController, Events, AlertController, PopoverController, ActionSheet, MenuController, Platform, NavController, NavParams, ViewController} from 'ionic-angular';
-import {Geolocation} from 'ionic-native';
-import { NgZone, Component, ElementRef, ViewChild} from '@angular/core';;
-import {Connectivity} from '../../providers/connectivity/connectivity';
-import {HouseDetailPage} from '../house-detail/house-detail';
-import {HouselistSearch} from '../houselist-search/houselist-search';
-import {MapleConf} from '../../providers/maple-rest-data/maple-config';
-import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-import {Observable} from 'rxjs/Observable';
+import { ModalController, LoadingController, Events, AlertController, PopoverController, ActionSheet, MenuController, Platform, NavController, NavParams, ViewController } from 'ionic-angular';
+import { Geolocation } from 'ionic-native';
+import { NgZone, Component, ElementRef, ViewChild } from '@angular/core';;
+import { Connectivity } from '../../providers/connectivity/connectivity';
+import { HouseDetailPage } from '../house-detail/house-detail';
+import { HouselistSearch } from '../houselist-search/houselist-search';
+import { MapleConf } from '../../providers/maple-rest-data/maple-config';
+import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
+import { Observable } from 'rxjs/Observable';
 //import {GoogleMaps} from '../../providers/google-maps/google-maps';
 //import {GoogleMap, GoogleMapsEvent, GoogleMapsLatLng, GoogleMapsMarker} from 'ionic-native';
-import {SelectOptionModal} from './map-option-modal';
-import {MapHouselist} from './map-houselist';
+import { SelectOptionModal } from './map-option-modal';
+import { MapHouselist } from './map-houselist';
 //import {ConferenceData} from '../../providers/conference-data';
-import {SchoolSelectOptionModal} from '../school-map/schoolmap-option-modal';
-import {SchoolListModal} from '../school-map/school-list-modal';
+import { SchoolSelectOptionModal } from '../school-map/schoolmap-option-modal';
+import { SchoolListModal } from '../school-map/school-list-modal';
 //import {HousePopover} from './house-popover';
-import {AuthService} from '../../providers/auth/auth';
-import {UserData} from '../../providers/user-data';
+import { AuthService } from '../../providers/auth/auth';
+import { UserData } from '../../providers/user-data';
 
 declare var RichMarker: any;
 declare var google;
@@ -80,7 +80,7 @@ export class MapSearchPage {
   public mapType: Number = 1; // 0 for house and 1 for school
   public markerDrop;
   public lockMapListener: Boolean = false;
-  
+
 
   constructor(
     public nav: NavController,
@@ -105,7 +105,7 @@ export class MapSearchPage {
     this.mapType = this.navparm.data.pageType;
     //this.resetItems();
     this.setMapType(this.mapType);
-   	this.listenEvents();
+    this.listenEvents();
 
   }
 
@@ -115,8 +115,8 @@ export class MapSearchPage {
       this.lockMapListener = false;
       this.setLocation(this.defaultcenter, this.defaultZoom, true);
     });
-     this.events.subscribe('schoolmap:center', () => {
-       console.log("List modal dismiss")
+    this.events.subscribe('schoolmap:center', () => {
+      console.log("List modal dismiss")
       this.listModal.dismiss();
     });
 
@@ -218,19 +218,44 @@ export class MapSearchPage {
   }
 
 
- ionViewDidEnter() {
+  ionViewDidEnter() {
 
     if (!this.mapInitialised) {
 
-        let mapLoaded = this.initMap();
+      let mapLoaded = this.initMap();
+      let alert = this.alertc.create({
+        title: '提示',
+        message: '根据TREB数据协议，有些房源只有登录后才可以显示，请注册/登录后查找更多房源',
+        buttons: [
+          {
+            text: '继续',
+            role: 'cancel',
+
+
+          },
+          {
+            text: '登录',
+            handler: () => {
+              alert.dismiss().then(res => {
+                this.events.publish('profile:login');
+
+              })
+
+            }
+          }
+        ]
+      });
+      
+      if (!this.auth.authenticated()) {
+        alert.present();
+      }
 
     }
 
 
-
   }
 
- 
+
 
 
   openModal() {
@@ -242,12 +267,12 @@ export class MapSearchPage {
       console.log("Option Modal is dismissed");
       console.log(data);
       //if ( this.selectOptions.hasOwnProperty('selectSearch')) {
-      if ( this.selectOptions.selectSearch.type == 'CITY') {
+      if (this.selectOptions.selectSearch.type == 'CITY') {
         let center = new google.maps.LatLng(this.selectOptions.selectSearch.lat, this.selectOptions.selectSearch.lng);
         this.setLocation(center, this.defaultZoom, true);
         console.log("Set city center");
       }
-      
+
       this.changeMap(this.mapType);
 
     });
@@ -293,7 +318,7 @@ export class MapSearchPage {
         console.log(this.selectOptions);
         //let modal = this.modalc.create(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds, listType: 'grid' });
         //modal.present();
-       this.listModal = this.modalc.create(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds, listType: 'grid' });
+        this.listModal = this.modalc.create(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds, listType: 'grid' });
         this.listModal.present();
 
 
@@ -352,19 +377,19 @@ export class MapSearchPage {
       this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
       if (this.auth.authenticated()) {
         this.userData.addCenterAlert(data['lat'], data['lng'], "保存中心位置到我的收藏");
-       
-       
-       // this.userData.addCenterAlert(data['lat'], data['lng'], "保存中心位置到我的收藏").then(res=>{
-         //  this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
-         //  this.lockMapListener = false;
+
+
+        // this.userData.addCenterAlert(data['lat'], data['lng'], "保存中心位置到我的收藏").then(res=>{
+        //  this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
+        //  this.lockMapListener = false;
 
         //});
       } else {
         this.locateLock = false;
-         this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
-         this.lockMapListener = false;
+        this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
+        this.lockMapListener = false;
       }
-     
+
 
     })
   }
@@ -429,11 +454,11 @@ export class MapSearchPage {
               text: '详情',
               handler: () => {
                 //let navTransition = alert.dismiss();
-               // navTransition.then(() => {
-                 //this.nav.pop();
-                 alert.dismiss();
-                 this.nav.push(HouseDetailPage, { id: house.MLS, list: this.currentHouseList });
-                  //this.nav.push(HouseDetailPage, mls); 
+                // navTransition.then(() => {
+                //this.nav.pop();
+                alert.dismiss();
+                this.nav.push(HouseDetailPage, { id: house.MLS, list: this.currentHouseList });
+                //this.nav.push(HouseDetailPage, mls); 
                 //});
                 return false;
               }
@@ -477,14 +502,14 @@ export class MapSearchPage {
         message: html,
         cssClass: 'school_popup',
         buttons: [{ text: '取消', role: 'cancel' },
-          {
-            text: '周边房源',
-            handler: () => {
-              this.events.publish('map:center', { lat: lat, lng: lng, type: 'SCHOOL' });
-              // this.events.publish('map:center', point);
-              //this.nav.push(MapSearchPage, { lat: lat, lng: lng });
-            }
+        {
+          text: '周边房源',
+          handler: () => {
+            this.events.publish('map:center', { lat: lat, lng: lng, type: 'SCHOOL' });
+            // this.events.publish('map:center', point);
+            //this.nav.push(MapSearchPage, { lat: lat, lng: lng });
           }
+        }
         ]
       });
       alert.present();
