@@ -202,6 +202,8 @@ export class MapSearchPage {
 
 
   ionViewWillEnter() {
+    console.log("Map View will enter");
+    this.lockMapListener = false; //unlock after view enter
     let optionType = (this.mapType == 0) ? 'houseSearch' : 'schoolSearch';
 
     if (this.auth.authenticated()) {
@@ -213,7 +215,7 @@ export class MapSearchPage {
       })
     }
 
-    console.log("Mappage will enter");
+
 
   }
 
@@ -245,7 +247,7 @@ export class MapSearchPage {
           }
         ]
       });
-      
+
       if (!this.auth.authenticated()) {
         alert.present();
       }
@@ -255,6 +257,10 @@ export class MapSearchPage {
 
   }
 
+  ionViewDidLeave() {
+    console.log("Map view did leave")
+    this.lockMapListener = true;
+  }
 
 
 
