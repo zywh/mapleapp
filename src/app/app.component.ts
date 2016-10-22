@@ -12,11 +12,10 @@ import {HouselistSearch} from '../pages/houselist-search/houselist-search'
 //import {ConferenceData} from './providers/conference-data';
 import {UserData} from '../providers/user-data';
 import {MapleRestData} from '../providers/maple-rest-data/maple-rest-data';
-import {Connectivity} from '../providers/connectivity/connectivity';
+import {Connectivity} from '../providers/connectivity';
 import {MapleConf} from '../providers/maple-rest-data/maple-config';
 import {AuthService} from '../providers/auth/auth';
-import {UpdateService} from '../providers/update/update';
-
+import {UpdateService} from '../providers/update';
 
 export interface PageObj {
   title: string;
@@ -142,6 +141,7 @@ export class MapleApp {
     this.menu.enable(loggedIn, "loggedInMenu");
     this.menu.enable(!loggedIn, "loggedOutMenu");
   }
+
   checkConnectivity() {
     //this.addConnectivityListeners();
     console.log("Google maps JavaScript needs to be loaded.");

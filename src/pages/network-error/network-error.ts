@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController,AlertController} from 'ionic-angular';
 import {TabsPage} from '../tabs/tabs';
-import {Connectivity} from '../../providers/connectivity/connectivity';
+import {Connectivity} from '../../providers/connectivity';
 declare var google: any;
 
 /*

@@ -7,6 +7,7 @@ import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {UserData} from '../../providers/user-data';
 import {HouseCityStatsPage} from '../../pages/house-city-stats/house-city-stats';
 import {AuthService} from '../../providers/auth/auth';
+import {ShareService} from '../../providers/share';
 declare var google: any;
 
 /*
@@ -238,7 +239,8 @@ export class HouseDetailPage  {
 		private auth: AuthService,
 		private toastCtrl: ToastController,
 		private actionSheetCtrl: ActionSheetController,
-		private platform: Platform) {
+		private platform: Platform,
+		private shareService: ShareService) {
 
 		//this.nav = nav;
 		console.log(navParams);
@@ -541,16 +543,6 @@ export class HouseDetailPage  {
 		let link = "http://m.maplecity.com.cn/index.php?r=mhouse/view&id=" + this.parms.id;
 		//console.log("socialshare", message, subject, img, link);
 		//SocialSharing.share(message, subject, img, link);
-
-
-		this.userData.share(link,img,subject,message);
-
-
-		
+		this.shareService.share(link,img,subject,message);
 	}
-
-	
-
-
-
 }
