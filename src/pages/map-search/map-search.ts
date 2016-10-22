@@ -259,7 +259,7 @@ export class MapSearchPage {
 
   ionViewDidLeave() {
     console.log("Map view did leave")
-    this.lockMapListener = true;
+    this.lockMapListener = true; //lock change map after view switch. workaround for android searchbar trigger map data refresh
   }
 
 
