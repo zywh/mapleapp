@@ -1,7 +1,7 @@
 import { ModalController, LoadingController, Events, AlertController, PopoverController, ActionSheet, MenuController, Platform, NavController, NavParams, ViewController } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
 import { NgZone, Component, ElementRef, ViewChild } from '@angular/core';;
-import { Connectivity } from '../../providers/connectivity/connectivity';
+import { Connectivity } from '../../providers/connectivity';
 import { HouseDetailPage } from '../house-detail/house-detail';
 import { HouselistSearch } from '../houselist-search/houselist-search';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
