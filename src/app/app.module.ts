@@ -7,12 +7,12 @@ import { AuthHttp, AuthConfig } from 'angular2-jwt';
 
 //import service and compoment
 import { UserData } from '../providers/user-data';
-//import { SharePage } from '../providers/share';
 import { MapleConf } from '../providers/maple-rest-data/maple-config';
 import { MapleRestData } from '../providers/maple-rest-data/maple-rest-data';
-import { Connectivity } from '../providers/connectivity/connectivity';
+import { Connectivity } from '../providers/connectivity';
 import { AuthService } from '../providers/auth/auth';
-import { UpdateService } from '../providers/update/update';
+import { UpdateService } from '../providers/update';
+import { ShareService } from '../providers/share';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { HouseList } from '../components/house-list/house-list';
 import { Search } from '../components/search/search';
@@ -69,7 +69,6 @@ export function authFactory(http: any) {
     HelpPage,
     HomePage,
     HouseCityStatsPage,
-    //SharePage,
     HouseDetailPage,
     MapSearchPage,
     HouselistSearch,
@@ -121,7 +120,6 @@ export function authFactory(http: any) {
     HelpPage,
     HomePage,
     HouseCityStatsPage,
-    //SharePage,
     HouseDetailPage,
     MapSearchPage,
     HouselistSearch,
@@ -156,6 +154,7 @@ export function authFactory(http: any) {
       deps: [Http]
     },
     AuthService,
-    UpdateService],
+    UpdateService,
+    ShareService],
 })
 export class AppModule { }

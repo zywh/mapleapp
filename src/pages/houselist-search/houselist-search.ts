@@ -64,9 +64,11 @@ export class HouselistSearch {
 
     //first time view is entered. add listener
     ionViewWillEnter() {
-        if (this.listType = 'grid') {
+
+        if (this.listType == 'grid') {
             this.getHouseList();
         } else {
+
             this.totalCount = this.currentHouseList.length;
         }
 
@@ -158,25 +160,54 @@ export class HouselistSearch {
     }
 
     sort() {
+
+
         if (this.listType == 'house') {
-            this.currentHouseList.sort(function (a, b) {
-                let an, bn;
-                if (this.sortType == 'ListDate') {
+            if (this.sortType == 'Price') {
+                if (this.sortOrder == 0) {
+                    this.currentHouseList.sort(function (a, b) {
+                        let an, bn;
+                        an = parseFloat(a.Price);
+                        bn = parseFloat(b.Price);
+                        return an - bn;
+
+                    })
+                }
+                if (this.sortOrder == 1) {
+                    this.currentHouseList.sort(function (a, b) {
+                        let an, bn;
+                        an = parseFloat(a.Price);
+                        bn = parseFloat(b.Price);
+                        return bn - an;
+
+                    })
+                }
+
+            }
+
+            if (this.sortType == 'ListDate') {
+                this.currentHouseList.sort(function (a, b) {
+                    let an, bn;
                     an = new Date(a.ListDate);
                     bn = new Date(b.ListDate);
-                } else {
-                    an = parseFloat(a[this.sortType]);
-                    bn = parseFloat(b[this.sortType])
-                }
-                if (this.sortOrder == 0) { //ascend
-
-                    return an - bn;
-                } else {
                     return bn - an;
-                }
+
+                });
+
+            }
+            if (this.sortType == 'Beds') {
+                this.currentHouseList.sort(function (a, b) {
+                    let an, bn;
+                    an = parseFloat(a.Beds);
+                    bn = parseFloat(b.Beds);
+                    return bn - an;
+
+                });
+
+            }
 
 
-            });
+
         } else { //grid view . Need run gethouse
             this.pageIndex = 0;  //reset pageIndex
             this.getHouseList();
