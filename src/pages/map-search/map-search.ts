@@ -314,9 +314,10 @@ export class MapSearchPage {
 
         //let modal = this.modalc.create(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost });
         //let modal = this.modalc.create(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost, listType: 'house' });
-        this.listModal = this.modalc.create(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost, listType: 'house' });
+        // this.listModal = this.modalc.create(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost, listType: 'house' });
 
-        this.listModal.present();
+        // this.listModal.present();
+        this.nav.push(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost, listType: 'house' });
 
       } else {
 
@@ -324,8 +325,9 @@ export class MapSearchPage {
         console.log(this.selectOptions);
         //let modal = this.modalc.create(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds, listType: 'grid' });
         //modal.present();
-        this.listModal = this.modalc.create(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds, listType: 'grid' });
-        this.listModal.present();
+        // this.listModal = this.modalc.create(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds, listType: 'grid' });
+        // this.listModal.present();
+        this.nav.push(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds, listType: 'grid' });
 
 
       }
@@ -572,11 +574,11 @@ export class MapSearchPage {
 
     if (this.lockMapListener == false) {
       console.log("change map" + type);
-      let loading = this.loadingc.create({
-        content: '加载数据...'
-      });
-      // this.nav.present(loading);
-      loading.present();
+      // let loading = this.loadingc.create({
+      //   content: '加载数据...'
+      // });
+     
+      // loading.present();
 
       this.clearAll(); //clear marker
 
@@ -635,7 +637,7 @@ export class MapSearchPage {
         this.mapleRestData.load(restUrl, mapParms).subscribe(
           data => {
             console.log("MapType:" + type)
-            loading.dismiss();
+            //loading.dismiss();
             if (type == 0) {
               this.processHouseData(data);
             } else {
@@ -646,7 +648,9 @@ export class MapSearchPage {
           },
           error => {
 
-            this.restError(loading);
+           // this.restError(loading);
+           this.presentError();
+           
           }
         );
 
