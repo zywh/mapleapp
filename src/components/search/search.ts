@@ -72,33 +72,43 @@ export class Search {
     this.queryText = '';
     this.currentDiv = 'searchlist';
     this.resetItems();
-   //this.defaultItems();
+    
+    //this.getDefaultcity();
+   
 
   }
   searchBlur(){
-      //this.resetItems();
+    
   }
 
-  defaultItems() {
-    this.cityItems = [
-      {
+  
+ getDefaultcity(){
 
-        id: "Mississauga",
-        lat: "43.589045",
-        lng: "-79.644120",
-        type: "CITY",
-        value: "Mississauga, Ontario"
-      }
+      this.currentDiv = 'searchlist';
+      //Call REST and generate item object
+      let val = 'DEFAULTCITY'
+      this.mapleConf.load().then(data => {
+        let restUrl = data.getCitylistDataRest;
+       
+        this.mapleRestData.load(restUrl, { term: val }).subscribe(
 
-    ]
+          data => {
+            
+
+          }); //end of callback
+
+        //}
+      })
+
+ }
 
 
-
-  }
+  
   getItems(ev) {
 
     this.resetItems();
     let val = ev.target.value;
+    
 
     if (val && val.trim() != '') {
       this.currentDiv = 'searchlist';
