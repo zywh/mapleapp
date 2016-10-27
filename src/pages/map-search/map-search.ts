@@ -738,8 +738,11 @@ export class MapSearchPage {
 
         }
         //console.log("Current:" + this.GeocodeLng + "Next:" + nextLng + "Total:" + totalhouse + "index:" + index + "Count:" + count);
-        let imgurl = this.imgHost + house.CoverImg;
-        let imgurltn = this.imgHost + house.CoverImgtn;
+        //let imgurl = this.imgHost + house.CoverImg;
+        //let imgurltn = this.imgHost + house.CoverImgtn;
+         let imgurl =  house.CdnCoverImg;
+        let imgurltn = house.CdnCoverImgtn;
+        
         let hprice = (house.SaleLease == 'Lease') ? Math.round(house.Price) * 10000 + '加元/月' : Math.round(house.Price) + '万加元';
         let markerprice = Math.round(house.Price);
 
@@ -748,7 +751,7 @@ export class MapSearchPage {
 
 
         let li = ' <ion-card>'
-          + '<img src="' + this.imgHost + house.CoverImg + '" />'
+          + '<img src="' +  house.CdnCoverImg + '" />'
           + '<div class="house_desc" text-left text-nowrap>'
           // + '<ion-item padding-left>'
           + '<ion-badge item-left>MLS:' + house.MLS + '</ion-badge>'

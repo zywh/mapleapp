@@ -142,6 +142,8 @@ export class HomePage {
           if (data.Data.Type == 'house') {
             this.imgHost = data.Data.imgHost;
             this.nearbyHouseList = data.Data.HouseList;
+            console.log(this.nearbyHouseList);
+            
           }
         })
 

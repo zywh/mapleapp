@@ -2,7 +2,7 @@
   <ion-item-sliding *ngFor="let house of houselist">
     <ion-item tappable  class="house_card" (click)="gotoHouseDetail(house.MLS)">
        <ion-thumbnail item-left>
-        <img [src]="imgHost + house.CoverImg" />
+        <img [src]="house.CdnCoverImg" />
       </ion-thumbnail>
 
       
@@ -49,7 +49,7 @@
   <ion-card  class="house_card" *ngFor="let house of houselist">
    
    
-    <img tappable  [src]="imgHost + house.CoverImg" (click)="gotoHouseDetail(house.MLS)" />
+    <img tappable  [src]="house.CdnCoverImg" (click)="gotoHouseDetail(house.MLS)" />
      <ion-item>
       <h2>MLS:{{house.MLS}}</h2>
       <ion-badge item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>

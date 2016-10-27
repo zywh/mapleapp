@@ -26,6 +26,7 @@ export class HouseList {
     private nav: NavController
   ) {
       //console.log("list type:" + this.fav + this.imgHost);
+      
   }
 
   gotoHouseDetail(mls) {
