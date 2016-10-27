@@ -33,6 +33,7 @@ export class HouseDetailPage  {
 	public house_mname: any;
 	public house_propertyType: any;
 	public photos: Array<string>;
+	public cdn_photos: Array<string>;
 	public exchangeRate: number;
 	public username: String;
 	public house = {
@@ -393,6 +394,7 @@ export class HouseDetailPage  {
 				this.house_propertyType = data.house_propertyType;
 				this.exchangeRate = data.exchangeRate;
 				this.photos = data.photos;
+				this.cdn_photos = data.cdn_photos;
 				this.houseRooms(this.house);
 				this.isFav = data.isFav; //check if houseFav and routeFav
 				this.setHouseList();
@@ -539,7 +541,8 @@ export class HouseDetailPage  {
 		
 		let subject = "枫之都房产：" + this.parms.id;
 		let message = this.getPriceTxt() + " - " + this.house.addr + " " + this.house.municipality;
-		let img = this.photoUrl(this.photos[0]);
+		//let img = this.photoUrl(this.photos[0]);
+		let img = this.cdn_photos[0];
 		let link = "http://m.maplecity.com.cn/index.php?r=mhouse/view&id=" + this.parms.id;
 		//console.log("socialshare", message, subject, img, link);
 		//SocialSharing.share(message, subject, img, link);

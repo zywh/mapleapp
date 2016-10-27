@@ -68,8 +68,8 @@
 
 
 	<ion-slides #photo_slider [options]="swiperOptions" class="swiper-container">
-		<ion-slide *ngFor="let photo of photos">
-			<img [src]="photoUrl(photo)" class="slide-image" />
+		<ion-slide *ngFor="let photo of cdn_photos">
+			<img [src]="photo" class="slide-image" />
 
 		</ion-slide>
 	</ion-slides>
