@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicModule, DeepLinkConfig } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { MapleApp } from './app.component';
 import { Http } from '@angular/http'
@@ -53,6 +53,12 @@ const cloudSettings: CloudSettings = {
   }
 };
 
+export const deepLinkConfig: DeepLinkConfig = {
+  links: [
+    { component: TabsPage, name: '主页', segment: 'home' },
+    { component: HouseDetailPage, name: '房源详情', segment: 'housedetail/:id／:list', defaultHistory: [ TabsPage ] }
+  ]
+};
 
 export function authFactory(http: any) {
    return new AuthHttp(new AuthConfig({ noJwtError: true }), http);
@@ -103,7 +109,8 @@ export function authFactory(http: any) {
           statusbarPadding: false
 
         },
-      }
+      },
+      deepLinkConfig
     }),
     CloudModule.forRoot(cloudSettings),
     //HouseList,
