@@ -226,6 +226,7 @@ export class HouseDetailPage  {
 		rm3_dc3_out: '', // => 'Rm3 Dc3 Out',
 		acres: '', // => 'Acres',
 	};
+	public rx_phone;
 
 	@ViewChild('photo_slider') slider: Slides;
 
@@ -389,6 +390,7 @@ export class HouseDetailPage  {
 		this.mapleRestData.load(url, { 'id': id, 'username': username }).subscribe(
 			data => {
 				//console.log(data);
+				this.rx_phone = this.mapleConf.data.phone;
 				this.house = data.house;
 				this.house_mname = data.house_mname;
 				this.house_propertyType = data.house_propertyType;

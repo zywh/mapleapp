@@ -55,8 +55,7 @@ const cloudSettings: CloudSettings = {
 
 export const deepLinkConfig: DeepLinkConfig = {
   links: [
-    { component: TabsPage, name: '主页', segment: 'home' },
-    { component: HouseDetailPage, name: '房源详情', segment: 'housedetail/:id/:list', defaultHistory: [ TabsPage ] }
+    { component: HouseDetailPage, name: '房源详情', segment: 'housedetail/:id' }
   ]
 };
 
@@ -96,10 +95,7 @@ export function authFactory(http: any) {
 
   ],
   imports: [
-    IonicModule.forRoot(MapleApp, {
-    
-      
-    },deepLinkConfig),
+    IonicModule.forRoot(MapleApp, {},deepLinkConfig),
     CloudModule.forRoot(cloudSettings),
   
   ],
