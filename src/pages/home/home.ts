@@ -1,17 +1,17 @@
 //import {Page, NavController} from 'ionic-angular';
-import {NavController, NavParams, Events} from 'ionic-angular';
-import {OnInit, Component} from '@angular/core';
-import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-import {Http, Headers, RequestOptions} from '@angular/http';
-import {MapleConf} from '../../providers/maple-rest-data/maple-config';
-import {ProjectDetailPage} from '../project-detail/project-detail';
-import {HouseDetailPage} from '../house-detail/house-detail';
-import {UserData} from '../../providers/user-data';
-import {PostPage} from '../post/post';
-import {ProfilePage} from '../profile/profile';
-import {AuthService} from '../../providers/auth/auth';
-import {HouseList} from '../../components/house-list/house-list';
-import {Search} from '../../components/search/search';
+import { NavController, NavParams, Events } from 'ionic-angular';
+import { OnInit, Component } from '@angular/core';
+import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import { MapleConf } from '../../providers/maple-rest-data/maple-config';
+import { ProjectDetailPage } from '../project-detail/project-detail';
+import { HouseDetailPage } from '../house-detail/house-detail';
+import { UserData } from '../../providers/user-data';
+import { PostPage } from '../post/post';
+import { ProfilePage } from '../profile/profile';
+import { AuthService } from '../../providers/auth/auth';
+import { HouseList } from '../../components/house-list/house-list';
+import { Search } from '../../components/search/search';
 
 @Component({
   templateUrl: 'home.html'
@@ -61,14 +61,14 @@ export class HomePage {
   };
 
 
-  listenEvents(){
-      this.events.subscribe('user:login', () => {
-        console.log("user login event detected")
+  listenEvents() {
+    this.events.subscribe('user:login', () => {
+      console.log("user login event detected")
     });
 
-      this.events.subscribe('user:logout', () => {
-        console.log("user logout event detected")
-    
+    this.events.subscribe('user:logout', () => {
+      console.log("user logout event detected")
+
     });
   }
 
@@ -76,16 +76,17 @@ export class HomePage {
   setVowMask(list) {
 
     for (var i = 0; i < list.length; i++) {
-      //let mls = this.houselist[i]['MLS'];
+
       let src = list[i].Src;
-       let flag: boolean = !(((src == 'VOW') && (this.auth.authenticated())) ? false : true);
+      let flag: boolean = ((!this.auth.authenticated()) && (src == 'VOW')) ? false : true;
       list[i]['vowShowFlag'] = flag;
+      console.log(src + "flag:" + flag)
 
     }
-   return list;
+    return list;
 
   }
-  
+
 
 
   fav() {
@@ -109,7 +110,7 @@ export class HomePage {
 
 
   ngOnInit() {
- // ionViewWillEnter() {
+    // ionViewWillEnter() {
 
     this.mapleConf.load().then(data => {
       //this.postListRest = data.postRest;
@@ -133,8 +134,8 @@ export class HomePage {
     this.mapleConf.load().then(data => {
       //this.postListRest = data.postRest;
       this.houseRestURL = data.mapHouseRest;
-     // this.getProjects(data.projectRest);
-     // this.getPosts(data.postListRest, 6);
+      // this.getProjects(data.projectRest);
+      // this.getPosts(data.postListRest, 6);
 
 
     })
@@ -170,7 +171,7 @@ export class HomePage {
             //this.nearbyHouseList = data.Data.HouseList;
             this.nearbyHouseList = this.setVowMask(data.Data.HouseList);
             console.log(this.nearbyHouseList);
-            
+
           }
         })
 
@@ -180,10 +181,11 @@ export class HomePage {
 
   getProjects() {
     this.mapleRestData.load(this.projectRest, this.parms).subscribe(
-      data => { this.projects = data; 
+      data => {
+        this.projects = data;
         console.log("get projects");
         console.log(data);
-      } );
+      });
 
   }
 
@@ -205,8 +207,8 @@ export class HomePage {
   searchSelection(e) {
     console.log(e);
     if (e.type == 'CITY') {
-     this.events.publish('map:center', { lat: e.lat, lng: e.lng });
-     this.userData.saveCenter('recentCenter',e.id,e.lat,e.lng);
+      this.events.publish('map:center', { lat: e.lat, lng: e.lng });
+      this.userData.saveCenter('recentCenter', e.id, e.lat, e.lng);
 
     } else {
       this.nav.push(HouseDetailPage, { id: e.id });

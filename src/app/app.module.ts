@@ -56,7 +56,7 @@ const cloudSettings: CloudSettings = {
 export const deepLinkConfig: DeepLinkConfig = {
   links: [
     { component: TabsPage, name: '主页', segment: 'home' },
-    { component: HouseDetailPage, name: '房源详情', segment: 'housedetail/:id／:list', defaultHistory: [ TabsPage ] }
+    { component: HouseDetailPage, name: '房源详情', segment: 'housedetail/:id/:list', defaultHistory: [ TabsPage ] }
   ]
 };
 
@@ -97,24 +97,11 @@ export function authFactory(http: any) {
   ],
   imports: [
     IonicModule.forRoot(MapleApp, {
-      tabPlacement: "bottom",
-      //backButtonText: "返回",
-      backButtonText: "",
-      prodMode: true,
-      //tabSubPages: false, //android house detail has two header bar
-      //mode: 'ios',
-      //temp padding to fix ionic view status bar overlapping
-      platforms: {
-        ios: {
-          statusbarPadding: false
-
-        },
-      },
-      deepLinkConfig
-    }),
+    
+      
+    },deepLinkConfig),
     CloudModule.forRoot(cloudSettings),
-    //HouseList,
-    //Search
+  
   ],
   bootstrap: [IonicApp],
   entryComponents: [

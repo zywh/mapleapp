@@ -69,7 +69,7 @@ export class HouseList {
     for (var i = 0; i < list.length; i++) {
       //let mls = this.houselist[i]['MLS'];
       let src = list[i].Src;
-      let flag: boolean = !(((src == 'VOW') && (this.auth.authenticated())) ? false : true);
+      let flag: boolean = ((!this.auth.authenticated()) && (src == 'VOW')) ? false : true;
       list[i]['vowShowFlag'] = flag; //false if VOW and not authen
 
     }
