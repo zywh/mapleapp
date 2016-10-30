@@ -52,11 +52,12 @@ export class HouseList {
     });
   }
 
-  gotoHouseDetail(mls, src) {
-    if ((src != 'CREA') && (!this.auth.authenticated())) {
-      this.userData.loginAlert();
-    } else {
+  gotoHouseDetail(mls, flag) {
+    console.log(mls + "Flag:" + flag);
+    if (flag) {
       this.nav.push(HouseDetailPage, { id: mls, list: this.houselist });
+    } else {
+       this.userData.loginAlert();
     }
 
 

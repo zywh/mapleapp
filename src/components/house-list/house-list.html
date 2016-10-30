@@ -1,6 +1,6 @@
 <ion-list class="houselist-search" *ngIf="isList">
   <ion-item-sliding *ngFor="let house of houselist">
-    <ion-item tappable  class="house_card" (click)="gotoHouseDetail(house.MLS,house.Src)">
+    <ion-item tappable  class="house_card" (click)="gotoHouseDetail(house.MLS,house.vowShowFlag)">
        <ion-thumbnail item-left>
         <img *ngIf="house.vowShowFlag" [src]="house.CdnCoverImg" />
         <img *ngIf="!house.vowShowFlag" [src]="house.MemberOnlyImg" />
