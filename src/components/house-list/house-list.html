@@ -1,20 +1,24 @@
 <ion-list class="houselist-search" *ngIf="isList">
   <ion-item-sliding *ngFor="let house of houselist">
-    <ion-item tappable  class="house_card" (click)="gotoHouseDetail(house.MLS)">
+    <ion-item tappable  class="house_card" (click)="gotoHouseDetail(house.MLS,house.Src)">
        <ion-thumbnail item-left>
-        <img [src]="house.CdnCoverImg" />
+        <img *ngIf="house.vowShowFlag" [src]="house.CdnCoverImg" />
+        <img *ngIf="!house.vowShowFlag" [src]="house.MemberOnlyImg" />
       </ion-thumbnail>
 
       
-      <h2 text-left><ion-badge>{{mapleConf.getListDays(house.ListDate)}}</ion-badge>{{house.Address}}</h2>
+      <h2 *ngIf="house.vowShowFlag" text-left><ion-badge>{{mapleConf.getListDays(house.ListDate)}}</ion-badge>{{house.Address}}</h2>
+      <h2 *ngIf="!house.vowShowFlag" text-left><ion-badge>{{mapleConf.getListDays(house.ListDate)}}</ion-badge>登录用户可见</h2>
       
-      <p text-left><ion-badge>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
+      <p text-left *ngIf="house.vowShowFlag"><ion-badge>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
       </p> 
+      <!--<p text-left ><ion-badge>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
+      </p> -->
       <p text-left>{{house.MLS}} {{house.MunicipalityName}},{{house.ProvinceCname}}</p>
 
     </ion-item>
 
-    <ion-item-options>
+    <ion-item-options *ngIf="house.vowShowFlag">
       <button ion-button clear (click)="userData.favWrapper(house.MLS,'houseFav')" *ngIf="!fav">
         <ion-icon name="heart"></ion-icon>
         收藏

@@ -50,7 +50,7 @@ export class HomePage {
     private auth: AuthService,
     private events: Events
   ) {
-
+    this.listenEvents();
   }
 
   projectSwiperOptions = {
@@ -60,6 +60,32 @@ export class HomePage {
     autoplay: 300
   };
 
+
+  listenEvents(){
+      this.events.subscribe('user:login', () => {
+        console.log("user login event detected")
+    });
+
+      this.events.subscribe('user:logout', () => {
+        console.log("user logout event detected")
+    
+    });
+  }
+
+
+  setVowMask(list) {
+
+    for (var i = 0; i < list.length; i++) {
+      //let mls = this.houselist[i]['MLS'];
+      let src = list[i].Src;
+       let flag: boolean = !(((src == 'VOW') && (this.auth.authenticated())) ? false : true);
+      list[i]['vowShowFlag'] = flag;
+
+    }
+   return list;
+
+  }
+  
 
 
   fav() {
@@ -141,7 +167,8 @@ export class HomePage {
           console.log(data);
           if (data.Data.Type == 'house') {
             this.imgHost = data.Data.imgHost;
-            this.nearbyHouseList = data.Data.HouseList;
+            //this.nearbyHouseList = data.Data.HouseList;
+            this.nearbyHouseList = this.setVowMask(data.Data.HouseList);
             console.log(this.nearbyHouseList);
             
           }
@@ -151,9 +178,6 @@ export class HomePage {
   }
 
 
-  gotoHouseDetail(mls, list) {
-    this.nav.push(HouseDetailPage, { id: mls, list: list });
-  }
   getProjects() {
     this.mapleRestData.load(this.projectRest, this.parms).subscribe(
       data => { this.projects = data; 
@@ -177,14 +201,6 @@ export class HomePage {
     this.nav.push(PostPage, id);
   }
 
-  resetItems() {
-    this.cityItems = [];
-    this.addressItems = [];
-    this.mlsItems = [];
-    this.scityItems = [];
-    this.schoolItems = [];
-    //this.searchQuery = '';
-  }
 
   searchSelection(e) {
     console.log(e);
@@ -198,8 +214,6 @@ export class HomePage {
 
 
   }
-
-
 
 
 

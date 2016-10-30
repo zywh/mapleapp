@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
-import {UserData} from '../../providers/user-data';
-import {HouseDetailPage} from '../../pages/house-detail/house-detail';
-import { NavController, reorderArray, ModalController,Events} from 'ionic-angular';
-import {MapleConf} from '../../providers/maple-rest-data/maple-config';
-import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-import {MapHouselist} from '../../pages/map-search/map-houselist';
+import { UserData } from '../../providers/user-data';
+import { HouseDetailPage } from '../../pages/house-detail/house-detail';
+import { NavController, reorderArray, ModalController, Events } from 'ionic-angular';
+import { MapleConf } from '../../providers/maple-rest-data/maple-config';
+import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
+import { MapHouselist } from '../../pages/map-search/map-houselist';
+import { AuthService } from '../../providers/auth/auth';
 
 @Component({
   selector: 'house-list',
@@ -17,25 +18,81 @@ export class HouseList {
   @Input() isList: Boolean;
   private data;
   private nearbyHouseList;
+  public vowShow: Object;
   constructor(
     private userData: UserData,
     private mapleConf: MapleConf,
     private mapleRestData: MapleRestData,
     private modalc: ModalController,
     private events: Events,
+    public auth: AuthService,
     private nav: NavController
   ) {
-      //console.log("list type:" + this.fav + this.imgHost);
-      
-  }
-
-  gotoHouseDetail(mls) {
-    this.nav.push(HouseDetailPage, { id: mls, list: this.houselist });
-  }
-
-
-  nearByHouses(lat, lng,mls) {
     
+    this.listenEvents();
+
+  }
+
+
+
+  listenEvents() {
+    this.events.subscribe('user:login', () => {
+
+      console.log("Login event detected");
+      this.houselist = this.setVowMask(this.houselist);
+      //console.log(this.vowShow);
+    });
+
+    this.events.subscribe('user:logout', () => {
+
+      console.log("Logout event detected");
+       this.houselist = this.setVowMask(this.houselist);
+      //console.log(this.vowShow);
+
+    });
+  }
+
+  gotoHouseDetail(mls, src) {
+    if ((src != 'CREA') && (!this.auth.authenticated())) {
+      this.userData.loginAlert();
+    } else {
+      this.nav.push(HouseDetailPage, { id: mls, list: this.houselist });
+    }
+
+
+  }
+
+
+  setVowMask(list) {
+
+    for (var i = 0; i < list.length; i++) {
+      //let mls = this.houselist[i]['MLS'];
+      let src = list[i].Src;
+      let flag: boolean = !(((src == 'VOW') && (this.auth.authenticated())) ? false : true);
+      list[i]['vowShowFlag'] = flag; //false if VOW and not authen
+
+    }
+   return list;
+
+  }
+  
+
+  // setVowMask() {
+
+  //   for (var i = 0; i < this.houselist.length; i++) {
+  //     //let mls = this.houselist[i]['MLS'];
+  //     let src = this.houselist[i].Src;
+  //     let flag: boolean = ((src != 'CREA') && (!this.auth.authenticated())) ? false : true;
+  //     this.houselist[i]['vowShowFlag'] = flag;
+
+  //   }
+  //   console.log(this.houselist);
+
+  // }
+
+
+  nearByHouses(lat, lng, mls) {
+
 
     let range: number = 0.015;
 
@@ -65,11 +122,11 @@ export class HouseList {
             this.nearbyHouseList = data.Data.HouseList;
             // let modal = this.modalc.create(MapHouselist, { list: this.nearbyHouseList, imgHost: this.imgHost });
             // modal.present();
-            this.nav.push(MapHouselist,{ list: this.nearbyHouseList, imgHost: this.imgHost });
+            this.nav.push(MapHouselist, { list: this.nearbyHouseList, imgHost: this.imgHost });
             console.log(this.nearbyHouseList);
-          
-             //this.nav.push(HouseDetailPage, { id: mls, list: this.houselist });
-            
+
+            //this.nav.push(HouseDetailPage, { id: mls, list: this.houselist });
+
           }
         });
 
@@ -80,12 +137,12 @@ export class HouseList {
 
   }
 
-  mapSearch(lat,lng){
-      this.events.publish('map:center', { lat: lat, lng: lng, type: 'HOUSE' });
+  mapSearch(lat, lng) {
+    this.events.publish('map:center', { lat: lat, lng: lng, type: 'HOUSE' });
   }
-  
+
   remove(mls) {
-    this.userData.changeFavorite(mls, 'houseFav','d').then(res => {
+    this.userData.changeFavorite(mls, 'houseFav', 'd').then(res => {
       console.log("Remove MLS Result:" + res);
       this.houselist = this.houselist.filter(function (obj) {
         return obj.MLS !== mls;

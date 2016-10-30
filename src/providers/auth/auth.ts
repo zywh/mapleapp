@@ -4,6 +4,7 @@ import {JwtHelper, tokenNotExpired} from 'angular2-jwt';
 import {Injectable, NgZone} from '@angular/core';
 import {Observable} from 'rxjs/Rx';
 import {CN} from './cn';
+import {Events} from 'ionic-angular';
 
 // Avoid name not found warnings
 declare var Auth0: any;
@@ -32,7 +33,7 @@ export class AuthService {
   user: Object;
   zoneImpl: NgZone;
 
-  constructor(zone: NgZone, public storage: Storage) {
+  constructor(zone: NgZone, public storage: Storage,private events: Events) {
     this.zoneImpl = zone;
     // Check if there is a profile saved in local storage
     this.storage.get('profile').then(profile => {
@@ -63,6 +64,7 @@ export class AuthService {
 
       this.storage.set('refresh_token', authResult.refreshToken);
       this.zoneImpl.run(() => this.user = authResult.profile);
+      this.events.publish('user:login');
     });
 
   }
@@ -83,6 +85,8 @@ export class AuthService {
     localStorage.removeItem('id_token');
     this.storage.remove('refresh_token');
     this.zoneImpl.run(() => this.user = null);
+    this.events.publish('user:logout');
+   
   }
   
 }
