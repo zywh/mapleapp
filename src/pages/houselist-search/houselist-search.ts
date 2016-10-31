@@ -267,7 +267,7 @@ export class HouselistSearch {
                     let totalprice = 0;
                     let totalhouse = data.Data.HouseList.length;
                     this.imgHost = data.Data.imgHost;
-                    this.currentHouseList = data.Data.HouseList;
+                    this.currentHouseList = this.userData.setVowMask(data.Data.HouseList);
 
                 });
 
