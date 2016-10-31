@@ -69,6 +69,7 @@ export class Search {
   }
   //auto complete REST CAll
   searchInFocus() {
+    this.currentDiv = '';
     this.queryText = '';
     this.currentDiv = 'searchlist';
     this.resetItems();

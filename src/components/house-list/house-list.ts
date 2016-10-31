@@ -28,7 +28,7 @@ export class HouseList {
     public auth: AuthService,
     private nav: NavController
   ) {
-    
+
     this.listenEvents();
 
   }
@@ -37,27 +37,21 @@ export class HouseList {
 
   listenEvents() {
     this.events.subscribe('user:login', () => {
-
-      console.log("Login event detected");
       this.houselist = this.setVowMask(this.houselist);
-      //console.log(this.vowShow);
+
     });
 
     this.events.subscribe('user:logout', () => {
-
-      console.log("Logout event detected");
-       this.houselist = this.setVowMask(this.houselist);
-      //console.log(this.vowShow);
-
+      this.houselist = this.setVowMask(this.houselist);
     });
   }
 
   gotoHouseDetail(mls, flag) {
-    console.log(mls + "Flag:" + flag);
+
     if (flag) {
       this.nav.push(HouseDetailPage, { id: mls, list: this.houselist });
     } else {
-       this.userData.loginAlert();
+      this.userData.loginAlert();
     }
 
 
@@ -73,24 +67,8 @@ export class HouseList {
       list[i]['vowShowFlag'] = flag; //false if VOW and not authen
 
     }
-   return list;
-
+    return list;
   }
-  
-
-  // setVowMask() {
-
-  //   for (var i = 0; i < this.houselist.length; i++) {
-  //     //let mls = this.houselist[i]['MLS'];
-  //     let src = this.houselist[i].Src;
-  //     let flag: boolean = ((src != 'CREA') && (!this.auth.authenticated())) ? false : true;
-  //     this.houselist[i]['vowShowFlag'] = flag;
-
-  //   }
-  //   console.log(this.houselist);
-
-  // }
-
 
   nearByHouses(lat, lng, mls) {
 
@@ -119,14 +97,13 @@ export class HouseList {
         data => {
           console.log(data);
           if (data.Data.Type == 'house') {
-            //this.imgHost = data.Data.imgHost;
+
             this.nearbyHouseList = data.Data.HouseList;
             // let modal = this.modalc.create(MapHouselist, { list: this.nearbyHouseList, imgHost: this.imgHost });
             // modal.present();
             this.nav.push(MapHouselist, { list: this.nearbyHouseList, imgHost: this.imgHost });
             console.log(this.nearbyHouseList);
 
-            //this.nav.push(HouseDetailPage, { id: mls, list: this.houselist });
 
           }
         });
