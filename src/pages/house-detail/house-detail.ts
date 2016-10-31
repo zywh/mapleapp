@@ -545,7 +545,8 @@ export class HouseDetailPage  {
 		let message = this.getPriceTxt() + " - " + this.house.addr + " " + this.house.municipality;
 		//let img = this.photoUrl(this.photos[0]);
 		let img = this.cdn_photos[0];
-		let link = "http://m.maplecity.com.cn/index.php?r=mhouse/view&id=" + this.parms.id;
+		//let link = "http://m.maplecity.com.cn/index.php?r=mhouse/view&id=" + this.parms.id;
+		let link = this.mapleConf.data.mcihost + "/#/housedetail/" + this.parms.id;
 		//console.log("socialshare", message, subject, img, link);
 		//SocialSharing.share(message, subject, img, link);
 		this.shareService.share(link,img,subject,message);

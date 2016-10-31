@@ -77,7 +77,8 @@ export class ProjectDetailPage implements OnInit {
 
   share() {
 
-    let link = "http://m.maplecity.com.cn/index.php?r=projects/more&id=" + this.project.id;
+    //let link = "http://m.maplecity.com.cn/index.php?r=projects/more&id=" + this.project.id;
+    let link = this.mapleconf.data.mcihost + "/#/projectdetail/" + this.project.id;
     let img = this.project.room_type_image.replace('uploads', this.project.replaceurl);
 
     this.shareService.share(link,img,this.project.name,this.project.summary);
