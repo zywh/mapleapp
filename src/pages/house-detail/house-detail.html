@@ -25,7 +25,7 @@
 
 		</ion-buttons>
 		<ion-buttons end>
-			<button ion-button icon-only (click)="share()">
+			<button ion-button icon-only [disabled]="!platform.is('cordova')" (click)="share()">
 			<ion-icon isActive="false" name="share" ></ion-icon>
 			</button>
 		</ion-buttons>
@@ -49,7 +49,7 @@
 			<ion-segment-button value="video" [disabled]="(house.tour_url)?'false':'true'" (ionSelect)="gotoVideo()">
 				视频
 			</ion-segment-button>
-			<ion-segment-button value="map" (ionSelect)="mapDirection()">
+			<ion-segment-button value="map" [disabled]="!platform.is('cordova')" (ionSelect)="mapDirection()">
 				导航
 			</ion-segment-button>
 		</ion-segment>

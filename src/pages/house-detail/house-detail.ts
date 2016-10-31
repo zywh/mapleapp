@@ -241,7 +241,7 @@ export class HouseDetailPage  {
 		private auth: AuthService,
 		private toastCtrl: ToastController,
 		private actionSheetCtrl: ActionSheetController,
-		private platform: Platform,
+		public platform: Platform,
 		private shareService: ShareService) {
 
 		//this.nav = nav;

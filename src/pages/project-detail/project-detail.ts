@@ -36,7 +36,7 @@ export class ProjectDetailPage implements OnInit {
     private mapleRestData: MapleRestData,
     private mapleconf: MapleConf,
     public shareService: ShareService,
-    private platform: Platform
+    public platform: Platform
   ) {
     this.parms = { 'id': navParams.data };
   }
