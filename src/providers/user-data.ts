@@ -331,6 +331,21 @@ export class UserData {
 
 
   }
+
+  
+  setVowMask(list) {
+
+    for (var i = 0; i < list.length; i++) {
+
+      let src = list[i].Src;
+      let flag: boolean = ((!this.auth.authenticated()) && (src == 'VOW')) ? false : true;
+      list[i]['vowShowFlag'] = flag;
+      console.log(src + "flag:" + flag)
+
+    }
+    return list;
+
+  }
  
   login(username) {
     this.storage.set(this.HAS_LOGGED_IN, true);

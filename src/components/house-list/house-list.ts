@@ -37,12 +37,12 @@ export class HouseList {
 
   listenEvents() {
     this.events.subscribe('user:login', () => {
-      this.houselist = this.setVowMask(this.houselist);
+      this.houselist = this.userData.setVowMask(this.houselist);
 
     });
 
     this.events.subscribe('user:logout', () => {
-      this.houselist = this.setVowMask(this.houselist);
+       this.houselist = this.userData.setVowMask(this.houselist);
     });
   }
 
@@ -58,17 +58,6 @@ export class HouseList {
   }
 
 
-  setVowMask(list) {
-
-    for (var i = 0; i < list.length; i++) {
-      //let mls = this.houselist[i]['MLS'];
-      let src = list[i].Src;
-      let flag: boolean = ((!this.auth.authenticated()) && (src == 'VOW')) ? false : true;
-      list[i]['vowShowFlag'] = flag; //false if VOW and not authen
-
-    }
-    return list;
-  }
 
   nearByHouses(lat, lng, mls) {
 

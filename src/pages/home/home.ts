@@ -73,22 +73,6 @@ export class HomePage {
   }
 
 
-  setVowMask(list) {
-
-    for (var i = 0; i < list.length; i++) {
-
-      let src = list[i].Src;
-      let flag: boolean = ((!this.auth.authenticated()) && (src == 'VOW')) ? false : true;
-      list[i]['vowShowFlag'] = flag;
-      console.log(src + "flag:" + flag)
-
-    }
-    return list;
-
-  }
-
-
-
   fav() {
 
     if (this.auth.authenticated()) {
@@ -169,7 +153,8 @@ export class HomePage {
           if (data.Data.Type == 'house') {
             this.imgHost = data.Data.imgHost;
             //this.nearbyHouseList = data.Data.HouseList;
-            this.nearbyHouseList = this.setVowMask(data.Data.HouseList);
+            //this.nearbyHouseList = this.setVowMask(data.Data.HouseList);
+            this.nearbyHouseList = this.userData.setVowMask(data.Data.HouseList);
             console.log(this.nearbyHouseList);
 
           }

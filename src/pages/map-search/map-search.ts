@@ -317,6 +317,7 @@ export class MapSearchPage {
         // this.listModal = this.modalc.create(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost, listType: 'house' });
 
         // this.listModal.present();
+        //this.currentHouseList = this.userData.setVowMask(this.currentHouseList);
         this.nav.push(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost, listType: 'house' });
 
       } else {
@@ -327,6 +328,7 @@ export class MapSearchPage {
         //modal.present();
         // this.listModal = this.modalc.create(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds, listType: 'grid' });
         // this.listModal.present();
+        //this.currentHouseList = this.userData.setVowMask(this.currentHouseList);
         this.nav.push(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds, listType: 'grid' });
 
 
@@ -478,10 +480,7 @@ export class MapSearchPage {
         //this.housePopover(house);
       } else {
         console.log("More than one");
-        // this.listModal = Modal.create(MapHouselist, { list: houses, imgHost: this.imgHost });
-        // this.nav.present(this.listModal);
-        this.nav.push(MapHouselist, { list: houses, imgHost: this.imgHost });
-
+        this.nav.push(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost, listType: 'house' });
 
       }
 
@@ -577,7 +576,7 @@ export class MapSearchPage {
       // let loading = this.loadingc.create({
       //   content: '加载数据...'
       // });
-     
+
       // loading.present();
 
       this.clearAll(); //clear marker
@@ -648,9 +647,9 @@ export class MapSearchPage {
           },
           error => {
 
-           // this.restError(loading);
-           this.presentError();
-           
+            // this.restError(loading);
+            this.presentError();
+
           }
         );
 
@@ -723,7 +722,7 @@ export class MapSearchPage {
       let nextLat;
       let nextLng;
       let listAllHtml;
-      this.currentHouseList = data.Data.HouseList;
+      this.currentHouseList = this.userData.setVowMask(data.Data.HouseList);
       let panelhtml;
       // console.log("Current House List Length:" + this.currentHouseList.length);
 
@@ -740,9 +739,9 @@ export class MapSearchPage {
         //console.log("Current:" + this.GeocodeLng + "Next:" + nextLng + "Total:" + totalhouse + "index:" + index + "Count:" + count);
         //let imgurl = this.imgHost + house.CoverImg;
         //let imgurltn = this.imgHost + house.CoverImgtn;
-         let imgurl =  house.CdnCoverImg;
+        let imgurl = house.CdnCoverImg;
         let imgurltn = house.CdnCoverImgtn;
-        
+
         let hprice = (house.SaleLease == 'Lease') ? Math.round(house.Price) * 10000 + '加元/月' : Math.round(house.Price) + '万加元';
         let markerprice = Math.round(house.Price);
 
@@ -751,7 +750,7 @@ export class MapSearchPage {
 
 
         let li = ' <ion-card>'
-          + '<img src="' +  house.CdnCoverImg + '" />'
+          + '<img src="' + house.CdnCoverImg + '" />'
           + '<div class="house_desc" text-left text-nowrap>'
           // + '<ion-item padding-left>'
           + '<ion-badge item-left>MLS:' + house.MLS + '</ion-badge>'
