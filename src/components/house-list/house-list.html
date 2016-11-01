@@ -52,17 +52,18 @@
 
   <ion-card  class="house_card" *ngFor="let house of houselist">
    
-   
-    <img tappable  [src]="house.CdnCoverImg" (click)="gotoHouseDetail(house.MLS)" />
+    <img tappable  *ngIf="house.vowShowFlag" [src]="house.CdnCoverImg" (click)="gotoHouseDetail(house.MLS,house.vowShowFlag)" />
+    <img tappable  *ngIf="!house.vowShowFlag" [src]="house.MemberOnlyImg" (click)="gotoHouseDetail(house.MLS,house.vowShowFlag)" />
+    
      <ion-item>
       <h2>MLS:{{house.MLS}}</h2>
-      <ion-badge item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
-      <p>{{house.Address}},{{house.MunicipalityName}}</p>
-      <p> {{house.HouseType}} {{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨</p>
+      <ion-badge *ngIf="house.vowShowFlag"  item-right>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
+      <p *ngIf="house.vowShowFlag" >{{house.Address}},{{house.MunicipalityName}}</p>
+      <p *ngIf="house.vowShowFlag" > {{house.HouseType}} {{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨</p>
      
     </ion-item>
 
-    <ion-row>
+    <ion-row *ngIf="house.vowShowFlag" >
       <ion-col>
         <button ion-button color="primary" clear small (click)="userData.favWrapper(house.MLS,'houseFav')" *ngIf="!fav">
          <ion-icon name="heart" active='false'></ion-icon> <div>收藏</div>
