@@ -566,7 +566,7 @@ export class HouseDetailPage  {
 	share() {
 		
 		let subject = "枫之都房产：" + this.parms.id;
-		let message = this.getPriceTxt() + " - " + this.house.addr + " " + this.house.municipality;
+		let message = this.getPriceTxt(this.house.lp_dol) + " - " + this.getAddr() + " " + this.house.municipality;
 		//let img = this.photoUrl(this.photos[0]);
 		let img = this.cdn_photos[0];
 		//let link = "http://m.maplecity.com.cn/index.php?r=mhouse/view&id=" + this.parms.id;
