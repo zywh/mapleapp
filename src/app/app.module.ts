@@ -53,6 +53,8 @@ const cloudSettings: CloudSettings = {
   }
 };
 
+let storage: Storage = new Storage();
+
 export const deepLinkConfig: DeepLinkConfig = {
   links: [
     { component: HouseDetailPage, name: '房源详情', segment: 'housedetail/:id' },
@@ -61,7 +63,8 @@ export const deepLinkConfig: DeepLinkConfig = {
 };
 
 export function authFactory(http: any) {
-   return new AuthHttp(new AuthConfig({ noJwtError: true }), http);
+   return new AuthHttp(new AuthConfig({  globalHeaders: [{'Accept': 'application/json'}],
+    tokenGetter: (() => storage.get('id_token')),noJwtError: true }), http);
 };
 
 @NgModule({

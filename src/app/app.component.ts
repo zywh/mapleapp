@@ -67,6 +67,7 @@ export class MapleApp {
       StatusBar.styleDefault();
       Splashscreen.hide();
       this.update.newUpdate();
+      auth.startupTokenRefresh();
     });
 
     // load the conference data
