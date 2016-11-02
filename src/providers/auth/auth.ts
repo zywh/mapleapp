@@ -29,8 +29,8 @@ export class AuthService {
       title: "枫之都"
     },
     language: 'zh',
-    sso: false,
-    rememberLastLogin: true,
+    //sso: false,
+    rememberLastLogin: false,
 
     auth: {
       redirect: false,
