@@ -1,99 +1,102 @@
 export const CN = {
-
-    error: {
-        forgotPassword: {
-            "too_many_requests": "You have reached the limit on password change attempts. Please wait before trying again.",
-            "lock.fallback": "We're sorry, something went wrong when requesting the password change."
-        },
-        login: {
-            "blocked_user": "The user is blocked.",
-            "invalid_user_password": "Wrong credentials.",
-            "lock.fallback": "We're sorry, something went wrong when attempting to log in.",
-            "lock.invalid_code": "Wrong code.",
-            "lock.invalid_email_password": "Wrong email or password.",
-            "lock.invalid_username_password": "Wrong username or password.",
-            "lock.network": "We could not reach the server. Please check your connection and try again.",
-            "lock.popup_closed": "Popup window closed. Try again.",
-            "lock.unauthorized": "Permissions were not granted. Try again.",
-            "password_change_required": "You need to update your password because this is the first time you are logging in, or because your password has expired.", // TODO: verify error code
-            "password_leaked": "This login has been blocked because your password has been leaked in another website. We’ve sent you an email with instructions on how to unblock it.",
-            "too_many_attempts": "Your account has been blocked after multiple consecutive login attempts."
-        },
-        passwordless: {
-            "bad.email": "The email is invalid",
-            "bad.phone_number": "The phone number is invalid",
-            "lock.fallback": "We're sorry, something went wrong"
-        },
-        signUp: {
-            "invalid_password": "Password is invalid.",
-            "lock.fallback": "We're sorry, something went wrong when attempting to sign up.",
-            "password_dictionary_error": "Password is too common.",
-            "password_no_user_info_error": "Password is based on user information.",
-            "password_strength_error": "Password is too weak.",
-            "user_exists": "The user already exists.",
-            "username_exists": "The username already exists."
-        }
+  error: {
+    forgotPassword: {
+      "too_many_requests": "您尝试登录次数过多 请稍后再试。",
+      "lock.fallback": "对不起，请求修改密码时出现错误。"
     },
-    success: { // success messages show above the form or in a confirmation pane
-        logIn: "Thanks for logging in.",
-        forgotPassword: "We've just sent you an email to reset your password.",
-        magicLink: "We sent you a link to log in<br />to %s.",
-        signUp: "感谢注册！"
+    login: {
+      "blocked_user": "该账号已被锁定。",
+      "invalid_user_password": "密码错误",
+      "lock.fallback": "对不起，请求登陆时出现错误。",
+      "lock.invalid_code": "代码错误。",
+      "lock.invalid_email_password": "邮箱或密码错误。",
+      "lock.invalid_username_password": "账号或密码错误。",
+      "lock.network": "无法连接到服务器，请检查网络连接后重试。",
+      "lock.popup_closed": "弹出窗口被关闭，请重试",
+      "lock.unauthorized": "权限不足，请重试。",
+      "password_change_required": "由于这是第一次登录或者您的密码已过期，请更新密码。",
+      "password_leaked": "由于您的密码在其他网站已泄露，该账户已被锁定，请查看邮件解除锁定。",
+      "too_many_attempts": "由于登录操作太频繁，您的帐号已被锁定。"
     },
-    blankErrorHint: "不能空",
-    codeInputPlaceholder: "your code",
-    databaseEnterpriseLoginInstructions: "",
-    databaseEnterpriseAlternativeLoginInstructions: "其他",
-    databaseSignUpInstructions: "",
-    databaseAlternativeSignUpInstructions: "其他",
-    emailInputPlaceholder: "yours@example.com",
-    enterpriseLoginIntructions: "Login with your corporate credentials.",
-    enterpriseActiveLoginInstructions: "Please enter your coorporate credentials at %s.",
-    failedLabel: "失败!",
-    forgotPasswordAction: "忘记密码?",
-    forgotPasswordInstructions: "请输入邮件. 我们会发送密码到此邮箱.",
-    invalidErrorHint: "无效",
-    lastLoginInstructions: "最近登录用户",
-    loginAtLabel: "Login at %s",
-    loginLabel: "登录",
-    loginWithLabel: "登录用户 %s",
-    notYourAccountAction: "更改用户?",
-    passwordInputPlaceholder: "密码",
-    passwordStrength: {
-        containsAtLeast: "Contain at least %d of the following %d types of characters:",
-        identicalChars: "No more than %d identical characters in a row (e.g., \"%s\" not allowed)",
-        nonEmpty: "Non-empty password required",
-        numbers: "Numbers (i.e. 0-9)",
-        lengthAtLeast: "At least %d characters in length",
-        lowerCase: "Lower case letters (a-z)",
-        shouldContain: "Should contain:",
-        specialCharacters: "Special characters (e.g. !@#$%^&*)",
-        upperCase: "Upper case letters (A-Z)"
+    passwordless: {
+      "bad.email": "邮箱错误",
+      "bad.phone_number": "手机号码格式不正确。",
+      "lock.fallback": "对不起，出现错误。"
     },
-    passwordlessEmailAlternativeInstructions: "Otherwise, enter your email to sign in<br>or create an account",
-    passwordlessEmailCodeInstructions: "An email with the code has been sent to %s.",
-    passwordlessEmailInstructions: "Enter your email to sign in<br>or create an account",
-    passwordlessSMSAlternativeInstructions: "Otherwise, enter your phone to sign in<br>or create an account",
-    passwordlessSMSCodeInstructions: "An SMS with the code has been sent<br>to %s.",
-    passwordlessSMSInstructions: "Enter your phone to sign in<br>or create an account",
-    phoneNumberInputPlaceholder: "your phone number",
-    resendCodeAction: "Did not get the code?",
-    resendLabel: "重新发送",
-    resendingLabel: "Resending...",
-    retryLabel: "重试",
-    sentLabel: "发送成功!",
-    signUpLabel: "注册",
-    signUpTerms: "",
-    signUpWithLabel: "Sign up with %s",
-    socialLoginInstructions: "",
-    socialSignUpInstructions: "",
-    ssoEnabled: "Single Sign-On enabled",
-    unrecoverableError: "Something went wrong.<br />Please contact technical support.",
-    usernameFormatErrorHint: "Use 1-15 letters, numbers and \"_\"",
-    usernameInputPlaceholder: "your username",
-    usernameOrEmailInputPlaceholder: "username/email",
-    title: "枫之都",
-    welcome: "欢迎 %s!",
-    windowsAuthInstructions: "You are connected from your corporate network&hellip;",
-    windowsAuthLabel: "Windows Authentication"
-}
+    signUp: {
+      "invalid_password": "密码错误",
+      "lock.fallback": "对不起，请求注册时出现错误。",
+      "password_dictionary_error": "密码过于常见。",
+      "password_no_user_info_error": "密码中出现账号信息。",
+      "password_strength_error": "密码过于简单。",
+      "user_exists": "该账号已存在。",
+      "username_exists": "该用户名已存在。"
+    }
+  },
+  success: {
+    logIn: "登录成功",
+    forgotPassword: "重置密码的邮件已发送",
+    magicLink: "已向您发送链接<br />到 %s 登录", // This one needs review
+    signUp: "感谢您的注册。"
+  },
+  blankErrorHint: "不能为空",
+  codeInputPlaceholder: "您的代码",
+  databaseEnterpriseLoginInstructions: "",
+  databaseEnterpriseAlternativeLoginInstructions: "或",
+  databaseSignUpInstructions: "",
+  databaseAlternativeSignUpInstructions: "或",
+  emailInputPlaceholder: "yours@example.com",
+  enterpriseLoginIntructions: "请用您的企业账号登录",  // This one needs review
+  enterpriseActiveLoginInstructions: "请输入您的企业账号 %s。",  // This one needs review
+  failedLabel: "失败!",
+  forgotPasswordAction: "忘记您的密码？",
+  forgotPasswordInstructions: "请输入您的邮箱，我们将为你发送重置密码的邮件。",
+  forgotPasswordSubmitLabel: "发电子邮件", // needs review
+  invalidErrorHint: "错误",
+  lastLoginInstructions: "上次登陆的信息为",
+  loginAtLabel: "登录到 %s",
+  loginLabel: "登录",
+  loginSubmitLabel: "登录", // needs review
+  loginWithLabel: "用 %s 登录",
+  notYourAccountAction: "不是您的账号?",
+  passwordInputPlaceholder: "您的密码",
+  passwordStrength: {
+    containsAtLeast: "至少包含%d个以下%d种字符:",
+    identicalChars: "不能多于%d个相同的字符在同一行(例如,不允许出现 \"%s\" )",
+    nonEmpty: "密码不能为空",
+    numbers: "数字 (如 0-9)",
+    lengthAtLeast: "最少长度为%d个字符",
+    lowerCase: "小写字母(a-z)",
+    shouldContain: "应包含:",
+    specialCharacters: "特殊字符 (如 !@#$%^&*)",
+    upperCase: "大写字母(A-Z)"
+  },
+  passwordlessEmailAlternativeInstructions: "您还可以通过邮箱登录<br>或者创建账号", // This one needs review
+  passwordlessEmailCodeInstructions: "代码已通过邮件发送到 %s。",
+  passwordlessEmailInstructions: "输入邮箱登录<br>或者创建账号。",
+  passwordlessSMSAlternativeInstructions: "您还可以通过手机号码登录<br>或者创建账号。",
+  passwordlessSMSCodeInstructions: "代码已通过短信发送到<br> %s。",
+  passwordlessSMSInstructions: "输入手机号码登录<br>或者创建账号",
+  phoneNumberInputPlaceholder: "您的手机号码",
+  resendCodeAction: "没有收到号码?",
+  resendLabel: "重新发送",
+  resendingLabel: "重新发送中...",
+  retryLabel: "重试",
+  sentLabel: "发送!",
+  signUpLabel: "注册",
+  signUpSubmitLabel: "注册", // needs review
+  signUpTerms: "",
+  signUpWithLabel: "通过 %s 注册",
+  socialLoginInstructions: "",
+  socialSignUpInstructions: "",
+  ssoEnabled: "单点登录已激活",
+  submitLabel: "提交", // needs review
+  unrecoverableError: "出现错误。<br />请联系技术人员。",
+  usernameFormatErrorHint: "请使用%d-%d个字母, 数字或 \"_\"的组合",
+  usernameInputPlaceholder: "您的用户名",
+  usernameOrEmailInputPlaceholder: "用户名/邮箱",
+  title: "Auth0",
+  welcome: "欢迎 %s!",
+  windowsAuthInstructions: "您已连接到组织网络&hellip;",
+  windowsAuthLabel: "Windows认证"
+};
