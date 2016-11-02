@@ -225,6 +225,18 @@ export class HouseDetailPage  {
 		rm12_dc2_out: '', // => 'Rm12 Dc2 Out',
 		rm3_dc3_out: '', // => 'Rm3 Dc3 Out',
 		acres: '', // => 'Acres',
+		apt_num: '',
+ 		orig_dol: '',
+		oh_date1: '', 
+		oh_date2: '',
+		oh_date3: '',
+		oh_from1: '',
+		oh_from2: '',
+		oh_from3: '',
+		oh_to1: '',
+		oh_to2: '',
+		oh_to3: '',
+ 		pic_num: ''
 	};
 	public rx_phone;
 
@@ -449,17 +461,17 @@ export class HouseDetailPage  {
 		this.rooms[11] = { level: h.level12, out: h.rm12_out, len: h.rm12_len, wth: h.rm12_wth, area: this.round1(h.rm12_len * h.rm12_wth), desc: this.getRoomDesc(h.rm12_dc1_out, h.rm12_dc2_out, h.rm12_dc3_out) };
 	}
 
-	getPriceTxt() {
+	getPriceTxt(price) {
 		let priceTxt;
 		if (this.house.s_r == "Sale")
-			priceTxt = Number(this.house.lp_dol) / 10000 + "万加币";
+			priceTxt = Number(price) / 10000 + "万加币";
 		else
-			priceTxt = this.house.lp_dol + "加元/月";
+			priceTxt = price + "加元/月";
 		return priceTxt;
 	}
 
-	getPriceRMB() {
-		return this.round2(parseFloat(this.house.lp_dol) * this.exchangeRate / 10000);
+	getPriceRMB(price) {
+		return this.round2(parseFloat(price) * this.exchangeRate / 10000);
 	}
 
 	getPropertyTxt() {
@@ -493,6 +505,18 @@ export class HouseDetailPage  {
 			return this.round2(parseFloat(this.house.land_area) * 0.09290304) + this.F2M.smeter;
 		else
 			return this.house.land_area + this.F2M.sfeet;
+	}
+
+	getAddr() {
+		let txt = this.house.addr;
+		if (this.house.apt_num) txt = this.house.apt_num + '-' + this.house.addr;
+		return txt;
+	}
+
+	getOpenHouse(oh_dt, oh_from, oh_to) {
+		let txt = '';
+		if (oh_dt) txt = oh_dt + ' ' + oh_from + '-' + oh_to;
+		return txt;
 	}
 
 	gotoCityStats() {
@@ -542,7 +566,7 @@ export class HouseDetailPage  {
 	share() {
 		
 		let subject = "枫之都房产：" + this.parms.id;
-		let message = this.getPriceTxt() + " - " + this.house.addr + " " + this.house.municipality;
+		let message = this.getPriceTxt(this.house.lp_dol) + " - " + this.getAddr() + " " + this.house.municipality;
 		//let img = this.photoUrl(this.photos[0]);
 		let img = this.cdn_photos[0];
 		//let link = "http://m.maplecity.com.cn/index.php?r=mhouse/view&id=" + this.parms.id;
