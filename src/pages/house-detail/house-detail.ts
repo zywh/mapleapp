@@ -250,7 +250,7 @@ export class HouseDetailPage  {
 		private events: Events,
 		private userData: UserData,
 		private alertc: AlertController,
-		private auth: AuthService,
+		public auth: AuthService,
 		private toastCtrl: ToastController,
 		private actionSheetCtrl: ActionSheetController,
 		public platform: Platform,
@@ -514,7 +514,10 @@ export class HouseDetailPage  {
 	}
 
 	hasOpenHouse(oh_dt) {
-		return (oh_dt && oh_dt != '0000-00-00')? true: false;
+		if (this.auth.authenticated())
+			return (oh_dt && oh_dt != '0000-00-00')? true: false;
+		else
+			return false;
 	}
 
 	getOpenHouse(oh_dt, oh_from, oh_to) {
