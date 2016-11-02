@@ -513,6 +513,10 @@ export class HouseDetailPage  {
 		return txt;
 	}
 
+	hasOpenHouse(oh_dt) {
+		return (oh_dt && oh_dt != '0000-00-00')? true: false;
+	}
+
 	getOpenHouse(oh_dt, oh_from, oh_to) {
 		let txt = '';
 		if (oh_dt && oh_dt != '0000-00-00') txt = oh_dt + ' ' + oh_from + '-' + oh_to;

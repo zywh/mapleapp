@@ -120,12 +120,17 @@
 				</div>
 			</div>
 		</div>
-		<div class="fyxq_ptss">
-			<div class="fyxq_ptssleft">开放日：</div>
-			<div class="fyxq_ptssright">{{getOpenHouse(house.oh_date1,house.oh_from1,house.oh_to1)}}
-				&nbsp;{{getOpenHouse(house.oh_date2,house.oh_from2,house.oh_to2)}}
-				&nbsp;{{getOpenHouse(house.oh_date3,house.oh_from3,house.oh_to3)}}
-			</div>
+		<div class="fyxq_ptss" *ngIf="hasOpenHouse(house.oh_date1)">
+			<div class="fyxq_ptssleft">开放日一：</div>
+			<div class="fyxq_ptssright">{{getOpenHouse(house.oh_date1,house.oh_from1,house.oh_to1)}}</div>
+		</div>
+		<div class="fyxq_ptss" *ngIf="hasOpenHouse(house.oh_date2)">
+			<div class="fyxq_ptssleft">开放日二：</div>
+			<div class="fyxq_ptssright">{{getOpenHouse(house.oh_date2,house.oh_from2,house.oh_to2)}}</div>
+		</div>
+		<div class="fyxq_ptss" *ngIf="hasOpenHouse(house.oh_date3)">
+			<div class="fyxq_ptssleft">开放日三：</div>
+			<div class="fyxq_ptssright">{{getOpenHouse(house.oh_date3,house.oh_from3,house.oh_to3)}}</div>
 		</div>
 	</ion-card>
 
