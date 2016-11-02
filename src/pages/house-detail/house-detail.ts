@@ -515,7 +515,7 @@ export class HouseDetailPage  {
 
 	getOpenHouse(oh_dt, oh_from, oh_to) {
 		let txt = '';
-		if (oh_dt) txt = oh_dt + ' ' + oh_from + '-' + oh_to;
+		if (oh_dt && oh_dt != '0000-00-00') txt = oh_dt + ' ' + oh_from + '-' + oh_to;
 		return txt;
 	}
 

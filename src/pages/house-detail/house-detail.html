@@ -75,8 +75,8 @@
 	</div>
 	<ion-card class="fyxq_cont">
 		<div class="fyxq_ptss">
-			<div class="fyxq_ptssleft">{{(house.lp_dol != house.orig_dol)?"新":""}}价格：</div>
-			<div class="fyxq_ptssright">{{getPriceTxt(house.lp_dol)}}
+			<div class="fyxq_ptssleft">价格：</div>
+			<div class="fyxq_ptssright"><ion-badge>{{(house.lp_dol != house.orig_dol)?"新":""}}</ion-badge>{{getPriceTxt(house.lp_dol)}}
 				<span *ngIf="exchangeRate">&nbsp;（约<i>{{getPriceRMB(house.lp_dol)}}</i>万人民币）</span>
 			</div>
 		</div>
@@ -121,11 +121,11 @@
 			</div>
 		</div>
 		<div class="fyxq_ptss">
-			<div class="fyxq_ptssleft">开放日期：</div>
+			<div class="fyxq_ptssleft">开放日：</div>
 			<div class="fyxq_ptssright">{{getOpenHouse(house.oh_date1,house.oh_from1,house.oh_to1)}}
 				&nbsp;{{getOpenHouse(house.oh_date2,house.oh_from2,house.oh_to2)}}
 				&nbsp;{{getOpenHouse(house.oh_date3,house.oh_from3,house.oh_to3)}}
-			<div>
+			</div>
 		</div>
 	</ion-card>
 
