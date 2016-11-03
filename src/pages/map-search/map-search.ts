@@ -266,6 +266,7 @@ export class MapSearchPage {
 
   openModal() {
     this.lockMapListener = true;
+    console.log(this.selectOptions);
     let modal = this.modalc.create(this.optionPage, { data: this.selectOptions, type: this.mapType });
     modal.onDidDismiss(data => {
       this.selectOptions = data;
@@ -276,7 +277,8 @@ export class MapSearchPage {
       if (this.selectOptions.selectSearch.type == 'CITY') {
         let center = new google.maps.LatLng(this.selectOptions.selectSearch.lat, this.selectOptions.selectSearch.lng);
         this.setLocation(center, this.defaultZoom, true);
-        console.log("Set city center");
+        this.selectOptions.selectSearch = {};
+       
       }
 
       this.changeMap(this.mapType);

@@ -247,6 +247,7 @@ export class HouselistSearch {
             sr: (this.selectOptions.selectSR == true) ? 'Sale' : 'Lease',
             housetype: this.selectOptions.selectType,
             houseprice: this.selectOptions.selectPrice,
+            oh: this.selectOptions.selectOH,
             houseroom: this.selectOptions.selectBeds,
             housearea: this.selectOptions.selectHousesize,
             houseground: this.selectOptions.selectLandsize,
