@@ -102,6 +102,7 @@ export class SelectOptionModal {
     resetSelections() {
         this.selectOptions = {
             selectSR: true,
+            selectOH: false,
             selectBaths: 0,
             selectBeds: 0,
             selectHousesize: { lower: 0, upper: 4000 },

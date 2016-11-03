@@ -10,6 +10,8 @@ export class MapleConf {
   data: any;
   location;
   public restHost: String = 'http://r.maplecity.com.cn/';
+  //public restHost: String = 'http://104.196.201.210/';
+  
   //private confJson = "mapleconf.json"; //production
   private confJson = "mapleconf_dev.json"; //development
   private localVersion: String = '1.0.0';

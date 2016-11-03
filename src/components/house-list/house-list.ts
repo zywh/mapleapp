@@ -91,7 +91,7 @@ export class HouseList {
             // let modal = this.modalc.create(MapHouselist, { list: this.nearbyHouseList, imgHost: this.imgHost });
             // modal.present();
             this.nav.push(MapHouselist, { list: this.nearbyHouseList, imgHost: this.imgHost });
-            console.log(this.nearbyHouseList);
+            //console.log(this.nearbyHouseList);
 
 
           }

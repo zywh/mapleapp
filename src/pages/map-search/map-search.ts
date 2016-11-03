@@ -349,6 +349,7 @@ export class MapSearchPage {
       //init house page parm
       this.selectOptions = {
         selectSR: true,
+        selectOH: false,
         selectBaths: 0,
         selectBeds: 0,
         selectHousesize: { lower: 0, upper: 4000 },
@@ -618,6 +619,7 @@ export class MapSearchPage {
           sr: (this.selectOptions.selectSR == true) ? 'Sale' : 'Lease',
           housetype: this.selectOptions.selectType,
           houseprice: this.selectOptions.selectPrice,
+          oh: this.selectOptions.selectOH,
           houseroom: this.selectOptions.selectBeds,
           housearea: this.selectOptions.selectHousesize,
           houseground: this.selectOptions.selectLandsize,
@@ -626,7 +628,7 @@ export class MapSearchPage {
         };
       }
 
-      //console.log("Map House Search Parms:" + mapParms);
+      console.log("Map House Search Parms:" + mapParms);
       this.mapleconf.load().then(data => {
 
         let restUrl = data.mapHouseRest;
@@ -635,7 +637,7 @@ export class MapSearchPage {
         }
         this.mapleRestData.load(restUrl, mapParms).subscribe(
           data => {
-            console.log("MapType:" + type)
+            //console.log("MapType:" + type)
             //loading.dismiss();
             if (type == 0) {
               this.processHouseData(data);
