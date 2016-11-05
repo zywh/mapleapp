@@ -13,8 +13,11 @@ export class MapleConf {
   //public restHost: String = 'http://104.196.201.210/';
   
   //private confJson = "mapleconf.json"; //production
-  private confJson = "mapleconf_dev.json"; //development
-  private localVersion: String = '1.0.0';
+  //private confJson = "mapleconf_dev.json"; //development
+ // private localVersion: String = '1.0.0';
+ 
+  private confJson = "mapleconf2.json"; //production
+  private localVersion: String = '0.2';
 
   constructor(private http: Http, private platform: Platform) {
 
