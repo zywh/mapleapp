@@ -7,7 +7,7 @@
      </ion-buttons>-->
     <!--<ion-title>枫之都</ion-title>-->
 
-    <search mapType='0' (searchInput)="searchSelection($event)"></search>
+    <search mapType='0' (searchInput)="searchSelection($event)" inputText=''></search>
     <ion-toolbar [attr.primary]="isAndroid ? '' : null">
     <ion-segment [(ngModel)]="homeSegment">
       <!--<ion-segment-button value="info">信息</ion-segment-button>-->

@@ -15,9 +15,9 @@ export class AuthService {
   jwtHelper: JwtHelper = new JwtHelper();
   auth0 = new Auth0({ clientID: '9fNpEj70wvf86dv5DeXPijTnkLVX5QZi', domain: 'mapleapp.auth0.com' });
   options = {
-    redirect: false,
-    autoclose: true,
-    popupOptions: { width: 30, height: 40, left: 200, top: 300 },
+    //redirect: false,
+    //autoclose: true,
+    //popupOptions: { width: 30, height: 40, left: 200, top: 300 },
     theme: {
       labeledSubmitButton: false,
       logo: "http://www.maplecity.com.cn/themes/house/images/layout/logo.jpg",

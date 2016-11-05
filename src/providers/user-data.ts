@@ -340,7 +340,7 @@ export class UserData {
       let src = list[i].Src;
       let flag: boolean = ((!this.auth.authenticated()) && (src == 'VOW')) ? false : true;
       list[i]['vowShowFlag'] = flag;
-      console.log(src + "flag:" + flag)
+      //console.log(src + "flag:" + flag)
 
     }
     return list;

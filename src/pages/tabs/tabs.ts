@@ -41,6 +41,8 @@ export class TabsPage {
     this.mapParms = navParams.data.rootParms || { lat: 0, lng: 0, type: "NONE" };
     this.tabMapParms = { pageType: 0, parms: this.mapParms };
     this.tabSchoolParms = { pageType: 1, parms: this.mapParms };
+    console.log("rootParms");
+    console.log(this.mapParms);
 
 
     //this.listenEvents();

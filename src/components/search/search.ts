@@ -19,6 +19,7 @@ import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 })
 export class Search {
   @Input() mapType: any;
+  @Input() inputText: String;
   @Output() searchInput = new EventEmitter();
   private cityItems;
   private addressItems;
@@ -43,7 +44,17 @@ export class Search {
 
 
   ngOnInit() { //Need wait after constructor
-    this.searchPlaceHolder = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
+
+    
+
+    if ( this.inputText != '' ){
+      this.searchPlaceHolder = this.inputText;
+      console.log("Search Componet input is not empty:" + this.inputText)
+    }else {
+      console.log("Search component is empty default")
+      this.searchPlaceHolder = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
+    }
+    
   }
 
 
@@ -73,6 +84,7 @@ export class Search {
     this.queryText = '';
     this.currentDiv = 'searchlist';
     this.resetItems();
+    this.searchInput.emit('INFOCUS');
     
     //this.getDefaultcity();
    

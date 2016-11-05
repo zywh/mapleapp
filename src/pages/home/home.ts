@@ -190,14 +190,19 @@ export class HomePage {
 
 
   searchSelection(e) {
-    console.log(e);
-    if (e.type == 'CITY') {
-      this.events.publish('map:center', { lat: e.lat, lng: e.lng });
-      this.userData.saveCenter('recentCenter', e.id, e.lat, e.lng);
+   
+    if (e != 'INFOCUS') {
+      if (e.type == 'CITY') {
+    
+        this.events.publish('map:center', { type:'HOUSE',lat: e.lat, lng: e.lng });
+        this.userData.saveCenter('recentCenter', e.id, e.lat, e.lng);
 
-    } else {
-      this.nav.push(HouseDetailPage, { id: e.id });
+      } else {
+        this.nav.push(HouseDetailPage, { id: e.id });
+      }
+
     }
+
 
 
   }

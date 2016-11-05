@@ -104,6 +104,7 @@ export class MapSearchPage {
 
     this.mapType = this.navparm.data.pageType;
     //this.resetItems();
+   
     this.setMapType(this.mapType);
     this.listenEvents();
 
@@ -189,7 +190,7 @@ export class MapSearchPage {
       //Add marker if it's redirected from school page
       console.log(this.navparm.data.parms.type);
       if (this.navparm.data.parms.type != 'NONE') {
-
+      
         this.setLocation(this.defaultcenter, 13, this.navparm.data.parms.type)
       }
 
