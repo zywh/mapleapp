@@ -1,10 +1,10 @@
-import {Modal, Range, NavParams, ViewController, Events} from 'ionic-angular';
-import {Component} from '@angular/core';
-import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-import {MapleConf} from '../../providers/maple-rest-data/maple-config';
-import {UserData} from '../../providers/user-data';
-import {AuthService} from '../../providers/auth/auth';
-import {Search} from '../../components/search/search';
+import { Modal, Range, NavParams, ViewController, Events } from 'ionic-angular';
+import { Component} from '@angular/core';
+import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
+import { MapleConf } from '../../providers/maple-rest-data/maple-config';
+import { UserData } from '../../providers/user-data';
+import { AuthService } from '../../providers/auth/auth';
+import { Search } from '../../components/search/search';
 
 // interface selectOptionsObj {
 
@@ -56,7 +56,9 @@ export class SelectOptionModal {
 
     public selectUnit: Boolean = true;
     public mapType;
+    public inputText;
     public unit;
+   
     constructor(
 
         private params: NavParams,
@@ -67,12 +69,19 @@ export class SelectOptionModal {
         private userData: UserData,
         private events: Events
     ) {
-
+       
         this.selectOptions = params.get('data');
         this.mapType = params.get('type');
         this.unit = 10;
         //this.getUserSelections();
         this.listenEvents();
+
+    }
+
+
+    ngOnInit() { //Need wait after constructor
+        this.inputText = this.selectOptions.selectSearch.id;
+
 
     }
 
@@ -84,14 +93,25 @@ export class SelectOptionModal {
 
     searchSelection(e) {
         console.log(e);
-        this.selectOptions['selectSearch'] = e;
+      
+        if (e != 'INFOCUS') {
+            this.selectOptions['selectSearch'] = e;
+            this.userData.saveCenter('recentCenter', e.id, e.lat, e.lng);
+        }else {
+             this.selectOptions['selectSearch'] = {id: ''};
+        }
+
+
+
     }
 
     getMySelections() {
         this.userData.getUserSelections('houseSearch').then(res => {
             if (res != null) {
-               this.selectOptions = res;
+                this.selectOptions = res;
+
             }
+            this.inputText = this.searchSelection['selectSearch']['id'];
 
         })
     }
@@ -101,6 +121,7 @@ export class SelectOptionModal {
     resetSelections() {
         this.selectOptions = {
             selectSR: true,
+            selectOH: false,
             selectBaths: 0,
             selectBeds: 0,
             selectHousesize: { lower: 0, upper: 4000 },
@@ -112,6 +133,8 @@ export class SelectOptionModal {
             selectSearch: ''
 
         }
+       
+        
     }
     saveSelections() {
         let data = JSON.stringify(this.selectOptions);

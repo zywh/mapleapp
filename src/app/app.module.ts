@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicModule, DeepLinkConfig } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { MapleApp } from './app.component';
 import { Http } from '@angular/http'
@@ -7,12 +7,12 @@ import { AuthHttp, AuthConfig } from 'angular2-jwt';
 
 //import service and compoment
 import { UserData } from '../providers/user-data';
-//import { SharePage } from '../providers/share';
 import { MapleConf } from '../providers/maple-rest-data/maple-config';
 import { MapleRestData } from '../providers/maple-rest-data/maple-rest-data';
-import { Connectivity } from '../providers/connectivity/connectivity';
+import { Connectivity } from '../providers/connectivity';
 import { AuthService } from '../providers/auth/auth';
-import { UpdateService } from '../providers/update/update';
+import { UpdateService } from '../providers/update';
+import { ShareService } from '../providers/share';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { HouseList } from '../components/house-list/house-list';
 import { Search } from '../components/search/search';
@@ -53,9 +53,18 @@ const cloudSettings: CloudSettings = {
   }
 };
 
+let storage: Storage = new Storage();
+
+export const deepLinkConfig: DeepLinkConfig = {
+  links: [
+    { component: HouseDetailPage, name: '房源详情', segment: 'housedetail/:id' },
+    { component: ProjectDetailPage, name: '项目详情', segment: 'projectdetail/:id' }
+  ]
+};
 
 export function authFactory(http: any) {
-   return new AuthHttp(new AuthConfig({ noJwtError: true }), http);
+   return new AuthHttp(new AuthConfig({  globalHeaders: [{'Accept': 'application/json'}],
+    tokenGetter: (() => storage.get('id_token')),noJwtError: true }), http);
 };
 
 @NgModule({
@@ -69,7 +78,6 @@ export function authFactory(http: any) {
     HelpPage,
     HomePage,
     HouseCityStatsPage,
-    //SharePage,
     HouseDetailPage,
     MapSearchPage,
     HouselistSearch,
@@ -92,23 +100,22 @@ export function authFactory(http: any) {
   ],
   imports: [
     IonicModule.forRoot(MapleApp, {
-      tabPlacement: "bottom",
-      //backButtonText: "返回",
-      backButtonText: "",
-      prodMode: true,
-      //tabSubPages: false, //android house detail has two header bar
-      //mode: 'ios',
-      //temp padding to fix ionic view status bar overlapping
-      platforms: {
-        ios: {
-          statusbarPadding: false
-
-        },
-      }
-    }),
+       tabPlacement: "bottom",
+       //backButtonText: "返回",
+       backButtonText: "",
+       prodMode: true,
+       //tabSubPages: false, //android house detail has two header bar
+       //mode: 'ios',
+       //temp padding to fix ionic view status bar overlapping
+       platforms: {
+         ios: {
+            statusbarPadding: false
+  
+          },
+       }
+      },deepLinkConfig),
     CloudModule.forRoot(cloudSettings),
-    //HouseList,
-    //Search
+  
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -121,7 +128,6 @@ export function authFactory(http: any) {
     HelpPage,
     HomePage,
     HouseCityStatsPage,
-    //SharePage,
     HouseDetailPage,
     MapSearchPage,
     HouselistSearch,
@@ -156,6 +162,7 @@ export function authFactory(http: any) {
       deps: [Http]
     },
     AuthService,
-    UpdateService],
+    UpdateService,
+    ShareService],
 })
 export class AppModule { }

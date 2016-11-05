@@ -8,7 +8,7 @@
 <ion-navbar>
   <ion-title>项目详情</ion-title>
   <ion-buttons end>
-  <button ion-button  (click)="share()">
+  <button ion-button [disabled]="!platform.is('cordova')" (click)="share()">
   <ion-icon isActive="false" name="share" ></ion-icon>
   </button>
   </ion-buttons>

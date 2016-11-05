@@ -1,22 +1,22 @@
-import {ModalController, LoadingController, Events, AlertController, PopoverController, ActionSheet, MenuController, Platform, NavController, NavParams, ViewController} from 'ionic-angular';
-import {Geolocation} from 'ionic-native';
-import { NgZone, Component, ElementRef, ViewChild} from '@angular/core';;
-import {Connectivity} from '../../providers/connectivity/connectivity';
-import {HouseDetailPage} from '../house-detail/house-detail';
-import {HouselistSearch} from '../houselist-search/houselist-search';
-import {MapleConf} from '../../providers/maple-rest-data/maple-config';
-import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-import {Observable} from 'rxjs/Observable';
+import { ModalController, LoadingController, Events, AlertController, PopoverController, ActionSheet, MenuController, Platform, NavController, NavParams, ViewController } from 'ionic-angular';
+import { Geolocation } from 'ionic-native';
+import { NgZone, Component, ElementRef, ViewChild } from '@angular/core';;
+import { Connectivity } from '../../providers/connectivity';
+import { HouseDetailPage } from '../house-detail/house-detail';
+import { HouselistSearch } from '../houselist-search/houselist-search';
+import { MapleConf } from '../../providers/maple-rest-data/maple-config';
+import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
+import { Observable } from 'rxjs/Observable';
 //import {GoogleMaps} from '../../providers/google-maps/google-maps';
 //import {GoogleMap, GoogleMapsEvent, GoogleMapsLatLng, GoogleMapsMarker} from 'ionic-native';
-import {SelectOptionModal} from './map-option-modal';
-import {MapHouselist} from './map-houselist';
+import { SelectOptionModal } from './map-option-modal';
+import { MapHouselist } from './map-houselist';
 //import {ConferenceData} from '../../providers/conference-data';
-import {SchoolSelectOptionModal} from '../school-map/schoolmap-option-modal';
-import {SchoolListModal} from '../school-map/school-list-modal';
+import { SchoolSelectOptionModal } from '../school-map/schoolmap-option-modal';
+import { SchoolListModal } from '../school-map/school-list-modal';
 //import {HousePopover} from './house-popover';
-import {AuthService} from '../../providers/auth/auth';
-import {UserData} from '../../providers/user-data';
+import { AuthService } from '../../providers/auth/auth';
+import { UserData } from '../../providers/user-data';
 
 declare var RichMarker: any;
 declare var google;
@@ -80,7 +80,7 @@ export class MapSearchPage {
   public mapType: Number = 1; // 0 for house and 1 for school
   public markerDrop;
   public lockMapListener: Boolean = false;
-  
+
 
   constructor(
     public nav: NavController,
@@ -104,17 +104,20 @@ export class MapSearchPage {
 
     this.mapType = this.navparm.data.pageType;
     //this.resetItems();
+   
     this.setMapType(this.mapType);
-   	this.listenEvents();
+    this.listenEvents();
 
   }
 
   listenEvents() {
     this.events.subscribe('locate:dismiss', () => {
       this.locateLock = false;
+      this.lockMapListener = false;
+      this.setLocation(this.defaultcenter, this.defaultZoom, true);
     });
-     this.events.subscribe('schoolmap:center', () => {
-       console.log("List modal dismiss")
+    this.events.subscribe('schoolmap:center', () => {
+      console.log("List modal dismiss")
       this.listModal.dismiss();
     });
 
@@ -187,7 +190,7 @@ export class MapSearchPage {
       //Add marker if it's redirected from school page
       console.log(this.navparm.data.parms.type);
       if (this.navparm.data.parms.type != 'NONE') {
-
+      
         this.setLocation(this.defaultcenter, 13, this.navparm.data.parms.type)
       }
 
@@ -200,6 +203,8 @@ export class MapSearchPage {
 
 
   ionViewWillEnter() {
+    console.log("Map View will enter");
+    this.lockMapListener = false; //unlock after view enter
     let optionType = (this.mapType == 0) ? 'houseSearch' : 'schoolSearch';
 
     if (this.auth.authenticated()) {
@@ -211,28 +216,58 @@ export class MapSearchPage {
       })
     }
 
-    console.log("Mappage will enter");
+
 
   }
 
 
- ionViewDidEnter() {
+  ionViewDidEnter() {
 
     if (!this.mapInitialised) {
 
-        let mapLoaded = this.initMap();
+      let mapLoaded = this.initMap();
+      let alert = this.alertc.create({
+        title: '提示',
+        message: '根据TREB数据协议，有些房源只有登录后才可以显示，请注册/登录后查找更多房源',
+        buttons: [
+          {
+            text: '继续',
+            role: 'cancel',
+
+
+          },
+          {
+            text: '登录',
+            handler: () => {
+              alert.dismiss().then(res => {
+                this.events.publish('profile:login');
+
+              })
+
+            }
+          }
+        ]
+      });
+
+      if (!this.auth.authenticated()) {
+        alert.present();
+      }
 
     }
 
 
-
   }
 
- 
+  ionViewDidLeave() {
+    console.log("Map view did leave")
+    this.lockMapListener = true; //lock change map after view switch. workaround for android searchbar trigger map data refresh
+  }
+
 
 
   openModal() {
     this.lockMapListener = true;
+    console.log(this.selectOptions);
     let modal = this.modalc.create(this.optionPage, { data: this.selectOptions, type: this.mapType });
     modal.onDidDismiss(data => {
       this.selectOptions = data;
@@ -240,12 +275,13 @@ export class MapSearchPage {
       console.log("Option Modal is dismissed");
       console.log(data);
       //if ( this.selectOptions.hasOwnProperty('selectSearch')) {
-      if ( this.selectOptions.selectSearch.type == 'CITY') {
+      if (this.selectOptions.selectSearch.type == 'CITY') {
         let center = new google.maps.LatLng(this.selectOptions.selectSearch.lat, this.selectOptions.selectSearch.lng);
         this.setLocation(center, this.defaultZoom, true);
-        console.log("Set city center");
+        this.selectOptions.selectSearch = {};
+       
       }
-      
+
       this.changeMap(this.mapType);
 
     });
@@ -281,9 +317,11 @@ export class MapSearchPage {
 
         //let modal = this.modalc.create(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost });
         //let modal = this.modalc.create(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost, listType: 'house' });
-        this.listModal = this.modalc.create(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost, listType: 'house' });
+        // this.listModal = this.modalc.create(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost, listType: 'house' });
 
-        this.listModal.present();
+        // this.listModal.present();
+        //this.currentHouseList = this.userData.setVowMask(this.currentHouseList);
+        this.nav.push(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost, listType: 'house' });
 
       } else {
 
@@ -291,8 +329,10 @@ export class MapSearchPage {
         console.log(this.selectOptions);
         //let modal = this.modalc.create(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds, listType: 'grid' });
         //modal.present();
-       this.listModal = this.modalc.create(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds, listType: 'grid' });
-        this.listModal.present();
+        // this.listModal = this.modalc.create(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds, listType: 'grid' });
+        // this.listModal.present();
+        //this.currentHouseList = this.userData.setVowMask(this.currentHouseList);
+        this.nav.push(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds, listType: 'grid' });
 
 
       }
@@ -312,6 +352,7 @@ export class MapSearchPage {
       //init house page parm
       this.selectOptions = {
         selectSR: true,
+        selectOH: false,
         selectBaths: 0,
         selectBeds: 0,
         selectHousesize: { lower: 0, upper: 4000 },
@@ -343,21 +384,26 @@ export class MapSearchPage {
 
   //SetCenter and Zoom if location button is clicked
   setCenter(isMarker) {
-
+    this.lockMapListener = true; // lock listener to prevent Android map listener trigger
     this.locateLock = true; //lock locate click to prevent frozen from double click
     this.mapleconf.getLocation().then(data => {
 
       this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
       if (this.auth.authenticated()) {
-        this.userData.addCenterAlert(data['lat'], data['lng'], "保存中心位置到我的收藏").then(res=>{
-           this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
+        this.userData.addCenterAlert(data['lat'], data['lng'], "保存中心位置到我的收藏");
 
-        });
+
+        // this.userData.addCenterAlert(data['lat'], data['lng'], "保存中心位置到我的收藏").then(res=>{
+        //  this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
+        //  this.lockMapListener = false;
+
+        //});
       } else {
         this.locateLock = false;
-         this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
+        this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
+        this.lockMapListener = false;
       }
-     
+
 
     })
   }
@@ -422,11 +468,11 @@ export class MapSearchPage {
               text: '详情',
               handler: () => {
                 //let navTransition = alert.dismiss();
-               // navTransition.then(() => {
-                 //this.nav.pop();
-                 alert.dismiss();
-                 this.nav.push(HouseDetailPage, { id: house.MLS, list: this.currentHouseList });
-                  //this.nav.push(HouseDetailPage, mls); 
+                // navTransition.then(() => {
+                //this.nav.pop();
+                alert.dismiss();
+                this.nav.push(HouseDetailPage, { id: house.MLS, list: this.currentHouseList });
+                //this.nav.push(HouseDetailPage, mls); 
                 //});
                 return false;
               }
@@ -438,10 +484,7 @@ export class MapSearchPage {
         //this.housePopover(house);
       } else {
         console.log("More than one");
-        // this.listModal = Modal.create(MapHouselist, { list: houses, imgHost: this.imgHost });
-        // this.nav.present(this.listModal);
-        this.nav.push(MapHouselist, { list: houses, imgHost: this.imgHost });
-
+        this.nav.push(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost, listType: 'house' });
 
       }
 
@@ -470,14 +513,14 @@ export class MapSearchPage {
         message: html,
         cssClass: 'school_popup',
         buttons: [{ text: '取消', role: 'cancel' },
-          {
-            text: '周边房源',
-            handler: () => {
-              this.events.publish('map:center', { lat: lat, lng: lng, type: 'SCHOOL' });
-              // this.events.publish('map:center', point);
-              //this.nav.push(MapSearchPage, { lat: lat, lng: lng });
-            }
+        {
+          text: '周边房源',
+          handler: () => {
+            this.events.publish('map:center', { lat: lat, lng: lng, type: 'SCHOOL' });
+            // this.events.publish('map:center', point);
+            //this.nav.push(MapSearchPage, { lat: lat, lng: lng });
           }
+        }
         ]
       });
       alert.present();
@@ -534,11 +577,11 @@ export class MapSearchPage {
 
     if (this.lockMapListener == false) {
       console.log("change map" + type);
-      let loading = this.loadingc.create({
-        content: '加载数据...'
-      });
-      // this.nav.present(loading);
-      loading.present();
+      // let loading = this.loadingc.create({
+      //   content: '加载数据...'
+      // });
+
+      // loading.present();
 
       this.clearAll(); //clear marker
 
@@ -579,6 +622,7 @@ export class MapSearchPage {
           sr: (this.selectOptions.selectSR == true) ? 'Sale' : 'Lease',
           housetype: this.selectOptions.selectType,
           houseprice: this.selectOptions.selectPrice,
+          oh: this.selectOptions.selectOH,
           houseroom: this.selectOptions.selectBeds,
           housearea: this.selectOptions.selectHousesize,
           houseground: this.selectOptions.selectLandsize,
@@ -587,7 +631,7 @@ export class MapSearchPage {
         };
       }
 
-      //console.log("Map House Search Parms:" + mapParms);
+      console.log("Map House Search Parms:" + mapParms);
       this.mapleconf.load().then(data => {
 
         let restUrl = data.mapHouseRest;
@@ -596,8 +640,8 @@ export class MapSearchPage {
         }
         this.mapleRestData.load(restUrl, mapParms).subscribe(
           data => {
-            console.log("MapType:" + type)
-            loading.dismiss();
+            //console.log("MapType:" + type)
+            //loading.dismiss();
             if (type == 0) {
               this.processHouseData(data);
             } else {
@@ -608,7 +652,9 @@ export class MapSearchPage {
           },
           error => {
 
-            this.restError(loading);
+            // this.restError(loading);
+            this.presentError();
+
           }
         );
 
@@ -681,7 +727,7 @@ export class MapSearchPage {
       let nextLat;
       let nextLng;
       let listAllHtml;
-      this.currentHouseList = data.Data.HouseList;
+      this.currentHouseList = this.userData.setVowMask(data.Data.HouseList);
       let panelhtml;
       // console.log("Current House List Length:" + this.currentHouseList.length);
 
@@ -696,8 +742,11 @@ export class MapSearchPage {
 
         }
         //console.log("Current:" + this.GeocodeLng + "Next:" + nextLng + "Total:" + totalhouse + "index:" + index + "Count:" + count);
-        let imgurl = this.imgHost + house.CoverImg;
-        let imgurltn = this.imgHost + house.CoverImgtn;
+        //let imgurl = this.imgHost + house.CoverImg;
+        //let imgurltn = this.imgHost + house.CoverImgtn;
+        let imgurl = house.CdnCoverImg;
+        let imgurltn = house.CdnCoverImgtn;
+
         let hprice = (house.SaleLease == 'Lease') ? Math.round(house.Price) * 10000 + '加元/月' : Math.round(house.Price) + '万加元';
         let markerprice = Math.round(house.Price);
 
@@ -706,7 +755,7 @@ export class MapSearchPage {
 
 
         let li = ' <ion-card>'
-          + '<img src="' + this.imgHost + house.CoverImg + '" />'
+          + '<img src="' + house.CdnCoverImg + '" />'
           + '<div class="house_desc" text-left text-nowrap>'
           // + '<ion-item padding-left>'
           + '<ion-badge item-left>MLS:' + house.MLS + '</ion-badge>'

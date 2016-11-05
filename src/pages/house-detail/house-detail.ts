@@ -7,6 +7,7 @@ import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {UserData} from '../../providers/user-data';
 import {HouseCityStatsPage} from '../../pages/house-city-stats/house-city-stats';
 import {AuthService} from '../../providers/auth/auth';
+import {ShareService} from '../../providers/share';
 declare var google: any;
 
 /*
@@ -32,6 +33,7 @@ export class HouseDetailPage  {
 	public house_mname: any;
 	public house_propertyType: any;
 	public photos: Array<string>;
+	public cdn_photos: Array<string>;
 	public exchangeRate: number;
 	public username: String;
 	public house = {
@@ -223,7 +225,20 @@ export class HouseDetailPage  {
 		rm12_dc2_out: '', // => 'Rm12 Dc2 Out',
 		rm3_dc3_out: '', // => 'Rm3 Dc3 Out',
 		acres: '', // => 'Acres',
+		apt_num: '',
+ 		orig_dol: '',
+		oh_date1: '', 
+		oh_date2: '',
+		oh_date3: '',
+		oh_from1: '',
+		oh_from2: '',
+		oh_from3: '',
+		oh_to1: '',
+		oh_to2: '',
+		oh_to3: '',
+ 		pic_num: ''
 	};
+	public rx_phone;
 
 	@ViewChild('photo_slider') slider: Slides;
 
@@ -235,10 +250,11 @@ export class HouseDetailPage  {
 		private events: Events,
 		private userData: UserData,
 		private alertc: AlertController,
-		private auth: AuthService,
+		public auth: AuthService,
 		private toastCtrl: ToastController,
 		private actionSheetCtrl: ActionSheetController,
-		private platform: Platform) {
+		public platform: Platform,
+		private shareService: ShareService) {
 
 		//this.nav = nav;
 		console.log(navParams);
@@ -386,11 +402,13 @@ export class HouseDetailPage  {
 		this.mapleRestData.load(url, { 'id': id, 'username': username }).subscribe(
 			data => {
 				//console.log(data);
+				this.rx_phone = this.mapleConf.data.phone;
 				this.house = data.house;
 				this.house_mname = data.house_mname;
 				this.house_propertyType = data.house_propertyType;
 				this.exchangeRate = data.exchangeRate;
 				this.photos = data.photos;
+				this.cdn_photos = data.cdn_photos;
 				this.houseRooms(this.house);
 				this.isFav = data.isFav; //check if houseFav and routeFav
 				this.setHouseList();
@@ -443,17 +461,17 @@ export class HouseDetailPage  {
 		this.rooms[11] = { level: h.level12, out: h.rm12_out, len: h.rm12_len, wth: h.rm12_wth, area: this.round1(h.rm12_len * h.rm12_wth), desc: this.getRoomDesc(h.rm12_dc1_out, h.rm12_dc2_out, h.rm12_dc3_out) };
 	}
 
-	getPriceTxt() {
+	getPriceTxt(price) {
 		let priceTxt;
 		if (this.house.s_r == "Sale")
-			priceTxt = Number(this.house.lp_dol) / 10000 + "万加币";
+			priceTxt = Number(price) / 10000 + "万加币";
 		else
-			priceTxt = this.house.lp_dol + "加元/月";
+			priceTxt = price + "加元/月";
 		return priceTxt;
 	}
 
-	getPriceRMB() {
-		return this.round2(parseFloat(this.house.lp_dol) * this.exchangeRate / 10000);
+	getPriceRMB(price) {
+		return this.round2(parseFloat(price) * this.exchangeRate / 10000);
 	}
 
 	getPropertyTxt() {
@@ -487,6 +505,25 @@ export class HouseDetailPage  {
 			return this.round2(parseFloat(this.house.land_area) * 0.09290304) + this.F2M.smeter;
 		else
 			return this.house.land_area + this.F2M.sfeet;
+	}
+
+	getAddr() {
+		let txt = this.house.addr;
+		if (this.house.apt_num) txt = this.house.apt_num + '-' + this.house.addr;
+		return txt;
+	}
+
+	hasOpenHouse(oh_dt) {
+		if (this.auth.authenticated())
+			return (oh_dt && oh_dt != '0000-00-00')? true: false;
+		else
+			return false;
+	}
+
+	getOpenHouse(oh_dt, oh_from, oh_to) {
+		let txt = '';
+		if (oh_dt && oh_dt != '0000-00-00') txt = oh_dt + ' ' + oh_from + '-' + oh_to;
+		return txt;
 	}
 
 	gotoCityStats() {
@@ -536,21 +573,13 @@ export class HouseDetailPage  {
 	share() {
 		
 		let subject = "枫之都房产：" + this.parms.id;
-		let message = this.getPriceTxt() + " - " + this.house.addr + " " + this.house.municipality;
-		let img = this.photoUrl(this.photos[0]);
-		let link = "http://m.maplecity.com.cn/index.php?r=mhouse/view&id=" + this.parms.id;
+		let message = this.getPriceTxt(this.house.lp_dol) + " - " + this.getAddr() + " " + this.house.municipality;
+		//let img = this.photoUrl(this.photos[0]);
+		let img = this.cdn_photos[0];
+		//let link = "http://m.maplecity.com.cn/index.php?r=mhouse/view&id=" + this.parms.id;
+		let link = this.mapleConf.data.mcihost + "/#/housedetail/" + this.parms.id;
 		//console.log("socialshare", message, subject, img, link);
 		//SocialSharing.share(message, subject, img, link);
-
-
-		this.userData.share(link,img,subject,message);
-
-
-		
+		this.shareService.share(link,img,subject,message);
 	}
-
-	
-
-
-
 }

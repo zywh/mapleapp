@@ -3,9 +3,7 @@ import {OnInit, Component} from '@angular/core';;
 import {SocialSharing} from 'ionic-native';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
-import {UserData} from '../../providers/user-data';
-declare var Wechat: any;
-//declare var WeChat: any; //tx-wechat
+import {ShareService} from '../../providers/share';
 
 @Component({
   templateUrl: 'project-detail.html'
@@ -37,14 +35,12 @@ export class ProjectDetailPage implements OnInit {
     private navParams: NavParams,
     private mapleRestData: MapleRestData,
     private mapleconf: MapleConf,
-    public userData: UserData,
-    private platform: Platform
+    public shareService: ShareService,
+    public platform: Platform
   ) {
-
     this.parms = { 'id': navParams.data };
-    //this.isAndroid = platform.is('android');
-
   }
+
   swiperOptions = {
     loop: true,
     //pager: true,
@@ -81,16 +77,11 @@ export class ProjectDetailPage implements OnInit {
 
   share() {
 
-    let link = "http://m.maplecity.com.cn/index.php?r=projects/more&id=" + this.project.id;
+    //let link = "http://m.maplecity.com.cn/index.php?r=projects/more&id=" + this.project.id;
+    let link = this.mapleconf.data.mcihost + "/#/projectdetail/" + this.project.id;
     let img = this.project.room_type_image.replace('uploads', this.project.replaceurl);
 
-    this.userData.share(link,img,this.project.name,this.project.summary);
-
-
-
+    this.shareService.share(link,img,this.project.name,this.project.summary);
   }
-
-
-
 
 }

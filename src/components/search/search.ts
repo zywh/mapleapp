@@ -19,6 +19,7 @@ import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 })
 export class Search {
   @Input() mapType: any;
+  @Input() inputText: String;
   @Output() searchInput = new EventEmitter();
   private cityItems;
   private addressItems;
@@ -43,7 +44,17 @@ export class Search {
 
 
   ngOnInit() { //Need wait after constructor
-    this.searchPlaceHolder = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
+
+    
+
+    if ( this.inputText != '' ){
+      this.searchPlaceHolder = this.inputText;
+      console.log("Search Componet input is not empty:" + this.inputText)
+    }else {
+      console.log("Search component is empty default")
+      this.searchPlaceHolder = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
+    }
+    
   }
 
 
@@ -69,36 +80,48 @@ export class Search {
   }
   //auto complete REST CAll
   searchInFocus() {
+    this.currentDiv = '';
     this.queryText = '';
     this.currentDiv = 'searchlist';
     this.resetItems();
-   //this.defaultItems();
+    this.searchInput.emit('INFOCUS');
+    
+    //this.getDefaultcity();
+   
 
   }
   searchBlur(){
-      //this.resetItems();
+    
   }
 
-  defaultItems() {
-    this.cityItems = [
-      {
+  
+ getDefaultcity(){
 
-        id: "Mississauga",
-        lat: "43.589045",
-        lng: "-79.644120",
-        type: "CITY",
-        value: "Mississauga, Ontario"
-      }
+      this.currentDiv = 'searchlist';
+      //Call REST and generate item object
+      let val = 'DEFAULTCITY'
+      this.mapleConf.load().then(data => {
+        let restUrl = data.getCitylistDataRest;
+       
+        this.mapleRestData.load(restUrl, { term: val }).subscribe(
 
-    ]
+          data => {
+            
+
+          }); //end of callback
+
+        //}
+      })
+
+ }
 
 
-
-  }
+  
   getItems(ev) {
 
     this.resetItems();
     let val = ev.target.value;
+    
 
     if (val && val.trim() != '') {
       this.currentDiv = 'searchlist';

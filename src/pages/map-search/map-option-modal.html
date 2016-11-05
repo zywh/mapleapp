@@ -25,7 +25,7 @@
 
 <ion-content class="map-option-modal">
   
-    <search mapType="0" (searchInput)="searchSelection($event)"></search>
+    <search mapType="0" (searchInput)="searchSelection($event)" [inputText]="inputText"></search>
   
 
     <ion-row>
@@ -101,6 +101,11 @@
         </ion-item>
         <ion-range class='range-s' dualKnobs="true" min="0" max="43560" step="1000" [(ngModel)]="selectOptions.selectLandsize">
         </ion-range>
+            <ion-item no-lines>
+                <ion-label>房屋开放日</ion-label>
+                <ion-toggle  [(ngModel)]="selectOptions.selectOH"> </ion-toggle>
+            </ion-item>
+      
     </ion-list>
 
 

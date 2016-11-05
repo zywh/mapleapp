@@ -6,20 +6,20 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+	<ion-navbar>
 
-    <ion-title>{{pageTitle}}</ion-title>
-    <ion-buttons end>
-      <button ion-button (click)="toggleView()">
+		<ion-title>{{pageTitle}}</ion-title>
+		<ion-buttons end>
+			<button ion-button (click)="toggleView()">
           <ion-icon [name]="viewType"></ion-icon>
       </button>
-    </ion-buttons>
-    <ion-buttons end *ngIf="isList">
-      <button ion-button (click)="toggleEdit()">{{editButton}}
+		</ion-buttons>
+		<ion-buttons end *ngIf="isList">
+			<button ion-button (click)="toggleEdit()">{{editButton}}
 
       </button>
-    </ion-buttons>
-  </ion-navbar>
+		</ion-buttons>
+	</ion-navbar>
 
 </ion-header>
 
@@ -27,55 +27,54 @@
 <ion-content class="houselist-search">
 
 
-  <ion-list [reorder]="editing" (ionItemReorder)="reorderItems($event)" *ngIf="isList">
+	<ion-list [reorder]="editing" (ionItemReorder)="reorderItems($event)" *ngIf="isList">
 
-    <ion-item-sliding *ngFor="let house of favList">
-      <ion-item tappable class="house_card" (click)="gotoHouseDetail(house.MLS,house.Address)">
-        <ion-thumbnail item-left *ngIf="!editing">
-          <img [src]="imgHost + house.CoverImg" />
-        </ion-thumbnail>
-        <ion-icon color="primary" *ngIf="editing" name="remove-circle" item-left (click)="remove(house.MLS)"></ion-icon>
+		<ion-item-sliding *ngFor="let house of favList">
+			<ion-item tappable class="house_card" (click)="gotoHouseDetail(house.MLS,house.Address)">
+				<ion-thumbnail item-left *ngIf="!editing && house.Address">
+					<img [src]="house.CdnCoverImg" />
+				</ion-thumbnail>
+				<ion-icon color="primary" *ngIf="editing" name="remove-circle" item-left (click)="remove(house.MLS)"></ion-icon>
 
-        <div *ngIf="!house.Address">
-          <h2>
-            <ion-badge>NOT LISTED</ion-badge>
-            {{house.MLS}}
+				<div *ngIf="!house.Address">
+					<h2>
+								<ion-badge>房源已不在MLS列表</ion-badge>{{house.MLS}}
+					</h2>
+       				
+				</div>
+				<div *ngIf="house.Address">
+					<h2>
+						<ion-badge>{{mapleConf.getListDays(house.ListDate)}}</ion-badge>
+						{{house.Address}}
 
-          </h2>
-        </div>
-        <div *ngIf="house.Address">
-          <h2>
-            <ion-badge>{{mapleConf.getListDays(house.ListDate)}}</ion-badge>
-            {{house.Address}}
+					</h2>
+					<p *ngIf="house.Address">
+						<ion-badge>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
+						{{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
 
-          </h2>
-          <p *ngIf="house.Address">
-            <ion-badge>{{mapleConf.getPriceTxt(house.SaleLease,house.Price)}}</ion-badge>
-            {{house.HouseType}}:{{house.Beds}}卧{{house.Baths}}卫{{house.Kitchen}}厨
+					</p>
+					<p *ngIf="house.Address">{{house.MLS}} {{house.MunicipalityName}},{{house.ProvinceCname}}</p>
+				</div>
 
-          </p>
-          <p *ngIf="house.Address">{{house.MLS}} {{house.MunicipalityName}},{{house.ProvinceCname}}</p>
-        </div>
-
-      </ion-item>
-      <ion-item-options>
-        <button ion-button clear (click)="remove(house.MLS)">
+			</ion-item>
+			<ion-item-options>
+				<button ion-button clear (click)="remove(house.MLS)">
         <ion-icon name="trash"></ion-icon>
         删除
       </button>
-        <button ion-button clear (click)="mapleConf.mapDirection(house.GeocodeLat,house.GeocodeLng)">
+				<button ion-button clear (click)="mapleConf.mapDirection(house.GeocodeLat,house.GeocodeLng)">
         <ion-icon name="navigate"></ion-icon>
         地图
       </button>
-      </ion-item-options>
-    </ion-item-sliding>
+			</ion-item-options>
+		</ion-item-sliding>
 
-  </ion-list>
+	</ion-list>
 
 
-  <div *ngIf="!isList">
-    <house-list [houselist]='favList' [imgHost]='imgHost' [isList]='false' [fav]='true'></house-list>
+	<div *ngIf="!isList">
+		<house-list [houselist]='favList' [imgHost]='imgHost' [isList]='false' [fav]='true'></house-list>
 
-  </div>
+	</div>
 
 </ion-content>

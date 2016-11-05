@@ -18,8 +18,9 @@ export class SchoolListModal {
     }
 
     schoolClick(lat, lng) {
-        let center = new google.maps.LatLng(lat, lng);
-        this.events.publish('map:center', center); //public event and trigger tab select and map change
+        //let center = new google.maps.LatLng(lat, lng);
+
+        this.events.publish('map:center', {type:'SCHOOL',lat:lat,lng:lng}); //public event and trigger tab select and map change
         this.dismiss();
     }
 

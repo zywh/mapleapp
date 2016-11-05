@@ -10,8 +10,10 @@ export class MapleConf {
   data: any;
   location;
   public restHost: String = 'http://r.maplecity.com.cn/';
-  private confJson = "mapleconf.json"; //production
-  //private confJson = "mapleconf_dev.json"; //development
+  //public restHost: String = 'http://104.196.201.210/';
+  
+  //private confJson = "mapleconf.json"; //production
+  private confJson = "mapleconf_dev.json"; //development
   private localVersion: String = '1.0.0';
 
   constructor(private http: Http, private platform: Platform) {
@@ -158,7 +160,8 @@ export class MapleConf {
     } else {
       let label = encodeURI('目的地');
      // window.open('geo:0,0?q=' + destination + '(' + label + ')', '_system');
-      window.open('geo:0,0?daddr=' + destination + '(' + label + ')', '_system');
+      //window.open('geo:0,0?daddr=' + destination + '(' + label + ')', '_system');
+      window.open('google.navigation:q=' + destination + '&mode=d', '_system');
     }
   }
 
@@ -170,9 +173,9 @@ export class MapleConf {
        window.open('maps://?ll=' + ll + '&q='+ type, '_system');
 
     } else {
-      let label = encodeURI('目的地');
+     let label = encodeURI('目的地');
      // window.open('geo:0,0?q=' + destination + '(' + label + ')', '_system');
-      window.open('geo:0,0?daddr=' + ll + '(' + label + ')', '_system');
+     window.open('geo:0,0?daddr=' + ll + '(' + label + ')', '_system');
     }
   }
 
