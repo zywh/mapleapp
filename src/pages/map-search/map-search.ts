@@ -104,7 +104,7 @@ export class MapSearchPage {
 
     this.mapType = this.navparm.data.pageType;
     //this.resetItems();
-   
+
     this.setMapType(this.mapType);
     this.listenEvents();
 
@@ -120,6 +120,15 @@ export class MapSearchPage {
       console.log("List modal dismiss")
       this.listModal.dismiss();
     });
+    this.events.subscribe('user:login', (data) => {
+
+
+    })
+    this.events.subscribe('user:logout', (data) => {
+      this.resetSelections();
+      //this.changeMap(this.mapType);
+
+    })
 
 
 
@@ -190,7 +199,7 @@ export class MapSearchPage {
       //Add marker if it's redirected from school page
       console.log(this.navparm.data.parms.type);
       if (this.navparm.data.parms.type != 'NONE') {
-      
+
         this.setLocation(this.defaultcenter, 13, this.navparm.data.parms.type)
       }
 
@@ -207,14 +216,14 @@ export class MapSearchPage {
     this.lockMapListener = false; //unlock after view enter
     let optionType = (this.mapType == 0) ? 'houseSearch' : 'schoolSearch';
 
-    if (this.auth.authenticated()) {
-      this.userData.getUserSelections(optionType).then(res => {
-        if (res != null) {
-          this.selectOptions = res;
-        }
+    // if (this.auth.authenticated()) {
+    //   this.userData.getUserSelections(optionType).then(res => {
+    //     if (res != null) {
+    //       this.selectOptions = res;
+    //     }
 
-      })
-    }
+    //   })
+    // }
 
 
 
@@ -268,21 +277,25 @@ export class MapSearchPage {
   openModal() {
     this.lockMapListener = true;
     console.log(this.selectOptions);
-    let modal = this.modalc.create(this.optionPage, { data: this.selectOptions, type: this.mapType });
+    let modal = this.modalc.create(this.optionPage, { data: this.selectOptions, type: this.mapType ,searchflag: true});
     modal.onDidDismiss(data => {
       this.selectOptions = data;
       this.lockMapListener = false;
-      console.log("Option Modal is dismissed");
+      this.changeMap(this.mapType);
       console.log(data);
       //if ( this.selectOptions.hasOwnProperty('selectSearch')) {
-      if (this.selectOptions.selectSearch.type == 'CITY') {
+      //if (this.selectOptions.selectSearch.type == 'CITY') {
+        if (this.selectOptions.selectSearch.lat > 20) {
         let center = new google.maps.LatLng(this.selectOptions.selectSearch.lat, this.selectOptions.selectSearch.lng);
         this.setLocation(center, this.defaultZoom, true);
         this.selectOptions.selectSearch = {};
-       
+
+      } else {
+
+        this.changeMap(this.mapType);
       }
 
-      this.changeMap(this.mapType);
+
 
     });
 
@@ -440,7 +453,7 @@ export class MapSearchPage {
   setContent(lat, lng, count, html, houses, price, house) {
     let point = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
     //let content = this.setMarkerCss(count, price);
-    console.log("Set House Content Marker")
+   // console.log("Set House Content Marker")
     let content = this.mapleconf.setHouseMarkerCss(count, price);
     let marker = new RichMarker({
       position: point,
@@ -856,18 +869,24 @@ export class MapSearchPage {
 
   }
 
-  //End of MAP import function
+  resetSelections() {
+    this.selectOptions = {
+      selectSR: true,
+      selectOH: false,
+      selectBaths: 0,
+      selectBeds: 0,
+      selectHousesize: { lower: 0, upper: 4000 },
+      selectLandsize: { lower: 0, upper: 43560 },
+      selectPrice: { lower: 0, upper: 600 },
+      selectType: '',
+      selectListType: true,
+      selectDate: 0,
+      selectSearch: {}
 
-  // housePopover(house) {
-  //   let popover = this.popoverc.create(HousePopover, {
-  //     house: house,
-  //     list: this.currentHouseList,
-  //     imgHost: this.imgHost
-  //   });
+    }
 
-  //   popover.present();
 
-  // }
+  }
 
 }
 

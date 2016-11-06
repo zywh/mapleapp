@@ -58,6 +58,7 @@ export class SelectOptionModal {
     public mapType;
     public inputText;
     public unit;
+    public searchFlag: Boolean;
    
     constructor(
 
@@ -71,6 +72,7 @@ export class SelectOptionModal {
     ) {
        
         this.selectOptions = params.get('data');
+        this.searchFlag = params.get('searchflag');
         this.mapType = params.get('type');
         this.unit = 10;
         //this.getUserSelections();
@@ -80,7 +82,9 @@ export class SelectOptionModal {
 
 
     ngOnInit() { //Need wait after constructor
-        this.inputText = this.selectOptions.selectSearch.id;
+        //this.inputText = this.selectOptions.selectSearch.id;
+       
+       // this.inputText = this.searchSelection['selectSearch']['id'];
 
 
     }
@@ -106,12 +110,14 @@ export class SelectOptionModal {
     }
 
     getMySelections() {
+        let searchObject = this.selectOptions.selectSearch;
         this.userData.getUserSelections('houseSearch').then(res => {
             if (res != null) {
                 this.selectOptions = res;
+                this.selectOptions.selectSearch = searchObject;
 
             }
-            this.inputText = this.searchSelection['selectSearch']['id'];
+           // this.inputText = this.searchSelection['selectSearch']['id'];
 
         })
     }
@@ -127,17 +133,19 @@ export class SelectOptionModal {
             selectHousesize: { lower: 0, upper: 4000 },
             selectLandsize: { lower: 0, upper: 43560 },
             selectPrice: { lower: 0, upper: 600 },
-            selectType: '',
+            selectType: [],
             selectListType: true,
             selectDate: 0,
-            selectSearch: ''
+            selectSearch: {}
 
         }
        
         
     }
     saveSelections() {
-        let data = JSON.stringify(this.selectOptions);
+        let saveOption: Object = this.selectOptions;
+        saveOption['selectSearch'] = {};
+        let data = JSON.stringify(saveOption);
         console.log(data);
         this.userData.saveSelectOption(data, 'houseSearch').then(res => {
             console.log("save Selection Result:" + res);

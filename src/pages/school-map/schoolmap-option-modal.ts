@@ -1,18 +1,19 @@
 
 
-import {Modal, Range, NavParams, ViewController, Events} from 'ionic-angular';
-import {Component} from '@angular/core';
-import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
-import {MapleConf} from '../../providers/maple-rest-data/maple-config';
-import {UserData} from '../../providers/user-data';
-import {AuthService} from '../../providers/auth/auth';
-import {Search} from '../../components/search/search';
+import { Modal, Range, NavParams, ViewController, Events } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
+import { MapleConf } from '../../providers/maple-rest-data/maple-config';
+import { UserData } from '../../providers/user-data';
+import { AuthService } from '../../providers/auth/auth';
+import { Search } from '../../components/search/search';
 
 export interface selectOptionsObj {
     selectType?: Boolean,
     selectRank?: Number,
     selectPingfen?: Number,
-    selectXingzhi?: String
+    selectXingzhi?: String,
+    selectSearch?: Object
 }
 
 @Component({
@@ -38,9 +39,9 @@ export class SchoolSelectOptionModal {
 
     }
 
-    searchSelection(e){
+    searchSelection(e) {
         console.log(e);
-        this.selectOptions['selectSearch'] = e;
+        this.selectOptions.selectSearch = e;
     }
 
     resetSelections() {
@@ -48,21 +49,27 @@ export class SchoolSelectOptionModal {
             selectPingfen: 0,
             selectRank: 0,
             selectType: false,
-            selectXingzhi: ''
+            selectXingzhi: '',
+            selectSearch: {}
 
         }
     }
     getMySelections() {
+        let searchObject = this.selectOptions.selectSearch;
         this.userData.getUserSelections('schoolSearch').then(res => {
             if (res != null) {
                 this.selectOptions = res;
+                this.selectOptions.selectSearch = searchObject;
+
             }
 
         })
     }
 
     saveSelections() {
-        let data = JSON.stringify(this.selectOptions);
+        let saveOption: Object = this.selectOptions;
+        saveOption['selectSearch'] = {};
+        let data = JSON.stringify(saveOption);
         console.log(data);
         this.userData.saveSelectOption(data, 'schoolSearch').then(res => {
             console.log("save Selection Result:" + res);

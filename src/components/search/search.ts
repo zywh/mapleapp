@@ -46,14 +46,14 @@ export class Search {
   ngOnInit() { //Need wait after constructor
 
     
-
-    if ( this.inputText != '' ){
-      this.searchPlaceHolder = this.inputText;
-      console.log("Search Componet input is not empty:" + this.inputText)
-    }else {
-      console.log("Search component is empty default")
-      this.searchPlaceHolder = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
-    }
+   this.searchPlaceHolder = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
+    // if ( this.inputText != '' ){
+    //   this.searchPlaceHolder = this.inputText;
+    //   console.log("Search Componet input is not empty:" + this.inputText)
+    // }else {
+    //   console.log("Search component is empty default")
+    //   this.searchPlaceHolder = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
+    // }
     
   }
 
@@ -142,14 +142,17 @@ export class Search {
 
             if (data.hasOwnProperty("MLS")) {
               this.mlsItems = data.MLS;
+              console.log(data.MLS);
 
             }
             if (data.hasOwnProperty("ADDRESS")) {
               this.addressItems = data.ADDRESS;
+              console.log(data.ADDRESS);
 
             }
             if (data.hasOwnProperty("SCHOOL")) {
               this.schoolItems = data.SCHOOL;
+              console.log(data.SCHOOL);
 
             }
 

@@ -76,7 +76,7 @@
 	<ion-card class="fyxq_cont">
 		<div class="fyxq_ptss">
 			<div class="fyxq_ptssleft">价格：</div>
-			<div class="fyxq_ptssright"><ion-badge>{{(house.orig_dol > 0 && house.lp_dol != house.orig_dol)?"新":""}}</ion-badge>{{getPriceTxt(house.lp_dol)}}
+			<div class="fyxq_ptssright"><ion-badge>{{(house.orig_dol && house.lp_dol != house.orig_dol)?"新":""}}</ion-badge>{{getPriceTxt(house.lp_dol)}}
 				<span *ngIf="exchangeRate">&nbsp;（约<i>{{getPriceRMB(house.lp_dol)}}</i>万人民币）</span>
 			</div>
 		</div>
@@ -148,7 +148,7 @@
 				<ion-label>
 					<ion-badge>{{mapleConf.getListDays(house.pix_updt)}}</ion-badge>{{house.ml_num}}</ion-label>
 			</ion-item>
-			<ion-item *ngIf="auth.authenticated() && house.orig_dol > 0 && house.orig_dol != house.lp_dol">
+			<ion-item *ngIf="auth.authenticated() && house.orig_dol && house.orig_dol != house.lp_dol">
 				<ion-label fixed class="xqlb_label">原价格：</ion-label>
 				<ion-label><s>{{getPriceTxt(house.orig_dol)}}</s></ion-label>
 			</ion-item>
