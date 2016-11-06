@@ -76,7 +76,7 @@ export class ProfilePage {
 
     this.userData.getUserSelections(optionName).then(res => {
       if (res != null) { this.selectOptions = res; }
-      let modal = this.modalc.create(optionPage, { data: this.selectOptions });
+      let modal = this.modalc.create(optionPage, { data: this.selectOptions,searchflag: false });
       modal.onDidDismiss(data => {
         console.log("Default selection is closed")
       });

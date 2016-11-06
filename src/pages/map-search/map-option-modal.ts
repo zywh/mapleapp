@@ -58,6 +58,7 @@ export class SelectOptionModal {
     public mapType;
     public inputText;
     public unit;
+    public searchFlag: Boolean;
    
     constructor(
 
@@ -71,6 +72,7 @@ export class SelectOptionModal {
     ) {
        
         this.selectOptions = params.get('data');
+        this.searchFlag = params.get('searchflag');
         this.mapType = params.get('type');
         this.unit = 10;
         //this.getUserSelections();

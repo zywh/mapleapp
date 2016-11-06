@@ -277,7 +277,7 @@ export class MapSearchPage {
   openModal() {
     this.lockMapListener = true;
     console.log(this.selectOptions);
-    let modal = this.modalc.create(this.optionPage, { data: this.selectOptions, type: this.mapType });
+    let modal = this.modalc.create(this.optionPage, { data: this.selectOptions, type: this.mapType ,searchflag: true});
     modal.onDidDismiss(data => {
       this.selectOptions = data;
       this.lockMapListener = false;
