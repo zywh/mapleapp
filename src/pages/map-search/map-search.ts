@@ -268,7 +268,7 @@ export class MapSearchPage {
   }
 
   ionViewDidLeave() {
-    console.log("Map view did leave")
+    //console.log("Map view did leave")
     this.lockMapListener = true; //lock change map after view switch. workaround for android searchbar trigger map data refresh
   }
 
@@ -276,13 +276,13 @@ export class MapSearchPage {
 
   openModal() {
     this.lockMapListener = true;
-    console.log(this.selectOptions);
+    //console.log(this.selectOptions);
     let modal = this.modalc.create(this.optionPage, { data: this.selectOptions, type: this.mapType ,searchflag: true});
     modal.onDidDismiss(data => {
       this.selectOptions = data;
       this.lockMapListener = false;
       this.changeMap(this.mapType);
-      console.log(data);
+      //console.log(data);
       //if ( this.selectOptions.hasOwnProperty('selectSearch')) {
       //if (this.selectOptions.selectSearch.type == 'CITY') {
         if (this.selectOptions.selectSearch.lat > 20) {
@@ -450,7 +450,7 @@ export class MapSearchPage {
   }
 
 
-  setContent(lat, lng, count, html, houses, price, house) {
+  setContent(lat, lng, count, html, houses, price, house,vowflag) {
     let point = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
     //let content = this.setMarkerCss(count, price);
    // console.log("Set House Content Marker")
@@ -467,6 +467,7 @@ export class MapSearchPage {
 
     marker.addListener('click', () => {
       if (count == 1) {
+       // let text = (vowflag)? 
         let alert = this.alertc.create({
           //title: 'Confirm purchase',
           message: html,
@@ -478,13 +479,18 @@ export class MapSearchPage {
 
             },
             {
-              text: '详情',
+              text: (vowflag)? '详情':'登录',
               handler: () => {
                 //let navTransition = alert.dismiss();
                 // navTransition.then(() => {
                 //this.nav.pop();
                 alert.dismiss();
-                this.nav.push(HouseDetailPage, { id: house.MLS, list: this.currentHouseList });
+                if( vowflag){
+                    this.nav.push(HouseDetailPage, { id: house.MLS, list: this.currentHouseList });
+                }else {
+                  this.userData.loginAlert();
+                }
+              
                 //this.nav.push(HouseDetailPage, mls); 
                 //});
                 return false;
@@ -765,9 +771,19 @@ export class MapSearchPage {
 
         let tlat = parseFloat(house.GeocodeLat);
         let tlng = parseFloat(house.GeocodeLng);
+        //let vowflag: Boolean = ( house.src == 'VOW' || this.auth.authenticated());
+       // console.log("MLS:"+ house.MLS + " SRC:" + house.src + " isAuth:" + this.auth.authenticated());
+        let vowflag: boolean = (!this.auth.authenticated() && house.Src == 'VOW') ? false : true;
+       
+        let li:String;
+        if (!vowflag){
+          console.log("MLS:" + house.MLS + "VOW Hide DATA");
+           li = "<h2>登录用户可见</h2>"
+        } else 
+        {
 
-
-        let li = ' <ion-card>'
+          console.log("MLS:" + house.MLS + "NOT VOW DATA");
+         li = ' <ion-card>'
           + '<img src="' + house.CdnCoverImg + '" />'
           + '<div class="house_desc" text-left text-nowrap>'
           // + '<ion-item padding-left>'
@@ -782,16 +798,15 @@ export class MapSearchPage {
           + '<div>' + house.Address + ',' + house.MunicipalityName + '</div>'
           + '</div></div>'
           + ' </ion-card> '
+          }
 
         if ((nextLng != house.GeocodeLng) || (nextLat != house.GeocodeLat)) {
 
           if (count == 1) {
 
-
             houses.push(house);
-            //this.setContent(tlat, tlng, 1, houses, markerprice);
-            //this.setContent(tlat, tlng, 1, li, house, markerprice, house.MLS);
-            this.setContent(tlat, tlng, 1, li, house, markerprice, house);
+          
+            this.setContent(tlat, tlng, 1, li, house, markerprice, house,vowflag);
             houses = [];
             totalprice = 0;
             panelhtml = '';
@@ -803,7 +818,7 @@ export class MapSearchPage {
             let price = (totalprice + markerprice) / count;
             //this.setContent(tlat, tlng, count, houses, price);
             // this.setContent(tlat, tlng, count, panelhtml, price, house.MLS);
-            this.setContent(tlat, tlng, count, panelhtml, houses, price, house.MLS);
+            this.setContent(tlat, tlng, count, panelhtml, houses, price, house.MLS, true);
             count = 1;
             totalprice = 0;
             houses = [];
