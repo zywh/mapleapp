@@ -80,7 +80,8 @@ export class SelectOptionModal {
 
 
     ngOnInit() { //Need wait after constructor
-        this.inputText = this.selectOptions.selectSearch.id;
+        //this.inputText = this.selectOptions.selectSearch.id;
+        this.inputText = this.searchSelection['selectSearch']['id'];
 
 
     }
