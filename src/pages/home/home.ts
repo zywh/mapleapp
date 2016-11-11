@@ -23,8 +23,8 @@ export class HomePage {
   public projectRest;
   public post1;
   public favList;
-  public hQueryText: String = '';
-  public sQueryText: String = '';
+  public hQueryText: string = '';
+  public sQueryText: string = '';
   public cityItems: any;
   public addressItems: any;
   public mlsItems: any;
@@ -38,8 +38,8 @@ export class HomePage {
   public imgHost;
   public houseRestURL;
   public data;
-  public listHouse: Boolean = false;
-  public listFav: Boolean = true;
+  public listHouse: boolean = false;
+  public listFav: boolean = true;
   //public houseListM;
 
 

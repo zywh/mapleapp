@@ -5,10 +5,10 @@ import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 
 export interface Post {
   id: number;
-  title: String;
-  content: String;
-  imgHost: String;
-  catname: String;
+  title: string;
+  content: string;
+  imgHost: string;
+  catname: string;
 
 }
 @Component({

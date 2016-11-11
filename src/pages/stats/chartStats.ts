@@ -24,8 +24,8 @@ declare var Highcharts: any;
 export class chartStats {
     //public options: Object;
     public options: Object;
-    public type: Number; // 0 for chart and 1 for highstock
-    public pagetitle: String;
+    public type: number; // 0 for chart and 1 for highstock
+    public pagetitle: string;
     public chart;
     constructor(private parm: NavParams, private view: ViewController) {
         this.type = this.parm.data.type;

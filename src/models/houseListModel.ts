@@ -1,29 +1,29 @@
 import { UserData } from '../providers/user-data';
 
 export class houseShort {
-    Src?: String;
+    Src?: string;
     ListDate: Date;
-    Beds?: Number;
-    Baths?: Number;
-    Kitchen?: Number;
-    GeocodeLat?: Number;
-    GeocodeLng?: Number;
-    Address?: String;
-    SaleLease: String;
-    Price: Number;
-    HouseType?: String;
-    MunicipalityName?: String;
-    CountryName?: String;
-    MLS: String;
-    Country?: String;
-    ProvinceEname?: String;
-    ProvinceCname?: String;
-    CoverImg?: String;
-    CoverImgtn?: String;
-    CdnCoverImg?: String;
-    CdnCoverImgtn?: String;
-    MemberOnlyImg?: String;
-    vowShowFlag?: Boolean;
+    Beds?: number;
+    Baths?: number;
+    Kitchen?: number;
+    GeocodeLat?: number;
+    GeocodeLng?: number;
+    Address?: string;
+    SaleLease: string;
+    Price: number;
+    HouseType?: string;
+    MunicipalityName?: string;
+    CountryName?: string;
+    MLS: string;
+    Country?: string;
+    ProvinceEname?: string;
+    ProvinceCname?: string;
+    CoverImg?: string;
+    CoverImgtn?: string;
+    CdnCoverImg?: string;
+    CdnCoverImgtn?: string;
+    MemberOnlyImg?: string;
+    vowShowFlag?:  boolean;
 
 
 

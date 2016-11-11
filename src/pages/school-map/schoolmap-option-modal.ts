@@ -9,10 +9,10 @@ import { AuthService } from '../../providers/auth/auth';
 import { Search } from '../../components/search/search';
 
 export interface selectOptionsObj {
-    selectType?: Boolean,
-    selectRank?: Number,
-    selectPingfen?: Number,
-    selectXingzhi?: String,
+    selectType?: boolean,
+    selectRank?: number,
+    selectPingfen?: number,
+    selectXingzhi?: string,
     selectSearch?: Object
 }
 

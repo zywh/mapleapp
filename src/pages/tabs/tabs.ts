@@ -10,9 +10,9 @@ import {ProfilePage} from '../profile/profile';
 //import {MapleConf} from './providers/maple-rest-data/maple-config';
 
 export interface MapParmObj {
-  lat?: Number,
-  lng?: Number
-  type?: String
+  lat?: number,
+  lng?: number
+  type?: string
 }
 @Component({
   templateUrl: 'tabs.html'

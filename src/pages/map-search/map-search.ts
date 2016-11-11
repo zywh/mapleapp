@@ -49,18 +49,18 @@ export class MapSearchPage {
   public center;
   public markerArray = [];
   public htmlArray = [];
-  public mviewLoaded: Boolean = false;
+  public mviewLoaded: boolean = false;
   public htmlArrayPosition = 0;
-  public totalCount: Number; //Returned House
+  public totalCount: number; //Returned House
   public listAllHtml = ''; //hold houses on current map
   public isListShow: boolean = false;
   public markerType;
   public imgHost: String;
   //public listModal: ViewController;
   public listModal;
-  public defaultZoom: Number = 14;
+  public defaultZoom: number = 14;
   public _bounds;
-  public locateLock: Boolean = false; //lock location button if there is input popup
+  public locateLock: boolean = false; //lock location button if there is input popup
 
   public schoolList: Array<any>;
   public swiperOptions = {
