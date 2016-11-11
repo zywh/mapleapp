@@ -77,7 +77,7 @@ export interface houseInterface {
     num_kit?: number, // => 'Num Kit',
     kit_plus?: number, // => 'Kit Plus',
     level1?: string, // => 'Level1',
-    level1number?: string, // => 'Level1number',
+    level10?: string, // => 'Level1number',
     level11?: string, // => 'Level11',
     level12?: string, // => 'Level12',
     level2?: string, // => 'Level2',

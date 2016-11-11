@@ -234,7 +234,7 @@ export class MapSearchPage {
 
   ionViewDidEnter() {
 
-    if (!this.mapInitialised) {
+    if (!this.mapInitialised ) {
 
       let mapLoaded = this.initMap();
       let alert = this.alertc.create({
