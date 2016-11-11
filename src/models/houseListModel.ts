@@ -1,8 +1,8 @@
 import { UserData } from '../providers/user-data';
 
-export class houseShort {
+export interface houseShort {
     Src?: string;
-    ListDate: Date;
+    ListDate?: Date;
     Beds?: number;
     Baths?: number;
     Kitchen?: number;
@@ -23,12 +23,13 @@ export class houseShort {
     CdnCoverImg?: string;
     CdnCoverImgtn?: string;
     MemberOnlyImg?: string;
-    vowShowFlag?:  boolean;
-
+    vowShowFlag?: boolean;
 
 
 
 }
+
+
 
 export class houseListModel {
     public list?: Array<houseShort>;
@@ -77,64 +78,64 @@ export class houseListModel {
 
     }
 
-    
-    sort(sortType,sortOrder) {
+
+    sort(sortType, sortOrder) {
 
 
-       
-            if (sortType == 'Price') {
-                if (sortOrder == 0) {
-                    this.list.sort(function (a, b) {
-                        let an, bn;
-                        //an = parseFloat(a.Price);
-                        an= a.Price;
-                        bn= b.Price;
-                        //bn = parseFloat(b.Price);
-                        return an - bn;
 
-                    })
-                }
-                if (sortOrder == 1) {
-                    this.list.sort(function (a, b) {
-                        let an, bn;
-                        //an = parseFloat(a.Price);
-                        //bn = parseFloat(b.Price);
-                        an= a.Price;
-                        bn= b.Price;
-                        return bn - an;
-
-                    })
-                }
-
-            }
-
-            if (sortType == 'ListDate') {
+        if (sortType == 'Price') {
+            if (sortOrder == 0) {
                 this.list.sort(function (a, b) {
                     let an, bn;
-                    an = new Date(a.ListDate);
-                    bn = new Date(b.ListDate);
-                    return bn - an;
+                    //an = parseFloat(a.Price);
+                    an = a.Price;
+                    bn = b.Price;
+                    //bn = parseFloat(b.Price);
+                    return an - bn;
 
-                });
-
+                })
             }
-            if (sortType == 'Beds') {
+            if (sortOrder == 1) {
                 this.list.sort(function (a, b) {
                     let an, bn;
-                    //an = parseFloat(a.Beds);
-                    //bn = parseFloat(b.Beds);
-                    an = a.Beds;
-                    bn = b.Beds;
+                    //an = parseFloat(a.Price);
+                    //bn = parseFloat(b.Price);
+                    an = a.Price;
+                    bn = b.Price;
                     return bn - an;
 
-                });
-
+                })
             }
 
+        }
+
+        if (sortType == 'ListDate') {
+            this.list.sort(function (a, b) {
+                let an, bn;
+                an = new Date(a.ListDate);
+                bn = new Date(b.ListDate);
+                return bn - an;
+
+            });
+
+        }
+        if (sortType == 'Beds') {
+            this.list.sort(function (a, b) {
+                let an, bn;
+                //an = parseFloat(a.Beds);
+                //bn = parseFloat(b.Beds);
+                an = a.Beds;
+                bn = b.Beds;
+                return bn - an;
+
+            });
+
+        }
 
 
-        } 
 
-    
+    }
+
+
 
 }
