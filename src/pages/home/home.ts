@@ -12,6 +12,7 @@ import { ProfilePage } from '../profile/profile';
 import { AuthService } from '../../providers/auth/auth';
 import { HouseList } from '../../components/house-list/house-list';
 import { Search } from '../../components/search/search';
+import {houseListModel} from '../../models/houseListModel';
 
 @Component({
   templateUrl: 'home.html'
@@ -32,13 +33,14 @@ export class HomePage {
   public schoolItems;
   public homeSegment: string = "house1";
   public isAndroid: boolean = false;
-  public nearbyHouseList;
+  public nearbyHouseList: houseListModel;
   public recommendHouseList;
   public imgHost;
   public houseRestURL;
   public data;
   public listHouse: Boolean = false;
   public listFav: Boolean = true;
+  //public houseListM;
 
 
   constructor(
@@ -154,7 +156,9 @@ export class HomePage {
             this.imgHost = data.Data.imgHost;
             //this.nearbyHouseList = data.Data.HouseList;
             //this.nearbyHouseList = this.setVowMask(data.Data.HouseList);
-            this.nearbyHouseList = this.userData.setVowMask(data.Data.HouseList);
+            this.nearbyHouseList = new houseListModel(data.Data.HouseList,this.auth.authenticated());
+           // this.nearbyHouseList.setVowMask(this.auth.authenticated());
+            
             console.log(this.nearbyHouseList);
 
           }

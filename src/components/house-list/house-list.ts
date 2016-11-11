@@ -5,6 +5,7 @@ import { NavController, reorderArray, ModalController, Events } from 'ionic-angu
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { MapHouselist } from '../../pages/map-search/map-houselist';
+import {houseShort, houseListModel } from '../../models/houseListModel';
 import { AuthService } from '../../providers/auth/auth';
 
 @Component({
@@ -12,37 +13,51 @@ import { AuthService } from '../../providers/auth/auth';
   templateUrl: 'house-list.html'
 })
 export class HouseList {
-  @Input() houselist: any;
+  @Input() houselist: houseListModel;
+ // @Input() houselist: any;
   @Input() imgHost: String;
   @Input() fav: Boolean;
   @Input() isList: Boolean;
   private data;
   private nearbyHouseList;
+  public houseListM: houseListModel;
+  //public houselist: Array<houseShort>;
   public vowShow: Object;
   constructor(
     private userData: UserData,
     private mapleConf: MapleConf,
     private mapleRestData: MapleRestData,
     private modalc: ModalController,
+    //public houseListM: houseListModel,
     private events: Events,
     public auth: AuthService,
     private nav: NavController
   ) {
-
+   
     this.listenEvents();
+    //this.houseListM = new houseListModel; 
 
   }
 
 
+  ngInit(){
+   // this.houseListM.setList(this.houselist);
+  }
 
   listenEvents() {
     this.events.subscribe('user:login', () => {
-      this.houselist = this.userData.setVowMask(this.houselist);
+          console.log("House-list login event");
+          this.houselist.setVowMask(true);
+      //console.log(this.houselist);
+     
 
     });
 
     this.events.subscribe('user:logout', () => {
-       this.houselist = this.userData.setVowMask(this.houselist);
+            console.log("House-list logout event");
+      this.houselist.setVowMask(false);
+     // console.log(this.houselist);
+      
     });
   }
 
@@ -108,16 +123,7 @@ export class HouseList {
     this.events.publish('map:center', { lat: lat, lng: lng, type: 'HOUSE' });
   }
 
-  remove(mls) {
-    this.userData.changeFavorite(mls, 'houseFav', 'd').then(res => {
-      console.log("Remove MLS Result:" + res);
-      this.houselist = this.houselist.filter(function (obj) {
-        return obj.MLS !== mls;
-      });
-    });
-
-
-  }
+  
 
 
 }

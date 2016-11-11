@@ -332,7 +332,7 @@ export class UserData {
 
   }
 
-  
+  /*
   setVowMask(list) {
 
     for (var i = 0; i < list.length; i++) {
@@ -346,6 +346,7 @@ export class UserData {
     return list;
 
   }
+  */
  
   login(username) {
     this.storage.set(this.HAS_LOGGED_IN, true);

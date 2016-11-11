@@ -17,6 +17,8 @@ import { SchoolListModal } from '../school-map/school-list-modal';
 //import {HousePopover} from './house-popover';
 import { AuthService } from '../../providers/auth/auth';
 import { UserData } from '../../providers/user-data';
+import {houseListModel} from '../../models/houseListModel';
+
 
 declare var RichMarker: any;
 declare var google;
@@ -74,7 +76,7 @@ export class MapSearchPage {
   public selectOptions;
   public optionPage;
   public savedOptions;
-  public currentHouseList; //Hold list of all houses on current map
+  public currentHouseList : houseListModel; //Hold list of all houses on current map
   public currentHouses; //Hold array of houses for single marker
   public currentDiv;
   public mapType: Number = 1; // 0 for house and 1 for school
@@ -317,7 +319,7 @@ export class MapSearchPage {
 
 
   gotoHouseDetail(mls) {
-    this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList });
+    this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList.list });
   }
 
   openList(ev) {
@@ -486,7 +488,7 @@ export class MapSearchPage {
                 //this.nav.pop();
                 alert.dismiss();
                 if( vowflag){
-                    this.nav.push(HouseDetailPage, { id: house.MLS, list: this.currentHouseList });
+                    this.nav.push(HouseDetailPage, { id: house.MLS, list: this.currentHouseList.list });
                 }else {
                   this.userData.loginAlert();
                 }
@@ -746,7 +748,8 @@ export class MapSearchPage {
       let nextLat;
       let nextLng;
       let listAllHtml;
-      this.currentHouseList = this.userData.setVowMask(data.Data.HouseList);
+      //this.currentHouseList = this.userData.setVowMask(data.Data.HouseList);
+      this.currentHouseList = new houseListModel(data.Data.HouseList,this.auth.authenticated());
       let panelhtml;
       // console.log("Current House List Length:" + this.currentHouseList.length);
 
