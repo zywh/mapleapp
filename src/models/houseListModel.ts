@@ -61,7 +61,11 @@ export class houseListModel {
     }
 
     setList(l) {
-        this.list = l;
+        let vowl = this.setVowMask(l);
+        console.log("Old List" + this.list.length);
+        this.list = this.list.concat(vowl);
+        console.log("New List" + this.list.length);
+        console.log(this.list);
     }
 
 

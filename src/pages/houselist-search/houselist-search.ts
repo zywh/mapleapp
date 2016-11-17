@@ -7,7 +7,7 @@ import { SelectOptionModal } from '../map-search/map-option-modal';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 import { AuthService } from '../../providers/auth/auth';
 import { HouseList } from '../../components/house-list/house-list';
-import { houseListModel } from '../../models/houseListModel';
+import { houseListModel, houseShort } from '../../models/houseListModel';
 
 
 @Component({
@@ -26,6 +26,7 @@ export class HouselistSearch {
     public sortType: string = 'Price';
     public sortOrder: number = 0;
     public listType: string;
+    private houses: Array<houseShort> = [];
     public currentHouseList: houseListModel; //Hold list of all houses on current map
 
     constructor(
@@ -50,6 +51,8 @@ export class HouselistSearch {
         this.listType = parms.data.listType;
         this.listenEvents();
 
+
+
     }
     listenEvents() {
 
@@ -58,19 +61,13 @@ export class HouselistSearch {
         });
 
 
-
-
     }
 
-
-    //first time view is entered. add listener
     ionViewWillEnter() {
 
         if (this.listType == 'grid') {
             this.getHouseList();
         } else {
-
-            //this.totalCount = this.currentHouseList.length;
             this.totalCount = this.currentHouseList.listNumber();
         }
 
@@ -187,6 +184,9 @@ export class HouselistSearch {
                 infiniteScroll.complete();
             }
         }, 500);
+
+
+
     }
 
     toggleView() {
@@ -201,7 +201,7 @@ export class HouselistSearch {
     getHouseList() {
 
         console.log(this.sortType);
-        let HouseArray = [];
+        //let HouseArray = [];
         let searchParms = {
             bounds: this.bounds,
             pageindex: this.pageIndex,
@@ -225,18 +225,17 @@ export class HouselistSearch {
                     //loading.dismiss();
                     this.totalCount = data.Data.Total;
                     this.pageTotal = Math.ceil(this.totalCount / 8);
-                    let houses = [];
+                    this.houses = this.houses.concat(data.Data.HouseList);
                     let totalprice = 0;
                     let totalhouse = data.Data.HouseList.length;
                     this.imgHost = data.Data.imgHost;
                     // this.currentHouseList = this.userData.setVowMask(data.Data.HouseList);
-                    this.currentHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
+                    //this.currentHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
+                    this.currentHouseList = new houseListModel(this.houses, this.auth.authenticated());
 
                 });
 
-
         })
-
 
     }
 
