@@ -64,7 +64,7 @@ export class HouseList {
   gotoHouseDetail(mls, flag) {
 
     if (flag) {
-      this.nav.push(HouseDetailPage, { id: mls, list: this.houselist });
+      this.nav.push(HouseDetailPage, { id: mls, list: this.houselist.list });
     } else {
       this.userData.loginAlert();
     }

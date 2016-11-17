@@ -10,11 +10,13 @@ export class MapleConf {
   data: any;
   location;
   public restHost: string = 'http://r.maplecity.com.cn/';
-  //public restHost: String = 'http://104.196.201.210/';
+ // public restHost: String = 'http://104.196.201.210/';
+  //public restHost: String = 'http://cdnr.citym.ca/';
   
-  //private confJson = "mapleconf.json"; //production
+  
+  //private confJson = "mapleconf2.json"; //production
   private confJson = "mapleconf_dev.json"; //development
-  private localVersion: string = '1.0.0';
+  private localVersion: string = '0.0.9';
 
   constructor(private http: Http, private platform: Platform) {
 

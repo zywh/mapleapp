@@ -37,7 +37,7 @@ export class HouseDetailPage {
 	public cdn_photos: Array<string>;
 	public exchangeRate: number;
 	public username: string;
-	
+
 	/*
 	public house: houseInterface = {
 				id: '',  // => 'ID',
@@ -437,8 +437,8 @@ export class HouseDetailPage {
 		rm3_dc3_out: '', // => 'Rm3 Dc3 Out',
 		acres: '', // => 'Acres',
 		apt_num: '',
- 		orig_dol: '',
-		oh_date1: '', 
+		orig_dol: '',
+		oh_date1: '',
 		oh_date2: '',
 		oh_date3: '',
 		oh_from1: '',
@@ -447,7 +447,7 @@ export class HouseDetailPage {
 		oh_to1: '',
 		oh_to2: '',
 		oh_to3: '',
- 		pic_num: ''
+		pic_num: ''
 	};
 
 	public rx_phone: string;
@@ -607,6 +607,19 @@ export class HouseDetailPage {
 
 
 
+
+	}
+
+	swipeEvent(e) {
+		if (e.direction == 2) {
+			//direction 2 = right to left swipe.
+			console.log("Swipe event right to left");
+			this.go2NextHouse();
+
+		} else if (e.direction == 4) {
+			console.log("Swipe event left to right");
+			this.go2PrevHouse();
+		}
 
 	}
 
