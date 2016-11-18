@@ -8,7 +8,7 @@ import { UserData } from '../../providers/user-data';
 import { HouseCityStatsPage } from '../../pages/house-city-stats/house-city-stats';
 import { AuthService } from '../../providers/auth/auth';
 import { ShareService } from '../../providers/share';
-//import { houseInterface, houseModel } from '../../models/houseModel'
+import { houseInterface, houseModel } from '../../models/houseModel'
 declare var google: any;
 
 /*
@@ -38,215 +38,14 @@ export class HouseDetailPage {
 	public exchangeRate: number;
 	public username: string;
 
+	public houseM = new houseModel;
+	public house: houseInterface ;
+
+	
+
+
+
 	/*
-	public house: houseInterface = {
-				id: '',  // => 'ID',
-		name: '', // => '名称',
-		prepay: '', // => '首付',
-		total_price: '', // => '总价',
-		subject_id: '', // => '所属项目',
-		accessDate: '', // => '挂牌时间',
-		location: '', // => '地址',
-		introduction: '', // => '描述',
-		house_image: '', // => '房源图片',
-		image_list: '', // => '组图',
-		video_url: '', // => '房源视频路径',
-		author: '', // => '作者',
-		recommend: '', // => '是否推荐',
-		city_id: 0, // => '城市',
-		district_id: '', // => '地区',
-		community: '', // => '社区',
-		investType_id: 0, // => '投资类型',
-		propertyType_id: '', // => '物业类型',
-		land_area: 0, // => '土地面积',
-		house_area: 0, // => '房屋面积',
-		floor_num: '', // => '房屋层数',
-		house_style: '', // => '房屋层数',
-		bedroom_num: '', // => '卧室数量',
-		toilet_num: '', // => '卫生间数量',
-		kitchen_num: '', // => '厨房数量',
-		park_num: '', // => '停车位数量',
-		house_size: '', // => '房屋规格',
-		door_direction: '', // => '大门朝向',
-		construction_year: '', // => '建造年份',
-		zipcode: '', // => '邮编',
-		certificate: '', // => '认证房源',
-		lift: '', // => '电梯',
-		carport: '', // => '车库',
-		embassy: '', // => '会客厅',
-		mls_code: '', // => 'MLS编号',
-		facilities: '', // => '附近设施',
-		longitude: 0, // => '经度',
-		latitude: 0, // => '纬度',
-		match: '', // => '配套设施',
-		is_sell: '', // => '是否售卖',
-		a_c: '', // => '是否中央空调',
-		central_vac: '', // => '是否中央吸尘',
-		gar_space: '', // => '是否配套家具',
-		basement: '', // => '是否地下室',
-		pool: '', // => '是否游泳池',
-		fireplace_stove: '', // => '是否壁炉',
-		taxes: '', // => '地税',
-		tax_year: '', // => '地税年度',
-		cross_streets: '', // => '交叉路口',
-		heat: '', // => '暖气',
-		mls_province: '', // => 'mls省份',
-		mls_area: '', // => 'mls地区',
-		mls_area_code: '', // => 'mls地区code',
-		mls_municipality: '', // => 'mls城市',
-		mls_municp_code: '', // => 'mls城市code',
-		yr_built: '', // => 'Yr Built',
-		sqft: '', // => 'Sqft',
-		area: '', // => 'Area',
-		area_code: '', // => 'Area Code',
-		bsmt1_out: '', // => 'Bsmt1 Out',
-		bsmt2_out: '', // => 'Bsmt2 Out',
-		br: 0, // => 'Br',
-		br_plus: 0, // => 'Br Plus',
-		community_c: '', // => 'Community C',
-		cross_st: '', // => 'Cross St',
-		elevator: '', // => 'Elevator',
-		constr1_out: '', // => 'Constr1 Out',
-		constr2_out: '', // => 'Constr2 Out',
-		extras: '', // => 'Extras',
-		fpl_num: '', // => 'Fpl Num',
-		comp_pts: '', // => 'Comp Pts',
-		furnished: '', // => 'Furnished',
-		fuel: '', // => 'Fuel',
-		heating: '', // => 'Heating',
-		num_kit: 0, // => 'Num Kit',
-		kit_plus: 0, // => 'Kit Plus',
-		level1: '', // => 'Level1',
-		level10: '', // => 'Level10',
-		level11: '', // => 'Level11',
-		level12: '', // => 'Level12',
-		level2: '', // => 'Level2',
-		level3: '', // => 'Level3',
-		level4: '', // => 'Level4',
-		level5: '', // => 'Level5',
-		level6: '', // => 'Level6',
-		level7: '', // => 'Level7',
-		level8: '', // => 'Level8',
-		level9: '', // => 'Level9',
-		lp_dol: 0, // => 'Lp Dol',
-		depth: '', // => 'Depth',
-		front_ft: '', // => 'Front Ft',
-		lotsz_code: '', // => 'Lotsz Code',
-		ml_num: '', // => 'Ml Num',
-		municipality: '', // => 'Municipality',
-		municipality_code: '', // => 'Municipality Code',
-		pix_updt: '', // => 'Pix Updt',
-		zip: '', // => 'Zip',
-		prop_feat1_out: '', // => 'Prop Feat1 Out',
-		prop_feat2_out: '', // => 'Prop Feat2 Out',
-		prop_feat3_out: '', // => 'Prop Feat3 Out',
-		prop_feat4_out: '', // => 'Prop Feat4 Out',
-		prop_feat5_out: '', // => 'Prop Feat5 Out',
-		prop_feat6_out: '', // => 'Prop Feat6 Out',
-		county: '', // => 'County',
-		ad_text: '', // => 'Ad Text',
-		rm1_out: '', // => 'Rm1 Out',
-		rm1_dc1_out: '', // => 'Rm1 Dc1 Out',
-		rm1_dc2_out: '', // => 'Rm1 Dc2 Out',
-		rm1_dc3_out: '', // => 'Rm1 Dc3 Out',
-		rm1_len: '', // => 'Rm1 Len',
-		rm1_wth: '', // => 'Rm1 Wth',
-		rm10_out: '', // => 'Rm10 Out',
-		rm10_dc1_out: '', // => 'Rm10 Dc1 Out',
-		rm10_dc2_out: '', // => 'Rm10 Dc2 Out',
-		rm10_dc3_out: '', // => 'Rm10 Dc3 Out',
-		rm10_wth: '', // => 'Rm10 Wth',
-		rm11_out: '', // => 'Rm11 Out',
-		rm11_dc1_out: '', // => 'Rm11 Dc1 Out',
-		rm11_dc2_out: '', // => 'Rm11 Dc2 Out',
-		rm11_dc3_out: '', // => 'Rm11 Dc3 Out',
-		rm10_len: '', // => 'Rm10 Len',
-		rm11_len: '', // => 'Rm11 Len',
-		rm11_wth: '', // => 'Rm11 Wth',
-		rm12_out: '', // => 'Rm12 Out',
-		rm12_dc1_out: '', // => 'Rm12 Dc1 Out',
-		rm12_dc3_out: '', // => 'Rm12 Dc3 Out',
-		rm12_len: '', // => 'Rm12 Len',
-		rm12_wth: '', // => 'Rm12 Wth',
-		rm2_out: '', // => 'Rm2 Out',
-		rm2_dc1_out: '', // => 'Rm2 Dc1 Out',
-		rm2_dc2_out: '', // => 'Rm2 Dc2 Out',
-		rm2_dc3_out: '', // => 'Rm2 Dc3 Out',
-		rm2_len: '', // => 'Rm2 Len',
-		rm2_wth: '', // => 'Rm2 Wth',
-		rm3_out: '', // => 'Rm3 Out',
-		rm3_dc1_out: '', // => 'Rm3 Dc1 Out',
-		rm3_dc2_out: '', // => 'Rm3 Dc2 Out',
-		rm3_len: '', // => 'Rm3 Len',
-		rm3_wth: '', // => 'Rm3 Wth',
-		rm4_out: '', // => 'Rm4 Out',
-		rm4_dc1_out: '', // => 'Rm4 Dc1 Out',
-		rm4_dc2_out: '', // => 'Rm4 Dc2 Out',
-		rm4_dc3_out: '', // => 'Rm4 Dc3 Out',
-		rm4_len: '', // => 'Rm4 Len',
-		rm4_wth: '', // => 'Rm4 Wth',
-		rm5_out: '', // => 'Rm5 Out',
-		rm5_dc1_out: '', // => 'Rm5 Dc1 Out',
-		rm5_dc2_out: '', // => 'Rm5 Dc2 Out',
-		rm5_dc3_out: '', // => 'Rm5 Dc3 Out',
-		rm5_len: '', // => 'Rm5 Len',
-		rm5_wth: '', // => 'Rm5 Wth',
-		rm6_out: '', // => 'Rm6 Out',
-		rm6_dc1_out: '', // => 'Rm6 Dc1 Out',
-		rm6_dc2_out: '', // => 'Rm6 Dc2 Out',
-		rm6_dc3_out: '', // => 'Rm6 Dc3 Out',
-		rm6_len: '', // => 'Rm6 Len',
-		rm6_wth: '', // => 'Rm6 Wth',
-		rm7_out: '', // => 'Rm7 Out',
-		rm7_dc1_out: '', // => 'Rm7 Dc1 Out',
-		rm7_dc2_out: '', // => 'Rm7 Dc2 Out',
-		rm7_dc3_out: '', // => 'Rm7 Dc3 Out',
-		rm7_len: '', // => 'Rm7 Len',
-		rm7_wth: '', // => 'Rm7 Wth',
-		rm8_out: '', // => 'Rm8 Out',
-		rm8_dc1_out: '', // => 'Rm8 Dc1 Out',
-		rm8_dc2_out: '', // => 'Rm8 Dc2 Out',
-		rm8_dc3_out: '', // => 'Rm8 Dc3 Out',
-		rm8_len: '', // => 'Rm8 Len',
-		rm8_wth: '', // => 'Rm8 Wth',
-		rm9_out: '', // => 'Rm9 Out',
-		rm9_dc1_out: '', // => 'Rm9 Dc1 Out',
-		rm9_dc2_out: '', // => 'Rm9 Dc2 Out',
-		rm9_dc3_out: '', // => 'Rm9 Dc3 Out',
-		rm9_len: '', // => 'Rm9 Len',
-		rm9_wth: '', // => 'Rm9 Wth',
-		rms: 0, // => 'Rms',
-		rooms_plus: 0, // => 'Rooms Plus',
-		s_r: '', // => 'S R',
-		style: '', // => 'Style',
-		yr: '', // => 'Yr',
-		type_own1_out: '', // => 'Type Own1 Out',
-		tour_url: '', // => 'Tour Url',
-		bath_tot: '', // => 'Bath Tot',
-		addr: '', // => 'Addr',
-		community_code: '', // => 'Community Code',
-		rm12_dc2_out: '', // => 'Rm12 Dc2 Out',
-		rm3_dc3_out: '', // => 'Rm3 Dc3 Out',
-		acres: '', // => 'Acres',
-		apt_num: '',
- 		orig_dol: 0,
-		oh_date1: '', 
-		oh_date2: '',
-		oh_date3: '',
-		oh_from1: '',
-		oh_from2: '',
-		oh_from3: '',
-		oh_to1: '',
-		oh_to2: '',
-		oh_to3: '',
- 		pic_num: 0
-	};
-
-	*/
-
-
-
-
 	public house = {
 		id: '',  // => 'ID',
 		name: '', // => '名称',
@@ -449,6 +248,7 @@ export class HouseDetailPage {
 		oh_to3: '',
 		pic_num: ''
 	};
+	*/
 
 	public rx_phone: string;
 	public COMP_PTS = { "N": "北", "S": "南", "W": "西", "E": "东" };
@@ -476,6 +276,8 @@ export class HouseDetailPage {
 		console.log(navParams);
 		this.parms = navParams.data;
 		this.listenEvents();
+		this.house = this.houseM.house;
+		//this.houseM = new houseModel;
 		//this.username = this.auth.user['email'];//testing user
 		//this.isAndroid = platform.is('android');
 
@@ -513,7 +315,7 @@ export class HouseDetailPage {
 
 	initMap() {
 
-		let point = new google.maps.LatLng(this.house.latitude, this.house.longitude);
+		let point = new google.maps.LatLng(this.houseM.house.latitude, this.houseM.house.longitude);
 		let mapOptions = {
 			//center: latLng,
 			center: point,
@@ -530,6 +332,10 @@ export class HouseDetailPage {
 		});
 
 
+	}
+
+	similar(){
+		//this.houseM.house.lp_dol = '';
 	}
 
 	more() {
@@ -588,8 +394,8 @@ export class HouseDetailPage {
 
 	fav(type) {
 		//type = 0 for houseFav and 1 for RouteFav
-		this.userData.favWrapper(this.house.ml_num, type).then(res => {
-			console.log(this.house.ml_num + "Return:" + res);
+		this.userData.favWrapper(this.houseM.house.ml_num, type).then(res => {
+			console.log(this.houseM.house.ml_num + "Return:" + res);
 			switch (res) {
 				case 'C': //mls doesn't exist .Add MLS into fav'
 					if (type == 'houseFav') { this.isFav.houseFav = true; }
@@ -631,17 +437,20 @@ export class HouseDetailPage {
 			data => {
 				//console.log(data);
 				this.rx_phone = this.mapleConf.data.phone;
-				this.house = data.house;
-				console.log(this.house);
+				//this.house = data.house;
+				//this.house = data.house;
+				this.houseM.house = data.house;
+				//console.log("Class House is changed");
+				//console.log(this.houseM.house);
 				this.house_mname = data.house_mname;
 				this.house_propertyType = data.house_propertyType;
 				this.exchangeRate = data.exchangeRate;
 				this.photos = data.photos;
 				this.cdn_photos = data.cdn_photos;
-				this.houseRooms(this.house);
+				this.houseRooms(this.houseM.house);
 				this.isFav = data.isFav; //check if houseFav and routeFav
 				this.setHouseList();
-				console.log(this.isFav);
+				//console.log(this.isFav);
 				//console.log(this.slider); 
 				this.slider.slideTo(0);
 				this.initMap();
@@ -692,7 +501,7 @@ export class HouseDetailPage {
 
 	getPriceTxt(price) {
 		let priceTxt;
-		if (this.house.s_r == "Sale")
+		if (this.houseM.house.s_r == "Sale")
 			priceTxt = Number(price) / 10000 + "万加币";
 		else
 			priceTxt = price + "加元/月";
@@ -704,18 +513,18 @@ export class HouseDetailPage {
 	}
 
 	getPropertyTxt() {
-		let propertyTxt = this.house.prop_feat1_out;
+		let propertyTxt = this.houseM.house.prop_feat1_out;
 
-		if (this.house.prop_feat2_out)
-			propertyTxt = propertyTxt + " , " + this.house.prop_feat2_out;
-		if (this.house.prop_feat3_out)
-			propertyTxt = propertyTxt + " , " + this.house.prop_feat3_out;
-		if (this.house.prop_feat4_out)
-			propertyTxt = propertyTxt + " , " + this.house.prop_feat4_out;
-		if (this.house.prop_feat5_out)
-			propertyTxt = propertyTxt + " , " + this.house.prop_feat5_out;
-		if (this.house.prop_feat6_out)
-			propertyTxt = propertyTxt + " , " + this.house.prop_feat6_out;
+		if (this.houseM.house.prop_feat2_out)
+			propertyTxt = propertyTxt + " , " + this.houseM.house.prop_feat2_out;
+		if (this.houseM.house.prop_feat3_out)
+			propertyTxt = propertyTxt + " , " + this.houseM.house.prop_feat3_out;
+		if (this.houseM.house.prop_feat4_out)
+			propertyTxt = propertyTxt + " , " + this.houseM.house.prop_feat4_out;
+		if (this.houseM.house.prop_feat5_out)
+			propertyTxt = propertyTxt + " , " + this.houseM.house.prop_feat5_out;
+		if (this.houseM.house.prop_feat6_out)
+			propertyTxt = propertyTxt + " , " + this.houseM.house.prop_feat6_out;
 
 		return propertyTxt;
 	}
@@ -731,14 +540,14 @@ export class HouseDetailPage {
 
 	getLandArea() {
 		if (this.switchF2M)
-			return this.round2(this.house.land_area * 0.09290304) + this.F2M.smeter;
+			return this.round2(this.houseM.house.land_area * 0.09290304) + this.F2M.smeter;
 		else
-			return this.house.land_area + this.F2M.sfeet;
+			return this.houseM.house.land_area + this.F2M.sfeet;
 	}
 
 	getAddr() {
-		let txt = this.house.addr;
-		if (this.house.apt_num) txt = this.house.apt_num + '-' + this.house.addr;
+		let txt = this.houseM.house.addr;
+		if (this.houseM.house.apt_num) txt = this.houseM.house.apt_num + '-' + this.houseM.house.addr;
 		return txt;
 	}
 
@@ -756,24 +565,24 @@ export class HouseDetailPage {
 	}
 
 	gotoCityStats() {
-		this.nav.push(HouseCityStatsPage, this.house.municipality);
+		this.nav.push(HouseCityStatsPage, this.houseM.house.municipality);
 	}
 	gotoSchool() {
 		//this.nav.push(SchoolSearchPage);
 		let navTransition = this.nav.pop();
 		navTransition.then(() => {
-			//let center = new google.maps.LatLng(this.house.latitude, this.house.longitude);
+			//let center = new google.maps.LatLng(this.houseM.house.latitude, this.houseM.house.longitude);
 			//this.events.publish('schoolmap:center', center);
-			this.events.publish('schoolmap:center', { lat: this.house.latitude, lng: this.house.longitude, type: 'HOUSE' });
+			this.events.publish('schoolmap:center', { lat: this.houseM.house.latitude, lng: this.houseM.house.longitude, type: 'HOUSE' });
 		}
 		)
 
 	}
 
 	gotoVideo() {
-		if (this.house.tour_url) window.open(this.house.tour_url, "_blank");
+		if (this.houseM.house.tour_url) window.open(this.houseM.house.tour_url, "_blank");
 		/*this.platform.ready().then(() => {
-				if (this.house.tour_url) cordova.InAppBrowser.open(this.house.tour_url, "_system", "location=true");
+				if (this.houseM.house.tour_url) cordova.InAppBrowser.open(this.houseM.house.tour_url, "_system", "location=true");
 		})*/
 	}
 
@@ -796,13 +605,13 @@ export class HouseDetailPage {
 	}
 
 	mapDirection() {
-		this.mapleConf.mapDirection(this.house.latitude, this.house.longitude)
+		this.mapleConf.mapDirection(this.houseM.house.latitude, this.houseM.house.longitude)
 	}
 
 	share() {
 
 		let subject = "枫之都房产：" + this.parms.id;
-		let message = this.getPriceTxt(this.house.lp_dol) + " - " + this.getAddr() + " " + this.house.municipality;
+		let message = this.getPriceTxt(this.houseM.house.lp_dol) + " - " + this.getAddr() + " " + this.houseM.house.municipality;
 		let img = this.cdn_photos[0];
 		//let link = "http://m.maplecity.com.cn/index.php?r=mhouse/view&id=" + this.parms.id;
 		let link = this.mapleConf.data.mcihost + "/#/housedetail/" + this.parms.id;
