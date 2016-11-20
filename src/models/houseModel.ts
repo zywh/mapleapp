@@ -23,8 +23,8 @@ export interface houseInterface {
     floor_num?: string, // => '房屋层数',
     house_style?: string, // => '房屋层数',
     bedroom_num?: string, // => '卧室数量',
-    toilet_num?: string, // => '卫生间数量',
-    kitchen_num?: string, // => '厨房数量',
+    toilet_num?: number, // => '卫生间数量',
+    kitchen_num?: number, // => '厨房数量',
     park_num?: string, // => '停车位数量',
     house_size?: string, // => '房屋规格',
     door_direction?: string, // => '大门朝向',
@@ -229,8 +229,8 @@ export class houseModel {
         floor_num: '', // => '房屋层数',
         house_style: '', // => '房屋层数',
         bedroom_num: '', // => '卧室数量',
-        toilet_num: '', // => '卫生间数量',
-        kitchen_num: '', // => '厨房数量',
+        toilet_num: 0, // => '卫生间数量',
+        kitchen_num: 0, // => '厨房数量',
         park_num: '', // => '停车位数量',
         house_size: '', // => '房屋规格',
         door_direction: '', // => '大门朝向',
@@ -411,20 +411,56 @@ export class houseModel {
     public COMP_PTS = { "N": "北", "S": "南", "W": "西", "E": "东" };
     public S_R = { "Sale": "出售", "Lease": "出租" };
     public F2M = { feet: "尺", meter: "米", sfeet: "平方英尺", smeter: "平方米" };
-    public rooms;
-    public rx_phone;
-    public house_mname;
+    public rooms = [];
+    public rxPhone;
+    //private auth: boolean
+    public houseMname;
     public exchangeRate;
     public cdnPhotos: Array<string>;
-    public house_propertyType;
+    public housePropertyType;
+    public landArea: string;
+    public propertyTxt: string;
+    public addr: string;
+    public priceCurrent: string;
+    public priceOrig: string;
+    public priceRMB;
+    public kit;
+    public beds;
+    public rms;
+    public listDate;
     //public isFav;
 
     constructor() {
 
     }
+    setProperties(auth: boolean,fzm: boolean){
+         
+        this.getLandArea(fzm);
+        this.houseRooms(fzm);
+        this.getAddr();
+        //this.getPriceTxt(this.house.)
+        this.priceCurrent =this.getPriceTxt(this.house.lp_dol);
+        this.priceOrig = this.getPriceTxt(this.house.orig_dol);
+        this.kit = this.add2(this.house.num_kit,this.house.kit_plus);
+        this.beds = this.add2(this.house.br,this.house.br_plus);
+        this.rms = this.add2(this.house.rms,this.house.rooms_plus);
+        this.priceRMB = this.getPriceRMB(this.house.lp_dol);
+        this.getListDays();
+        this.getPropertyTxt();
+        
+    }
 
+
+  getListDays() { // yyyy-mm-dd
+    let date1:any = new Date(this.house.pix_updt);
+    let date2:any = new Date();
+    let diffdays = Math.floor((date2 - date1) / (1000*60*60*24));
+    this.listDate = diffdays + "天";
+    return diffdays + "天";
+  }
 
     add2(int1, int2) {
+        
         return parseInt(int1, 10) + parseInt(int2, 10);
     }
 
@@ -438,38 +474,43 @@ export class houseModel {
 
 
     houseRooms(s: boolean) {
+
         if (s == true) {  //meter
-            this.rooms[0] = { level: this.house.level1, out: this.house.rm1_out, len: this.house.rm1_len, wth: this.house.rm1_wth, area: this.round1(this.house.rm1_len * this.house.rm1_wth), desc: this.getRoomDesc(this.house.rm1_dc1_out, this.house.rm1_dc2_out, this.house.rm1_dc3_out) };
-            this.rooms[1] = { level: this.house.level2, out: this.house.rm2_out, len: this.house.rm2_len, wth: this.house.rm2_wth, area: this.round1(this.house.rm2_len * this.house.rm2_wth), desc: this.getRoomDesc(this.house.rm2_dc1_out, this.house.rm2_dc2_out, this.house.rm2_dc3_out) };
-            this.rooms[2] = { level: this.house.level3, out: this.house.rm3_out, len: this.house.rm3_len, wth: this.house.rm3_wth, area: this.round1(this.house.rm3_len * this.house.rm3_wth), desc: this.getRoomDesc(this.house.rm3_dc1_out, this.house.rm3_dc2_out, this.house.rm3_dc3_out) };
-            this.rooms[3] = { level: this.house.level4, out: this.house.rm4_out, len: this.house.rm4_len, wth: this.house.rm4_wth, area: this.round1(this.house.rm4_len * this.house.rm4_wth), desc: this.getRoomDesc(this.house.rm4_dc1_out, this.house.rm4_dc2_out, this.house.rm4_dc3_out) };
-            this.rooms[4] = { level: this.house.level5, out: this.house.rm5_out, len: this.house.rm5_len, wth: this.house.rm5_wth, area: this.round1(this.house.rm5_len * this.house.rm5_wth), desc: this.getRoomDesc(this.house.rm5_dc1_out, this.house.rm5_dc2_out, this.house.rm5_dc3_out) };
-            this.rooms[5] = { level: this.house.level6, out: this.house.rm6_out, len: this.house.rm6_len, wth: this.house.rm6_wth, area: this.round1(this.house.rm6_len * this.house.rm6_wth), desc: this.getRoomDesc(this.house.rm6_dc1_out, this.house.rm6_dc2_out, this.house.rm6_dc3_out) };
-            this.rooms[6] = { level: this.house.level7, out: this.house.rm7_out, len: this.house.rm7_len, wth: this.house.rm7_wth, area: this.round1(this.house.rm7_len * this.house.rm7_wth), desc: this.getRoomDesc(this.house.rm7_dc1_out, this.house.rm7_dc2_out, this.house.rm7_dc3_out) };
-            this.rooms[7] = { level: this.house.level8, out: this.house.rm8_out, len: this.house.rm8_len, wth: this.house.rm8_wth, area: this.round1(this.house.rm8_len * this.house.rm8_wth), desc: this.getRoomDesc(this.house.rm8_dc1_out, this.house.rm8_dc2_out, this.house.rm8_dc3_out) };
-            this.rooms[8] = { level: this.house.level9, out: this.house.rm9_out, len: this.house.rm9_len, wth: this.house.rm9_wth, area: this.round1(this.house.rm9_len * this.house.rm9_wth), desc: this.getRoomDesc(this.house.rm9_dc1_out, this.house.rm9_dc2_out, this.house.rm9_dc3_out) };
-            this.rooms[9] = { level: this.house.level10, out: this.house.rm10_out, len: this.house.rm10_len, wth: this.house.rm10_wth, area: this.round1(this.house.rm10_len * this.house.rm10_wth), desc: this.getRoomDesc(this.house.rm10_dc1_out, this.house.rm10_dc2_out, this.house.rm10_dc3_out) };
-            this.rooms[10] = { level: this.house.level11, out: this.house.rm11_out, len: this.house.rm11_len, wth: this.house.rm11_wth, area: this.round1(this.house.rm11_len * this.house.rm11_wth), desc: this.getRoomDesc(this.house.rm11_dc1_out, this.house.rm11_dc2_out, this.house.rm11_dc3_out) };
-            this.rooms[11] = { level: this.house.level12, out: this.house.rm12_out, len: this.house.rm12_len, wth: this.house.rm12_wth, area: this.round1(this.house.rm12_len * this.house.rm12_wth), desc: this.getRoomDesc(this.house.rm12_dc1_out, this.house.rm12_dc2_out, this.house.rm12_dc3_out) };
+
+            this.rooms = [];
+            for (let i = 1; i < 12; i++) {
+                let o = {
+                    level: this.house["level" + i],
+                    out: this.house['rm' + i + '_out'],
+                    len: this.house['rm' + i + '_len'],
+                    wth: this.house['rm' + i + '_wth'],
+                    area: this.round1(this.house['rm' + i + '_len'] * this.house['rm' + i + '_wth']),
+                    desc: this.getRoomDesc(this.house['rm' + i + '_dc1_out'], this.house['rm' + i + '_dc2_out'], this.house['rm' + i + '_dc3_out'])
+                };
+
+                this.rooms.push(o);
+            }
 
 
         } else {  //feet
+            this.rooms = [];
+            for (let i = 1; i < 12; i++) {
+                let o = {
+                    level: this.house["level" + i],
+                    out: this.house['rm' + i + '_out'],
+                    len: this.round1(this.house['rm' + i + '_len']*3.3),
+                    wth: this.round1(this.house['rm' + i + '_wth']*3.3),
+                    area: this.round1(this.round1(this.house['rm' + i + '_len'] * this.house['rm' + i + '_wth']) * 3.3 *3.3),
+                    desc: this.getRoomDesc(this.house['rm' + i + '_dc1_out'], this.house['rm' + i + '_dc2_out'], this.house['rm' + i + '_dc3_out'])
+                };
 
+                this.rooms.push(o);
+            }
 
-
-            this.rooms[0] = { level: this.house.level1, out: this.house.rm1_out, len: this.house.rm1_len, wth: this.house.rm1_wth, area: this.round1(this.house.rm1_len * this.house.rm1_wth), desc: this.getRoomDesc(this.house.rm1_dc1_out, this.house.rm1_dc2_out, this.house.rm1_dc3_out) };
-            this.rooms[1] = { level: this.house.level2, out: this.house.rm2_out, len: this.house.rm2_len, wth: this.house.rm2_wth, area: this.round1(this.house.rm2_len * this.house.rm2_wth), desc: this.getRoomDesc(this.house.rm2_dc1_out, this.house.rm2_dc2_out, this.house.rm2_dc3_out) };
-            this.rooms[2] = { level: this.house.level3, out: this.house.rm3_out, len: this.house.rm3_len, wth: this.house.rm3_wth, area: this.round1(this.house.rm3_len * this.house.rm3_wth), desc: this.getRoomDesc(this.house.rm3_dc1_out, this.house.rm3_dc2_out, this.house.rm3_dc3_out) };
-            this.rooms[3] = { level: this.house.level4, out: this.house.rm4_out, len: this.house.rm4_len, wth: this.house.rm4_wth, area: this.round1(this.house.rm4_len * this.house.rm4_wth), desc: this.getRoomDesc(this.house.rm4_dc1_out, this.house.rm4_dc2_out, this.house.rm4_dc3_out) };
-            this.rooms[4] = { level: this.house.level5, out: this.house.rm5_out, len: this.house.rm5_len, wth: this.house.rm5_wth, area: this.round1(this.house.rm5_len * this.house.rm5_wth), desc: this.getRoomDesc(this.house.rm5_dc1_out, this.house.rm5_dc2_out, this.house.rm5_dc3_out) };
-            this.rooms[5] = { level: this.house.level6, out: this.house.rm6_out, len: this.house.rm6_len, wth: this.house.rm6_wth, area: this.round1(this.house.rm6_len * this.house.rm6_wth), desc: this.getRoomDesc(this.house.rm6_dc1_out, this.house.rm6_dc2_out, this.house.rm6_dc3_out) };
-            this.rooms[6] = { level: this.house.level7, out: this.house.rm7_out, len: this.house.rm7_len, wth: this.house.rm7_wth, area: this.round1(this.house.rm7_len * this.house.rm7_wth), desc: this.getRoomDesc(this.house.rm7_dc1_out, this.house.rm7_dc2_out, this.house.rm7_dc3_out) };
-            this.rooms[7] = { level: this.house.level8, out: this.house.rm8_out, len: this.house.rm8_len, wth: this.house.rm8_wth, area: this.round1(this.house.rm8_len * this.house.rm8_wth), desc: this.getRoomDesc(this.house.rm8_dc1_out, this.house.rm8_dc2_out, this.house.rm8_dc3_out) };
-            this.rooms[8] = { level: this.house.level9, out: this.house.rm9_out, len: this.house.rm9_len, wth: this.house.rm9_wth, area: this.round1(this.house.rm9_len * this.house.rm9_wth), desc: this.getRoomDesc(this.house.rm9_dc1_out, this.house.rm9_dc2_out, this.house.rm9_dc3_out) };
-            this.rooms[9] = { level: this.house.level10, out: this.house.rm10_out, len: this.house.rm10_len, wth: this.house.rm10_wth, area: this.round1(this.house.rm10_len * this.house.rm10_wth), desc: this.getRoomDesc(this.house.rm10_dc1_out, this.house.rm10_dc2_out, this.house.rm10_dc3_out) };
-            this.rooms[10] = { level: this.house.level11, out: this.house.rm11_out, len: this.house.rm11_len, wth: this.house.rm11_wth, area: this.round1(this.house.rm11_len * this.house.rm11_wth), desc: this.getRoomDesc(this.house.rm11_dc1_out, this.house.rm11_dc2_out, this.house.rm11_dc3_out) };
-            this.rooms[11] = { level: this.house.level12, out: this.house.rm12_out, len: this.house.rm12_len, wth: this.house.rm12_wth, area: this.round1(this.house.rm12_len * this.house.rm12_wth), desc: this.getRoomDesc(this.house.rm12_dc1_out, this.house.rm12_dc2_out, this.house.rm12_dc3_out) };
         }
+
+
+        return this.rooms;
     }
 
     getPriceTxt(price: number) {
@@ -486,6 +527,7 @@ export class houseModel {
     }
 
     getPropertyTxt() {
+        //console.log("get property")
         let propertyTxt = this.house.prop_feat1_out;
 
         if (this.house.prop_feat2_out)
@@ -499,6 +541,7 @@ export class houseModel {
         if (this.house.prop_feat6_out)
             propertyTxt = propertyTxt + " , " + this.house.prop_feat6_out;
 
+        this.propertyTxt = propertyTxt  
         return propertyTxt;
     }
 
@@ -512,21 +555,31 @@ export class houseModel {
     }
 
     getLandArea(switchF2M: boolean) {
+        console.log("get land size")
         if (switchF2M)
-            return this.round2(this.house.land_area * 0.09290304) + this.F2M.smeter;
+           // return this.round2(this.house.land_area * 0.09290304) + this.F2M.smeter;
+           this.landArea = this.round2(this.house.land_area * 0.09290304) + this.F2M.smeter;
+
         else
-            return this.house.land_area + this.F2M.sfeet;
+            //return this.house.land_area + this.F2M.sfeet;
+            this.landArea = this.house.land_area + this.F2M.sfeet;
     }
 
     getAddr() {
         let txt = this.house.addr;
         if (this.house.apt_num) txt = this.house.apt_num + '-' + this.house.addr;
+        this.addr = txt;
         return txt;
     }
 
     hasOpenHouse(oh_dt, auth: boolean) {
-        if (auth)
-            return (oh_dt && oh_dt != '0000-00-00') ? true : false;
+       
+        if (auth){
+           
+             return (oh_dt && oh_dt != '0000-00-00') ? true : false;
+         
+        }
+         
         else
             return false;
     }
