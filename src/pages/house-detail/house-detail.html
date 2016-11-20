@@ -65,7 +65,7 @@
 
 
 	<ion-slides #photo_slider [options]="swiperOptions" class="swiper-container">
-		<ion-slide *ngFor="let photo of cdn_photos">
+		<ion-slide *ngFor="let photo of houseM.cdnPhotos">
 			<img [src]="photo" class="slide-image" />
 
 		</ion-slide>
@@ -87,7 +87,7 @@
 			</div>
 			<div class="fyxq_ptss">
 				<div class="fyxq_ptssleft">{{(houseM.house.investType_id == 1)?"学区":"城市"}}：</div>
-				<div class="fyxq_ptssright">{{house_mname?.municipality_cname}}
+				<div class="fyxq_ptssright">{{houseM.house_mname?.municipality_cname}}
 
 				</div>
 			</div>

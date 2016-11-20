@@ -109,72 +109,72 @@ export interface houseInterface {
     rm1_dc1_out?: string, // => 'Rm1 Dc1 Out',
     rm1_dc2_out?: string, // => 'Rm1 Dc2 Out',
     rm1_dc3_out?: string, // => 'Rm1 Dc3 Out',
-    rm1_len?: string, // => 'Rm1 Len',
-    rm1_wth?: string, // => 'Rm1 Wth',
+    rm1_len?: number, // => 'Rm1 Len',
+    rm1_wth?: number, // => 'Rm1 Wth',
     rm10_out?: string, // => 'rm10 Out',
     rm10_dc1_out?: string, // => 'rm10 Dc1 Out',
     rm10_dc2_out?: string, // => 'rm10 Dc2 Out',
     rm10_dc3_out?: string, // => 'rm10 Dc3 Out',
-    rm10_wth?: string, // => 'rm10 Wth',
+    rm10_wth?: number, // => 'rm10 Wth',
     rm11_out?: string, // => 'Rm11 Out',
     rm11_dc1_out?: string, // => 'Rm11 Dc1 Out',
     rm11_dc2_out?: string, // => 'Rm11 Dc2 Out',
     rm11_dc3_out?: string, // => 'Rm11 Dc3 Out',
-    rm10_len?: string, // => 'rm10 Len',
-    rm11_len?: string, // => 'Rm11 Len',
-    rm11_wth?: string, // => 'Rm11 Wth',
+    rm10_len?: number, // => 'rm10 Len',
+    rm11_len?: number, // => 'Rm11 Len',
+    rm11_wth?: number, // => 'Rm11 Wth',
     rm12_out?: string, // => 'Rm12 Out',
     rm12_dc1_out?: string, // => 'Rm12 Dc1 Out',
     rm12_dc3_out?: string, // => 'Rm12 Dc3 Out',
-    rm12_len?: string, // => 'Rm12 Len',
-    rm12_wth?: string, // => 'Rm12 Wth',
+    rm12_len?: number, // => 'Rm12 Len',
+    rm12_wth?: number, // => 'Rm12 Wth',
     rm2_out?: string, // => 'Rm2 Out',
     rm2_dc1_out?: string, // => 'Rm2 Dc1 Out',
     rm2_dc2_out?: string, // => 'Rm2 Dc2 Out',
     rm2_dc3_out?: string, // => 'Rm2 Dc3 Out',
-    rm2_len?: string, // => 'Rm2 Len',
-    rm2_wth?: string, // => 'Rm2 Wth',
+    rm2_len?: number, // => 'Rm2 Len',
+    rm2_wth?: number, // => 'Rm2 Wth',
     rm3_out?: string, // => 'Rm3 Out',
     rm3_dc1_out?: string, // => 'Rm3 Dc1 Out',
     rm3_dc2_out?: string, // => 'Rm3 Dc2 Out',
-    rm3_len?: string, // => 'Rm3 Len',
-    rm3_wth?: string, // => 'Rm3 Wth',
+    rm3_len?: number, // => 'Rm3 Len',
+    rm3_wth?: number, // => 'Rm3 Wth',
     rm4_out?: string, // => 'Rm4 Out',
     rm4_dc1_out?: string, // => 'Rm4 Dc1 Out',
     rm4_dc2_out?: string, // => 'Rm4 Dc2 Out',
     rm4_dc3_out?: string, // => 'Rm4 Dc3 Out',
-    rm4_len?: string, // => 'Rm4 Len',
-    rm4_wth?: string, // => 'Rm4 Wth',
+    rm4_len?: number, // => 'Rm4 Len',
+    rm4_wth?: number, // => 'Rm4 Wth',
     rm5_out?: string, // => 'Rm5 Out',
     rm5_dc1_out?: string, // => 'Rm5 Dc1 Out',
     rm5_dc2_out?: string, // => 'Rm5 Dc2 Out',
     rm5_dc3_out?: string, // => 'Rm5 Dc3 Out',
-    rm5_len?: string, // => 'Rm5 Len',
-    rm5_wth?: string, // => 'Rm5 Wth',
+    rm5_len?: number, // => 'Rm5 Len',
+    rm5_wth?: number, // => 'Rm5 Wth',
     rm6_out?: string, // => 'Rm6 Out',
     rm6_dc1_out?: string, // => 'Rm6 Dc1 Out',
     rm6_dc2_out?: string, // => 'Rm6 Dc2 Out',
     rm6_dc3_out?: string, // => 'Rm6 Dc3 Out',
-    rm6_len?: string, // => 'Rm6 Len',
-    rm6_wth?: string, // => 'Rm6 Wth',
+    rm6_len?: number, // => 'Rm6 Len',
+    rm6_wth?: number, // => 'Rm6 Wth',
     rm7_out?: string, // => 'Rm7 Out',
     rm7_dc1_out?: string, // => 'Rm7 Dc1 Out',
     rm7_dc2_out?: string, // => 'Rm7 Dc2 Out',
     rm7_dc3_out?: string, // => 'Rm7 Dc3 Out',
-    rm7_len?: string, // => 'Rm7 Len',
-    rm7_wth?: string, // => 'Rm7 Wth',
+    rm7_len?: number, // => 'Rm7 Len',
+    rm7_wth?: number, // => 'Rm7 Wth',
     rm8_out?: string, // => 'Rm8 Out',
     rm8_dc1_out?: string, // => 'Rm8 Dc1 Out',
     rm8_dc2_out?: string, // => 'Rm8 Dc2 Out',
     rm8_dc3_out?: string, // => 'Rm8 Dc3 Out',
-    rm8_len?: string, // => 'Rm8 Len',
-    rm8_wth?: string, // => 'Rm8 Wth',
+    rm8_len?: number, // => 'Rm8 Len',
+    rm8_wth?: number, // => 'Rm8 Wth',
     rm9_out?: string, // => 'Rm9 Out',
     rm9_dc1_out?: string, // => 'Rm9 Dc1 Out',
     rm9_dc2_out?: string, // => 'Rm9 Dc2 Out',
     rm9_dc3_out?: string, // => 'Rm9 Dc3 Out',
-    rm9_len?: string, // => 'Rm9 Len',
-    rm9_wth?: string, // => 'Rm9 Wth',
+    rm9_len?: number, // => 'Rm9 Len',
+    rm9_wth?: number, // => 'Rm9 Wth',
     rms?: number, // => 'Rms',
     rooms_plus?: number, // => 'Rooms Plus',
     s_r?: string, // => 'S R',
@@ -203,6 +203,8 @@ export interface houseInterface {
 };
 
 export class houseModel {
+
+    //init house default object
     public house: houseInterface = {
         id: '',  // => 'ID',
         name: '', // => '名称',
@@ -313,72 +315,72 @@ export class houseModel {
         rm1_dc1_out: '', // => 'Rm1 Dc1 Out',
         rm1_dc2_out: '', // => 'Rm1 Dc2 Out',
         rm1_dc3_out: '', // => 'Rm1 Dc3 Out',
-        rm1_len: '', // => 'Rm1 Len',
-        rm1_wth: '', // => 'Rm1 Wth',
+        rm1_len: 0, // => 'Rm1 Len',
+        rm1_wth: 0, // => 'Rm1 Wth',
         rm10_out: '', // => 'Rm10 Out',
         rm10_dc1_out: '', // => 'Rm10 Dc1 Out',
         rm10_dc2_out: '', // => 'Rm10 Dc2 Out',
         rm10_dc3_out: '', // => 'Rm10 Dc3 Out',
-        rm10_wth: '', // => 'Rm10 Wth',
+        rm10_wth: 0, // => 'Rm10 Wth',
         rm11_out: '', // => 'Rm11 Out',
         rm11_dc1_out: '', // => 'Rm11 Dc1 Out',
         rm11_dc2_out: '', // => 'Rm11 Dc2 Out',
         rm11_dc3_out: '', // => 'Rm11 Dc3 Out',
-        rm10_len: '', // => 'Rm10 Len',
-        rm11_len: '', // => 'Rm11 Len',
-        rm11_wth: '', // => 'Rm11 Wth',
+        rm10_len: 0, // => 'Rm10 Len',
+        rm11_len: 0, // => 'Rm11 Len',
+        rm11_wth: 0, // => 'Rm11 Wth',
         rm12_out: '', // => 'Rm12 Out',
         rm12_dc1_out: '', // => 'Rm12 Dc1 Out',
         rm12_dc3_out: '', // => 'Rm12 Dc3 Out',
-        rm12_len: '', // => 'Rm12 Len',
-        rm12_wth: '', // => 'Rm12 Wth',
+        rm12_len: 0, // => 'Rm12 Len',
+        rm12_wth: 0, // => 'Rm12 Wth',
         rm2_out: '', // => 'Rm2 Out',
         rm2_dc1_out: '', // => 'Rm2 Dc1 Out',
         rm2_dc2_out: '', // => 'Rm2 Dc2 Out',
         rm2_dc3_out: '', // => 'Rm2 Dc3 Out',
-        rm2_len: '', // => 'Rm2 Len',
-        rm2_wth: '', // => 'Rm2 Wth',
+        rm2_len: 0, // => 'Rm2 Len',
+        rm2_wth: 0, // => 'Rm2 Wth',
         rm3_out: '', // => 'Rm3 Out',
         rm3_dc1_out: '', // => 'Rm3 Dc1 Out',
         rm3_dc2_out: '', // => 'Rm3 Dc2 Out',
-        rm3_len: '', // => 'Rm3 Len',
-        rm3_wth: '', // => 'Rm3 Wth',
+        rm3_len: 0, // => 'Rm3 Len',
+        rm3_wth: 0, // => 'Rm3 Wth',
         rm4_out: '', // => 'Rm4 Out',
         rm4_dc1_out: '', // => 'Rm4 Dc1 Out',
         rm4_dc2_out: '', // => 'Rm4 Dc2 Out',
         rm4_dc3_out: '', // => 'Rm4 Dc3 Out',
-        rm4_len: '', // => 'Rm4 Len',
-        rm4_wth: '', // => 'Rm4 Wth',
+        rm4_len: 0, // => 'Rm4 Len',
+        rm4_wth: 0, // => 'Rm4 Wth',
         rm5_out: '', // => 'Rm5 Out',
         rm5_dc1_out: '', // => 'Rm5 Dc1 Out',
         rm5_dc2_out: '', // => 'Rm5 Dc2 Out',
         rm5_dc3_out: '', // => 'Rm5 Dc3 Out',
-        rm5_len: '', // => 'Rm5 Len',
-        rm5_wth: '', // => 'Rm5 Wth',
+        rm5_len: 0, // => 'Rm5 Len',
+        rm5_wth: 0, // => 'Rm5 Wth',
         rm6_out: '', // => 'Rm6 Out',
         rm6_dc1_out: '', // => 'Rm6 Dc1 Out',
         rm6_dc2_out: '', // => 'Rm6 Dc2 Out',
         rm6_dc3_out: '', // => 'Rm6 Dc3 Out',
-        rm6_len: '', // => 'Rm6 Len',
-        rm6_wth: '', // => 'Rm6 Wth',
+        rm6_len: 0, // => 'Rm6 Len',
+        rm6_wth: 0, // => 'Rm6 Wth',
         rm7_out: '', // => 'Rm7 Out',
         rm7_dc1_out: '', // => 'Rm7 Dc1 Out',
         rm7_dc2_out: '', // => 'Rm7 Dc2 Out',
         rm7_dc3_out: '', // => 'Rm7 Dc3 Out',
-        rm7_len: '', // => 'Rm7 Len',
-        rm7_wth: '', // => 'Rm7 Wth',
+        rm7_len: 0, // => 'Rm7 Len',
+        rm7_wth: 0, // => 'Rm7 Wth',
         rm8_out: '', // => 'Rm8 Out',
         rm8_dc1_out: '', // => 'Rm8 Dc1 Out',
         rm8_dc2_out: '', // => 'Rm8 Dc2 Out',
         rm8_dc3_out: '', // => 'Rm8 Dc3 Out',
-        rm8_len: '', // => 'Rm8 Len',
-        rm8_wth: '', // => 'Rm8 Wth',
+        rm8_len: 0, // => 'Rm8 Len',
+        rm8_wth: 0, // => 'Rm8 Wth',
         rm9_out: '', // => 'Rm9 Out',
         rm9_dc1_out: '', // => 'Rm9 Dc1 Out',
         rm9_dc2_out: '', // => 'Rm9 Dc2 Out',
         rm9_dc3_out: '', // => 'Rm9 Dc3 Out',
-        rm9_len: '', // => 'Rm9 Len',
-        rm9_wth: '', // => 'Rm9 Wth',
+        rm9_len: 0, // => 'Rm9 Len',
+        rm9_wth: 0, // => 'Rm9 Wth',
         rms: 0, // => 'Rms',
         rooms_plus: 0, // => 'Rooms Plus',
         s_r: '', // => 'S R',
@@ -406,9 +408,133 @@ export class houseModel {
         pic_num: 0
 
     };
+    public COMP_PTS = { "N": "北", "S": "南", "W": "西", "E": "东" };
+    public S_R = { "Sale": "出售", "Lease": "出租" };
+    public F2M = { feet: "尺", meter: "米", sfeet: "平方英尺", smeter: "平方米" };
+    public rooms;
+    public rx_phone;
+    public house_mname;
+    public exchangeRate;
+    public cdnPhotos: Array<string>;
+    public house_propertyType;
+    //public isFav;
 
     constructor() {
 
+    }
+
+
+    add2(int1, int2) {
+        return parseInt(int1, 10) + parseInt(int2, 10);
+    }
+
+    round1(num) {
+        return +(Math.round(+(num + "e+1")) + "e-1");
+    }
+
+    round2(num) {
+        return +(Math.round(+(num + "e+2")) + "e-2");
+    }
+
+
+    houseRooms(s: boolean) {
+        if (s == true) {  //meter
+            this.rooms[0] = { level: this.house.level1, out: this.house.rm1_out, len: this.house.rm1_len, wth: this.house.rm1_wth, area: this.round1(this.house.rm1_len * this.house.rm1_wth), desc: this.getRoomDesc(this.house.rm1_dc1_out, this.house.rm1_dc2_out, this.house.rm1_dc3_out) };
+            this.rooms[1] = { level: this.house.level2, out: this.house.rm2_out, len: this.house.rm2_len, wth: this.house.rm2_wth, area: this.round1(this.house.rm2_len * this.house.rm2_wth), desc: this.getRoomDesc(this.house.rm2_dc1_out, this.house.rm2_dc2_out, this.house.rm2_dc3_out) };
+            this.rooms[2] = { level: this.house.level3, out: this.house.rm3_out, len: this.house.rm3_len, wth: this.house.rm3_wth, area: this.round1(this.house.rm3_len * this.house.rm3_wth), desc: this.getRoomDesc(this.house.rm3_dc1_out, this.house.rm3_dc2_out, this.house.rm3_dc3_out) };
+            this.rooms[3] = { level: this.house.level4, out: this.house.rm4_out, len: this.house.rm4_len, wth: this.house.rm4_wth, area: this.round1(this.house.rm4_len * this.house.rm4_wth), desc: this.getRoomDesc(this.house.rm4_dc1_out, this.house.rm4_dc2_out, this.house.rm4_dc3_out) };
+            this.rooms[4] = { level: this.house.level5, out: this.house.rm5_out, len: this.house.rm5_len, wth: this.house.rm5_wth, area: this.round1(this.house.rm5_len * this.house.rm5_wth), desc: this.getRoomDesc(this.house.rm5_dc1_out, this.house.rm5_dc2_out, this.house.rm5_dc3_out) };
+            this.rooms[5] = { level: this.house.level6, out: this.house.rm6_out, len: this.house.rm6_len, wth: this.house.rm6_wth, area: this.round1(this.house.rm6_len * this.house.rm6_wth), desc: this.getRoomDesc(this.house.rm6_dc1_out, this.house.rm6_dc2_out, this.house.rm6_dc3_out) };
+            this.rooms[6] = { level: this.house.level7, out: this.house.rm7_out, len: this.house.rm7_len, wth: this.house.rm7_wth, area: this.round1(this.house.rm7_len * this.house.rm7_wth), desc: this.getRoomDesc(this.house.rm7_dc1_out, this.house.rm7_dc2_out, this.house.rm7_dc3_out) };
+            this.rooms[7] = { level: this.house.level8, out: this.house.rm8_out, len: this.house.rm8_len, wth: this.house.rm8_wth, area: this.round1(this.house.rm8_len * this.house.rm8_wth), desc: this.getRoomDesc(this.house.rm8_dc1_out, this.house.rm8_dc2_out, this.house.rm8_dc3_out) };
+            this.rooms[8] = { level: this.house.level9, out: this.house.rm9_out, len: this.house.rm9_len, wth: this.house.rm9_wth, area: this.round1(this.house.rm9_len * this.house.rm9_wth), desc: this.getRoomDesc(this.house.rm9_dc1_out, this.house.rm9_dc2_out, this.house.rm9_dc3_out) };
+            this.rooms[9] = { level: this.house.level10, out: this.house.rm10_out, len: this.house.rm10_len, wth: this.house.rm10_wth, area: this.round1(this.house.rm10_len * this.house.rm10_wth), desc: this.getRoomDesc(this.house.rm10_dc1_out, this.house.rm10_dc2_out, this.house.rm10_dc3_out) };
+            this.rooms[10] = { level: this.house.level11, out: this.house.rm11_out, len: this.house.rm11_len, wth: this.house.rm11_wth, area: this.round1(this.house.rm11_len * this.house.rm11_wth), desc: this.getRoomDesc(this.house.rm11_dc1_out, this.house.rm11_dc2_out, this.house.rm11_dc3_out) };
+            this.rooms[11] = { level: this.house.level12, out: this.house.rm12_out, len: this.house.rm12_len, wth: this.house.rm12_wth, area: this.round1(this.house.rm12_len * this.house.rm12_wth), desc: this.getRoomDesc(this.house.rm12_dc1_out, this.house.rm12_dc2_out, this.house.rm12_dc3_out) };
+
+
+        } else {  //feet
+
+
+
+            this.rooms[0] = { level: this.house.level1, out: this.house.rm1_out, len: this.house.rm1_len, wth: this.house.rm1_wth, area: this.round1(this.house.rm1_len * this.house.rm1_wth), desc: this.getRoomDesc(this.house.rm1_dc1_out, this.house.rm1_dc2_out, this.house.rm1_dc3_out) };
+            this.rooms[1] = { level: this.house.level2, out: this.house.rm2_out, len: this.house.rm2_len, wth: this.house.rm2_wth, area: this.round1(this.house.rm2_len * this.house.rm2_wth), desc: this.getRoomDesc(this.house.rm2_dc1_out, this.house.rm2_dc2_out, this.house.rm2_dc3_out) };
+            this.rooms[2] = { level: this.house.level3, out: this.house.rm3_out, len: this.house.rm3_len, wth: this.house.rm3_wth, area: this.round1(this.house.rm3_len * this.house.rm3_wth), desc: this.getRoomDesc(this.house.rm3_dc1_out, this.house.rm3_dc2_out, this.house.rm3_dc3_out) };
+            this.rooms[3] = { level: this.house.level4, out: this.house.rm4_out, len: this.house.rm4_len, wth: this.house.rm4_wth, area: this.round1(this.house.rm4_len * this.house.rm4_wth), desc: this.getRoomDesc(this.house.rm4_dc1_out, this.house.rm4_dc2_out, this.house.rm4_dc3_out) };
+            this.rooms[4] = { level: this.house.level5, out: this.house.rm5_out, len: this.house.rm5_len, wth: this.house.rm5_wth, area: this.round1(this.house.rm5_len * this.house.rm5_wth), desc: this.getRoomDesc(this.house.rm5_dc1_out, this.house.rm5_dc2_out, this.house.rm5_dc3_out) };
+            this.rooms[5] = { level: this.house.level6, out: this.house.rm6_out, len: this.house.rm6_len, wth: this.house.rm6_wth, area: this.round1(this.house.rm6_len * this.house.rm6_wth), desc: this.getRoomDesc(this.house.rm6_dc1_out, this.house.rm6_dc2_out, this.house.rm6_dc3_out) };
+            this.rooms[6] = { level: this.house.level7, out: this.house.rm7_out, len: this.house.rm7_len, wth: this.house.rm7_wth, area: this.round1(this.house.rm7_len * this.house.rm7_wth), desc: this.getRoomDesc(this.house.rm7_dc1_out, this.house.rm7_dc2_out, this.house.rm7_dc3_out) };
+            this.rooms[7] = { level: this.house.level8, out: this.house.rm8_out, len: this.house.rm8_len, wth: this.house.rm8_wth, area: this.round1(this.house.rm8_len * this.house.rm8_wth), desc: this.getRoomDesc(this.house.rm8_dc1_out, this.house.rm8_dc2_out, this.house.rm8_dc3_out) };
+            this.rooms[8] = { level: this.house.level9, out: this.house.rm9_out, len: this.house.rm9_len, wth: this.house.rm9_wth, area: this.round1(this.house.rm9_len * this.house.rm9_wth), desc: this.getRoomDesc(this.house.rm9_dc1_out, this.house.rm9_dc2_out, this.house.rm9_dc3_out) };
+            this.rooms[9] = { level: this.house.level10, out: this.house.rm10_out, len: this.house.rm10_len, wth: this.house.rm10_wth, area: this.round1(this.house.rm10_len * this.house.rm10_wth), desc: this.getRoomDesc(this.house.rm10_dc1_out, this.house.rm10_dc2_out, this.house.rm10_dc3_out) };
+            this.rooms[10] = { level: this.house.level11, out: this.house.rm11_out, len: this.house.rm11_len, wth: this.house.rm11_wth, area: this.round1(this.house.rm11_len * this.house.rm11_wth), desc: this.getRoomDesc(this.house.rm11_dc1_out, this.house.rm11_dc2_out, this.house.rm11_dc3_out) };
+            this.rooms[11] = { level: this.house.level12, out: this.house.rm12_out, len: this.house.rm12_len, wth: this.house.rm12_wth, area: this.round1(this.house.rm12_len * this.house.rm12_wth), desc: this.getRoomDesc(this.house.rm12_dc1_out, this.house.rm12_dc2_out, this.house.rm12_dc3_out) };
+        }
+    }
+
+    getPriceTxt(price: number) {
+        let priceTxt;
+        if (this.house.s_r == "Sale")
+            priceTxt = Number(price) / 10000 + "万加币";
+        else
+            priceTxt = price + "加元/月";
+        return priceTxt;
+    }
+
+    getPriceRMB(price: number) {
+        return this.round2(price * this.exchangeRate / 10000);
+    }
+
+    getPropertyTxt() {
+        let propertyTxt = this.house.prop_feat1_out;
+
+        if (this.house.prop_feat2_out)
+            propertyTxt = propertyTxt + " , " + this.house.prop_feat2_out;
+        if (this.house.prop_feat3_out)
+            propertyTxt = propertyTxt + " , " + this.house.prop_feat3_out;
+        if (this.house.prop_feat4_out)
+            propertyTxt = propertyTxt + " , " + this.house.prop_feat4_out;
+        if (this.house.prop_feat5_out)
+            propertyTxt = propertyTxt + " , " + this.house.prop_feat5_out;
+        if (this.house.prop_feat6_out)
+            propertyTxt = propertyTxt + " , " + this.house.prop_feat6_out;
+
+        return propertyTxt;
+    }
+
+    getRoomDesc(dc1, dc2, dc3) {
+        let roomDesc = dc1;
+
+        if (dc2) roomDesc = roomDesc + " , " + dc2;
+        if (dc3) roomDesc = roomDesc + " , " + dc3;
+
+        return roomDesc;
+    }
+
+    getLandArea(switchF2M: boolean) {
+        if (switchF2M)
+            return this.round2(this.house.land_area * 0.09290304) + this.F2M.smeter;
+        else
+            return this.house.land_area + this.F2M.sfeet;
+    }
+
+    getAddr() {
+        let txt = this.house.addr;
+        if (this.house.apt_num) txt = this.house.apt_num + '-' + this.house.addr;
+        return txt;
+    }
+
+    hasOpenHouse(oh_dt, auth: boolean) {
+        if (auth)
+            return (oh_dt && oh_dt != '0000-00-00') ? true : false;
+        else
+            return false;
+    }
+
+    getOpenHouse(oh_dt, oh_from, oh_to) {
+        let txt = '';
+        if (oh_dt && oh_dt != '0000-00-00') txt = oh_dt + ' ' + oh_from + '-' + oh_to;
+        return txt;
     }
 
 

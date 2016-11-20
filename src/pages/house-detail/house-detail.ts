@@ -33,8 +33,8 @@ export class HouseDetailPage {
 	public rooms: Array<Object> = [];
 	public house_mname: any;
 	public house_propertyType: any;
-	public photos: Array<string>;
-	public cdn_photos: Array<string>;
+	//public photos: Array<string>;
+	//public cdn_photos: Array<string>;
 	public exchangeRate: number;
 	public username: string;
 
@@ -250,7 +250,7 @@ export class HouseDetailPage {
 	};
 	*/
 
-	public rx_phone: string;
+	//public rx_phone: string;
 	public COMP_PTS = { "N": "北", "S": "南", "W": "西", "E": "东" };
 	public S_R = { "Sale": "出售", "Lease": "出租" };
 	public F2M = { feet: "尺", meter: "米", sfeet: "平方英尺", smeter: "平方米" };
@@ -436,17 +436,18 @@ export class HouseDetailPage {
 		this.mapleRestData.load(url, { 'id': id, 'username': username }).subscribe(
 			data => {
 				//console.log(data);
-				this.rx_phone = this.mapleConf.data.phone;
-				//this.house = data.house;
-				//this.house = data.house;
+				//this.rx_phone = this.mapleConf.data.phone;
+				this.houseM.rx_phone = this.mapleConf.data.phone;
 				this.houseM.house = data.house;
-				//console.log("Class House is changed");
-				//console.log(this.houseM.house);
-				this.house_mname = data.house_mname;
-				this.house_propertyType = data.house_propertyType;
+				//this.house_mname = data.house_mname;
+				this.houseM.house_mname = data.house_mname;
+				//this.house_propertyType = data.house_propertyType;
+				this.houseM.house_propertyType = data.house_propertyType;
+				this.houseM.exchangeRate =  data.exchangeRate;
 				this.exchangeRate = data.exchangeRate;
-				this.photos = data.photos;
-				this.cdn_photos = data.cdn_photos;
+				//this.photos = data.photos;
+				this.houseM.cdnPhotos = data.cdn_photos;
+				//this.cdn_photos = data.cdn_photos;
 				this.houseRooms(this.houseM.house);
 				this.isFav = data.isFav; //check if houseFav and routeFav
 				this.setHouseList();
@@ -498,7 +499,7 @@ export class HouseDetailPage {
 		this.rooms[10] = { level: h.level11, out: h.rm11_out, len: h.rm11_len, wth: h.rm11_wth, area: this.round1(h.rm11_len * h.rm11_wth), desc: this.getRoomDesc(h.rm11_dc1_out, h.rm11_dc2_out, h.rm11_dc3_out) };
 		this.rooms[11] = { level: h.level12, out: h.rm12_out, len: h.rm12_len, wth: h.rm12_wth, area: this.round1(h.rm12_len * h.rm12_wth), desc: this.getRoomDesc(h.rm12_dc1_out, h.rm12_dc2_out, h.rm12_dc3_out) };
 	}
-
+    
 	getPriceTxt(price) {
 		let priceTxt;
 		if (this.houseM.house.s_r == "Sale")
@@ -511,7 +512,7 @@ export class HouseDetailPage {
 	getPriceRMB(price) {
 		return this.round2(parseFloat(price) * this.exchangeRate / 10000);
 	}
-
+	
 	getPropertyTxt() {
 		let propertyTxt = this.houseM.house.prop_feat1_out;
 
@@ -611,8 +612,8 @@ export class HouseDetailPage {
 	share() {
 
 		let subject = "枫之都房产：" + this.parms.id;
-		let message = this.getPriceTxt(this.houseM.house.lp_dol) + " - " + this.getAddr() + " " + this.houseM.house.municipality;
-		let img = this.cdn_photos[0];
+		let message = this.houseM.getPriceTxt(this.houseM.house.lp_dol) + " - " + this.getAddr() + " " + this.houseM.house.municipality;
+		let img = this.houseM.cdnPhotos[0];
 		//let link = "http://m.maplecity.com.cn/index.php?r=mhouse/view&id=" + this.parms.id;
 		let link = this.mapleConf.data.mcihost + "/#/housedetail/" + this.parms.id;
 		this.shareService.share(link, img, subject, message);
