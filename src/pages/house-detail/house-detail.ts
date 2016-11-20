@@ -8,7 +8,10 @@ import { UserData } from '../../providers/user-data';
 import { HouseCityStatsPage } from '../../pages/house-city-stats/house-city-stats';
 import { AuthService } from '../../providers/auth/auth';
 import { ShareService } from '../../providers/share';
-import { houseInterface, houseModel } from '../../models/houseModel'
+import { houseInterface, houseModel } from '../../models/houseModel';
+import { houseListModel } from '../../models/houseListModel';
+import { HouselistSearch } from '../houselist-search/houselist-search';
+
 declare var google: any;
 
 /*
@@ -43,6 +46,7 @@ export class HouseDetailPage {
 	public COMP_PTS = { "N": "北", "S": "南", "W": "西", "E": "东" };
 	public S_R = { "Sale": "出售", "Lease": "出租" };
 	public F2M = { feet: "尺", meter: "米", sfeet: "平方英尺", smeter: "平方米" };
+	private houseRestURL;
 
 
 	@ViewChild('photo_slider') slider: Slides;
@@ -65,7 +69,7 @@ export class HouseDetailPage {
 		console.log(navParams);
 		this.parms = navParams.data;
 		this.listenEvents();
-		this.house = this.houseM.house;
+		//this.house = this.houseM.house;
 
 	}
 
@@ -95,6 +99,8 @@ export class HouseDetailPage {
 		this.mapleConf.load().then(data => {
 			//this.getResult('index.php?r=ngget/getHouseDetail');
 			this.getResult(data.houseDetailRest, this.parms.id);
+			this.houseRestURL = data.mapHouseRest;
+
 		})
 	}
 
@@ -122,6 +128,56 @@ export class HouseDetailPage {
 
 	similar() {
 		//this.houseM.house.lp_dol = '';
+
+		let similarHouses;
+		let range: number = 0.1;
+
+
+		let swLat = this.houseM.house.latitude - range;
+		let swLng = this.houseM.house.longitude - range;
+		let neLat = this.houseM.house.latitude + range;
+		let neLng = this.houseM.house.longitude + range;
+		let bounds = swLat + "," + swLng + "," + neLat + "," + neLng;
+		let housePrice = { lower: this.houseM.house.lp_dol * 0.8 / 10000, upper: this.houseM.house.lp_dol * 1.2 / 10000 };
+		let houseArea;
+		if (this.houseM.house.house_area > 1) {
+			houseArea = { lower: this.houseM.house.house_area * 0.8, upper: this.houseM.house.house_area * 1.2 };
+		}
+
+
+		let landArea = {};
+		if (this.houseM.house.land_area > 1000) {
+			landArea = { lower: this.houseM.house.land_area * 0.8, upper: this.houseM.house.land_area * 1.2 };
+		}
+
+
+
+		let mapParms = {
+			bounds: bounds,
+			housetype: [this.houseM.house.propertyType_id],
+			sr: this.houseM.house.s_r,
+			houseprice: housePrice,
+			houseroom: this.houseM.house.br,
+			housearea: houseArea,
+			houseground: landArea
+		}
+
+		// this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
+		this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
+			data => {
+				console.log(data);
+
+
+				if (data.Data.Type == 'house') {
+					similarHouses = new houseListModel(data.Data.HouseList, this.auth.authenticated());
+					console.log(similarHouses);
+					this.nav.push(HouselistSearch, { list: similarHouses, imgHost: '', listType: 'house' });
+
+
+				}
+			})
+
+
 	}
 
 	more() {
@@ -155,6 +211,15 @@ export class HouseDetailPage {
 							actionSheet.dismiss().then(res => {
 								this.fav('routeFav');
 								this.isMore = false;
+							})
+
+						}
+					},
+					{
+						text: '类似房源',
+						handler: () => {
+							actionSheet.dismiss().then(res => {
+								this.similar();
 							})
 
 						}
@@ -221,26 +286,18 @@ export class HouseDetailPage {
 		let username = (this.auth.authenticated()) ? this.auth.user['email'] : 'NO';
 		this.mapleRestData.load(url, { 'id': id, 'username': username }).subscribe(
 			data => {
-				//console.log(data);
-				this.rx_phone = this.mapleConf.data.phone;
+
 				this.houseM.rxPhone = this.mapleConf.data.phone;
 				this.houseM.house = data.house;
 				this.houseM.houseMname = data.house_mname;
 				this.house_propertyType = data.house_propertyType;
 				this.houseM.housePropertyType = data.house_propertyType;
 				this.houseM.exchangeRate = data.exchangeRate;
-				this.exchangeRate = data.exchangeRate;
-			
 				this.houseM.cdnPhotos = data.cdn_photos;
-				this.rooms = this.houseM.houseRooms(this.switchF2M);
-			
 				this.isFav = data.isFav; //check if houseFav and routeFav
 				this.setHouseList();
+				this.houseM.setProperties(this.auth.authenticated(), this.switchF2M);
 
-				//set variabl
-				//this.houseM.getLandArea(this.switchF2M);
-				this.houseM.setProperties(this.auth.authenticated(),this.switchF2M);
-				
 				this.slider.slideTo(0);
 				this.initMap();
 			}
@@ -285,7 +342,8 @@ export class HouseDetailPage {
 				if (this.houseM.house.tour_url) cordova.InAppBrowser.open(this.houseM.house.tour_url, "_system", "location=true");
 		})*/
 	}
-	f2m(){
+
+	f2m() {
 		this.houseM.getLandArea(this.switchF2M);
 		this.houseM.houseRooms(this.switchF2M);
 	}

@@ -330,23 +330,10 @@ export class MapSearchPage {
 
       if ((this.markerType == 'house') && (this.totalCount > 0)) {
 
-        //let modal = this.modalc.create(MapHouselist, { list: this.currentHouseList, imgHost: this.imgHost });
-        //let modal = this.modalc.create(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost, listType: 'house' });
-        // this.listModal = this.modalc.create(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost, listType: 'house' });
-
-        // this.listModal.present();
-        //this.currentHouseList = this.userData.setVowMask(this.currentHouseList);
         this.nav.push(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost, listType: 'house' });
 
       } else {
 
-        //this.nav.push(HouselistSearch, { opts: this.selectOptions, bounds: this._bounds });
-        console.log(this.selectOptions);
-        //let modal = this.modalc.create(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds, listType: 'grid' });
-        //modal.present();
-        // this.listModal = this.modalc.create(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds, listType: 'grid' });
-        // this.listModal.present();
-        //this.currentHouseList = this.userData.setVowMask(this.currentHouseList);
         this.nav.push(HouselistSearch, { searchOptions: this.selectOptions, bounds: this._bounds, listType: 'grid' });
 
 
