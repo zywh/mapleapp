@@ -28,7 +28,7 @@ export class HouseDetailPage {
 
 	public isFav = { houseFav: false, routeFav: false };
 	public isMore: Boolean = true; //more buttom will be disabled before toast is dismiss
-	public parms = { id: '', list: [] };
+	public parms = { id: '', list: [], VOWtoken:'' };
 	public houseList = { prev: '', next: '', index: 0, total: 0 };
 	public section: string = "summary";
 	public isAndroid: boolean = false;
@@ -63,6 +63,7 @@ export class HouseDetailPage {
 		private toastCtrl: ToastController,
 		private actionSheetCtrl: ActionSheetController,
 		public platform: Platform,
+		private VOWtoken: any,
 		private shareService: ShareService) {
 
 		//this.nav = nav;
@@ -100,7 +101,9 @@ export class HouseDetailPage {
 			//this.getResult('index.php?r=ngget/getHouseDetail');
 			this.getResult(data.houseDetailRest, this.parms.id);
 			this.houseRestURL = data.mapHouseRest;
-
+			if (!this.VOWtoken) {
+				this.getVOWtoken(data.getVOWTokenRest);
+			} 
 		})
 	}
 
@@ -284,7 +287,8 @@ export class HouseDetailPage {
 		console.log("house detail get result")
 		this.parms.id = id;
 		let username = (this.auth.authenticated()) ? this.auth.user['email'] : 'NO';
-		this.mapleRestData.load(url, { 'id': id, 'username': username }).subscribe(
+		let token = (this.auth.authenticated()) ? '' : this.parms.VOWtoken;
+		this.mapleRestData.load(url, { 'id': id, 'username': username, 'VOWtoken': token }).subscribe(
 			data => {
 
 				this.houseM.rxPhone = this.mapleConf.data.phone;
@@ -300,6 +304,15 @@ export class HouseDetailPage {
 
 				this.slider.slideTo(0);
 				this.initMap();
+			}
+		)
+	}
+
+	getVOWtoken(url) {
+		this.mapleRestData.load(url, '').subscribe(
+			token => { 
+				this.VOWtoken = token;
+				console.log('global VOWtoken:' + this.VOWtoken);
 			}
 		)
 	}
@@ -371,6 +384,9 @@ export class HouseDetailPage {
 		let img = this.houseM.cdnPhotos[0];
 		//let link = "http://m.maplecity.com.cn/index.php?r=mhouse/view&id=" + this.parms.id;
 		let link = this.mapleConf.data.mcihost + "/#/housedetail/" + this.parms.id;
+		if (this.houseM.house.src == 'VOW') {
+			link = link + "/" + this.VOWtoken;
+		}
 		this.shareService.share(link, img, subject, message);
 	}
 }

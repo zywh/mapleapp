@@ -199,7 +199,8 @@ export interface houseInterface {
     oh_to1?: string,
     oh_to2?: string,
     oh_to3?: string,
-    pic_num?: number
+    pic_num?: number,
+    src?: string
 };
 
 export class houseModel {
@@ -405,7 +406,8 @@ export class houseModel {
         oh_to1: '',
         oh_to2: '',
         oh_to3: '',
-        pic_num: 0
+        pic_num: 0,
+        src: ''
 
     };
     public COMP_PTS = { "N": "北", "S": "南", "W": "西", "E": "东" };
