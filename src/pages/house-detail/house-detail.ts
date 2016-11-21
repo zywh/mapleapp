@@ -47,6 +47,7 @@ export class HouseDetailPage {
 	public S_R = { "Sale": "出售", "Lease": "出租" };
 	public F2M = { feet: "尺", meter: "米", sfeet: "平方英尺", smeter: "平方米" };
 	private houseRestURL;
+	private VOWtoken: string;
 
 
 	@ViewChild('photo_slider') slider: Slides;
@@ -63,7 +64,6 @@ export class HouseDetailPage {
 		private toastCtrl: ToastController,
 		private actionSheetCtrl: ActionSheetController,
 		public platform: Platform,
-		private VOWtoken: any,
 		private shareService: ShareService) {
 
 		//this.nav = nav;
