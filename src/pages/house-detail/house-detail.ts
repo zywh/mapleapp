@@ -290,6 +290,8 @@ export class HouseDetailPage {
 				this.houseM.rxPhone = this.mapleConf.data.phone;
 				this.houseM.house = data.house;
 				this.houseM.houseMname = data.house_mname;
+				this.houseM.houseProvince = data.house_province;
+				//console.log(this.houseM.houseProvince);
 				this.house_propertyType = data.house_propertyType;
 				this.houseM.housePropertyType = data.house_propertyType;
 				this.houseM.exchangeRate = data.exchangeRate;

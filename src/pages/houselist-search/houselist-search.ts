@@ -168,6 +168,7 @@ export class HouselistSearch {
 
         } else { //grid view . Need run gethouse
             this.pageIndex = 0;  //reset pageIndex
+            this.houses = [];
             this.getHouseList();
         }
 

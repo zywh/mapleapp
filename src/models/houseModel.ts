@@ -412,21 +412,22 @@ export class houseModel {
     public S_R = { "Sale": "出售", "Lease": "出租" };
     public F2M = { feet: "尺", meter: "米", sfeet: "平方英尺", smeter: "平方米" };
     public rooms = [];
-    public rxPhone;
+    public rxPhone: string;
     //private auth: boolean
     public houseMname;
     public exchangeRate;
     public cdnPhotos: Array<string>;
     public housePropertyType;
+    public houseProvince;
     public landArea: string;
     public propertyTxt: string;
     public addr: string;
     public priceCurrent: string;
     public priceOrig: string;
-    public priceRMB;
-    public kit;
-    public beds;
-    public rms;
+    public priceRMB: number;
+    public kit: number;
+    public beds: number;
+    public rms: number;
     public listDate;
     //public isFav;
 
