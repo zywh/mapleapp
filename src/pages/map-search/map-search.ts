@@ -119,7 +119,7 @@ export class MapSearchPage {
       this.setLocation(this.defaultcenter, this.defaultZoom, true);
     });
     this.events.subscribe('schoolmap:center', () => {
-      console.log("List modal dismiss")
+     // console.log("List modal dismiss")
       this.listModal.dismiss();
     });
     this.events.subscribe('user:login', (data) => {
@@ -153,7 +153,7 @@ export class MapSearchPage {
       //this.defaultcenter = this.mapLatLng(data['lat'], data['lng']);
 
       if (this.navparm.data.parms.lat > 20) {
-        console.log("Redirect from other page with center");
+       // console.log("Redirect from other page with center");
         this.defaultcenter = new google.maps.LatLng(this.navparm.data.parms.lat, this.navparm.data.parms.lng);
         //this.defaultcenter = this.mapLatLng(data['lat'], data['lng']);
       }
@@ -199,7 +199,7 @@ export class MapSearchPage {
 
 
       //Add marker if it's redirected from school page
-      console.log(this.navparm.data.parms.type);
+     // console.log(this.navparm.data.parms.type);
       if (this.navparm.data.parms.type != 'NONE') {
 
         this.setLocation(this.defaultcenter, 13, this.navparm.data.parms.type)
@@ -491,7 +491,7 @@ export class MapSearchPage {
         alert.present();
         //this.housePopover(house);
       } else {
-        console.log("More than one");
+       // console.log("More than one");
         this.nav.push(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost, listType: 'house' });
 
       }
@@ -502,7 +502,7 @@ export class MapSearchPage {
 
   }
   setSchoolContent(lat, lng, html, rating) {
-    console.log("Set School Marker Content")
+    //console.log("Set School Marker Content")
     let point = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
     let content = this.mapleconf.setSchoolMarkerCss(rating);
     let marker = new RichMarker({
@@ -639,7 +639,7 @@ export class MapSearchPage {
         };
       }
 
-      console.log("Map House Search Parms:" + mapParms);
+     // console.log("Map House Search Parms:" + mapParms);
       this.mapleconf.load().then(data => {
 
         let restUrl = data.mapHouseRest;
@@ -767,12 +767,12 @@ export class MapSearchPage {
        
         let li:String;
         if (!vowflag){
-          console.log("MLS:" + house.MLS + "VOW Hide DATA");
+         // console.log("MLS:" + house.MLS + "VOW Hide DATA");
            li = "<h2>登录用户可见</h2>"
         } else 
         {
 
-          console.log("MLS:" + house.MLS + "NOT VOW DATA");
+          //console.log("MLS:" + house.MLS + "NOT VOW DATA");
          li = ' <ion-card>'
           + '<img src="' + house.CdnCoverImg + '" />'
           + '<div class="house_desc" text-left text-nowrap>'
