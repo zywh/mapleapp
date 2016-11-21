@@ -105,6 +105,7 @@ export class HomePage {
 
       //this.getProjects();
       // this.getPosts(data.postListRest, 6);
+      this.setVOWtoken(data.getVOWTokenRest);
       this.searchHouse('nearby');
 
 
@@ -209,6 +210,13 @@ export class HomePage {
 
   }
 
+	setVOWtoken(url) {
+		this.mapleRestData.load(url, '').subscribe(
+			token => { 
+				this.mapleConf.setVOWtoken(token);
+			}
+		)
+	}
 
 
 }
