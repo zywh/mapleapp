@@ -1,7 +1,9 @@
 .house-detail {
+    .swiper-pagination-bullet { opacity: 1; background: #fff; }
+    .swiper-pagination-bullet-active { opacity: 1; background: #ff4103; }
     // z-index: 11;
     .swiper-container {
-        width: 100%;
+       // width: 100%;
         //height: auto; //66.8vw;
         min-height: 66.8vw;
         max-height: 66.8vw;

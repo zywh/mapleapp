@@ -129,7 +129,7 @@ export class HomePage {
 
   searchHouse(s) {
     console.log("Button is clicked for house search");
-    let range: number = (s == 'recommend') ? 0.1 : 0.015;
+    let range: number = (s == 'recommend') ? 0.2 : 0.030;
 
 
     this.mapleConf.getLocation().then(data => {
@@ -140,7 +140,8 @@ export class HomePage {
       let neLng = this.data['lng'] + range;
       let bounds = swLat + "," + swLng + "," + neLat + "," + neLng;
       let mapParms = {
-
+        centerLat: this.data['lat'],
+        centerLng: this.data['lng'],
         bounds: bounds,
         type: s,
         sr: 'Sale'

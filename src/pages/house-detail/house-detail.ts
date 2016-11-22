@@ -88,6 +88,8 @@ export class HouseDetailPage {
 
 	swiperOptions = {
 		//loop: true,
+		slidesPerView: 'auto',
+		spaceBetween: 1,
 		autoHeight: true,
 		pager: true,
 		speed: 300,
