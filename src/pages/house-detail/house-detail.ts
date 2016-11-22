@@ -47,8 +47,6 @@ export class HouseDetailPage {
 	public S_R = { "Sale": "出售", "Lease": "出租" };
 	public F2M = { feet: "尺", meter: "米", sfeet: "平方英尺", smeter: "平方米" };
 	private houseRestURL;
-	private VOWtoken: string;
-
 
 	@ViewChild('photo_slider') slider: Slides;
 
@@ -103,9 +101,6 @@ export class HouseDetailPage {
 			//this.getResult('index.php?r=ngget/getHouseDetail');
 			this.getResult(data.houseDetailRest, this.parms.id);
 			this.houseRestURL = data.mapHouseRest;
-			if (!this.VOWtoken) {
-				this.getVOWtoken(data.getVOWTokenRest);
-			} 
 		})
 	}
 
@@ -312,15 +307,6 @@ export class HouseDetailPage {
 		)
 	}
 
-	getVOWtoken(url) {
-		this.mapleRestData.load(url, '').subscribe(
-			token => { 
-				this.VOWtoken = token;
-				console.log('global VOWtoken:' + this.VOWtoken);
-			}
-		)
-	}
-
 	setHouseList() {
 		this.houseList = { prev: null, next: null, index: 0, total: 0 };
 		if (this.parms.list) {
@@ -387,10 +373,8 @@ export class HouseDetailPage {
 		let message = this.houseM.getPriceTxt(this.houseM.house.lp_dol) + " - " + this.houseM.getAddr() + " " + this.houseM.house.municipality;
 		let img = this.houseM.cdnPhotos[0];
 		//let link = "http://m.maplecity.com.cn/index.php?r=mhouse/view&id=" + this.parms.id;
-		let link = this.mapleConf.data.mcihost + "/#/housedetail/" + this.parms.id;
-		if (this.houseM.house.src == 'VOW') {
-			link = link + "/" + this.VOWtoken;
-		}
+		let link = this.mapleConf.data.mcihost + "/#/housedetail/" + this.parms.id + "/" + this.mapleConf.VOWtoken;
+		console.log("wechat link -" + link );
 		this.shareService.share(link, img, subject, message);
 	}
 }

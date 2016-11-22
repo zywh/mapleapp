@@ -21,6 +21,7 @@ export class HomePage {
   public projects: Object;
   public postListRest;
   public projectRest;
+  public VOWTokenRest;
   public post1;
   public favList;
   public hQueryText: string = '';
@@ -65,10 +66,12 @@ export class HomePage {
 
   listenEvents() {
     this.events.subscribe('user:login', () => {
+      this.setVOWtoken(this.VOWTokenRest);
       console.log("user login event detected")
     });
 
     this.events.subscribe('user:logout', () => {
+      this.setVOWtoken(this.VOWTokenRest);
       console.log("user logout event detected")
 
     });
@@ -102,9 +105,11 @@ export class HomePage {
       //this.postListRest = data.postRest;
       this.houseRestURL = data.mapHouseRest;
       this.projectRest = data.projectRest;
+      this.VOWTokenRest = data.getVOWTokenRest;
 
       //this.getProjects();
       // this.getPosts(data.postListRest, 6);
+      this.setVOWtoken(this.VOWTokenRest);
       this.searchHouse('nearby');
 
 
@@ -210,6 +215,13 @@ export class HomePage {
 
   }
 
+	setVOWtoken(url) {
+		this.mapleRestData.load(url, '').subscribe(
+			token => {
+          this.mapleConf.setVOWtoken(token);
+			}
+		)
+	}
 
 
 }

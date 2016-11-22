@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Http} from '@angular/http';
-import {Platform} from 'ionic-angular';
+import { Platform } from 'ionic-angular';
 //import {Observable} from 'rxjs/Observable';
 //import 'rxjs/Rx';
 
@@ -9,7 +9,8 @@ import {Platform} from 'ionic-angular';
 export class MapleConf {
   data: any;
   location;
-  public restHost: string = 'http://r.maplecity.com.cn/';
+  VOWtoken: string;
+  public restHost: string = 'http://r.citym.ca/';
  // public restHost: String = 'http://104.196.201.210/';
   //public restHost: String = 'http://cdnr.citym.ca/';
   
@@ -37,6 +38,7 @@ export class MapleConf {
       this.http.get(dataURL).subscribe(res => {
 
         this.data = res.json();
+
         resolve(this.data);
       });
     });
@@ -201,6 +203,14 @@ export class MapleConf {
  
     return diffdays + "天";
   }
+
+	setVOWtoken(token) {
+      console.log('mapleConf setVOWtoken :' + token);
+
+      this.VOWtoken = (!token.startsWith("invalid"))? token: '';
+      
+      console.log('mapleConf VOWtoken loaded:' + this.VOWtoken);
+	}
 
 }
 
