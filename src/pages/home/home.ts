@@ -134,7 +134,7 @@ export class HomePage {
 
   searchHouse(s) {
     console.log("Button is clicked for house search");
-    let range: number = (s == 'recommend') ? 0.2 : 0.030;
+    let range: number = (s == 'recommend') ? 0.1 : 0.05;
 
 
     this.mapleConf.getLocation().then(data => {
