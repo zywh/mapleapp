@@ -140,14 +140,14 @@ export class HouseDetailPage {
 		let bounds = swLat + "," + swLng + "," + neLat + "," + neLng;
 		let housePrice = { lower: this.houseM.house.lp_dol * 0.8 / 10000, upper: this.houseM.house.lp_dol * 1.2 / 10000 };
 		let houseArea;
-		if (this.houseM.house.house_area > 1) {
-			houseArea = { lower: this.houseM.house.house_area * 0.8, upper: this.houseM.house.house_area * 1.2 };
+		if (this.houseM.house.house_area > 100) {
+			//houseArea = { lower: this.houseM.house.house_area * 0.8, upper: this.houseM.house.house_area * 1.2 };
 		}
 
 
 		let landArea = {};
 		if (this.houseM.house.land_area > 1000) {
-			landArea = { lower: this.houseM.house.land_area * 0.8, upper: this.houseM.house.land_area * 1.2 };
+			//landArea = { lower: this.houseM.house.land_area * 0.8, upper: this.houseM.house.land_area * 1.2 };
 		}
 
 
@@ -158,8 +158,10 @@ export class HouseDetailPage {
 			sr: this.houseM.house.s_r,
 			houseprice: housePrice,
 			houseroom: this.houseM.house.br,
-			housearea: houseArea,
-			houseground: landArea
+			//housearea: houseArea,
+			//houseground: landArea
+			type: 'nearby',
+			housebaths: this.houseM.house.bath_tot
 		}
 
 		// this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(

@@ -631,6 +631,7 @@ export class MapSearchPage {
           housetype: this.selectOptions.selectType,
           houseprice: this.selectOptions.selectPrice,
           oh: this.selectOptions.selectOH,
+          housebaths: this.selectOptions.selectBaths,
           houseroom: this.selectOptions.selectBeds,
           housearea: this.selectOptions.selectHousesize,
           houseground: this.selectOptions.selectLandsize,
