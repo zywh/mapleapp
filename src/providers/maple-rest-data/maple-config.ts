@@ -205,8 +205,11 @@ export class MapleConf {
   }
 
 	setVOWtoken(token) {
-				this.VOWtoken = token;
-				console.log('mapleConf VOWtoken loaded:' + this.VOWtoken);
+      console.log('mapleConf setVOWtoken :' + token);
+
+      this.VOWtoken = (!token.startsWith("invalid"))? token: '';
+      
+      console.log('mapleConf VOWtoken loaded:' + this.VOWtoken);
 	}
 
 }
