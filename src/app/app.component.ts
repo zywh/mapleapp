@@ -5,13 +5,13 @@ import {StatusBar, Splashscreen} from 'ionic-native';
 import {TabsPage} from '../pages/tabs/tabs';
 //import {LoginPage} from '../pages/login/login';
 //import {SignupPage} from '../pages/signup/signup';
-import {SettingsPage} from '../pages/settings/settings';
-import {ProfilePage} from '../pages/profile/profile';
+//import {SettingsPage} from '../pages/settings/settings';
+//import {ProfilePage} from '../pages/profile/profile';
 import {NetworkErrorPage} from '../pages/network-error/network-error';
-import {HouselistSearch} from '../pages/houselist-search/houselist-search'
+//import {HouselistSearch} from '../pages/houselist-search/houselist-search'
 //import {ConferenceData} from './providers/conference-data';
 import {UserData} from '../providers/user-data';
-import {MapleRestData} from '../providers/maple-rest-data/maple-rest-data';
+//import {MapleRestData} from '../providers/maple-rest-data/maple-rest-data';
 import {Connectivity} from '../providers/connectivity';
 import {MapleConf} from '../providers/maple-rest-data/maple-config';
 import {AuthService} from '../providers/auth/auth';

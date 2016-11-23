@@ -1,5 +1,5 @@
 import {NavController, Modal} from 'ionic-angular';
-import {OnInit, Component} from '@angular/core';;
+import {Component} from '@angular/core';;
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 //import {gtaStats} from './gtaStats';
@@ -188,7 +188,7 @@ export class StatsPage {
                         let data = value[f];
                         let seriesname = type + "_" + f;  //all_avgprice
                         let chartdata = [];
-                        let xdata = [];
+                       // let xdata = [];
 
                         //Loop through each day
                         for (let v in data) {
@@ -217,8 +217,8 @@ export class StatsPage {
                     }
 
                 }
-                let viewHeight = window.innerHeight;
-                let viewWidth = window.innerWidth;
+                //let viewHeight = window.innerHeight;
+               // let viewWidth = window.innerWidth;
 
 
             });

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController,AlertController } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {UserData} from '../../providers/user-data';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';

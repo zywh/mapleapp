@@ -1,20 +1,18 @@
-import { ModalController, LoadingController, Events, AlertController, PopoverController, ActionSheet, MenuController, Platform, NavController, NavParams, ViewController } from 'ionic-angular';
-import { Geolocation } from 'ionic-native';
+import { ModalController, LoadingController, Events, AlertController, PopoverController, MenuController, Platform, NavController, NavParams, ViewController } from 'ionic-angular';
+
 import { NgZone, Component, ElementRef, ViewChild } from '@angular/core';;
 import { Connectivity } from '../../providers/connectivity';
 import { HouseDetailPage } from '../house-detail/house-detail';
 import { HouselistSearch } from '../houselist-search/houselist-search';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
-import { Observable } from 'rxjs/Observable';
-//import {GoogleMaps} from '../../providers/google-maps/google-maps';
-//import {GoogleMap, GoogleMapsEvent, GoogleMapsLatLng, GoogleMapsMarker} from 'ionic-native';
+
 import { SelectOptionModal } from './map-option-modal';
 import { MapHouselist } from './map-houselist';
-//import {ConferenceData} from '../../providers/conference-data';
+
 import { SchoolSelectOptionModal } from '../school-map/schoolmap-option-modal';
 import { SchoolListModal } from '../school-map/school-list-modal';
-//import {HousePopover} from './house-popover';
+
 import { AuthService } from '../../providers/auth/auth';
 import { UserData } from '../../providers/user-data';
 import {houseListModel} from '../../models/houseListModel';
@@ -34,15 +32,14 @@ export class MapSearchPage {
   public mapLib = 1; // 0 is java and 1 is native google SDK
   public queryText: String = '';
   public mapInitialised: boolean = false;
-  //mapLoaded: any;
-  //mapLoadedObserver: any;
+  
   public searchInFocus: boolean = false;
   public cityItems: any;
   public addressItems: any;
   public mlsItems: any;
   public schoolItems: any;
   public parms: Object;
-  // public defaultcenter = new google.maps.LatLng(43.6532, -79.3832);
+ 
   public defaultcenter;
   public houselist: any;
   public map = null;

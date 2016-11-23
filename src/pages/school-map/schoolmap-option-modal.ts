@@ -1,12 +1,12 @@
 
 
-import { Modal, Range, NavParams, ViewController, Events } from 'ionic-angular';
+import { NavParams, ViewController, Events } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 import { UserData } from '../../providers/user-data';
 import { AuthService } from '../../providers/auth/auth';
-import { Search } from '../../components/search/search';
+
 
 export interface selectOptionsObj {
     selectType?: boolean,

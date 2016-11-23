@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, reorderArray } from 'ionic-angular';
 import {HouseDetailPage} from '../house-detail/house-detail';
-import {HouselistSearch} from '../houselist-search/houselist-search';
+//import {HouselistSearch} from '../houselist-search/houselist-search';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 // import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {UserData} from '../../providers/user-data';
-import {HouseList} from '../../components/house-list/house-list';
+//import {HouseList} from '../../components/house-list/house-list';
 
 @Component({
   templateUrl: 'favorite.html'

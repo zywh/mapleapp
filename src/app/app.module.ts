@@ -16,6 +16,7 @@ import { ShareService } from '../providers/share';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { HouseList } from '../components/house-list/house-list';
 import { Search } from '../components/search/search';
+import { ElasticHeader } from '../components/elastic-header/elastic-header';
 
 
 //import pages
@@ -44,6 +45,7 @@ import {SettingsPage} from '../pages/settings/settings';
 import {StatsPage} from '../pages/stats/stats';
 import { TabsPage } from '../pages/tabs/tabs';
 import {chartStats} from '../pages/stats/chartStats';
+
 
 
 const cloudSettings: CloudSettings = {
@@ -75,6 +77,7 @@ export function authFactory(http: any) {
     Search,
     MapleApp,
     AboutPage,
+    ElasticHeader,
     FavoritePage,
     HelpPage,
     HomePage,

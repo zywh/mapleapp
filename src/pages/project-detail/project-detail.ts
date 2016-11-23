@@ -1,6 +1,6 @@
-import {NavController, NavParams, Platform} from 'ionic-angular';
+import {NavParams, Platform} from 'ionic-angular';
 import {OnInit, Component} from '@angular/core';;
-import {SocialSharing} from 'ionic-native';
+//import {SocialSharing} from 'ionic-native';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {ShareService} from '../../providers/share';

@@ -1,8 +1,7 @@
 //import {Page, NavController} from 'ionic-angular';
 import { NavController, NavParams, Events } from 'ionic-angular';
-import { OnInit, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
-import { Http, Headers, RequestOptions } from '@angular/http';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 import { ProjectDetailPage } from '../project-detail/project-detail';
 import { HouseDetailPage } from '../house-detail/house-detail';
@@ -10,8 +9,8 @@ import { UserData } from '../../providers/user-data';
 import { PostPage } from '../post/post';
 import { ProfilePage } from '../profile/profile';
 import { AuthService } from '../../providers/auth/auth';
-import { HouseList } from '../../components/house-list/house-list';
-import { Search } from '../../components/search/search';
+//import { HouseList } from '../../components/house-list/house-list';
+//import { Search } from '../../components/search/search';
 import {houseListModel} from '../../models/houseListModel';
 
 @Component({

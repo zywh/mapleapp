@@ -1,4 +1,4 @@
-import {NavController, NavParams} from 'ionic-angular';
+import {NavController} from 'ionic-angular';
 import {OnInit,Component} from '@angular/core';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
@@ -23,13 +23,7 @@ export class ProjectsPage implements OnInit {
     constructor(private nav: NavController, private mapleRestData: MapleRestData,private mapleconf: MapleConf) {
         //this.nav = nav;
     }
-    
-    private swiperOptions = {
-        loop: true,
-        //pager: true,
-        speed: 4000,
-        autoplay: 300
-    };
+   
 
     ngOnInit() {
         this.getResult('index.php?r=ngget/getProjects');

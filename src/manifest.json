@@ -1,0 +1,7 @@
+{
+  "name": "Maplecity App",
+  "short_name": "Maplecity",
+  "start_url": "index.html",
+  "display": "standalone"
+  
+}
