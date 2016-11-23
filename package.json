@@ -6,15 +6,10 @@
     "type": "git",
     "url": "https://github.com/zywh/maplecityapp.git"
   },
-  "private": true,
-  "scripts": {
+   "scripts": {
     "build": "ionic-app-scripts build",
-    "watch": "ionic-app-scripts watch",
-    "serve:before": "watch",
-    "emulate:before": "build",
-    "deploy:before": "build",
-    "build:before": "build",
-    "run:before": "build"
+    "watch": "ionic-app-scripts watch"
+   
   },
   "globalDependencies": {
     "highcharts": "^4.2.5"
@@ -30,22 +25,25 @@
     "@angular/platform-browser-dynamic": "2.1.1",
     "@angular/platform-server": "2.1.1",
     "@ionic/storage": "^1.1.6",
-    "ionic-angular": "^2.0.0-rc.2",
+    "ionic-angular": "^2.0.0-rc.3",
     "ionic-native": "^2.2.3",
     "ionicons": "^3.0.0",
     "moment": "^2.15.1",
     "rxjs": "5.0.0-beta.12",
-    "zone.js": "0.6.21",
+    "zone.js": "0.6.26",
     "@ionic/cloud": "^0.14.0",
     "@ionic/cloud-angular": "^0.7.0",
     "angular2-highcharts": "^0.4.1",
     "angular2-jwt": "^0.1.25"
   },
   "devDependencies": {
-   "@ionic/app-scripts": "^0.0.39",
-
-    "@types/js-base64": "^2.1.4",
-    "typescript": "^2.0.3"
+   "@ionic/app-scripts": "^0.0.45",
+   "@types/js-base64": "^2.1.4",
+    "typescript": "2.0.9",
+    "webpack-bundle-analyzer": "^1.5.3"
+  },
+  "config": {
+    "ionic_bundler": "webpack"
   },
   "cordovaPlugins": [
     "cordova-plugin-whitelist",
@@ -70,16 +68,7 @@
   ],
   "cordovaPlatforms": [
     "ios",
-    "android",
-    {
-      "platform": "android",
-      "version": "",
-      "locator": "android"
-    },
-    {
-      "platform": "ios",
-      "version": "",
-      "locator": "ios"
-    }
+    "android"
+   
   ]
 }
