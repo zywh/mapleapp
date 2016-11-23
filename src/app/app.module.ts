@@ -57,7 +57,8 @@ let storage: Storage = new Storage();
 
 export const deepLinkConfig: DeepLinkConfig = {
   links: [
-    { component: HouseDetailPage, name: '房源详情', segment: 'housedetail/:id/:VOWtoken' },
+    { component: HouseDetailPage, name: '房源详情', segment: 'housedetail/:id' },
+    { component: HouseDetailPage, name: '房源详情2', segment: 'housedetail/:id/:VOWtoken' },
     { component: ProjectDetailPage, name: '项目详情', segment: 'projectdetail/:id' }
   ]
 };

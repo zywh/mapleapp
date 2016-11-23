@@ -9,7 +9,7 @@ import { Platform } from 'ionic-angular';
 export class MapleConf {
   data: any;
   location;
-  VOWtoken: string;
+  VOWtoken: string = '';
   public restHost: string = 'http://r.citym.ca/';
  // public restHost: String = 'http://104.196.201.210/';
   //public restHost: String = 'http://cdnr.citym.ca/';
@@ -208,7 +208,7 @@ export class MapleConf {
       console.log('mapleConf setVOWtoken :' + token);
 
       this.VOWtoken = (!token.startsWith("invalid"))? token: '';
-      
+
       console.log('mapleConf VOWtoken loaded:' + this.VOWtoken);
 	}
 
