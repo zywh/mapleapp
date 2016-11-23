@@ -97,6 +97,7 @@ export class HouseDetailPage {
 
 	ionViewDidEnter() {
 		console.log("House Detail page view did enter")
+		console.log(this.parms)
 		this.mapleConf.load().then(data => {
 			//this.getResult('index.php?r=ngget/getHouseDetail');
 			this.getResult(data.houseDetailRest, this.parms.id);
@@ -286,7 +287,7 @@ export class HouseDetailPage {
 		console.log("house detail get result")
 		this.parms.id = id;
 		let username = (this.auth.authenticated()) ? this.auth.user['email'] : 'NO';
-		let token = (this.auth.authenticated()) ? '' : this.parms.VOWtoken;
+		let token = this.parms.VOWtoken;
 		this.mapleRestData.load(url, { 'id': id, 'username': username, 'VOWtoken': token }).subscribe(
 			data => {
 
