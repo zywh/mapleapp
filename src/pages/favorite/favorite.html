@@ -29,7 +29,7 @@
 
 	<ion-list [reorder]="editing" (ionItemReorder)="reorderItems($event)" *ngIf="isList">
 
-		<ion-item-sliding *ngFor="let house of favList">
+		<ion-item-sliding *ngFor="let house of favList?.list">
 			<ion-item tappable class="house_card" (click)="gotoHouseDetail(house.MLS,house.Address)">
 				<ion-thumbnail item-left *ngIf="!editing && house.Address">
 					<img [src]="house.CdnCoverImg" />

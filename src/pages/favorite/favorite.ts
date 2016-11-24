@@ -6,12 +6,13 @@ import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 // import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {UserData} from '../../providers/user-data';
 //import {HouseList} from '../../components/house-list/house-list';
+import {houseListModel} from '../../models/houseListModel';
 
 @Component({
   templateUrl: 'favorite.html'
 })
 export class FavoritePage {
-  public favList;
+  public favList: houseListModel;
   public imgHost = '';
   public pageTitle;
   public pageType;
@@ -19,6 +20,7 @@ export class FavoritePage {
   public editing: boolean = false;
   public viewType: string = 'apps';
   public isList: boolean = true;
+  
   
 
   constructor(
@@ -39,7 +41,8 @@ export class FavoritePage {
 
     this.userData.getUserData(this.pageType).then(res => {
       this.imgHost = res.imgHost;
-      this.favList = res.HouseList;
+      //this.favList = res.HouseList;
+      this.favList = new houseListModel(res.HouseList,true);
       console.log(this.favList);
 
     });
@@ -51,7 +54,7 @@ export class FavoritePage {
   gotoHouseDetail(mls,address) {
     if (address && !this.editing){
       //this.nav.pop().then(() => this.nav.push(HouseDetailPage, { id: mls, list: this.favList }))
-      this.nav.push(HouseDetailPage, { id: mls, list: this.favList });
+      this.nav.push(HouseDetailPage, { id: mls, list: this.favList.list });
       //this.nav.pop();
     }
     
@@ -79,7 +82,7 @@ export class FavoritePage {
   remove(mls) {
     this.userData.changeFavorite(mls, this.pageType, 'd').then(res => {
       console.log("Remove MLS Result:" + res);
-      this.favList = this.favList.filter(function (obj) {
+      this.favList.list = this.favList.list.filter(function (obj) {
         return obj.MLS !== mls;
       });
     });
@@ -88,13 +91,13 @@ export class FavoritePage {
   }
 
   reorderItems(indexes) {
-    this.favList = reorderArray(this.favList, indexes);
+    this.favList.list = reorderArray(this.favList.list, indexes);
 
   }
 
   saveFavOrder() {
 
-    let list = this.favList.map(function (a) { return a.MLS; }).join();
+    let list = this.favList.list.map(function (a) { return a.MLS; }).join();
     console.log(list);
     this.userData.changeFavorite(list, this.pageType, 'r').then(res => {
       console.log("MLS Result Reorder:" + res);
