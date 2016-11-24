@@ -116,13 +116,13 @@ export class HouseDetailPage {
 			zoom: 14,
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		}
-	   new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-		// let markerDrop = new google.maps.Marker({
-		// 	position: point,
-		// 	map: map,
-		// 	animation: google.maps.Animation.DROP,
-		// 	draggable: false,
-		// });
+	   let map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+		 new google.maps.Marker({
+			position: point,
+			map: map,
+			animation: google.maps.Animation.DROP,
+			draggable: false,
+		});
 
 
 	}
