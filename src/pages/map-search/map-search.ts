@@ -8,7 +8,7 @@ import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 
 import { SelectOptionModal } from './map-option-modal';
-import { MapHouselist } from './map-houselist';
+//import { MapHouselist } from './map-houselist';
 
 import { SchoolSelectOptionModal } from '../school-map/schoolmap-option-modal';
 import { SchoolListModal } from '../school-map/school-list-modal';
@@ -138,9 +138,9 @@ export class MapSearchPage {
 
     this.mapInitialised = true;
 
-    let loading = this.loadingc.create({
-      content: '加载地图...'
-    });
+    // let loading = this.loadingc.create({
+    //   content: '加载地图...'
+    // });
     //loading.present();
 
 
@@ -213,7 +213,7 @@ export class MapSearchPage {
   ionViewWillEnter() {
     console.log("Map View will enter");
     this.lockMapListener = false; //unlock after view enter
-    let optionType = (this.mapType == 0) ? 'houseSearch' : 'schoolSearch';
+   // let optionType = (this.mapType == 0) ? 'houseSearch' : 'schoolSearch';
 
     // if (this.auth.authenticated()) {
     //   this.userData.getUserSelections(optionType).then(res => {
@@ -233,7 +233,7 @@ export class MapSearchPage {
 
     if (!this.mapInitialised ) {
 
-      let mapLoaded = this.initMap();
+      this.initMap();
       let alert = this.alertc.create({
         title: '提示',
         message: '根据TREB数据协议，有些房源只有登录后才可以显示，请注册/登录后查找更多房源',
@@ -600,11 +600,11 @@ export class MapSearchPage {
       let gridy = Math.ceil(mapHeight / gridSize);
       let _sw = this.map.getBounds().getSouthWest();
       let _ne = this.map.getBounds().getNorthEast();
-      let centerlat = (_ne.lat() + _sw.lat()) / 2;
-      let centerlng = (_ne.lng() + _sw.lng()) / 2;
-      let HouseArray = [];
+      //let centerlat = (_ne.lat() + _sw.lat()) / 2;
+      //let centerlng = (_ne.lng() + _sw.lng()) / 2;
+     // let HouseArray = [];
 
-      let marker;
+      
       let mapParms;
       this._bounds = _sw.lat() + "," + _sw.lng() + "," + _ne.lat() + "," + _ne.lng();
       if (type == 1) {
@@ -732,7 +732,7 @@ export class MapSearchPage {
       this.imgHost = data.Data.imgHost;
       let nextLat;
       let nextLng;
-      let listAllHtml;
+      //let listAllHtml;
       //this.currentHouseList = this.userData.setVowMask(data.Data.HouseList);
       this.currentHouseList = new houseListModel(data.Data.HouseList,this.auth.authenticated());
       let panelhtml;
@@ -751,10 +751,10 @@ export class MapSearchPage {
         //console.log("Current:" + this.GeocodeLng + "Next:" + nextLng + "Total:" + totalhouse + "index:" + index + "Count:" + count);
         //let imgurl = this.imgHost + house.CoverImg;
         //let imgurltn = this.imgHost + house.CoverImgtn;
-        let imgurl = house.CdnCoverImg;
+        //let imgurl = house.CdnCoverImg;
         let imgurltn = house.CdnCoverImgtn;
 
-        let hprice = (house.SaleLease == 'Lease') ? Math.round(house.Price) * 10000 + '加元/月' : Math.round(house.Price) + '万加元';
+        //let hprice = (house.SaleLease == 'Lease') ? Math.round(house.Price) * 10000 + '加元/月' : Math.round(house.Price) + '万加元';
         let markerprice = Math.round(house.Price);
 
         let tlat = parseFloat(house.GeocodeLat);

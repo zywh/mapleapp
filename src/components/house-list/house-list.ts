@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { UserData } from '../../providers/user-data';
 import { HouseDetailPage } from '../../pages/house-detail/house-detail';
-import { NavController, reorderArray, ModalController, Events } from 'ionic-angular';
+import { NavController,  ModalController, Events } from 'ionic-angular';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { MapHouselist } from '../../pages/map-search/map-houselist';
-import {houseShort, houseListModel } from '../../models/houseListModel';
+import {houseListModel } from '../../models/houseListModel';
 import { AuthService } from '../../providers/auth/auth';
 
 @Component({
@@ -18,7 +18,7 @@ export class HouseList {
   @Input() imgHost: String;
   @Input() fav: Boolean;
   @Input() isList: Boolean;
-  private data;
+  //private data;
   private nearbyHouseList;
   public houseListM: houseListModel;
   //public houselist: Array<houseShort>;

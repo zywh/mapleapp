@@ -1,7 +1,7 @@
 import { NavController, NavParams, AlertController, ToastController, Platform, Slides, Events, ActionSheetController } from 'ionic-angular';
-import { OnInit, Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 //import {Geolocation} from 'ionic-native';
-import { SocialSharing } from 'ionic-native';
+//import { SocialSharing } from 'ionic-native';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 import { UserData } from '../../providers/user-data';
@@ -116,13 +116,13 @@ export class HouseDetailPage {
 			zoom: 14,
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		}
-		let map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-		let markerDrop = new google.maps.Marker({
-			position: point,
-			map: map,
-			animation: google.maps.Animation.DROP,
-			draggable: false,
-		});
+	   new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+		// let markerDrop = new google.maps.Marker({
+		// 	position: point,
+		// 	map: map,
+		// 	animation: google.maps.Animation.DROP,
+		// 	draggable: false,
+		// });
 
 
 	}
@@ -140,13 +140,13 @@ export class HouseDetailPage {
 		let neLng = this.houseM.house.longitude + range;
 		let bounds = swLat + "," + swLng + "," + neLat + "," + neLng;
 		let housePrice = { lower: this.houseM.house.lp_dol * 0.8 / 10000, upper: this.houseM.house.lp_dol * 1.2 / 10000 };
-		let houseArea;
+		//let houseArea;
 		if (this.houseM.house.house_area > 100) {
 			//houseArea = { lower: this.houseM.house.house_area * 0.8, upper: this.houseM.house.house_area * 1.2 };
 		}
 
 
-		let landArea = {};
+		//let landArea = {};
 		if (this.houseM.house.land_area > 1000) {
 			//landArea = { lower: this.houseM.house.land_area * 0.8, upper: this.houseM.house.land_area * 1.2 };
 		}
@@ -158,11 +158,11 @@ export class HouseDetailPage {
 			housetype: [this.houseM.house.propertyType_id],
 			sr: this.houseM.house.s_r,
 			houseprice: housePrice,
-			houseroom: this.houseM.house.br,
+			//houseroom: this.houseM.house.br,
 			//housearea: houseArea,
 			//houseground: landArea
 			type: 'nearby',
-			housebaths: this.houseM.house.bath_tot
+			//housebaths: this.houseM.house.bath_tot
 		}
 
 		// this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(

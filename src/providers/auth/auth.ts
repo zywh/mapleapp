@@ -3,7 +3,7 @@ import { Storage } from '@ionic/storage';
 import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 import { Injectable, NgZone } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { CN } from './cn';
+//import { CN } from './cn';
 import { Events } from 'ionic-angular';
 
 // Avoid name not found warnings

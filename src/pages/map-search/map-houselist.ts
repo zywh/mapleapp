@@ -1,14 +1,14 @@
-import {NavParams, NavController, Events} from 'ionic-angular';
+import {NavParams, NavController} from 'ionic-angular';
 import {Component} from '@angular/core';
 import {HouseDetailPage} from '../house-detail/house-detail';
-import {Modal, Loading, AlertController, ViewController} from 'ionic-angular';
-import { NgZone} from '@angular/core';;
-import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
+
+//import { NgZone} from '@angular/core';;
+//import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {UserData} from '../../providers/user-data'
-import {SelectOptionModal} from '../map-search/map-option-modal';
+//import {SelectOptionModal} from '../map-search/map-option-modal';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
-import {AuthService} from '../../providers/auth/auth';
-import {HouseList} from '../../components/house-list/house-list';
+//import {AuthService} from '../../providers/auth/auth';
+//import {HouseList} from '../../components/house-list/house-list';
 
 
 

@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import {UserData} from '../../providers/user-data';
-import {HouseDetailPage} from '../../pages/house-detail/house-detail';
-import { NavController, ModalController, Events} from 'ionic-angular';
+//import {HouseDetailPage} from '../../pages/house-detail/house-detail';
+import { NavController,Events} from 'ionic-angular';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 

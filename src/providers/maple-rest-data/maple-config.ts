@@ -38,6 +38,9 @@ export class MapleConf {
       this.http.get(dataURL).subscribe(res => {
 
         this.data = res.json();
+        if ( this.data.version != this.localVersion){
+          console.log("Version Change");
+        }
 
         resolve(this.data);
       });
@@ -162,7 +165,7 @@ export class MapleConf {
        window.open('maps://?daddr=' + destination, '_system');
 
     } else {
-      let label = encodeURI('目的地');
+      //let label = encodeURI('目的地');
      // window.open('geo:0,0?q=' + destination + '(' + label + ')', '_system');
       //window.open('geo:0,0?daddr=' + destination + '(' + label + ')', '_system');
       window.open('google.navigation:q=' + destination + '&mode=d', '_system');

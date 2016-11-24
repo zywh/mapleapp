@@ -1,12 +1,12 @@
-import { Modal, Loading, NavController, AlertController, NavParams, ViewController, ActionSheetController, Events } from 'ionic-angular';
-import { NgZone, Component } from '@angular/core';;
+import { NavController, AlertController, NavParams,ActionSheetController, Events } from 'ionic-angular';
+import { Component } from '@angular/core';;
 import { HouseDetailPage } from '../house-detail/house-detail';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { UserData } from '../../providers/user-data'
-import { SelectOptionModal } from '../map-search/map-option-modal';
+//import { SelectOptionModal } from '../map-search/map-option-modal';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 import { AuthService } from '../../providers/auth/auth';
-import { HouseList } from '../../components/house-list/house-list';
+//import { HouseList } from '../../components/house-list/house-list';
 import { houseListModel, houseShort } from '../../models/houseListModel';
 
 
@@ -227,8 +227,8 @@ export class HouselistSearch {
                     this.totalCount = data.Data.Total;
                     this.pageTotal = Math.ceil(this.totalCount / 8);
                     this.houses = this.houses.concat(data.Data.HouseList);
-                    let totalprice = 0;
-                    let totalhouse = data.Data.HouseList.length;
+                    //let totalprice = 0;
+                    //let totalhouse = data.Data.HouseList.length;
                     this.imgHost = data.Data.imgHost;
                     // this.currentHouseList = this.userData.setVowMask(data.Data.HouseList);
                     //this.currentHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());

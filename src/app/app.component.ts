@@ -1,4 +1,4 @@
-import {ViewChild, Component,Type} from '@angular/core';
+import {ViewChild, Component} from '@angular/core';
 import {Events, Platform, Nav, MenuController} from 'ionic-angular';
 import {StatusBar, Splashscreen} from 'ionic-native';
 //import {AccountPage} from '../pages/account/account';

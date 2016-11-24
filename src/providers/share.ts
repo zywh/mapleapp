@@ -64,10 +64,10 @@ export class ShareService {
 
   shareSocial(link, img, title, des) {
 
-    var onSuccess = function (result) {
-      console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true
-      console.log("Shared to app: " + result.app); // On Android result.app is currently empty. On iOS it's empty when sharing is cancelled (result.completed=false)
-    }
+    // var onSuccess = function (result) {
+    //   console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true
+    //   console.log("Shared to app: " + result.app); // On Android result.app is currently empty. On iOS it's empty when sharing is cancelled (result.completed=false)
+    // }
     var options = {
       message: des, // not supported on some apps (Facebook, Instagram)
       subject: title, // fi. for email
@@ -75,9 +75,9 @@ export class ShareService {
       url: link,
       chooserTitle: '分享' // Android only, you can override the default share sheet title
     }
-    var onError = function (msg) {
-      console.log("Sharing failed with message: " + msg);
-    }
+    // var onError = function (msg) {
+    //   console.log("Sharing failed with message: " + msg);
+    // }
     SocialSharing.shareWithOptions(options);
   }
 }

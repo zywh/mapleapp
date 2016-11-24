@@ -1,4 +1,4 @@
-import {NavController, Modal,NavParams} from 'ionic-angular';
+import {NavController,NavParams} from 'ionic-angular';
 import {Component} from '@angular/core';;
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
