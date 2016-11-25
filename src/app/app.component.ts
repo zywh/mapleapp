@@ -118,7 +118,8 @@ export class MapleApp {
      this.events.subscribe('profile:login', (data) => {
 
       setTimeout(() => {
-        this.nav.setRoot(TabsPage, { tabIndex: 4});
+        this.auth.login();
+        //this.nav.setRoot(TabsPage, { tabIndex: 4});
       }, 300);
     });
 
