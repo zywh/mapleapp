@@ -168,7 +168,7 @@
 					<ion-label fixed class="xqlb_label">挂牌时间：</ion-label>
 					<ion-label>{{houseM.house.pix_updt}}</ion-label>
 				</ion-item>
-				<ion-item>
+				<ion-item *ngIf="houseM.house.style">
 					<ion-label fixed class="xqlb_label">房屋层数：</ion-label>
 					<ion-label>{{houseM.house.style}}</ion-label>
 				</ion-item>
@@ -192,64 +192,64 @@
 					<!--<ion-label>{{houseM.add2(houseM.house.num_kit,houseM.house.kit_plus)}}</ion-label>-->
 					<ion-label>{{houseM.kit}}</ion-label>
 				</ion-item>
-				<ion-item>
+				<ion-item >
 					<ion-label fixed class="xqlb_label">土地面积：</ion-label>
 					<!--<ion-label>{{getLandArea(switchF2M)}}</ion-label>-->
 					<ion-label>{{houseM.landArea}}</ion-label>
-				</ion-item>
+				</ion-item >
 					<ion-item>
 					<ion-label fixed class="xqlb_label">土地描述：</ion-label>
 					<ion-label>{{houseM.house.acres}}</ion-label>
 				</ion-item>
-				<ion-item>
+				<ion-item *ngIf="houseM.house.sqft">
 					<ion-label fixed class="xqlb_label">房屋面积：</ion-label>
 					<ion-label>{{houseM.house.sqft}}</ion-label>
 				</ion-item>
 
-				<ion-item>
+				<ion-item *ngIf="houseM.house.taxes">
 					<ion-label fixed class="xqlb_label">地税：</ion-label>
 					<ion-label>{{houseM.house.taxes}}/{{houseM.house.yr}} 年</ion-label>
 				</ion-item>
 				
-				<ion-item>
+				<ion-item *ngIf="houseM.house.prepay">
 					<ion-label fixed class="xqlb_label">物业管理：</ion-label>
 					<ion-label>{{houseM.house.prepay}}</ion-label>
 				</ion-item>
 				
-				<ion-item>
+				<ion-item *ngIf="houseM.house.yr_built">
 					<ion-label fixed class="xqlb_label">建造年份：</ion-label>
 					<ion-label>{{houseM.house.yr_built}}年</ion-label>
 				</ion-item>
 			
 				
-				<ion-item>
+				<ion-item *ngIf="houseM.house.bsmt1_out">
 					<ion-label fixed class="xqlb_label">地下室：</ion-label>
 					<ion-label>{{houseM.house.bsmt1_out}}&nbsp;{{houseM.house.bsmt2_out}}</ion-label>
 				</ion-item>
-				<ion-item>
+				<ion-item *ngIf="houseM.house.gar_space">
 					<ion-label fixed class="xqlb_label">车库数量：</ion-label>
 					<ion-label>{{houseM.house.gar_space}}</ion-label>
 				</ion-item>
-				<ion-item>
+				<ion-item *ngIf="houseM.house.heating">
 					<ion-label fixed class="xqlb_label">暖气：</ion-label>
 					<ion-label>{{houseM.house.heating}}</ion-label>
 				</ion-item>
-				<ion-item>
+				<ion-item *ngIf="houseM.house.comp_pts">
 					<ion-label fixed class="xqlb_label">大门朝向：</ion-label>
 					<ion-label>{{COMP_PTS[houseM.house.comp_pts]}}</ion-label>
 				</ion-item>
-				<ion-item>
+				<ion-item *ngIf="houseM.house.a_c">
 					<ion-label fixed class="xqlb_label">空调：</ion-label>
 					<ion-label>{{houseM.house.a_c}}</ion-label>
 				</ion-item>
-				<ion-item>
+				<ion-item *ngIf="houseM.house.cross_st">
 					<ion-label fixed class="xqlb_label">交叉路口：</ion-label>
 					<ion-label>{{houseM.house.cross_st}}</ion-label>
 				</ion-item>
-				<ion-item>
+				<!--<ion-item>
 					<ion-label fixed class="xqlb_label">邮编：</ion-label>
 					<ion-label>{{houseM.house.zip}}</ion-label>
-				</ion-item>
+				</ion-item>-->
 				<ion-item>
 					<ion-label fixed class="xqlb_label">中央吸尘：</ion-label>
 					<ion-label>{{(houseM.house.central_vac=="Y ")?"是 ":"否 "}}</ion-label>
@@ -258,10 +258,10 @@
 					<ion-label fixed class="xqlb_label">游泳池：</ion-label>
 					<ion-label>{{houseM.house.pool}}</ion-label>
 				</ion-item>
-				<ion-item>
+				<!--<ion-item>
 					<ion-label fixed class="xqlb_label">售/租：</ion-label>
 					<ion-label>{{S_R[houseM.house.s_r]}}</ion-label>
-				</ion-item>
+				</ion-item>-->
 				<ion-item-divider id="housedivider" divider   >
 					<ion-label>房屋布局</ion-label>
 					<ion-label class="switchF2M">{{(switchF2M == false)? F2M.feet: F2M.meter}}</ion-label>
