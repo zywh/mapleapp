@@ -10,6 +10,7 @@ export class MapleConf {
   data: any;
   location;
   VOWtoken: string = '';
+  public helpHouseDetailFlag: boolean = false;
   //public restHost: string = 'http://r.citym.ca/';
   public restHost: string = 'http://devr.citym.ca/';
 

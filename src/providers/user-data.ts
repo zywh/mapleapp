@@ -113,7 +113,7 @@ export class UserData {
   presentToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
-      duration: 1000,
+      duration: 2000,
       position: 'bottom'
       //dismissOnPageChange: true
     });
