@@ -64,13 +64,10 @@ export class MapleConf {
 
     if (this.platform.is('ios')) {
       let iosButton = {
-        text: '版本升级',
+        //text: '版本升级',
+        text: this.data.iosURL[0].txt,
         handler: () => {
-          alert.dismiss().then(res => {
-
-            window.open(this.data.iosURL, "_blank");
-
-          })
+          alert.dismiss().then(res => { window.open(this.data.iosURL[0].url, "_blank");  })
 
         }
       };
@@ -78,30 +75,44 @@ export class MapleConf {
     }
 
     if (this.platform.is('android')) {
-      let androidButton = {
-        text: '安卓下载',
-        handler: () => {
-          alert.dismiss().then(res => {
 
-            if (this.platform.is('android')) window.open(this.data.androidURL, "_blank");
+      buttons = [
+        {
+          text: this.data.androidURL[0].txt,
+          handler: () => {
+          
+            alert.dismiss().then(res => {  window.open(this.data.androidURL[0].url, "_blank"); })
 
-          })
+          }
+        },
+         {
+          text: this.data.androidURL[1].txt,
+          handler: () => {
+       
+            alert.dismiss().then(res => {  window.open(this.data.androidURL[1].url, "_blank"); })
 
-        }
-      };
-      let googleButton = {
-        text: '谷歌下载',
-        handler: () => {
-          alert.dismiss().then(res => {
+          }
+        },
 
-            if (this.platform.is('android')) window.open(this.data.googleURL, "_blank");
+      ]
+    
 
-          })
+      /*
+      for (var i = 0; i < this.data.androidURL.length; i++) {
+      console.log(this.data.androidURL[i].url)
+        let androidButton = {
+          text: this.data.androidURL[i].txt,
+          handler: () => {
+            //console.log("Redirect URL" + this.data.androidURL[i].url);
+            console.log("Redirect URL");
+            console.log(this.data.androidURL[i].url);
+            alert.dismiss().then(res => {  window.open(this.data.androidURL[i].url, "_blank"); })
 
-        }
-      };
-      buttons.push(androidButton);
-      buttons.push(googleButton);
+          }
+        };
+        buttons.push(androidButton);
+      }
+      */
 
     }
 
