@@ -57,7 +57,8 @@
 </ion-header>
 
 
-<ion-content class="house-detail" elastic-header>
+<!--<ion-content class="house-detail" elastic-header>-->
+	<ion-content class="house-detail" >
 
 	<ion-fab top right>
 		<button ion-fab (click)="fav('houseFav')"><ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon></button>
@@ -262,6 +263,11 @@
 					<ion-label fixed class="xqlb_label">售/租：</ion-label>
 					<ion-label>{{S_R[houseM.house.s_r]}}</ion-label>
 				</ion-item>-->
+			</ion-list>
+		</ion-card>	
+	</div>			
+		<ion-card class="fyxqlb_cont">
+				
 				<ion-item-divider id="housedivider" divider   >
 					<ion-label>房屋布局</ion-label>
 					<ion-label class="switchF2M">{{(switchF2M == false)? F2M.feet: F2M.meter}}</ion-label>
@@ -300,10 +306,10 @@
 					<BR/>
 					<B>Extras:</B>
 					<BR/>{{houseM.house.extras}}</div>
-			</ion-list>
+			
 		</ion-card>
 		<!--End-->
-	</div>
+	
 	<!--Map Start-->
 	<div #maphouse id="maphouse"></div>
 	<!--Map End-->
