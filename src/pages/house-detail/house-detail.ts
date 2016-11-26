@@ -77,11 +77,13 @@ export class HouseDetailPage {
 			console.log("Toast dismiss event received")
 			this.isMore = true;
 		});
+		this.events.subscribe('user:login', (data) => {
+			// no need after directly jump to auth.login - hu
+			//this.nav.pop(); //dismiss once login page is presented
+			console.log('housedetail user:login detected ' + this.houseM.house.src);
+			if (!this.houseM.house.src) this.getResult(this.mapleConf.data.houseDetailRest, this.parms.id);
 
-		this.events.subscribe('profile:login', (data) => {
-			this.nav.pop(); //dismiss once login page is presented
 		})
-
 	}
 
 	swiperOptions = {
