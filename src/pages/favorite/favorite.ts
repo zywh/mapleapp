@@ -41,9 +41,9 @@ export class FavoritePage {
 
     this.userData.getUserData(this.pageType).then(res => {
       this.imgHost = res.imgHost;
-      //this.favList = res.HouseList;
+   
       this.favList = new houseListModel(res.HouseList,true);
-      console.log(this.favList);
+    
 
     });
 
@@ -81,7 +81,7 @@ export class FavoritePage {
 
   remove(mls) {
     this.userData.changeFavorite(mls, this.pageType, 'd').then(res => {
-      console.log("Remove MLS Result:" + res);
+     
       this.favList.list = this.favList.list.filter(function (obj) {
         return obj.MLS !== mls;
       });
@@ -98,9 +98,9 @@ export class FavoritePage {
   saveFavOrder() {
 
     let list = this.favList.list.map(function (a) { return a.MLS; }).join();
-    console.log(list);
+   
     this.userData.changeFavorite(list, this.pageType, 'r').then(res => {
-      console.log("MLS Result Reorder:" + res);
+    
 
     });
   }

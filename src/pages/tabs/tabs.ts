@@ -41,33 +41,18 @@ export class TabsPage {
     this.mapParms = navParams.data.rootParms || { lat: 0, lng: 0, type: "NONE" };
     this.tabMapParms = { pageType: 0, parms: this.mapParms };
     this.tabSchoolParms = { pageType: 1, parms: this.mapParms };
-    console.log("rootParms");
-    console.log(this.mapParms);
-
+    
 
     //this.listenEvents();
   }
 
-  // schoolTabSelected(){
-  //   //console.log("School Tab is selected");
-  //   //this.events.publish("tab:schoolmap");
-  //   // this.nav.setRoot(TabsPage ,{ tabIndex: 2 });
-  //    this.nav.setRoot(SchoolMapPage);
-  // }
   listenEvents() {
     this.events.subscribe('map:center', (data) => {
-      // console.log("Map Center event:")
-      // this.mapParms = data[0];
-      // this.tabRef.select(1);
-      // this.mySelectedIndex = 1;
-
+    
 
     });
     this.events.subscribe('schoolmap:center', (data) => {
-      console.log("Map Center event:")
-      // this.mapParms = data[0];
-      //this.tabRef.select(2);
-      // this.mySelectedIndex = 2;
+    
 
     });
   }

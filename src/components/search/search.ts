@@ -74,7 +74,7 @@ export class Search {
     this.currentDiv = '';
     this.queryText = '';
     this.searchPlaceHolder = item.value;
-    console.log("item tapped:"+this.searchPlaceHolder);
+  
     this.searchInput.emit(item);
 
   }
@@ -136,24 +136,21 @@ export class Search {
           data => {
             if (data.hasOwnProperty("CITY")) {
               this.cityItems = data.CITY;
-              console.log(this.cityItems);
-
+             
             };
 
             if (data.hasOwnProperty("MLS")) {
               this.mlsItems = data.MLS;
-              console.log(data.MLS);
+             
 
             }
             if (data.hasOwnProperty("ADDRESS")) {
               this.addressItems = data.ADDRESS;
-              console.log(data.ADDRESS);
-
+             
             }
             if (data.hasOwnProperty("SCHOOL")) {
               this.schoolItems = data.SCHOOL;
-              console.log(data.SCHOOL);
-
+            
             }
 
           }); //end of callback

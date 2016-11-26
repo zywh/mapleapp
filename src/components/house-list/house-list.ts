@@ -46,18 +46,15 @@ export class HouseList {
 
   listenEvents() {
     this.events.subscribe('user:login', () => {
-          console.log("House-list login event");
+        
           this.houselist.setVowMask(true);
-      //console.log(this.houselist);
      
-
     });
 
     this.events.subscribe('user:logout', () => {
-            console.log("House-list logout event");
+        
       this.houselist.setVowMask(false);
-     // console.log(this.houselist);
-      
+    
     });
   }
 

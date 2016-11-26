@@ -81,7 +81,7 @@
             价格{{(selectOptions.selectSR == false)? "(/月)":"(万)"}}
             <ion-badge item-right>{{selectOptions.selectPrice.lower}}-{{(selectOptions.selectPrice.upper == 500)? "不限" : selectOptions.selectPrice.upper}}</ion-badge>
         </ion-item>
-        <ion-range class='range-s' dualKnobs="true" min="0" [max]="(selectOptions?.selectSR == false)?8000:500" [step]="(selectOptions?.selectSR == false)?100:1" [(ngModel)]="selectOptions.selectPrice">
+        <ion-range class='range-s' dualKnobs="true" min="0" [max]="(selectOptions?.selectSR == false)?8000:500" [step]="(selectOptions?.selectSR == false)?100:5" [(ngModel)]="selectOptions.selectPrice">
         </ion-range>
 
         <ion-item>

@@ -116,9 +116,7 @@ export class AuthService {
 
     let source = Observable.of(this.idToken).flatMap(
       token => {
-        console.log('token here', token);
-        // The delay to generate in this case is the difference
-        // between the expiry time and the issued at time
+      
         let jwtIat = this.jwtHelper.decodeToken(token).iat;
         let jwtExp = this.jwtHelper.decodeToken(token).exp;
         let iat = new Date(0);

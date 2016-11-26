@@ -35,9 +35,9 @@ export class AboutPage  {
 
 
   ngAfterViewInit(): void {
-     console.log("About page init");
+   
       this.mapleconf.load().then(data => {
-      console.log(data.projectRest);
+    
       this.getResult(data.aboutRest);
       this.imgHost = data.postpicHost;
     })

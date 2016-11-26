@@ -33,7 +33,7 @@ export class HelpPage {
 
  // ionViewWillEnter() {
  ionViewDidEnter() {
-    console.log("Help View is entered" + this.data.helpRest);
+   
     this.mapleRestData.load(this.data.helpRest, { type: 'faqs' }).subscribe(
       res => { this.faqs = res; console.log(res); }
     );
@@ -41,11 +41,11 @@ export class HelpPage {
   }
 
   faqPopup(id){
-    console.log(id);
+ 
      let faq = this.faqs.filter(function (obj) {
         return obj.id == id;
       });
-      console.log(faq);
+    
      let alert = this.alertc.create({
       title: faq[0].subject,
       subTitle: faq[0].text,

@@ -35,15 +35,14 @@ export class PostPage implements OnInit {
     private navParms: NavParams
   ) {
     this.postId = navParms.data;
-    //this.postId = navParms.get('id');
-    console.log("Post ID:" + this.postId);
+   
   }
 
 
   ngOnInit() {
 
     this.mapleconf.load().then(data => {
-      console.log(data.postRest);
+   
       this.postRest = data.postRest;
       this.postpicHost = data.postpicHost;
       this.getResult(this.postRest, this.postId);

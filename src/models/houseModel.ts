@@ -530,7 +530,7 @@ export class houseModel {
     }
 
     getPropertyTxt() {
-        //console.log("get property")
+        
         let propertyTxt = this.house.prop_feat1_out;
 
         if (this.house.prop_feat2_out)
@@ -558,7 +558,7 @@ export class houseModel {
     }
 
     getLandArea(switchF2M: boolean) {
-        console.log("get land size")
+     
         if (switchF2M)
            // return this.round2(this.house.land_area * 0.09290304) + this.F2M.smeter;
            this.landArea = this.round2(this.house.land_area * 0.09290304) + this.F2M.smeter;

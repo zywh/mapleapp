@@ -201,7 +201,7 @@ export class HouselistSearch {
 
     getHouseList() {
 
-        console.log(this.sortType);
+    
         //let HouseArray = [];
         let searchParms = {
             bounds: this.bounds,

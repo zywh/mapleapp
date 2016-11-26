@@ -33,14 +33,14 @@ export class SchoolSelectOptionModal {
         private events: Events
     ) {
 
-        console.log(this.params);
+     
         this.selectOptions = params.get('data');
 
 
     }
 
     searchSelection(e) {
-        console.log(e);
+     
         this.selectOptions.selectSearch = e;
     }
 

@@ -29,7 +29,7 @@ export class ProfilePage {
     private userData: UserData,
     public mapleConf: MapleConf
   ) {
-    console.log(auth.user);
+   
   }
   aboutUs() {
     this.nav.push(AboutPage);
@@ -81,7 +81,7 @@ export class ProfilePage {
       if (res != null) { this.selectOptions = res; }
       let modal = this.modalc.create(optionPage, { data: this.selectOptions,searchflag: false });
       modal.onDidDismiss(data => {
-        console.log("Default selection is closed")
+      
       });
 
       modal.present();

@@ -42,7 +42,7 @@ export class houseListModel {
 
     remove(mls) {
         this.userData.changeFavorite(mls, 'houseFav', 'd').then(res => {
-            console.log("Remove MLS Result:" + res);
+          
             this.list = this.list.filter(function (obj) {
                 return obj.MLS !== mls;
 
@@ -62,10 +62,9 @@ export class houseListModel {
 
     setList(l) {
         let vowl = this.setVowMask(l);
-        console.log("Old List" + this.list.length);
+       
         this.list = this.list.concat(vowl);
-        console.log("New List" + this.list.length);
-        console.log(this.list);
+       
     }
 
 

@@ -96,8 +96,7 @@ export class SelectOptionModal {
     }
 
     searchSelection(e) {
-        console.log(e);
-
+     
         if (e != 'INFOCUS') {
             this.selectOptions['selectSearch'] = e;
             this.userData.saveCenter('recentCenter', e.id, e.lat, e.lng);
@@ -139,7 +138,7 @@ export class SelectOptionModal {
             differ = this.selectOptions.selectPrice.upper - this.selectOptions.selectPrice.lower;
             step = Math.floor((smax - smin) / 40);
         }
-        console.log("Diff:" + differ);
+       
         if (differ < (smax-smin) * 0.2 && differ > (smax-smin) * 0.01) {
            
             let i = Math.floor(this.selectOptions.selectPrice.lower - differ * 1.2);
