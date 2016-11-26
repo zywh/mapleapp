@@ -28,7 +28,7 @@ export class HouseDetailPage {
 
 	public isFav = { houseFav: false, routeFav: false };
 	public isMore: Boolean = true; //more buttom will be disabled before toast is dismiss
-	public parms = { id: '', list: [], VOWtoken:'' };
+	public parms = { id: '', list: [], VOWtoken: '' };
 	public houseList = { prev: '', next: '', index: 0, total: 0 };
 	public section: string = "summary";
 	public isAndroid: boolean = false;
@@ -81,9 +81,15 @@ export class HouseDetailPage {
 			// no need after directly jump to auth.login - hu
 			//this.nav.pop(); //dismiss once login page is presented
 			console.log('housedetail user:login detected ' + this.houseM.house.src);
-			if (!this.houseM.house.src) this.getResult(this.mapleConf.data.houseDetailRest, this.parms.id);
 
-		})
+
+			setTimeout(() => {
+				if (!this.houseM.house.src) this.getResult(this.mapleConf.data.houseDetailRest, this.parms.id);
+			}, 600);
+		});
+
+
+
 	}
 
 	swiperOptions = {
@@ -118,8 +124,8 @@ export class HouseDetailPage {
 			zoom: 14,
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		}
-	   let map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-		 new google.maps.Marker({
+		let map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+		new google.maps.Marker({
 			position: point,
 			map: map,
 			animation: google.maps.Animation.DROP,
@@ -379,7 +385,7 @@ export class HouseDetailPage {
 		let img = this.houseM.cdnPhotos[0];
 		//let link = "http://m.maplecity.com.cn/index.php?r=mhouse/view&id=" + this.parms.id;
 		let link = this.mapleConf.data.mcihost + "/#/housedetail/" + this.parms.id + "/" + this.mapleConf.VOWtoken;
-		console.log("wechat link -" + link );
+		console.log("wechat link -" + link);
 		this.shareService.share(link, img, subject, message);
 	}
 }
