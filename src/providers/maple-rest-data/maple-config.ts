@@ -52,14 +52,6 @@ export class MapleConf {
 
   upgradeAlert() {
 
-    // let buttons: Array<Object> = [
-    //   {
-    //     text: '取消',
-    //     role: 'cancel',
-    //     handler: () => {
-    //       console.log('Cancel clicked');
-    //     }
-    //   }];
     let buttons: Array<Object> = [];
 
     if (this.platform.is('ios')) {
@@ -67,7 +59,7 @@ export class MapleConf {
         //text: '版本升级',
         text: this.data.iosURL[0].txt,
         handler: () => {
-          alert.dismiss().then(res => { window.open(this.data.iosURL[0].url, "_blank");  })
+          alert.dismiss().then(res => { window.open(this.data.iosURL[0].url, "_blank"); })
 
         }
       };
@@ -79,40 +71,14 @@ export class MapleConf {
       buttons = [
         {
           text: this.data.androidURL[0].txt,
-          handler: () => {
-          
-            alert.dismiss().then(res => {  window.open(this.data.androidURL[0].url, "_blank"); })
-
-          }
+          handler: () => { alert.dismiss().then(res => { window.open(this.data.androidURL[0].url, "_blank"); }) }
         },
-         {
+        {
           text: this.data.androidURL[1].txt,
-          handler: () => {
-       
-            alert.dismiss().then(res => {  window.open(this.data.androidURL[1].url, "_blank"); })
-
-          }
+          handler: () => { alert.dismiss().then(res => { window.open(this.data.androidURL[1].url, "_blank"); }) }
         },
 
       ]
-    
-
-      /*
-      for (var i = 0; i < this.data.androidURL.length; i++) {
-      console.log(this.data.androidURL[i].url)
-        let androidButton = {
-          text: this.data.androidURL[i].txt,
-          handler: () => {
-            //console.log("Redirect URL" + this.data.androidURL[i].url);
-            console.log("Redirect URL");
-            console.log(this.data.androidURL[i].url);
-            alert.dismiss().then(res => {  window.open(this.data.androidURL[i].url, "_blank"); })
-
-          }
-        };
-        buttons.push(androidButton);
-      }
-      */
 
     }
 
@@ -121,27 +87,7 @@ export class MapleConf {
       title: '提示',
       message: '新版本:' + this.data.version + ' 可升级',
       buttons: buttons
-      // buttons: [
-      //   {
-      //     text: '取消',
-      //     role: 'cancel',
-      //     handler: () => {
-      //       console.log('Cancel clicked');
-      //     }
-      //   },
-      //   {
-      //     text: '升级',
-      //     handler: () => {
-      //       alert.dismiss().then(res => {
-      //         if (this.platform.is('ios'))
-      //           window.open(this.data.iosURL, "_blank");
-      //         if (this.platform.is('android')) window.open(this.data.androidURL, "_blank");
 
-      //       })
-
-      //     }
-      //   }
-      // ]
     });
     alert.present();
   }

@@ -356,7 +356,7 @@ export class MapSearchPage {
         selectBeds: 0,
         selectHousesize: { lower: 0, upper: 4000 },
         selectLandsize: { lower: 0, upper: 43560 },
-        selectPrice: { lower: 0, upper: 600 },
+        selectPrice: { lower: 0, upper: 500 },
         selectType: '',
         selectListType: true,
         selectDate: 0
@@ -875,7 +875,7 @@ export class MapSearchPage {
       selectBeds: 0,
       selectHousesize: { lower: 0, upper: 4000 },
       selectLandsize: { lower: 0, upper: 43560 },
-      selectPrice: { lower: 0, upper: 600 },
+      selectPrice: { lower: 0, upper: 500 },
       selectType: '',
       selectListType: true,
       selectDate: 0,
