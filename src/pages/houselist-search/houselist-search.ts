@@ -211,6 +211,7 @@ export class HouselistSearch {
             houseprice: this.selectOptions.selectPrice,
             oh: this.selectOptions.selectOH,
             houseroom: this.selectOptions.selectBeds,
+            housebaths: this.selectOptions.selectBaths,
             housearea: this.selectOptions.selectHousesize,
             houseground: this.selectOptions.selectLandsize,
             housedate: this.selectOptions.selectDate,
