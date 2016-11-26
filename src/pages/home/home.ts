@@ -73,14 +73,13 @@ export class HomePage {
 
   listenEvents() {
     this.events.subscribe('user:login', () => {
-      this.setVOWtoken(this.VOWTokenRest);
       console.log("user login event detected")
+      setTimeout(() => {this.setVOWtoken(this.VOWTokenRest);}, 600);     
     });
 
     this.events.subscribe('user:logout', () => {
-      this.setVOWtoken(this.VOWTokenRest);
       console.log("user logout event detected")
-
+      setTimeout(() => {this.setVOWtoken(this.VOWTokenRest);}, 600);     
     });
   }
 
