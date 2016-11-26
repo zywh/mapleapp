@@ -1,5 +1,5 @@
 //import {Page, NavController} from 'ionic-angular';
-import { NavController, NavParams, Events } from 'ionic-angular';
+import { NavController, NavParams, Events,AlertController,Platform } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
@@ -17,6 +17,10 @@ import {houseListModel} from '../../models/houseListModel';
   templateUrl: 'home.html'
 })
 export class HomePage {
+  private remoteVersion;
+  private iosURL;
+  private androidURL;
+  private googleURL;
   public projects: Object;
   public postListRest;
   public projectRest;
@@ -45,6 +49,8 @@ export class HomePage {
 
   constructor(
     private nav: NavController,
+    private platform: Platform,
+    private alertc: AlertController,
     private parms: NavParams,
     private mapleRestData: MapleRestData,
     private userData: UserData,
@@ -52,6 +58,8 @@ export class HomePage {
     private auth: AuthService,
     private events: Events
   ) {
+  
+
     this.listenEvents();
   }
 
@@ -101,15 +109,26 @@ export class HomePage {
     // ionViewWillEnter() {
 
     this.mapleConf.load().then(data => {
+      console.log(data);
       //this.postListRest = data.postRest;
+      this.remoteVersion = data.version;
       this.houseRestURL = data.mapHouseRest;
       this.projectRest = data.projectRest;
       this.VOWTokenRest = data.getVOWTokenRest;
+      this.googleURL = data.googleURL;
+      this.iosURL = data.iosURL;
+      this.androidURL = data.androidURL;
+
+     
 
       //this.getProjects();
       // this.getPosts(data.postListRest, 6);
       this.setVOWtoken(this.VOWTokenRest);
       this.searchHouse('nearby');
+    
+    //  if (this.remoteVersion != this.mapleConf.localVersion){
+    //    this.upgradeAlert(this.remoteVersion);
+    //  }
 
 
     })
@@ -117,6 +136,18 @@ export class HomePage {
 
 
   }
+
+  // ionViewWillEnter() {
+  //   console.log("Home Page will enter");
+  //   console.log(this.remoteVersion + "LocalVersion:" + this.mapleConf.localVersion);
+  //   if ( this.remoteVersion != this.mapleConf.localVersion){
+  //     console.log("Upgrade alert");
+  //   }
+
+  // }
+
+  
+
   getPostList() {
     this.mapleConf.getLocation().then(data => {
       this.data = data;

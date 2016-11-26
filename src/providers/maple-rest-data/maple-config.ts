@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http} from '@angular/http';
-import { Platform } from 'ionic-angular';
+import { Http } from '@angular/http';
+import { Platform, AlertController } from 'ionic-angular';
 //import {Observable} from 'rxjs/Observable';
 //import 'rxjs/Rx';
 
@@ -10,16 +10,15 @@ export class MapleConf {
   data: any;
   location;
   VOWtoken: string = '';
-  public restHost: string = 'http://r.citym.ca/';
- // public restHost: String = 'http://104.196.201.210/';
-  //public restHost: String = 'http://cdnr.citym.ca/';
-  
-  
-  //private confJson = "mapleconf2.json"; //production
-  private confJson = "mapleconf_dev.json"; //development
-  public localVersion: string = '0.0.9';
+  //public restHost: string = 'http://r.citym.ca/';
+  public restHost: string = 'http://devr.citym.ca/';
 
-  constructor(private http: Http, private platform: Platform) {
+  private confJson = "mapleconf2.json"; //production
+  //private confJson = "mapleconf_dev.json"; //development
+  public localVersion: string = '0.0.8';
+  public remoteVersion;
+
+  constructor(private http: Http, private platform: Platform, private alertc: AlertController) {
 
   }
 
@@ -38,24 +37,113 @@ export class MapleConf {
       this.http.get(dataURL).subscribe(res => {
 
         this.data = res.json();
-        if ( this.data.version != this.localVersion){
-          console.log("Version Change");
+        if (this.platform.is('ios') || this.platform.is('android')) {
+          this.remoteVersion = this.data.version;
+          if (this.data.version != this.localVersion) {
+            this.upgradeAlert();
+          }
         }
+
 
         resolve(this.data);
       });
     });
   }
 
-  getLocation() {
+  upgradeAlert() {
 
-   if (this.location) {
-      // already loaded data
-     // return Promise.resolve(this.location);
+    // let buttons: Array<Object> = [
+    //   {
+    //     text: '取消',
+    //     role: 'cancel',
+    //     handler: () => {
+    //       console.log('Cancel clicked');
+    //     }
+    //   }];
+    let buttons: Array<Object> = [];
+
+    if (this.platform.is('ios')) {
+      let iosButton = {
+        text: '版本升级',
+        handler: () => {
+          alert.dismiss().then(res => {
+
+            window.open(this.data.iosURL, "_blank");
+
+          })
+
+        }
+      };
+      buttons.push(iosButton);
     }
 
-  //Important: This is safe guard for map init. This introudce delay which is required for map switch. Otherwise it cause blank map when switching
- // below code need be commented out so if it's loaded and we still run geolocation code to introduce delay on purpose
+    if (this.platform.is('android')) {
+      let androidButton = {
+        text: '安卓下载',
+        handler: () => {
+          alert.dismiss().then(res => {
+
+            if (this.platform.is('android')) window.open(this.data.androidURL, "_blank");
+
+          })
+
+        }
+      };
+      let googleButton = {
+        text: '谷歌下载',
+        handler: () => {
+          alert.dismiss().then(res => {
+
+            if (this.platform.is('android')) window.open(this.data.googleURL, "_blank");
+
+          })
+
+        }
+      };
+      buttons.push(androidButton);
+      buttons.push(googleButton);
+
+    }
+
+
+    let alert = this.alertc.create({
+      title: '提示',
+      message: '新版本:' + this.data.version + ' 可升级',
+      buttons: buttons
+      // buttons: [
+      //   {
+      //     text: '取消',
+      //     role: 'cancel',
+      //     handler: () => {
+      //       console.log('Cancel clicked');
+      //     }
+      //   },
+      //   {
+      //     text: '升级',
+      //     handler: () => {
+      //       alert.dismiss().then(res => {
+      //         if (this.platform.is('ios'))
+      //           window.open(this.data.iosURL, "_blank");
+      //         if (this.platform.is('android')) window.open(this.data.androidURL, "_blank");
+
+      //       })
+
+      //     }
+      //   }
+      // ]
+    });
+    alert.present();
+  }
+
+  getLocation() {
+
+    if (this.location) {
+      // already loaded data
+      // return Promise.resolve(this.location);
+    }
+
+    //Important: This is safe guard for map init. This introudce delay which is required for map switch. Otherwise it cause blank map when switching
+    // below code need be commented out so if it's loaded and we still run geolocation code to introduce delay on purpose
     return new Promise(resolve => {
       let center = { lat: 43.6532, lng: -79.3832 };
       let options = { timeout: 10000, enableHighAccuracy: true };
@@ -67,15 +155,16 @@ export class MapleConf {
             this.location = center;
             return resolve(center);
           } else {
-             this.location = center;
+            this.location = center;
             return resolve(center);
 
           }
 
         },
-        (error) => { 
+        (error) => {
           this.location = center;
-          return resolve(center);  }, options
+          return resolve(center);
+        }, options
       );
 
     });
@@ -162,27 +251,27 @@ export class MapleConf {
     let destination = lat + ',' + lng;
     if (this.platform.is('ios')) {
       //window.open('maps://?q=' + destination, '_system');
-       window.open('maps://?daddr=' + destination, '_system');
+      window.open('maps://?daddr=' + destination, '_system');
 
     } else {
       //let label = encodeURI('目的地');
-     // window.open('geo:0,0?q=' + destination + '(' + label + ')', '_system');
+      // window.open('geo:0,0?q=' + destination + '(' + label + ')', '_system');
       //window.open('geo:0,0?daddr=' + destination + '(' + label + ')', '_system');
       window.open('google.navigation:q=' + destination + '&mode=d', '_system');
     }
   }
 
-  nearBy(lat, lng,type) {
+  nearBy(lat, lng, type) {
 
     let ll = lat + ',' + lng;
     if (this.platform.is('ios')) {
       //window.open('maps://?q=' + destination, '_system');
-       window.open('maps://?ll=' + ll + '&q='+ type, '_system');
+      window.open('maps://?ll=' + ll + '&q=' + type, '_system');
 
     } else {
-     let label = encodeURI('目的地');
-     // window.open('geo:0,0?q=' + destination + '(' + label + ')', '_system');
-     window.open('geo:0,0?daddr=' + ll + '(' + label + ')', '_system');
+      let label = encodeURI('目的地');
+      // window.open('geo:0,0?q=' + destination + '(' + label + ')', '_system');
+      window.open('geo:0,0?daddr=' + ll + '(' + label + ')', '_system');
     }
   }
 
@@ -200,20 +289,20 @@ export class MapleConf {
   }
 
   getListDays(listDate) { // yyyy-mm-dd
-    let date1:any = new Date(listDate);
-    let date2:any = new Date();
-    let diffdays = Math.floor((date2 - date1) / (1000*60*60*24));
- 
+    let date1: any = new Date(listDate);
+    let date2: any = new Date();
+    let diffdays = Math.floor((date2 - date1) / (1000 * 60 * 60 * 24));
+
     return diffdays + "天";
   }
 
-	setVOWtoken(token) {
-      console.log('mapleConf setVOWtoken :' + token);
+  setVOWtoken(token) {
+    console.log('mapleConf setVOWtoken :' + token);
 
-      this.VOWtoken = (!token.startsWith("invalid"))? token: '';
+    this.VOWtoken = (!token.startsWith("invalid")) ? token : '';
 
-      console.log('mapleConf VOWtoken loaded:' + this.VOWtoken);
-	}
+    console.log('mapleConf VOWtoken loaded:' + this.VOWtoken);
+  }
 
 }
 
