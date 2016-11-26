@@ -17,7 +17,7 @@ export class MapleConf {
   
   //private confJson = "mapleconf2.json"; //production
   private confJson = "mapleconf_dev.json"; //development
-  private localVersion: string = '0.0.9';
+  public localVersion: string = '0.0.9';
 
   constructor(private http: Http, private platform: Platform) {
 

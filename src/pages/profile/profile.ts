@@ -9,6 +9,8 @@ import {MyCenterPage} from '../my-center/my-center'
 import {UserData} from '../../providers/user-data';
 import {SelectOptionModal} from '../map-search/map-option-modal';
 import {SchoolSelectOptionModal} from '../school-map/schoolmap-option-modal';
+import { MapleConf } from '../../providers/maple-rest-data/maple-config';
+
 
 @Component({
   templateUrl: 'profile.html',
@@ -24,7 +26,8 @@ export class ProfilePage {
     public auth: AuthService,
     private nav: NavController,
     private modalc: ModalController,
-    private userData: UserData
+    private userData: UserData,
+    public mapleConf: MapleConf
   ) {
     console.log(auth.user);
   }
