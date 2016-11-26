@@ -111,10 +111,6 @@ export class HouseDetailPage {
 			this.getResult(data.houseDetailRest, this.parms.id);
 			this.houseRestURL = data.mapHouseRest;
 		})
-		if ( this.mapleConf.helpHouseDetailFlag == false){
-			this.userData.presentToast("提示：左右滑动切换上一个和下一个房源");
-			this.mapleConf.helpHouseDetailFlag = true;
-		}
 	}
 
 
@@ -388,7 +384,8 @@ export class HouseDetailPage {
 		let message = this.houseM.getPriceTxt(this.houseM.house.lp_dol) + " - " + this.houseM.getAddr() + " " + this.houseM.house.municipality;
 		let img = this.houseM.cdnPhotos[0];
 		//let link = "http://m.maplecity.com.cn/index.php?r=mhouse/view&id=" + this.parms.id;
-		let link = this.mapleConf.data.mcihost + "/#/housedetail/" + this.parms.id + "/" + this.mapleConf.VOWtoken;
+		let link = this.mapleConf.data.mcihost + "/#/housedetail/" + this.parms.id;
+		if (this.houseM.house.src == 'VOW') link = link + "/" + this.mapleConf.VOWtoken;
 		console.log("wechat link -" + link);
 		this.shareService.share(link, img, subject, message);
 	}
