@@ -17,7 +17,7 @@ export class MapleConf {
 
   private confJson = "mapleconf2.json"; //production
   //private confJson = "mapleconf_dev.json"; //development
-  public localVersion: string = '0.0.9';
+  public localVersion: string = '1.0.0';
   public remoteVersion;
 
   constructor(private http: Http, private platform: Platform, private alertc: AlertController) {
@@ -39,17 +39,29 @@ export class MapleConf {
       this.http.get(dataURL).subscribe(res => {
 
         this.data = res.json();
-        if (this.platform.is('ios') || this.platform.is('android')) {
-          this.remoteVersion = this.data.version;
-          if (this.data.version != this.localVersion) {
+
+        if ((this.platform.is('ios') || this.platform.is('android')) && this.checkVersion(this.data.version)) {
+         
             this.upgradeAlert();
-          }
+          
         }
 
 
         resolve(this.data);
       });
     });
+  }
+
+  checkVersion(v:string){
+    
+    let localA = this.localVersion.split(".");
+    let remoteA = v.split('.');
+    let local:number = Number(localA[0])*100 +Number(localA[1])*10 +Number(localA[2]);
+    let remote:number = Number(remoteA[0])*100 +Number(remoteA[1])*10 +Number(remoteA[2]);
+    let flag:boolean = (remote > local)? true: false;
+    console.log(local + "remote:" + remote + "flag:" + flag);
+
+    return flag;
   }
 
   upgradeAlert() {
