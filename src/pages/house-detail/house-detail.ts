@@ -94,9 +94,9 @@ export class HouseDetailPage {
 
 	swiperOptions = {
 		//loop: true,
-		slidesPerView: 'auto',
+		slidesPerView: "auto",
 		spaceBetween: 1,
-		autoHeight: true,
+		//autoHeight: true,
 		pager: true,
 		speed: 300,
 		autoplay: 3000
@@ -122,6 +122,7 @@ export class HouseDetailPage {
 			center: point,
 			minZoom: 4,
 			zoom: 14,
+			draggable: false,
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		}
 		let map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
