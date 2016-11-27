@@ -93,13 +93,12 @@ export class HouseDetailPage {
 	}
 
 	swiperOptions = {
+
 		//loop: true,
-		slidesPerView: "auto",
-		spaceBetween: 1,
-		//autoHeight: true,
 		pager: true,
-		speed: 300,
-		autoplay: 3000
+		//speed: 4000,
+		//autoplay: 300
+		
 	};
 
 
@@ -319,6 +318,7 @@ export class HouseDetailPage {
 				this.houseM.setProperties(this.auth.authenticated(), this.switchF2M);
 
 				this.slider.slideTo(0);
+				
 				this.initMap();
 			}
 		)

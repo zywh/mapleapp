@@ -57,17 +57,18 @@
 
 <!--<ion-content class="house-detail" elastic-header>-->
 	<ion-content class="house-detail" >
-
+<!--
 	<ion-fab top left style="opacity:0.8;">
 		<button ion-fab (click)="fav('houseFav')"><ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon></button>
-	</ion-fab>
+	</ion-fab>-->
 
-	<ion-fab top right  style="opacity:0.8;">
+	<ion-fab bottom right  style="opacity:0.8;">
 	  <button ion-fab ><ion-icon name="add"></ion-icon></button>
 		
- 	<ion-fab-list>
+ 	<ion-fab-list side="top">
       <button ion-fab (click)="mapDirection()"><ion-icon name="navigate"></ion-icon></button>
-      <button ion-fab *ngIf="!platform.is('cordova')" (click)="share()"><ion-icon name="share"></ion-icon></button>
+	  <button ion-fab (click)="fav('houseFav')"><ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon></button>
+      <button ion-fab *ngIf="platform.is('cordova')" (click)="share()"><ion-icon name="share"></ion-icon></button>
       <button ion-fab [disabled]="!houseList.prev" (click)="go2PrevHouse()"><ion-icon name="arrow-dropleft-circle"></ion-icon></button>
 	  <button ion-fab [disabled]="!houseList.next" (click)="go2NextHouse()"><ion-icon name="arrow-dropright-circle"></ion-icon></button>
     </ion-fab-list>
