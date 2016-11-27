@@ -9,7 +9,7 @@
 		</ion-buttons>
 
 
-
+<!--
 		<ion-buttons end>
 			<button ion-button icon-only [disabled]="!houseList.prev" (click)="go2PrevHouse()">
 			<ion-icon  name="arrow-up" ></ion-icon>
@@ -19,16 +19,14 @@
 			<button ion-button icon-only [disabled]="!houseList.next" (click)="go2NextHouse()">
 			<ion-icon  name="arrow-down" ></ion-icon>
 			</button>
-		</ion-buttons>
-		<ion-buttons end>
-
-
-		</ion-buttons>
+		</ion-buttons>-->
+	
 		<ion-buttons end>
 			<button ion-button icon-only [disabled]="!platform.is('cordova')" (click)="share()">
 			<ion-icon isActive="false" name="share" ></ion-icon>
 			</button>
 		</ion-buttons>
+		
 		<ion-buttons end>
 			<button ion-button icon-only [disabled]="!isMore" (click)="more()">
 			<ion-icon  name="more" ></ion-icon>
@@ -60,12 +58,19 @@
 <!--<ion-content class="house-detail" elastic-header>-->
 	<ion-content class="house-detail" >
 
-	<ion-fab top right>
+	<ion-fab top right style="opacity:0.8;">
 		<button ion-fab (click)="fav('houseFav')"><ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon></button>
 	</ion-fab>
 
-	<ion-fab top left *ngIf="platform.is('cordova')">
-		<button ion-fab (click)="mapDirection()"><ion-icon name="navigate" ></ion-icon></button>
+	<ion-fab top left  style="opacity:0.8;">
+	  <button ion-fab ><ion-icon name="add"></ion-icon></button>
+		
+ 	<ion-fab-list>
+      <button ion-fab (click)="mapDirection()"><ion-icon name="navigate"></ion-icon></button>
+      <button ion-fab *ngIf="!platform.is('cordova')" (click)="share()"><ion-icon name="share"></ion-icon></button>
+      <button ion-fab [disabled]="!houseList.prev" (click)="go2PrevHouse()"><ion-icon name="arrow-dropleft-circle"></ion-icon></button>
+	  <button ion-fab [disabled]="!houseList.next" (click)="go2NextHouse()"><ion-icon name="arrow-dropright-circle"></ion-icon></button>
+    </ion-fab-list>
 	</ion-fab>
 
 
@@ -267,13 +272,13 @@
 		</ion-card>	
 	</div>			
 		<ion-card class="fyxqlb_cont">
-				
+			<ion-list class="xqlb_list">	
 				<ion-item-divider id="housedivider" divider   >
 					<ion-label>房屋布局</ion-label>
 					<ion-label class="switchF2M">{{(switchF2M == false)? F2M.feet: F2M.meter}}</ion-label>
 					<ion-toggle [(ngModel)]="switchF2M" (ionChange)="f2m()"></ion-toggle>
 				</ion-item-divider>
-				<ion-item>
+				<ion-item >
 					<div class="fwbj_table">
 						<table>
 							<thead>
@@ -306,7 +311,7 @@
 					<BR/>
 					<B>Extras:</B>
 					<BR/>{{houseM.house.extras}}</div>
-			
+			</ion-list>
 		</ion-card>
 		<!--End-->
 	

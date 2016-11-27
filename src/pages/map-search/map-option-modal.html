@@ -61,18 +61,18 @@
     <ion-list no-lines>
         <ion-range class='range-p' min="0" max="6" step="1" snaps='true' [(ngModel)]="selectOptions.selectBeds">
             <ion-label class='range-label' range-left>卧室</ion-label>
-            <ion-badge range-right>{{ (selectOptions.selectBeds > 0)? "至少" + selectOptions.selectBeds +"间" : "不限" }}</ion-badge>
+            <ion-badge range-right>{{ (selectOptions.selectBeds > 0)? "&ge;" + selectOptions.selectBeds  : "不限" }}</ion-badge>
 
         </ion-range>
 
 
         <ion-range class='range-p' min="0" max="6" step="1" snaps='true' [(ngModel)]="selectOptions.selectBaths">
             <ion-label class='range-label' range-left> 洗手间</ion-label>
-            <ion-badge range-right>{{ (selectOptions.selectBaths > 0)? "至少" + selectOptions.selectBaths +"间" : "不限" }}</ion-badge>
+            <ion-badge range-right>{{ (selectOptions.selectBaths > 0)? "&ge;" + selectOptions.selectBaths  : "不限" }}</ion-badge>
         </ion-range>
         <ion-range class='range-p' min="0" max="30" step="1" [(ngModel)]="selectOptions.selectDate">
             <ion-label class='range-label' range-left> 上市</ion-label>
-            <ion-badge range-right>{{ (selectOptions.selectDate > 0)? "最近" + selectOptions.selectDate +"天" : "不限" }}</ion-badge>
+            <ion-badge range-right>{{ (selectOptions.selectDate > 0)? "&le;" + selectOptions.selectDate + "天" : "不限" }}</ion-badge>
         </ion-range>
 
     </ion-list>
