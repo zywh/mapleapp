@@ -111,6 +111,11 @@ export class HouseDetailPage {
 			this.getResult(data.houseDetailRest, this.parms.id);
 			this.houseRestURL = data.mapHouseRest;
 		})
+
+		if ( this.mapleConf.helpHouseDetailFlag == false && this.parms.list.length > 1) {
+ 			this.userData.presentToast("提示：左右滑动切换上一个和下一个房源");
+ 			this.mapleConf.helpHouseDetailFlag = true;
+ 		}
 	}
 
 
