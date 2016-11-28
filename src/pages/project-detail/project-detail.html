@@ -9,6 +9,27 @@
 		</ion-buttons>
  
 </ion-navbar>
+
+
+
+  <ion-toolbar [attr.primary]="isAndroid ? '' : null">
+    <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
+      <ion-segment-button value="summary">
+        简介
+      </ion-segment-button>
+      <ion-segment-button value="point">
+        详情
+      </ion-segment-button>
+     
+      <ion-segment-button value="layout">
+        布局
+      </ion-segment-button>
+      <ion-segment-button value="amenities">
+        周边
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
 </ion-header>
 
 
@@ -57,24 +78,5 @@
 </ion-content>
 <ion-footer>
 
-
-
-  <ion-toolbar [attr.primary]="isAndroid ? '' : null">
-    <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
-      <ion-segment-button value="summary">
-        简介
-      </ion-segment-button>
-      <ion-segment-button value="point">
-        详情
-      </ion-segment-button>
-     
-      <ion-segment-button value="layout">
-        布局
-      </ion-segment-button>
-      <ion-segment-button value="amenities">
-        周边
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
 
 </ion-footer> 

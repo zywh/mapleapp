@@ -1,4 +1,5 @@
 <ion-header class="opaque">
+
 	<ion-navbar no-border-bottom>
 
 
@@ -8,8 +9,8 @@
 		</button>
 		</ion-buttons>
 
-
-		<!--
+	<!--
+		
 		<ion-buttons end>
 			<button ion-button icon-only [disabled]="!houseList.prev" (click)="go2PrevHouse()">
 			<ion-icon  name="arrow-up" ></ion-icon>
@@ -19,7 +20,7 @@
 			<button ion-button icon-only [disabled]="!houseList.next" (click)="go2NextHouse()">
 			<ion-icon  name="arrow-down" ></ion-icon>
 			</button>
-		</ion-buttons>-->
+		</ion-buttons>
 
 		<ion-buttons end>
 			<button ion-button icon-only [disabled]="!platform.is('cordova')" (click)="share()">
@@ -32,9 +33,10 @@
 			<ion-icon  name="more" ></ion-icon>
 			</button>
 		</ion-buttons>
-
+	-->
 
 	</ion-navbar>
+
 	<ion-toolbar [attr.primary]="isAndroid ? '' : null" no-border-bottom>
 		<ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
 			<ion-segment-button value="citystats" (ionSelect)="gotoCityStats()">
@@ -71,7 +73,10 @@
 			<button ion-fab *ngIf="parms.list" [disabled]="!houseList.next" (click)="go2NextHouse()"><ion-icon name="arrow-dropright-circle"></ion-icon></button>
 			<button ion-fab *ngIf="platform.is('cordova')" (click)="share()"><ion-icon name="share"></ion-icon></button>
 			<button ion-fab (click)="fav('houseFav')"><ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon></button>
+			
 			<button ion-fab *ngIf="platform.is('cordova')" (click)="mapDirection()"><ion-icon name="navigate"></ion-icon></button>
+
+			<button ion-fab (click)="more()"><ion-icon name="more"></ion-icon></button>
 
 		</ion-fab-list>
 	</ion-fab>

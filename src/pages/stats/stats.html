@@ -5,6 +5,22 @@
     </button>-->
 		<ion-title>房源数据统计</ion-title>
 	</ion-navbar>
+	
+	<ion-toolbar [attr.primary]="isAndroid ? '' : null">
+		<ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
+			<ion-segment-button value="canada">
+				全国统计
+			</ion-segment-button>
+			<ion-segment-button value="toronto">
+				大多统计
+			</ion-segment-button>
+
+			<ion-segment-button value="house">
+				房源统计
+			</ion-segment-button>
+
+		</ion-segment>
+	</ion-toolbar>
 
 
 </ion-header>
@@ -56,19 +72,4 @@
 </ion-content>
 <ion-footer>
 
-	<ion-toolbar [attr.primary]="isAndroid ? '' : null">
-		<ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
-			<ion-segment-button value="canada">
-				全国统计
-			</ion-segment-button>
-			<ion-segment-button value="toronto">
-				大多统计
-			</ion-segment-button>
-
-			<ion-segment-button value="house">
-				房源统计
-			</ion-segment-button>
-
-		</ion-segment>
-	</ion-toolbar>
 </ion-footer>	
