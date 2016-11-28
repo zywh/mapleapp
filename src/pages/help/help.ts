@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController } from 'ionic-angular';
+import { AlertController,NavController } from 'ionic-angular';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 import {UserData} from '../../providers/user-data';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
@@ -20,6 +20,7 @@ export class HelpPage {
 
   constructor(
     private mapleConf: MapleConf, 
+    public nav: NavController,
     private userData: UserData, 
     private mapleRestData: MapleRestData,
     private alertc: AlertController

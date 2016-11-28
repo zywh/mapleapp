@@ -31,8 +31,10 @@
 	  <button ion-fab ><ion-icon name="add"></ion-icon></button>
 		
  	<ion-fab-list side="top">
+		 
       <button ion-fab (click)="nav.pop()"><ion-icon name="undo" ></ion-icon></button>
 	  <button ion-fab (click)="toggleView()"><ion-icon [name]="viewType"></ion-icon></button>
+	   <button ion-fab (click)="toggleEdit()"><ion-icon [name]="(editing)?'checkmark-circle':'create'"></ion-icon></button>
      
     </ion-fab-list>
 	</ion-fab>

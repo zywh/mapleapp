@@ -52,12 +52,11 @@
 
 		<ion-fab-list side="top">
 			<button ion-fab (click)="nav.pop()"><ion-icon name="undo" ></ion-icon></button>
-
 			<button ion-fab [disabled]="!houseList.prev" (click)="go2PrevHouse()"><ion-icon name="arrow-dropleft-circle"></ion-icon></button>
 			<button ion-fab [disabled]="!houseList.next" (click)="go2NextHouse()"><ion-icon name="arrow-dropright-circle"></ion-icon></button>
 			<button ion-fab *ngIf="platform.is('cordova')" (click)="share()"><ion-icon name="share"></ion-icon></button>
-			<button ion-fab (click)="mapDirection()"><ion-icon name="navigate"></ion-icon></button>
 			<button ion-fab (click)="fav('houseFav')"><ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon></button>
+			<button ion-fab (click)="mapDirection()"><ion-icon name="navigate"></ion-icon></button>
 
 		</ion-fab-list>
 	</ion-fab>
@@ -71,7 +70,10 @@
 	</ion-slides>
 	<div (swipe)="swipeEvent($event)">
 		<div class="fyxq_rx">服务热线：
-			<img src="assets/img/maple/plat.jpg " /><a href="tel:{{houseM.rxPhone}} "><span>{{houseM.rxPhone}}</span></a>
+			<img src="assets/img/maple/plat.jpg " />
+			<a href="tel:{{houseM.rxPhone}} "><span>{{houseM.rxPhone}}</span></a>
+			<!--<a tappable ion-item [href]="houseM.emailURL" target="_top">
+      		<ion-icon color="primary" name="mail" item-left></ion-icon>反馈</a>-->
 		</div>
 		<ion-card class="fyxq_cont">
 			<div class="fyxq_ptss">

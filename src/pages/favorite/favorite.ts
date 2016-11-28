@@ -75,7 +75,7 @@ export class FavoritePage {
     if (this.isList) {
       this.viewType ='apps';
     } else {
-     this.viewType = 'list';
+     this.viewType = 'list-box';
     }
   }
 

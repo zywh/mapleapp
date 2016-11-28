@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons left>
-      <button ion-button  (click)="nav.pop()">
+      <button ion-button (click)="nav.pop()">
     <ion-icon outline name="arrow-back" ></ion-icon>
    <!-- {{totalCount}}套 - {{pageIndex + 1}}/{{pageTotal}}页-->
      {{totalCount}}套
@@ -10,7 +10,7 @@
 
 
     <ion-title>房源列表</ion-title>
-<!--
+    <!--
     <ion-buttons end>
       <button ion-button icon-only  (click)="pagePre()" [disabled]="pageIndex <= 0">
         <ion-icon name="arrow-dropleft"></ion-icon>
@@ -23,7 +23,7 @@
      </button>
     </ion-buttons>
     -->
-     <ion-buttons end>
+    <ion-buttons end>
       <button ion-button icon-only (click)="sortAction()">
           <ion-icon name="swap"></ion-icon>
       </button>
@@ -42,19 +42,20 @@
 
 <ion-content class="houselist-search">
 
-	<ion-fab bottom right  style="opacity:0.8;">
-	  <button ion-fab ><ion-icon name="add"></ion-icon></button>
-		
- 	<ion-fab-list side="top">
-      <button ion-fab (click)="sortAction()"><ion-icon name="swap"></ion-icon></button>
-	  <button ion-fab (click)="toggleView()"><ion-icon [name]="viewType"></ion-icon></button>
+  <ion-fab bottom right style="opacity:0.8;">
+    <button ion-fab><ion-icon name="add"></ion-icon></button>
+
+    <ion-fab-list side="top">
       <button ion-fab (click)="nav.pop()"><ion-icon name="undo" ></ion-icon></button>
+      <button ion-fab (click)="sortAction()"><ion-icon name="swap"></ion-icon></button>
+      <button ion-fab (click)="toggleView()"><ion-icon [name]="viewType"></ion-icon></button>
+
     </ion-fab-list>
-	</ion-fab>
+  </ion-fab>
 
   <house-list [houselist]='currentHouseList' [imgHost]='imgHost' [isList]='isList'></house-list>
 
- <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 

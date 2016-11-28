@@ -1,5 +1,6 @@
 
 import {Component} from '@angular/core';
+import { NavController} from 'ionic-angular';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 
@@ -31,7 +32,7 @@ export class AboutPage  {
   //   return [[MapleRestData],[MapleConf]];
   // }
 
-  constructor(private mapleRestData: MapleRestData, private mapleconf: MapleConf) { }
+  constructor(private mapleRestData: MapleRestData, private mapleconf: MapleConf,public nav:NavController) { }
 
 
   ngAfterViewInit(): void {
