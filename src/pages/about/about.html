@@ -6,23 +6,6 @@
     <ion-title>关于我们</ion-title>
   </ion-navbar>
 
-  <ion-toolbar [attr.primary]="isAndroid ? '' : null" >
-      <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
-          <ion-segment-button value="about">
-            关于
-          </ion-segment-button>
-          <ion-segment-button value="advantage">
-            优势
-          </ion-segment-button>
-
-          <ion-segment-button value="contact">
-            联系
-          </ion-segment-button>
-          <ion-segment-button value="hire">
-            招募
-          </ion-segment-button>
-     </ion-segment>
-  </ion-toolbar>  
 </ion-header>
 
  <ion-content padding class='about_page' elastic-header>
@@ -82,3 +65,23 @@
         </div>
       </div>
  </ion-content>
+ <ion-footer>
+
+  <ion-toolbar [attr.primary]="isAndroid ? '' : null" >
+      <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
+          <ion-segment-button value="about">
+            关于
+          </ion-segment-button>
+          <ion-segment-button value="advantage">
+            优势
+          </ion-segment-button>
+
+          <ion-segment-button value="contact">
+            联系
+          </ion-segment-button>
+          <ion-segment-button value="hire">
+            招募
+          </ion-segment-button>
+     </ion-segment>
+  </ion-toolbar>  
+ </ion-footer>

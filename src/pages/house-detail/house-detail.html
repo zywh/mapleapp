@@ -36,22 +36,7 @@
 
 	</ion-navbar>
 
-	<ion-toolbar [attr.primary]="isAndroid ? '' : null" no-border-bottom>
-		<ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
-			<ion-segment-button value="citystats" (ionSelect)="gotoCityStats()">
-				社区
-			</ion-segment-button>
-			<ion-segment-button value="school" (ionSelect)="gotoSchool()">
-				学校
-			</ion-segment-button>
-			<ion-segment-button value="video" [disabled]="(houseM.house.tour_url)?'false':'true'" (ionSelect)="gotoVideo()">
-				视频
-			</ion-segment-button>
-			<ion-segment-button value="similar" (ionSelect)="similar()">
-				类似
-			</ion-segment-button>
-		</ion-segment>
-	</ion-toolbar>
+
 </ion-header>
 
 
@@ -321,3 +306,21 @@
 	<!--Map End-->
 
 </ion-content>
+<ion-footer>
+	<ion-toolbar [attr.primary]="isAndroid ? '' : null" no-border-bottom>
+		<ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
+			<ion-segment-button value="citystats" (ionSelect)="gotoCityStats()">
+				社区
+			</ion-segment-button>
+			<ion-segment-button value="school" (ionSelect)="gotoSchool()">
+				学校
+			</ion-segment-button>
+			<ion-segment-button value="video" [disabled]="(houseM.house.tour_url)?'false':'true'" (ionSelect)="gotoVideo()">
+				视频
+			</ion-segment-button>
+			<ion-segment-button value="similar" (ionSelect)="similar()">
+				类似
+			</ion-segment-button>
+		</ion-segment>
+	</ion-toolbar>
+</ion-footer>

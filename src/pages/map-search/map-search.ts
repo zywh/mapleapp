@@ -337,8 +337,9 @@ export class MapSearchPage {
       }
     } else {
 
-      let modal = this.modalc.create(SchoolListModal, { data: this.schoolList });
-      modal.present();
+      // let modal = this.modalc.create(SchoolListModal, { data: this.schoolList });
+      // modal.present();
+      this.nav.push(SchoolListModal, { data: this.schoolList });
     }
 
   }

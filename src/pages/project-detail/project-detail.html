@@ -17,24 +17,6 @@
 
   <h4 text-center > {{project.name}}</h4>
 
-
-  <ion-toolbar [attr.primary]="isAndroid ? '' : null">
-    <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
-      <ion-segment-button value="summary">
-        简介
-      </ion-segment-button>
-      <ion-segment-button value="point">
-        详情
-      </ion-segment-button>
-     
-      <ion-segment-button value="layout">
-        布局
-      </ion-segment-button>
-      <ion-segment-button value="amenities">
-        周边
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
   <div class="spacer" style="width: 284.545px; height: 17.9886px;"></div>
   <div [ngSwitch]="section">
     <div *ngSwitchCase="'summary'">
@@ -69,3 +51,26 @@
     </div>
   </div>
 </ion-content>
+<ion-footer>
+
+
+
+  <ion-toolbar [attr.primary]="isAndroid ? '' : null">
+    <ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
+      <ion-segment-button value="summary">
+        简介
+      </ion-segment-button>
+      <ion-segment-button value="point">
+        详情
+      </ion-segment-button>
+     
+      <ion-segment-button value="layout">
+        布局
+      </ion-segment-button>
+      <ion-segment-button value="amenities">
+        周边
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  
+</ion-footer> 

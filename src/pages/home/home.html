@@ -8,15 +8,6 @@
     <!--<ion-title>枫之都</ion-title>-->
 
     <search mapType='0' (searchInput)="searchSelection($event)" inputText=''></search>
-    <ion-toolbar [attr.primary]="isAndroid ? '' : null">
-    <ion-segment [(ngModel)]="homeSegment">
-      <!--<ion-segment-button value="info">信息</ion-segment-button>-->
-      <ion-segment-button value="house1" (ionSelect)="searchHouse('nearby')">周边</ion-segment-button>
-      <ion-segment-button value="house2" (ionSelect)="searchHouse('recommend')">推荐</ion-segment-button>
-      <!--<ion-segment-button value="house3" (ionSelect)="fav()">收藏</ion-segment-button>-->
-      <ion-segment-button value='projects' (ionSelect)="getProjects()">项目</ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
 
   </ion-navbar>
 </ion-header>
@@ -32,7 +23,7 @@
 
     </ion-slide>
   </ion-slides>-->
-  
+
   <div [ngSwitch]="homeSegment">
     <div *ngSwitchCase="'info'">
       <ion-list>
@@ -69,3 +60,15 @@
   </div>
 
 </ion-content>
+<ion-footer>
+  <ion-toolbar [attr.primary]="isAndroid ? '' : null">
+    <ion-segment [(ngModel)]="homeSegment">
+      <!--<ion-segment-button value="info">信息</ion-segment-button>-->
+      <ion-segment-button value="house1" (ionSelect)="searchHouse('nearby')">周边</ion-segment-button>
+      <ion-segment-button value="house2" (ionSelect)="searchHouse('recommend')">推荐</ion-segment-button>
+      <!--<ion-segment-button value="house3" (ionSelect)="fav()">收藏</ion-segment-button>-->
+      <ion-segment-button value='projects' (ionSelect)="getProjects()">项目</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+</ion-footer>
