@@ -9,7 +9,7 @@
 		</ion-buttons>
 
 
-<!--
+		<!--
 		<ion-buttons end>
 			<button ion-button icon-only [disabled]="!houseList.prev" (click)="go2PrevHouse()">
 			<ion-icon  name="arrow-up" ></ion-icon>
@@ -20,13 +20,13 @@
 			<ion-icon  name="arrow-down" ></ion-icon>
 			</button>
 		</ion-buttons>-->
-	
+
 		<ion-buttons end>
 			<button ion-button icon-only [disabled]="!platform.is('cordova')" (click)="share()">
 			<ion-icon isActive="false" name="share" ></ion-icon>
 			</button>
 		</ion-buttons>
-		
+
 		<ion-buttons end>
 			<button ion-button icon-only [disabled]="!isMore" (click)="more()">
 			<ion-icon  name="more" ></ion-icon>
@@ -41,22 +41,25 @@
 
 
 <!--<ion-content class="house-detail" elastic-header>-->
-	<ion-content class="house-detail" >
-<!--
+<ion-content class="house-detail">
+	<!--
 	<ion-fab top left style="opacity:0.8;">
 		<button ion-fab (click)="fav('houseFav')"><ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon></button>
 	</ion-fab>-->
 
-	<ion-fab bottom right  style="opacity:0.8;">
-	  <button ion-fab ><ion-icon name="add"></ion-icon></button>
-		
- 	<ion-fab-list side="top">
-      <button ion-fab (click)="mapDirection()"><ion-icon name="navigate"></ion-icon></button>
-	  <button ion-fab (click)="fav('houseFav')"><ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon></button>
-      <button ion-fab *ngIf="platform.is('cordova')" (click)="share()"><ion-icon name="share"></ion-icon></button>
-      <button ion-fab [disabled]="!houseList.prev" (click)="go2PrevHouse()"><ion-icon name="arrow-dropleft-circle"></ion-icon></button>
-	  <button ion-fab [disabled]="!houseList.next" (click)="go2NextHouse()"><ion-icon name="arrow-dropright-circle"></ion-icon></button>
-    </ion-fab-list>
+	<ion-fab bottom right style="opacity:0.8;">
+		<button ion-fab><ion-icon name="add"></ion-icon></button>
+
+		<ion-fab-list side="top">
+			<button ion-fab (click)="nav.pop()"><ion-icon name="undo" ></ion-icon></button>
+
+			<button ion-fab [disabled]="!houseList.prev" (click)="go2PrevHouse()"><ion-icon name="arrow-dropleft-circle"></ion-icon></button>
+			<button ion-fab [disabled]="!houseList.next" (click)="go2NextHouse()"><ion-icon name="arrow-dropright-circle"></ion-icon></button>
+			<button ion-fab *ngIf="platform.is('cordova')" (click)="share()"><ion-icon name="share"></ion-icon></button>
+			<button ion-fab (click)="mapDirection()"><ion-icon name="navigate"></ion-icon></button>
+			<button ion-fab (click)="fav('houseFav')"><ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon></button>
+
+		</ion-fab-list>
 	</ion-fab>
 
 
@@ -136,9 +139,9 @@
 		<!--START-->
 		<ion-card class="fyxqlb_cont">
 			<ion-list class="xqlb_list">
-				<ion-item-divider id="housedivider" divider   >
+				<ion-item-divider id="housedivider" divider>
 					<ion-label>详情列表</ion-label>
-				
+
 				</ion-item-divider>
 				<ion-item>
 					<ion-label fixed class="xqlb_label">MLS编号：</ion-label>
@@ -164,7 +167,7 @@
 					<ion-label fixed class="xqlb_label">房屋层数：</ion-label>
 					<ion-label>{{houseM.house.style}}</ion-label>
 				</ion-item>
-	
+
 				<ion-item>
 					<ion-label fixed class="xqlb_label">房屋数量：</ion-label>
 					<!--<ion-label>{{houseM.add2(houseM.house.rms,houseM.house.rooms_plus)}}</ion-label>-->
@@ -184,12 +187,12 @@
 					<!--<ion-label>{{houseM.add2(houseM.house.num_kit,houseM.house.kit_plus)}}</ion-label>-->
 					<ion-label>{{houseM.kit}}</ion-label>
 				</ion-item>
-				<ion-item >
+				<ion-item>
 					<ion-label fixed class="xqlb_label">土地面积：</ion-label>
 					<!--<ion-label>{{getLandArea(switchF2M)}}</ion-label>-->
 					<ion-label>{{houseM.landArea}}</ion-label>
-				</ion-item >
-					<ion-item>
+				</ion-item>
+				<ion-item>
 					<ion-label fixed class="xqlb_label">土地描述：</ion-label>
 					<ion-label>{{houseM.house.acres}}</ion-label>
 				</ion-item>
@@ -202,18 +205,18 @@
 					<ion-label fixed class="xqlb_label">地税：</ion-label>
 					<ion-label>{{houseM.house.taxes}}/{{houseM.house.yr}} 年</ion-label>
 				</ion-item>
-				
+
 				<ion-item *ngIf="houseM.house.prepay">
 					<ion-label fixed class="xqlb_label">物业管理：</ion-label>
 					<ion-label>{{houseM.house.prepay}}</ion-label>
 				</ion-item>
-				
+
 				<ion-item *ngIf="houseM.house.yr_built">
 					<ion-label fixed class="xqlb_label">建造年份：</ion-label>
 					<ion-label>{{houseM.house.yr_built}}年</ion-label>
 				</ion-item>
-			
-				
+
+
 				<ion-item *ngIf="houseM.house.bsmt1_out">
 					<ion-label fixed class="xqlb_label">地下室：</ion-label>
 					<ion-label>{{houseM.house.bsmt1_out}}&nbsp;{{houseM.house.bsmt2_out}}</ion-label>
@@ -255,52 +258,52 @@
 					<ion-label>{{S_R[houseM.house.s_r]}}</ion-label>
 				</ion-item>-->
 			</ion-list>
-		</ion-card>	
-	</div>			
-		<ion-card class="fyxqlb_cont">
-			<ion-list class="xqlb_list">	
-				<ion-item-divider id="housedivider" divider   >
-					<ion-label>房屋布局</ion-label>
-					<ion-label class="switchF2M">{{(switchF2M == false)? F2M.feet: F2M.meter}}</ion-label>
-					<ion-toggle [(ngModel)]="switchF2M" (ionChange)="f2m()"></ion-toggle>
-				</ion-item-divider>
-				<ion-item >
-					<div class="fwbj_table">
-						<table>
-							<thead>
-								<tr>
-									<th width="12% ">楼层</th>
-									<th width="12% ">房间</th>
-									<th width="20% ">长({{(switchF2M == false)? F2M.feet: F2M.meter}})</th>
-									<th width="20% ">宽({{(switchF2M == false)? F2M.feet: F2M.meter}})</th>
-									<th width="17% ">面积({{(switchF2M == false)? F2M.feet: F2M.meter}}<sup>2</sup>)</th>
-									<th width="21% ">说明</th>
-								</tr>
-							</thead>
-							<tbody *ngFor="let room of houseM.rooms ">
-								<tr *ngIf="room.level !='' || room.out !='' ">
-									<td>{{room.level}}</td>
-									<td>{{room.out}}</td>
-									<td>{{room.len}}</td>
-									<td>{{room.wth}}</td>
-									<td>{{room.area}}</td>
-									<td>{{room.desc}}</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</ion-item>
-				<ion-item-divider id="housedivider" divider   >房屋周边</ion-item-divider>
-				<div class="fwms_item ">{{houseM.propertyTxt}}</div>
-				<ion-item-divider id="housedivider" divider   >房屋描述</ion-item-divider>
-				<div class="fwms_item ">{{houseM.house.ad_text}}
-					<BR/>
-					<B>Extras:</B>
-					<BR/>{{houseM.house.extras}}</div>
-			</ion-list>
 		</ion-card>
-		<!--End-->
-	
+	</div>
+	<ion-card class="fyxqlb_cont">
+		<ion-list class="xqlb_list">
+			<ion-item-divider id="housedivider" divider>
+				<ion-label>房屋布局</ion-label>
+				<ion-label class="switchF2M">{{(switchF2M == false)? F2M.feet: F2M.meter}}</ion-label>
+				<ion-toggle [(ngModel)]="switchF2M" (ionChange)="f2m()"></ion-toggle>
+			</ion-item-divider>
+			<ion-item>
+				<div class="fwbj_table">
+					<table>
+						<thead>
+							<tr>
+								<th width="12% ">楼层</th>
+								<th width="12% ">房间</th>
+								<th width="20% ">长({{(switchF2M == false)? F2M.feet: F2M.meter}})</th>
+								<th width="20% ">宽({{(switchF2M == false)? F2M.feet: F2M.meter}})</th>
+								<th width="17% ">面积({{(switchF2M == false)? F2M.feet: F2M.meter}}<sup>2</sup>)</th>
+								<th width="21% ">说明</th>
+							</tr>
+						</thead>
+						<tbody *ngFor="let room of houseM.rooms ">
+							<tr *ngIf="room.level !='' || room.out !='' ">
+								<td>{{room.level}}</td>
+								<td>{{room.out}}</td>
+								<td>{{room.len}}</td>
+								<td>{{room.wth}}</td>
+								<td>{{room.area}}</td>
+								<td>{{room.desc}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</ion-item>
+			<ion-item-divider id="housedivider" divider>房屋周边</ion-item-divider>
+			<div class="fwms_item ">{{houseM.propertyTxt}}</div>
+			<ion-item-divider id="housedivider" divider>房屋描述</ion-item-divider>
+			<div class="fwms_item ">{{houseM.house.ad_text}}
+				<BR/>
+				<B>Extras:</B>
+				<BR/>{{houseM.house.extras}}</div>
+		</ion-list>
+	</ion-card>
+	<!--End-->
+
 	<!--Map Start-->
 	<div #maphouse id="maphouse"></div>
 	<!--Map End-->

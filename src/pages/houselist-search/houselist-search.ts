@@ -50,6 +50,7 @@ export class HouselistSearch {
         this.imgHost = parms.data.imgHost;
         this.listType = parms.data.listType;
         this.listenEvents();
+        
 
 
 

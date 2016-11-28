@@ -1,4 +1,4 @@
-import {ViewController, NavParams, Events} from 'ionic-angular';
+import {ViewController,NavController, NavParams, Events} from 'ionic-angular';
 import {Component} from '@angular/core';
 declare var google: any;
 
@@ -9,6 +9,7 @@ export class SchoolListModal {
     public schoolList;
 
     constructor(
+        public nav:NavController,
         private parm: NavParams,
         private events: Events,
         private viewCtrl: ViewController

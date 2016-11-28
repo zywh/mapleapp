@@ -24,7 +24,7 @@ export class FavoritePage {
   
 
   constructor(
-    private nav: NavController,
+    public nav: NavController,
     private mapleConf: MapleConf,
     private parm: NavParams,
     private userData: UserData

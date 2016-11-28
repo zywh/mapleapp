@@ -27,6 +27,17 @@
 <ion-content class="houselist-search">
 
 
+	<ion-fab bottom right  style="opacity:0.8;">
+	  <button ion-fab ><ion-icon name="add"></ion-icon></button>
+		
+ 	<ion-fab-list side="top">
+      <button ion-fab (click)="nav.pop()"><ion-icon name="undo" ></ion-icon></button>
+	  <button ion-fab (click)="toggleView()"><ion-icon [name]="viewType"></ion-icon></button>
+     
+    </ion-fab-list>
+	</ion-fab>
+
+
 	<ion-list [reorder]="editing" (ionItemReorder)="reorderItems($event)" *ngIf="isList">
 
 		<ion-item-sliding *ngFor="let house of favList?.list">

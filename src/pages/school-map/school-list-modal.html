@@ -11,6 +11,11 @@
 </ion-header>
 
 <ion-content no-padding>
+
+ <ion-fab right bottom style="opacity:0.8;" >
+    <button ion-fab (click)="nav.pop()"><ion-icon name="undo"></ion-icon></button>
+ </ion-fab>
+
     <ion-list>
         <ion-item no-padding *ngFor="let school of schoolList" (click)="schoolClick(school.Lat,school.Lng)">
              <p><ion-icon color="primary" name="school" padding-right></ion-icon>{{school.School}}</p> 

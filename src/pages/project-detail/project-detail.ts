@@ -1,4 +1,4 @@
-import {NavParams, Platform} from 'ionic-angular';
+import {NavParams, Platform,NavController} from 'ionic-angular';
 import {OnInit, Component} from '@angular/core';;
 //import {SocialSharing} from 'ionic-native';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
@@ -32,6 +32,7 @@ export class ProjectDetailPage implements OnInit {
   // }
 
   constructor(
+    public nav: NavController,
     private navParams: NavParams,
     private mapleRestData: MapleRestData,
     private mapleconf: MapleConf,

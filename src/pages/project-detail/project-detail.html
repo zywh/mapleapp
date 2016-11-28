@@ -15,6 +15,10 @@
 
 <ion-content padding class="project-detail">
 
+ <ion-fab right bottom >
+    <button ion-fab (click)="nav.pop()"><ion-icon name="undo"></ion-icon></button>
+ </ion-fab>
+
   <h4 text-center > {{project.name}}</h4>
 
   <div class="spacer" style="width: 284.545px; height: 17.9886px;"></div>
@@ -72,5 +76,5 @@
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
-  
+
 </ion-footer> 
