@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header class="opaque">
 	<ion-navbar no-border-bottom>
 
 
@@ -35,13 +35,28 @@
 
 
 	</ion-navbar>
-
+	<ion-toolbar [attr.primary]="isAndroid ? '' : null" no-border-bottom>
+		<ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
+			<ion-segment-button value="citystats" (ionSelect)="gotoCityStats()">
+				社区
+			</ion-segment-button>
+			<ion-segment-button value="school" (ionSelect)="gotoSchool()">
+				学校
+			</ion-segment-button>
+			<ion-segment-button value="video" [disabled]="(houseM.house.tour_url)?'false':'true'" (ionSelect)="gotoVideo()">
+				视频
+			</ion-segment-button>
+			<ion-segment-button value="similar" (ionSelect)="similar()">
+				类似
+			</ion-segment-button>
+		</ion-segment>
+	</ion-toolbar>
 
 </ion-header>
 
 
 <!--<ion-content class="house-detail" elastic-header>-->
-<ion-content class="house-detail">
+<ion-content class="house-detail" fullscreen="true">
 	<!--
 	<ion-fab top left style="opacity:0.8;">
 		<button ion-fab (click)="fav('houseFav')"><ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon></button>
@@ -312,20 +327,5 @@
 
 </ion-content>
 <ion-footer>
-	<ion-toolbar [attr.primary]="isAndroid ? '' : null" no-border-bottom>
-		<ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
-			<ion-segment-button value="citystats" (ionSelect)="gotoCityStats()">
-				社区
-			</ion-segment-button>
-			<ion-segment-button value="school" (ionSelect)="gotoSchool()">
-				学校
-			</ion-segment-button>
-			<ion-segment-button value="video" [disabled]="(houseM.house.tour_url)?'false':'true'" (ionSelect)="gotoVideo()">
-				视频
-			</ion-segment-button>
-			<ion-segment-button value="similar" (ionSelect)="similar()">
-				类似
-			</ion-segment-button>
-		</ion-segment>
-	</ion-toolbar>
+
 </ion-footer>

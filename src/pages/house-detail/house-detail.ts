@@ -47,6 +47,7 @@ export class HouseDetailPage {
 	public S_R = { "Sale": "出售", "Lease": "出租" };
 	public F2M = { feet: "尺", meter: "米", sfeet: "平方英尺", smeter: "平方米" };
 	private houseRestURL;
+	tabBarElement: any;
 
 	@ViewChild('photo_slider') slider: Slides;
 
@@ -67,8 +68,11 @@ export class HouseDetailPage {
 		//this.nav = nav;
 		console.log(navParams);
 		this.parms = navParams.data;
+		this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
 		this.listenEvents();
 		//this.house = this.houseM.house;
+
+
 
 	}
 
@@ -98,10 +102,16 @@ export class HouseDetailPage {
 		pager: true,
 		//speed: 4000,
 		//autoplay: 300
-		
+
 	};
 
+	ionViewWillEnter() {
+		this.tabBarElement.style.display = 'none';
+	}
 
+	ionViewWillLeave() {
+		this.tabBarElement.style.display = 'flex';
+	}
 	ionViewDidEnter() {
 		console.log("House Detail page view did enter")
 		console.log(this.parms)
@@ -111,10 +121,10 @@ export class HouseDetailPage {
 			this.houseRestURL = data.mapHouseRest;
 		})
 
-		if ( this.mapleConf.helpHouseDetailFlag == false && this.parms.list.length > 1) {
- 			this.userData.presentToast("提示：左右滑动切换上一个和下一个房源");
- 			this.mapleConf.helpHouseDetailFlag = true;
- 		}
+		if (this.mapleConf.helpHouseDetailFlag == false && this.parms.list.length > 1) {
+			this.userData.presentToast("提示：左右滑动切换上一个和下一个房源");
+			this.mapleConf.helpHouseDetailFlag = true;
+		}
 	}
 
 
@@ -126,7 +136,7 @@ export class HouseDetailPage {
 			center: point,
 			minZoom: 4,
 			zoom: 14,
-			draggable: false,
+			//draggable: false,
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		}
 		let map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
@@ -318,7 +328,7 @@ export class HouseDetailPage {
 				this.houseM.setProperties(this.auth.authenticated(), this.switchF2M);
 
 				this.slider.slideTo(0);
-				
+
 				this.initMap();
 			}
 		)
