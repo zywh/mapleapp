@@ -1,11 +1,19 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.maplecity.mobileapp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.maplecity.mobileapp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>MapleCity</name>
-    <description>
-       枫之都手机应用
+    <description>
+
+
+       枫之都手机应用
+
+
   </description>
-    <author email="info@maplecity.com.cn" href="http://maplecity.com.cn/">
-      MapleCity Development Team
+    <author email="info@maplecity.com.cn" href="http://maplecity.com.cn/">
+
+
+      MapleCity Development Team
+
+
   </author>
     <content src="index.html" />
     <access origin="*" />
