@@ -10,7 +10,7 @@
     <search mapType='0' (searchInput)="searchSelection($event)" inputText=''></search>
 
   </ion-navbar>
-   <ion-toolbar [attr.primary]="isAndroid ? '' : null">
+  <ion-toolbar [attr.primary]="isAndroid ? '' : null">
     <ion-segment [(ngModel)]="homeSegment">
       <!--<ion-segment-button value="info">信息</ion-segment-button>-->
       <ion-segment-button value="house1" (ionSelect)="searchHouse('nearby')">周边</ion-segment-button>
@@ -22,7 +22,9 @@
 </ion-header>
 
 <ion-content class="home">
-
+  <!--<ion-fab right bottom style="opacity:0.8;">
+    <button ion-fab (click)="refresh()"><ion-icon name="refresh"></ion-icon></button>
+  </ion-fab>-->
 
   <!--  
   <ion-slides [options]="projectSwiperOptions" class="swiper-container">
@@ -70,6 +72,6 @@
 
 </ion-content>
 <ion-footer>
- 
+
 
 </ion-footer>

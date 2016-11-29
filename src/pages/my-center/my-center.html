@@ -8,33 +8,33 @@
 
   <ion-navbar>
     <ion-title>{{pageTitle}}</ion-title>
-     <!--<ion-buttons end>
+    <!--<ion-buttons end>
       <button ion-button (click)="addCenter()">
         <ion-icon name="add"></ion-icon>
     </button>
     </ion-buttons>-->
-     <ion-buttons end>
+    <ion-buttons end>
       <button ion-button (click)="toggleEdit()">{{editButton}}
       </button>
     </ion-buttons>
   </ion-navbar>
- 
+
 
 </ion-header>
 
 
 <ion-content>
   <ion-fab right bottom style="opacity:0.8;">
-        <button ion-fab (click)="nav.pop()"><ion-icon name="undo"></ion-icon></button>
-    </ion-fab>
+    <button ion-fab (click)="nav.pop()"><ion-icon name="undo"></ion-icon></button>
+  </ion-fab>
 
   <ion-list [reorder]="editing" (ionItemReorder)="reorderItems($event)">
 
     <ion-item-sliding *ngFor="let center of centerList">
-      <ion-item >
-        <ion-icon tappable  color="primary" *ngIf="editing" name="remove-circle" item-left (click)="remove(center)"></ion-icon>
-         <ion-icon color="primary" *ngIf="!editing" name="locate" item-left></ion-icon>
-           <h2 tappable  (click)="gotoMap(center.lat,center.lng)"> {{center.name}}</h2>
+      <ion-item>
+        <ion-icon tappable color="primary" *ngIf="editing" name="remove-circle" item-left (click)="remove(center)"></ion-icon>
+        <ion-icon color="primary" *ngIf="!editing" name="locate" item-left></ion-icon>
+        <h2 tappable (click)="gotoMap(center.lat,center.lng)"> {{center.name}}</h2>
       </ion-item>
       <ion-item-options>
         <button ion-button clear (click)="remove(center)">

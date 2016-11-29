@@ -161,6 +161,18 @@ export class HomePage {
     })
   }
 
+  refresh(){
+    if (this.homeSegment == 'house1') 
+    this.searchHouse('nearby');
+    if (this.homeSegment == 'house2') 
+    this.searchHouse('recommend');
+    if (this.homeSegment == 'projects') 
+    this.getProjects();
+    
+    
+
+  }
+
   searchHouse(s) {
     console.log("Button is clicked for house search");
     let range: number = (s == 'recommend') ? 0.1 : 0.05;
