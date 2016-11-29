@@ -24,7 +24,9 @@
 
 
 <ion-content>
-
+  <ion-fab right bottom style="opacity:0.8;">
+        <button ion-fab (click)="nav.pop()"><ion-icon name="undo"></ion-icon></button>
+    </ion-fab>
 
   <ion-list [reorder]="editing" (ionItemReorder)="reorderItems($event)">
 

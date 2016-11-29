@@ -22,7 +22,7 @@ export class MyCenterPage {
   public editing: boolean = false;
 
   constructor(
-    private nav: NavController,
+    public nav: NavController,
     private mapleConf: MapleConf,
     private parm: NavParams,
     private userData: UserData,
