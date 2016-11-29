@@ -251,6 +251,15 @@ export class HouseDetailPage {
 						}
 					},
 					{
+						text: '地图导航',
+						handler: () => {
+							actionSheet.dismiss().then(res => {
+								this.mapDirection();
+							})
+
+						}
+					},
+					{
 						text: '取消',
 						role: 'cancel',
 						handler: () => {
@@ -352,17 +361,18 @@ export class HouseDetailPage {
 
 	gotoCityStats() {
 		this.nav.push(HouseCityStatsPage, this.houseM.house.municipality);
-		this.auth.authenticated();
+		//this.auth.authenticated();
 	}
 	gotoSchool() {
 		//this.nav.push(SchoolSearchPage);
-		let navTransition = this.nav.pop();
-		navTransition.then(() => {
-			//let center = new google.maps.LatLng(this.houseM.house.latitude, this.houseM.house.longitude);
-			//this.events.publish('schoolmap:center', center);
+		// let navTransition = this.nav.pop();
+		// navTransition.then(() => {
+		// 	//let center = new google.maps.LatLng(this.houseM.house.latitude, this.houseM.house.longitude);
+		// 	//this.events.publish('schoolmap:center', center);
+		// 	this.events.publish('schoolmap:center', { lat: this.houseM.house.latitude, lng: this.houseM.house.longitude, type: 'HOUSE' });
+		// }
+		// )
 			this.events.publish('schoolmap:center', { lat: this.houseM.house.latitude, lng: this.houseM.house.longitude, type: 'HOUSE' });
-		}
-		)
 
 	}
 

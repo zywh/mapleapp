@@ -5,19 +5,19 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-<ion-navbar>
-  <!--<button ion-button menuToggle>
+  <ion-navbar>
+    <!--<button ion-button menuToggle>
     <ion-icon name="menu"></ion-icon>
   </button>-->
-  <ion-title>{{city}}统计</ion-title>
-</ion-navbar>
+    <ion-title>{{city}}统计</ion-title>
+  </ion-navbar>
 </ion-header>
 
-<ion-content class="house-city-stats" >
-
+<ion-content class="house-city-stats">
  
-    <ion-list>
-      <a ion-item *ngFor="let topic of topics" (click)="cityStatsColumn(topic)"> {{topic}} </a>
-    </ion-list>
+
+  <ion-list>
+    <a ion-item *ngFor="let topic of topics" (click)="cityStatsColumn(topic)"> {{topic}} </a>
+  </ion-list>
 
 </ion-content>
