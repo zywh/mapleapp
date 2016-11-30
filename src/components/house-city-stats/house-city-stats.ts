@@ -2,24 +2,17 @@ import { Component,Input } from '@angular/core';
 import {NavController,NavParams} from 'ionic-angular';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
-//import {gtaStats} from './gtaStats';
-import {CityStats} from './city-stats';
-//import {Highcharts} from 'angular2-highcharts';
+//import { HouseDetailPage } from '../../pages/house-detail/house-detail';
+import { CityStats} from '../../pages/house-city-stats/city-stats';
 declare var Highcharts: any;
 
-/*
-  Generated class for the HouseCityStats component.
-
-  See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
-  for more info on Angular 2 Components.
-*/
 @Component({
   selector: 'house-city-stats',
   templateUrl: 'house-city-stats.html'
 })
 export class HouseCityStatsComponent {
 
- @Input() city: String;
+ @Input() city: string;
   public chart;
   public seriesOptions = [];
   public topics = [];
@@ -30,9 +23,9 @@ export class HouseCityStatsComponent {
     private mapleRestData: MapleRestData,
     private parm: NavParams,
     private mapleconf: MapleConf,
-    private nav: NavController
+    public nav: NavController
   ) { 
-   
+   console.log("CITYSTATS Component Constructor:" + this.city);
   }
 
   date2str() {
@@ -43,9 +36,9 @@ export class HouseCityStatsComponent {
     return yyyy + "-" + mm + "-" + dd;
   }
 
-  ionViewWillEnter() {
+  ngOnInit(){
 
-    console.log("Stats Page will enter");
+    console.log("View did enter Stats Page will enter");
     if (this.topics.length == 0) {
       this.mapleconf.load().then(data => {
         //console.log(data.getMlsDataRest);
@@ -55,7 +48,7 @@ export class HouseCityStatsComponent {
     }  
       
   }
-
+ 
   getCityStats(url) {
     this.mapleRestData.load(url, { city: this.city }).subscribe(
       data => {
@@ -149,9 +142,8 @@ export class HouseCityStatsComponent {
 
     };
     console.log(this.data[topic]);
-
-    console.log(options)
     this.nav.push(CityStats, { city: this.city, options: options });
+     //this.nav.push(HouseDetailPage, { id: 'W3661544' });
   }
 
 

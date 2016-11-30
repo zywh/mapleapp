@@ -27,7 +27,7 @@ import {AboutPage} from '../pages/about/about';
 import {FavoritePage} from '../pages/favorite/favorite';
 import {HelpPage} from '../pages/help/help';
 import {HomePage} from '../pages/home/home';
-import {HouseCityStatsPage} from '../pages/house-city-stats/house-city-stats';
+//import {HouseCityStatsPage} from '../pages/house-city-stats/house-city-stats';
 import {CityStats} from '../pages/house-city-stats/city-stats';
 
 import {HouseDetailPage} from '../pages/house-detail/house-detail';
@@ -85,7 +85,7 @@ export function authFactory(http: any) {
     FavoritePage,
     HelpPage,
     HomePage,
-    HouseCityStatsPage,
+    //HouseCityStatsPage,
     HouseDetailPage,
     MapSearchPage,
     HouselistSearch,
@@ -137,7 +137,7 @@ export function authFactory(http: any) {
     FavoritePage,
     HelpPage,
     HomePage,
-    HouseCityStatsPage,
+    //HouseCityStatsPage,
     HouseDetailPage,
     MapSearchPage,
     HouselistSearch,

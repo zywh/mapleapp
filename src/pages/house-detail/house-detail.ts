@@ -5,7 +5,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 import { UserData } from '../../providers/user-data';
-import { HouseCityStatsPage } from '../../pages/house-city-stats/house-city-stats';
+//import { HouseCityStatsPage } from '../../pages/house-city-stats/house-city-stats';
 import { AuthService } from '../../providers/auth/auth';
 import { ShareService } from '../../providers/share';
 import { houseInterface, houseModel } from '../../models/houseModel';
