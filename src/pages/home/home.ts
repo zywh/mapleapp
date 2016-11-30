@@ -1,5 +1,5 @@
 //import {Page, NavController} from 'ionic-angular';
-import { NavController, NavParams, Events,AlertController,Platform } from 'ionic-angular';
+import { NavController, NavParams, Events, AlertController, Platform } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
@@ -11,16 +11,16 @@ import { ProfilePage } from '../profile/profile';
 import { AuthService } from '../../providers/auth/auth';
 //import { HouseList } from '../../components/house-list/house-list';
 //import { Search } from '../../components/search/search';
-import {houseListModel} from '../../models/houseListModel';
+import { houseListModel } from '../../models/houseListModel';
 
 @Component({
   templateUrl: 'home.html'
 })
 export class HomePage {
   private remoteVersion;
-  private iosURL;
-  private androidURL;
-  private googleURL;
+  // private iosURL;
+  // private androidURL;
+  // private googleURL;
   public projects: Object;
   public postListRest;
   public projectRest;
@@ -30,20 +30,21 @@ export class HomePage {
   public hQueryText: string = '';
   public sQueryText: string = '';
   public cityItems: any;
-  public addressItems: any;
-  public mlsItems: any;
+  //public addressItems: any;
+  // public mlsItems: any;
   public currentDiv;
-  public scityItems;
-  public schoolItems;
+  // public scityItems;
+  // public schoolItems;
   public homeSegment: string = "house1";
   public isAndroid: boolean = false;
   public nearbyHouseList: houseListModel;
-  public recommendHouseList;
+  public recommendHouseList: houseListModel;
   public imgHost;
   public houseRestURL;
-  public data;
+  private data = { 'lat': 0, 'lng': 0 };
   public listHouse: boolean = false;
   public listFav: boolean = true;
+  private refreshLock = { 'nearby': false, 'recommend': false, 'projects': false };
   //public houseListM;
 
 
@@ -58,7 +59,7 @@ export class HomePage {
     private auth: AuthService,
     private events: Events
   ) {
-  
+
 
     this.listenEvents();
   }
@@ -74,12 +75,12 @@ export class HomePage {
   listenEvents() {
     this.events.subscribe('user:login', () => {
       console.log("user login event detected")
-      setTimeout(() => {this.setVOWtoken(this.VOWTokenRest);}, 600);     
+      setTimeout(() => { this.setVOWtoken(this.VOWTokenRest); }, 600);
     });
 
     this.events.subscribe('user:logout', () => {
       console.log("user logout event detected")
-      setTimeout(() => {this.setVOWtoken(this.VOWTokenRest);}, 600);     
+      setTimeout(() => { this.setVOWtoken(this.VOWTokenRest); }, 600);
     });
   }
 
@@ -114,20 +115,20 @@ export class HomePage {
       this.houseRestURL = data.mapHouseRest;
       this.projectRest = data.projectRest;
       this.VOWTokenRest = data.getVOWTokenRest;
-      this.googleURL = data.googleURL;
-      this.iosURL = data.iosURL;
-      this.androidURL = data.androidURL;
+      //this.googleURL = data.googleURL;
+      // this.iosURL = data.iosURL;
+      // this.androidURL = data.androidURL;
 
-     
+
 
       //this.getProjects();
       // this.getPosts(data.postListRest, 6);
       this.setVOWtoken(this.VOWTokenRest);
       this.searchHouse('nearby');
-    
-    //  if (this.remoteVersion != this.mapleConf.localVersion){
-    //    this.upgradeAlert(this.remoteVersion);
-    //  }
+
+      //  if (this.remoteVersion != this.mapleConf.localVersion){
+      //    this.upgradeAlert(this.remoteVersion);
+      //  }
 
 
     })
@@ -145,12 +146,12 @@ export class HomePage {
 
   // }
 
-  
+
 
   getPostList() {
-    this.mapleConf.getLocation().then(data => {
-      this.data = data;
-    })
+    // this.mapleConf.getLocation().then(data => {
+    //   this.data = data;
+    // })
     this.mapleConf.load().then(data => {
       //this.postListRest = data.postRest;
       this.houseRestURL = data.mapHouseRest;
@@ -161,15 +162,15 @@ export class HomePage {
     })
   }
 
-  refresh(){
-    if (this.homeSegment == 'house1') 
-    this.searchHouse('nearby');
-    if (this.homeSegment == 'house2') 
-    this.searchHouse('recommend');
-    if (this.homeSegment == 'projects') 
-    this.getProjects();
-    
-    
+  refresh() {
+    if (this.homeSegment == 'house1')
+      this.searchHouse('nearby');
+    if (this.homeSegment == 'house2')
+      this.searchHouse('recommend');
+    if (this.homeSegment == 'projects')
+      this.getProjects();
+
+
 
   }
 
@@ -179,48 +180,67 @@ export class HomePage {
 
 
     this.mapleConf.getLocation().then(data => {
-      this.data = data;
-      let swLat = this.data['lat'] - range;
-      let swLng = this.data['lng'] - range;
-      let neLat = this.data['lat'] + range;
-      let neLng = this.data['lng'] + range;
-      let bounds = swLat + "," + swLng + "," + neLat + "," + neLng;
-      let mapParms = {
-        centerLat: this.data['lat'],
-        centerLng: this.data['lng'],
-        bounds: bounds,
-        type: s,
-        sr: 'Sale'
-      };
+      console.log(data);
+      console.log(this.data);
+      let locationChange: boolean = (this.data.lat.toFixed(3) != data['lat'].toFixed(3)) || (this.data.lng.toFixed(3) != data['lng'].toFixed(3))
+      if (locationChange) {
+        this.refreshLock = { 'nearby': false, 'recommend': false, 'projects': false };
+      }
+      let runGetHouse: boolean = (s == 'nearby') ? this.refreshLock.nearby : this.refreshLock.recommend;
+      if (!runGetHouse) {
+        this.data.lat = data['lat'];
+        this.data.lng = data['lng'];
+        let swLat = this.data['lat'] - range;
+        let swLng = this.data['lng'] - range;
+        let neLat = this.data['lat'] + range;
+        let neLng = this.data['lng'] + range;
+        let bounds = swLat + "," + swLng + "," + neLat + "," + neLng;
+        let mapParms = {
+          centerLat: this.data['lat'],
+          centerLng: this.data['lng'],
+          bounds: bounds,
+          type: s,
+          sr: 'Sale'
+        };
 
-      // this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
-      this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
-        data => {
-          console.log(data);
-          if (data.Data.Type == 'house') {
-            this.imgHost = data.Data.imgHost;
-            //this.nearbyHouseList = data.Data.HouseList;
-            //this.nearbyHouseList = this.setVowMask(data.Data.HouseList);
-            this.nearbyHouseList = new houseListModel(data.Data.HouseList,this.auth.authenticated());
-           // this.nearbyHouseList.setVowMask(this.auth.authenticated());
-            
-            console.log(this.nearbyHouseList);
+        // this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
+        this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
+          data => {
+            console.log(data);
+            if (data.Data.Type == 'house') {
+              this.imgHost = data.Data.imgHost;
 
-          }
-        })
+              if (s == 'nearby') {
+                this.nearbyHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
+                this.refreshLock.nearby = true;
+              }
+              if (s == 'recommend') {
+                this.recommendHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
+                this.refreshLock.recommend = true;
+             }
+             // this.nearbyHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
 
+
+            }
+          })
+      }
     })
   }
 
 
   getProjects() {
-    this.mapleRestData.load(this.projectRest, this.parms).subscribe(
-      data => {
-        this.projects = data;
-        console.log("get projects");
-        console.log(data);
-      });
 
+    if (this.refreshLock.projects == false) {
+
+
+      this.mapleRestData.load(this.projectRest, this.parms).subscribe(
+        data => {
+          this.projects = data;
+          console.log("get projects");
+          this.refreshLock.projects = true;
+
+        });
+    }
   }
 
   getPosts(url, catId) {
@@ -239,11 +259,11 @@ export class HomePage {
 
 
   searchSelection(e) {
-   
+
     if (e != 'INFOCUS') {
       if (e.type == 'CITY') {
-    
-        this.events.publish('map:center', { type:'HOUSE',lat: e.lat, lng: e.lng });
+
+        this.events.publish('map:center', { type: 'HOUSE', lat: e.lat, lng: e.lng });
         this.userData.saveCenter('recentCenter', e.id, e.lat, e.lng);
 
       } else {
@@ -256,13 +276,13 @@ export class HomePage {
 
   }
 
-	setVOWtoken(url) {
-		this.mapleRestData.load(url, '').subscribe(
-			token => {
-          this.mapleConf.setVOWtoken(token);
-			}
-		)
-	}
+  setVOWtoken(url) {
+    this.mapleRestData.load(url, '').subscribe(
+      token => {
+        this.mapleConf.setVOWtoken(token);
+      }
+    )
+  }
 
 
 }

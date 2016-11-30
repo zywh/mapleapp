@@ -10,7 +10,7 @@ import { AuthService } from '../../providers/auth/auth';
 import { ShareService } from '../../providers/share';
 import { houseInterface, houseModel } from '../../models/houseModel';
 import { houseListModel } from '../../models/houseListModel';
-import { HouselistSearch } from '../houselist-search/houselist-search';
+//import { HouselistSearch } from '../houselist-search/houselist-search';
 
 declare var google: any;
 
@@ -48,9 +48,11 @@ export class HouseDetailPage {
 	public F2M = { feet: "尺", meter: "米", sfeet: "平方英尺", smeter: "平方米" };
 	private houseRestURL;
 	public similarHouseList;
+	public schoolList;
 	tabBarElement: any;
 	@ViewChild(Content) content: Content;
-	showToolbar: boolean = false;
+	//showToolbar: boolean = false;
+	private lockRefresh = { 'school': false, 'similar': false, 'community': false };//Lock tab page refresh
 
 	@ViewChild('photo_slider') slider: Slides;
 
@@ -79,10 +81,6 @@ export class HouseDetailPage {
 
 	}
 
-	toggleToolbar() {
-		this.showToolbar = !this.showToolbar;
-		this.content.resize();
-	}
 
 	listenEvents() {
 		this.events.subscribe('toast:dismiss', () => {
@@ -172,59 +170,59 @@ export class HouseDetailPage {
 
 	similar() {
 		//this.houseM.house.lp_dol = '';
+		if (this.lockRefresh.similar == false) {
+			//let similarHouses;
+			let range: number = 0.1;
 
-		let similarHouses;
-		let range: number = 0.1;
+
+			let swLat = this.houseM.house.latitude - range;
+			let swLng = this.houseM.house.longitude - range;
+			let neLat = this.houseM.house.latitude + range;
+			let neLng = this.houseM.house.longitude + range;
+			let bounds = swLat + "," + swLng + "," + neLat + "," + neLng;
+			let housePrice = { lower: this.houseM.house.lp_dol * 0.8 / 10000, upper: this.houseM.house.lp_dol * 1.2 / 10000 };
+			//let houseArea;
+			if (this.houseM.house.house_area > 100) {
+				//houseArea = { lower: this.houseM.house.house_area * 0.8, upper: this.houseM.house.house_area * 1.2 };
+			}
 
 
-		let swLat = this.houseM.house.latitude - range;
-		let swLng = this.houseM.house.longitude - range;
-		let neLat = this.houseM.house.latitude + range;
-		let neLng = this.houseM.house.longitude + range;
-		let bounds = swLat + "," + swLng + "," + neLat + "," + neLng;
-		let housePrice = { lower: this.houseM.house.lp_dol * 0.8 / 10000, upper: this.houseM.house.lp_dol * 1.2 / 10000 };
-		//let houseArea;
-		if (this.houseM.house.house_area > 100) {
-			//houseArea = { lower: this.houseM.house.house_area * 0.8, upper: this.houseM.house.house_area * 1.2 };
+			//let landArea = {};
+			if (this.houseM.house.land_area > 1000) {
+				//landArea = { lower: this.houseM.house.land_area * 0.8, upper: this.houseM.house.land_area * 1.2 };
+			}
+
+
+
+			let mapParms = {
+				bounds: bounds,
+				housetype: [this.houseM.house.propertyType_id],
+				sr: this.houseM.house.s_r,
+				houseprice: housePrice,
+				//houseroom: this.houseM.house.br,
+				//housearea: houseArea,
+				//houseground: landArea
+				type: 'nearby',
+				//housebaths: this.houseM.house.bath_tot
+			}
+
+			// this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
+			this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
+				data => {
+					console.log(data);
+
+
+					if (data.Data.Type == 'house') {
+						//similarHouses = new houseListModel(data.Data.HouseList, this.auth.authenticated());
+						this.similarHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
+						//console.log(similarHouses);
+						//this.nav.push(HouselistSearch, { list: similarHouses, imgHost: '', listType: 'house' });
+						this.lockRefresh.similar = true;
+
+					}
+				})
+
 		}
-
-
-		//let landArea = {};
-		if (this.houseM.house.land_area > 1000) {
-			//landArea = { lower: this.houseM.house.land_area * 0.8, upper: this.houseM.house.land_area * 1.2 };
-		}
-
-
-
-		let mapParms = {
-			bounds: bounds,
-			housetype: [this.houseM.house.propertyType_id],
-			sr: this.houseM.house.s_r,
-			houseprice: housePrice,
-			//houseroom: this.houseM.house.br,
-			//housearea: houseArea,
-			//houseground: landArea
-			type: 'nearby',
-			//housebaths: this.houseM.house.bath_tot
-		}
-
-		// this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
-		this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
-			data => {
-				console.log(data);
-
-
-				if (data.Data.Type == 'house') {
-					//similarHouses = new houseListModel(data.Data.HouseList, this.auth.authenticated());
-					this.similarHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
-					//console.log(similarHouses);
-					//this.nav.push(HouselistSearch, { list: similarHouses, imgHost: '', listType: 'house' });
-
-
-				}
-			})
-
-
 	}
 
 	more() {
@@ -335,18 +333,7 @@ export class HouseDetailPage {
 		}
 
 	}
-	// swipeContent(e) {
-	// 	console.log("Swipe Event Detected");
-	// 	console.log(e);
-	// 	if (e.direction == 8) {
-	// 		this.tabBarElement.style.display = 'none';
 
-	// 	} else if (e.direction == 16) {
-	// 		this.tabBarElement.style.display = 'flex';
-
-	// 	}
-
-	// }
 
 	getResult(url, id) {
 		console.log("house detail get result")
@@ -372,6 +359,8 @@ export class HouseDetailPage {
 				this.slider.slideTo(0);
 
 				this.initMap();
+				this.lockRefresh = { 'school': false, 'similar': false, 'community': false };//Lock tab page refresh
+
 			}
 		)
 	}
@@ -394,6 +383,7 @@ export class HouseDetailPage {
 
 	gotoCityStats() {
 		this.nav.push(HouseCityStatsPage, this.houseM.house.municipality);
+		this.section = "housedetail";
 		//this.auth.authenticated();
 	}
 	gotoSchool() {
@@ -406,24 +396,29 @@ export class HouseDetailPage {
 		// }
 		// )
 		//this.events.publish('schoolmap:center', { lat: this.houseM.house.latitude, lng: this.houseM.house.longitude, type: 'HOUSE' });
+		if (this.lockRefresh.school == false) {
 
 
-		let _sw_lat = this.houseM.house.latitude - 0.02;
-		let _sw_lng = this.houseM.house.longitude + 0.02;
-		let _ne_lat = this.houseM.house.latitude + 0.02;
-		let _ne_lng = this.houseM.house.longitude - 0.02;
-		let _bounds = _sw_lat + "," + _sw_lng + "," + _ne_lat + "," + _ne_lng;
-		let mapParms = { bounds: _bounds };
-		this.mapleConf.load().then(data => {
+			let range = 0.03;
+			let _sw_lat = this.houseM.house.latitude - range;
+			let _sw_lng = this.houseM.house.longitude - range;
+			let _ne_lat = this.houseM.house.latitude + range;
+			let _ne_lng = this.houseM.house.longitude + range;
+			let _bounds = _sw_lat + "," + _sw_lng + "," + _ne_lat + "," + _ne_lng;
+			let mapParms = { bounds: _bounds };
+			this.mapleConf.load().then(data => {
 
-			let restUrl = data.getSchoolmapDataRest;
+				let restUrl = data.getSchoolmapDataRest;
 
-			this.mapleRestData.load(restUrl, mapParms).subscribe(
-				data => {
-					console.log(data);
-				}
-			);
-		});
+				this.mapleRestData.load(restUrl, mapParms).subscribe(
+					data => {
+						console.log(data);
+						this.schoolList = data.SchoolList;
+						this.lockRefresh.school = true;
+					}
+				);
+			});
+		}
 
 	}
 
