@@ -260,15 +260,7 @@ export class HouseDetailPage {
 
 						}
 					},
-					{
-						text: '类似房源',
-						handler: () => {
-							actionSheet.dismiss().then(res => {
-								this.similar();
-							})
-
-						}
-					},
+				
 					{
 						text: '地图导航',
 						handler: () => {
