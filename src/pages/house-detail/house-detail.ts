@@ -1,4 +1,4 @@
-import { NavController, NavParams, AlertController, ToastController, Platform, Slides, Events, ActionSheetController } from 'ionic-angular';
+import { Content, NavController, NavParams, AlertController, ToastController, Platform, Slides, Events, ActionSheetController } from 'ionic-angular';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 //import {Geolocation} from 'ionic-native';
 //import { SocialSharing } from 'ionic-native';
@@ -30,7 +30,7 @@ export class HouseDetailPage {
 	public isMore: Boolean = true; //more buttom will be disabled before toast is dismiss
 	public parms = { id: '', list: [], VOWtoken: '' };
 	public houseList = { prev: '', next: '', index: 0, total: 0 };
-	public section: string = "summary";
+	public section: string = "housedetail";
 	public isAndroid: boolean = false;
 	public switchF2M: boolean = true; //"Meter"
 	public rooms: Array<Object> = [];
@@ -47,7 +47,10 @@ export class HouseDetailPage {
 	public S_R = { "Sale": "出售", "Lease": "出租" };
 	public F2M = { feet: "尺", meter: "米", sfeet: "平方英尺", smeter: "平方米" };
 	private houseRestURL;
+	public similarHouseList;
 	tabBarElement: any;
+	@ViewChild(Content) content: Content;
+	showToolbar: boolean = false;
 
 	@ViewChild('photo_slider') slider: Slides;
 
@@ -74,6 +77,11 @@ export class HouseDetailPage {
 
 
 
+	}
+
+	toggleToolbar() {
+		this.showToolbar = !this.showToolbar;
+		this.content.resize();
 	}
 
 	listenEvents() {
@@ -105,14 +113,14 @@ export class HouseDetailPage {
 
 	};
 
-	ionViewWillEnter() {
-		this.tabBarElement.style.display = 'none';
-	}
+	// ionViewDidLoad(){
 
-	ionViewWillLeave() {
-		this.tabBarElement.style.display = 'flex';
-	}
-	ionViewDidEnter() {
+	// }
+
+	ionViewWillEnter() {
+
+		this.tabBarElement.style.display = 'none';
+		this.content.resize();
 		console.log("House Detail page view did enter")
 		console.log(this.parms)
 		this.mapleConf.load().then(data => {
@@ -125,7 +133,19 @@ export class HouseDetailPage {
 			this.userData.presentToast("提示：左右滑动切换上一个和下一个房源");
 			this.mapleConf.helpHouseDetailFlag = true;
 		}
+
 	}
+
+	ionViewWillLeave() {
+		this.tabBarElement.style.display = 'flex';
+	}
+
+
+
+
+	// //this.content.resize();
+	// ionViewDidEnter() {
+	// }
 
 
 	initMap() {
@@ -195,9 +215,10 @@ export class HouseDetailPage {
 
 
 				if (data.Data.Type == 'house') {
-					similarHouses = new houseListModel(data.Data.HouseList, this.auth.authenticated());
-					console.log(similarHouses);
-					this.nav.push(HouselistSearch, { list: similarHouses, imgHost: '', listType: 'house' });
+					//similarHouses = new houseListModel(data.Data.HouseList, this.auth.authenticated());
+					this.similarHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
+					//console.log(similarHouses);
+					//this.nav.push(HouselistSearch, { list: similarHouses, imgHost: '', listType: 'house' });
 
 
 				}
@@ -314,6 +335,18 @@ export class HouseDetailPage {
 		}
 
 	}
+	// swipeContent(e) {
+	// 	console.log("Swipe Event Detected");
+	// 	console.log(e);
+	// 	if (e.direction == 8) {
+	// 		this.tabBarElement.style.display = 'none';
+
+	// 	} else if (e.direction == 16) {
+	// 		this.tabBarElement.style.display = 'flex';
+
+	// 	}
+
+	// }
 
 	getResult(url, id) {
 		console.log("house detail get result")
@@ -372,7 +405,25 @@ export class HouseDetailPage {
 		// 	this.events.publish('schoolmap:center', { lat: this.houseM.house.latitude, lng: this.houseM.house.longitude, type: 'HOUSE' });
 		// }
 		// )
-			this.events.publish('schoolmap:center', { lat: this.houseM.house.latitude, lng: this.houseM.house.longitude, type: 'HOUSE' });
+		//this.events.publish('schoolmap:center', { lat: this.houseM.house.latitude, lng: this.houseM.house.longitude, type: 'HOUSE' });
+
+
+		let _sw_lat = this.houseM.house.latitude - 0.02;
+		let _sw_lng = this.houseM.house.longitude + 0.02;
+		let _ne_lat = this.houseM.house.latitude + 0.02;
+		let _ne_lng = this.houseM.house.longitude - 0.02;
+		let _bounds = _sw_lat + "," + _sw_lng + "," + _ne_lat + "," + _ne_lng;
+		let mapParms = { bounds: _bounds };
+		this.mapleConf.load().then(data => {
+
+			let restUrl = data.getSchoolmapDataRest;
+
+			this.mapleRestData.load(restUrl, mapParms).subscribe(
+				data => {
+					console.log(data);
+				}
+			);
+		});
 
 	}
 

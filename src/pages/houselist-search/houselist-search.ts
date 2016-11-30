@@ -1,5 +1,5 @@
-import { NavController, AlertController, NavParams,ActionSheetController, Events } from 'ionic-angular';
-import { Component } from '@angular/core';;
+import { NavController,Content, AlertController, NavParams,ActionSheetController, Events } from 'ionic-angular';
+import { Component,ViewChild } from '@angular/core';;
 import { HouseDetailPage } from '../house-detail/house-detail';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { UserData } from '../../providers/user-data'
@@ -28,6 +28,7 @@ export class HouselistSearch {
     public listType: string;
     private houses: Array<houseShort> = [];
     public currentHouseList: houseListModel; //Hold list of all houses on current map
+    @ViewChild(Content) content: Content;
 
     constructor(
         public nav: NavController,
@@ -71,8 +72,15 @@ export class HouselistSearch {
         } else {
             this.totalCount = this.currentHouseList.listNumber();
         }
+        	this.content.resize();
 
     }
+
+   
+
+	// ionViewDidEnter() {
+	// 	this.content.resize();
+	// }
 
 
     gotoHouseDetail(mls) {

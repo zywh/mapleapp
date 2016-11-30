@@ -15,9 +15,9 @@ import { AuthService } from '../../providers/auth/auth';
 export class HouseList {
   @Input() houselist: houseListModel;
  // @Input() houselist: any;
-  @Input() imgHost: String;
-  @Input() fav: Boolean;
-  @Input() isList: Boolean;
+  @Input() imgHost?: String;
+  @Input() fav?: boolean;
+  @Input() isList?: boolean;
   //private data;
   private nearbyHouseList;
   public houseListM: houseListModel;

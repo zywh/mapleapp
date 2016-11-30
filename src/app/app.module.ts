@@ -15,6 +15,7 @@ import { UpdateService } from '../providers/update';
 import { ShareService } from '../providers/share';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { HouseList } from '../components/house-list/house-list';
+import { SchoolListComponent} from '../components/school-list/school-list';
 import { Search } from '../components/search/search';
 import { ElasticHeader } from '../components/elastic-header/elastic-header';
 
@@ -74,6 +75,7 @@ export function authFactory(http: any) {
   declarations: [
    
     HouseList,
+    SchoolListComponent,
     Search,
     MapleApp,
     AboutPage,
@@ -125,6 +127,7 @@ export function authFactory(http: any) {
   entryComponents: [
    
     HouseList,
+    SchoolListComponent,
     Search,
     MapleApp,
     AboutPage,
