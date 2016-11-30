@@ -374,8 +374,8 @@ export class HouseDetailPage {
 
 
 	gotoCityStats() {
-		this.section = "housedetail";
-		this.nav.push(HouseCityStatsPage, this.houseM.house.municipality);
+		//this.section = "housedetail";
+		//this.nav.push(HouseCityStatsPage, this.houseM.house.municipality);
 		
 		//this.auth.authenticated();
 	}

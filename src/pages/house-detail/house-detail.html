@@ -110,7 +110,8 @@
 		<ion-segment-button value="housedetail" >
 			详情
 		</ion-segment-button>
-		<ion-segment-button value="citystats" (ionSelect)="gotoCityStats()">
+		<!--<ion-segment-button value="citystats" (ionSelect)="gotoCityStats()">-->
+			<ion-segment-button value="citystats">
 			社区
 		</ion-segment-button>
 		<ion-segment-button value="school" (ionSelect)="gotoSchool()">
@@ -371,8 +372,9 @@
 		<!--Map End-->
 	</div>
 
-	<!--<div *ngSwitchCase="'citystats'">
-	</div>-->
+	<div *ngSwitchCase="'citystats'">
+		<house-city-stats [city]="houseM.house.municipality"></house-city-stats>
+	</div>
 
 	<div *ngSwitchCase="'school'">
 		 <school-list [schoolList]='schoolList'  ></school-list>
