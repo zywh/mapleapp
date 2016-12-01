@@ -27,6 +27,14 @@
             }
         }
     }
+
+    ion-segment.segment_css{
+         padding-left: 4px;
+        padding-right: 4px;
+
+    }
+
+    
    
     
     ion-card.fyxq_cont {
@@ -109,6 +117,7 @@
                 }
             }
         }
+       
         .xqlb_list {
             ion-item { 
                 padding: 0px; 
@@ -124,6 +133,7 @@
             }
             ion-label {
                 margin: 0px;
+                
             }
             ion-label[fixed] {
                 flex: 0 0 90px;
@@ -132,6 +142,7 @@
                 max-width: 90px; 
             }
         }
+
         .fwbj_table {
             overflow: auto;
             -webkit-overflow-scrolling: touch;
@@ -140,7 +151,8 @@
             }
         }
         .fwms_item {
-            line-height: 22px;
+            line-height: 23px;
+            font-size: medium;
         }
     }
 
