@@ -1,6 +1,8 @@
 .house-detail {
 
-
+    ion-list.houselist-search.list.list-ios {
+        margin: 0;
+    }
     .swiper-pagination-bullet { opacity: 1; background: #fff; }
     .swiper-pagination-bullet-active { opacity: 1; background: #ff4103; }
     // z-index: 11;

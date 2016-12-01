@@ -5,7 +5,7 @@ import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 //import {gtaStats} from './gtaStats';
 import {chartStats} from './chartStats';
 //import {Highcharts} from 'angular2-highcharts';
-import {HouseCityStatsPage} from '../house-city-stats/house-city-stats'
+//import {HouseCityStatsPage} from '../house-city-stats/house-city-stats'
 
 declare var Highcharts: any;
 
@@ -423,7 +423,7 @@ export class StatsPage {
         this.nav.push(chartStats, { type: 0, options: options });
     }
     cityStats(city){
-        this.nav.push(HouseCityStatsPage,city);
+       // this.nav.push(HouseCityStatsPage,city);
     }
 
 }

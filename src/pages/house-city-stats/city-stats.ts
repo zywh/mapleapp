@@ -1,4 +1,4 @@
-import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { NavParams, ViewController } from 'ionic-angular';
 import { Component } from '@angular/core';
 //import {  Highcharts } from 'angular2-highcharts';
 declare var Highcharts: any;
