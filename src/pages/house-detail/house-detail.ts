@@ -115,8 +115,8 @@ export class HouseDetailPage {
 
 	// }
 
-	// ionViewWillEnter() {
-		ionViewDidLoad(){
+	ionViewWillEnter() {
+		
 
 		this.tabBarElement.style.display = 'none';
 		this.content.resize();
