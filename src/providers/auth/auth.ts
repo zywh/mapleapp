@@ -61,6 +61,9 @@ export class AuthService {
     });
 
     this.lock.on('authenticated', authResult => {
+      this.storage.remove('profile');
+      this.storage.remove('id_token');
+      this.idToken = authResult.idToken;
       // local save for authhttp use by maple-rest-data - default token name is id_token
       this.storage.set('id_token', authResult.idToken);
       localStorage.setItem('id_token', authResult.idToken);

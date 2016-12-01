@@ -36,6 +36,14 @@ export class HouseCityStatsComponent {
     return yyyy + "-" + mm + "-" + dd;
   }
 
+  ionViewDidLoad(){
+    console.log("City stat page did load");
+  }
+
+  ionViewWillUnload(){
+     console.log("City stat page will unload");
+  }
+
   ngOnInit(){
 
     console.log("View did enter Stats Page will enter");
