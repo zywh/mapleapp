@@ -1,4 +1,16 @@
+#house-header {
+    .button-ios {
+        margin: 0;
+        padding: 0;
+        height: 2.4em;
+       
+    }
+}
+
 .house-detail {
+
+
+  
 
     ion-list.houselist-search.list.list-ios {
         margin: 0;
@@ -165,9 +177,9 @@
     }
 
 
-    #maphouse {
+    #housemap {
         width: 100%;
-        height: 250px;
+        height: 350px;
     
     }
 }

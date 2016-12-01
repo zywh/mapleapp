@@ -53,9 +53,10 @@ export class HouseDetailPage {
 	@ViewChild(Content) content: Content;
 	//showToolbar: boolean = false;
 	private lockRefresh = { 'school': false, 'similar': false, 'community': false };//Lock tab page refresh
-	public location = {'lat':44,'lng':-79};
+	public location = { 'lat': 44, 'lng': -79 };
 
 	@ViewChild('photo_slider') slider: Slides;
+	public popLock:boolean = false;
 
 	constructor(
 		public nav: NavController,
@@ -117,10 +118,8 @@ export class HouseDetailPage {
 	// }
 
 	ionViewWillEnter() {
-		
 
-		this.tabBarElement.style.display = 'none';
-		this.content.resize();
+
 		console.log("House Detail page view did enter")
 		console.log(this.parms)
 		this.mapleConf.load().then(data => {
@@ -140,6 +139,21 @@ export class HouseDetailPage {
 		this.tabBarElement.style.display = 'flex';
 	}
 
+	ionViewDidEnter() {
+		this.tabBarElement.style.display = 'none';
+		this.content.resize();
+	}
+
+	ionViewCanLeave() {
+		console.log("Should I leave?" + this.popLock);
+		return this.popLock;
+	}
+
+	unlockPop(){
+		this.popLock = true;
+		this.nav.pop();
+	}
+
 
 
 
@@ -148,30 +162,36 @@ export class HouseDetailPage {
 	// }
 
 
-	initMap() {
+	// initMap() {
 
-		let point = new google.maps.LatLng(this.houseM.house.latitude, this.houseM.house.longitude);
-		let mapOptions = {
-			//center: latLng,
-			center: point,
-			minZoom: 4,
-			zoom: 14,
-			//draggable: false,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-		}
-		let map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-		new google.maps.Marker({
-			position: point,
-			map: map,
-			animation: google.maps.Animation.DROP,
-			draggable: false,
-		});
+	// 	let point = new google.maps.LatLng(this.houseM.house.latitude, this.houseM.house.longitude);
+	// 	let mapOptions = {
+	// 		//center: latLng,
+	// 		center: point,
+	// 		minZoom: 4,
+	// 		zoom: 14,
+	// 		//draggable: false,
+	// 		scrollwheel: false,
+	// 		navigationControl: false,
+	// 		mapTypeControl: false,
+	// 		scaleControl: false,
+	// 		draggable: false,
+	// 		mapTypeId: google.maps.MapTypeId.ROADMAP
+	// 	}
+	// 	let map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+	// 	new google.maps.Marker({
+	// 		position: point,
+	// 		map: map,
+	// 		animation: google.maps.Animation.DROP,
+	// 		draggable: false,
+	// 	});
 
 
-	}
+	// }
 
 	similar() {
 		//this.houseM.house.lp_dol = '';
+		this.popLock = true;
 		if (this.lockRefresh.similar == false) {
 			//let similarHouses;
 			let range: number = 0.1;
@@ -262,7 +282,7 @@ export class HouseDetailPage {
 
 						}
 					},
-				
+
 					{
 						text: '地图导航',
 						handler: () => {
@@ -349,7 +369,7 @@ export class HouseDetailPage {
 				this.isFav = data.isFav; //check if houseFav and routeFav
 				this.setHouseList();
 				this.houseM.setProperties(this.auth.authenticated(), this.switchF2M);
-				this.location = {'lat':this.houseM.house.latitude,'lng':this.houseM.house.longitude};
+				this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude };
 
 				this.slider.slideTo(0);
 
@@ -360,7 +380,7 @@ export class HouseDetailPage {
 			}
 		)
 	}
-	
+
 
 	setHouseList() {
 		this.houseList = { prev: null, next: null, index: 0, total: 0 };
@@ -381,7 +401,7 @@ export class HouseDetailPage {
 	gotoCityStats() {
 		//this.section = "housedetail";
 		//this.nav.push(HouseCityStatsPage, this.houseM.house.municipality);
-		
+
 		//this.auth.authenticated();
 	}
 	gotoSchool() {

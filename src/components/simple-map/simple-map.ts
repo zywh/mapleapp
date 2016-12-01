@@ -7,7 +7,7 @@ declare var google: any;
   templateUrl: 'simple-map.html'
 })
 export class SimpleMapComponent {
-  @ViewChild('maphouse') mapElement: ElementRef;
+  @ViewChild('simplemap') mapElement: ElementRef;
   @Input() center;
 
 
@@ -22,7 +22,7 @@ export class SimpleMapComponent {
   }
 
   initMap() {
-    
+
     console.log(this.center);
     let point = new google.maps.LatLng(this.center['lat'], this.center['lng']);
     let mapOptions = {
@@ -31,6 +31,11 @@ export class SimpleMapComponent {
       minZoom: 4,
       zoom: 14,
       //draggable: false,
+      scrollwheel: false,
+      navigationControl: false,
+      mapTypeControl: false,
+      scaleControl: false,
+      draggable: false,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
     let map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);

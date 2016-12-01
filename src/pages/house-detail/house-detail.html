@@ -1,13 +1,25 @@
-<ion-header class="opaque">
+<ion-header class="opaque house-header" id="house-header">
 
-	<ion-navbar no-border-bottom>
+	<!--<ion-navbar no-border-bottom hideBackButton="true">-->
+
+	<ion-navbar hideBackButton="true">
 
 
-		<ion-buttons left>
-			<button ion-button (click)="nav.pop()">
-			房源({{houseList.index + 1}}/{{houseList.total}})
+		<ion-buttons left *ngIf="parms.list">
+			<button ion-button (click)="unlockPop()">
+				返回
+			<!--房源({{houseList.index + 1}}/{{houseList.total}})-->
 		</button>
 		</ion-buttons>
+
+		<ion-title *ngIf="parms.list"> 
+			房源({{houseList.index + 1}}/{{houseList.total}})
+		</ion-title >
+
+
+		<ion-title *ngIf="!parms.list">
+			{{parms.id}}
+		</ion-title>
 
 
 		<!--		
@@ -36,29 +48,6 @@
 
 
 
-		<!--<ion-toolbar [attr.primary]="isAndroid ? '' : null" no-border-bottom>
-			<ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null">
-				<ion-segment-button value="citystats" (ionSelect)="gotoCityStats()">
-					社区
-				</ion-segment-button>
-				<ion-segment-button value="school" (ionSelect)="gotoSchool()">
-					学校
-				</ion-segment-button>
-				<ion-segment-button value="video" [disabled]="(houseM.house.tour_url)?'false':'true'" (ionSelect)="gotoVideo()">
-					视频
-				</ion-segment-button>
-				<ion-segment-button value="similar" (ionSelect)="similar()">
-					类似
-				</ion-segment-button>
-			</ion-segment>
-		</ion-toolbar>
-
-		<ion-buttons end>
-			<button ion-button icon-only [disabled]="!isMore" (click)="more()">
-			<ion-icon  name="more" ></ion-icon>
-			</button>
-		</ion-buttons>
-		-->
 
 	</ion-navbar>
 
@@ -73,7 +62,7 @@
 		<button ion-fab><ion-icon name="add"></ion-icon></button>
 
 		<ion-fab-list side="top">
-			<button ion-fab (click)="nav.pop()"><ion-icon name="undo" ></ion-icon></button>
+			<button ion-fab *ngIf="parms.list" (click)="unlockPop()"><ion-icon name="undo" ></ion-icon></button>
 			<button ion-fab *ngIf="parms.list" [disabled]="!houseList.prev" (click)="go2PrevHouse()"><ion-icon name="arrow-back"></ion-icon></button>
 			<button ion-fab *ngIf="parms.list" [disabled]="!houseList.next" (click)="go2NextHouse()"><ion-icon name="arrow-forward"></ion-icon></button>
 			<button ion-fab *ngIf="platform.is('cordova')" (click)="share()"><ion-icon name="share"></ion-icon></button>
@@ -107,17 +96,17 @@
 	</ion-slides>
 	<ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null" class="segment_css">
 
-		<ion-segment-button value="housedetail">
+		<ion-segment-button value="housedetail" (ionSelect)="popLock = false">
 			详情
 		</ion-segment-button>
 		<!--<ion-segment-button value="citystats" (ionSelect)="gotoCityStats()">-->
-		<ion-segment-button value="citystats">
+		<ion-segment-button value="citystats" (ionSelect)="popLock = true">
 			社区
 		</ion-segment-button>
 		<ion-segment-button value="school" (ionSelect)="gotoSchool()">
 			学校
 		</ion-segment-button>
-		<ion-segment-button value="map">
+		<ion-segment-button value="map" (ionSelect)="popLock = false">
 			地图
 		</ion-segment-button>
 		<!--<ion-segment-button value="video" [disabled]="(houseM.house.tour_url)?'false':'true'" (ionSelect)="gotoVideo()">
@@ -133,6 +122,7 @@
 
 		<div *ngSwitchCase="'housedetail'">
 			<div (swipe)="swipeEvent($event)">
+			<!--<div >-->
 				<div class="fyxq_rx">热线：
 					<img src="assets/img/maple/plat.jpg " />
 					<a href="tel:{{houseM.rxPhone}} "><span>{{houseM.rxPhone}}</span></a>
@@ -378,20 +368,23 @@
 		</div>
 
 		<div *ngSwitchCase="'citystats'">
+			
 			<house-city-stats [city]="houseM.house.municipality"></house-city-stats>
+			
 		</div>
 
 		<div *ngSwitchCase="'school'">
 			<school-list [schoolList]='schoolList'></school-list>
 		</div>
 
-		<div *ngSwitchCase="'map'">
+		<div *ngSwitchCase="'map'" id="housemap" >
 			<simple-map [center]="location"></simple-map>
 		</div>
 
 		<div *ngSwitchCase="'similar'">
-
+		
 			<house-list [houselist]='similarHouseList' isList="true"></house-list>
+		
 		</div>
 
 	</div>
