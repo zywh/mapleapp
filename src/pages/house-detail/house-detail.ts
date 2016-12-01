@@ -53,6 +53,7 @@ export class HouseDetailPage {
 	@ViewChild(Content) content: Content;
 	//showToolbar: boolean = false;
 	private lockRefresh = { 'school': false, 'similar': false, 'community': false };//Lock tab page refresh
+	public location = {'lat':44,'lng':-79};
 
 	@ViewChild('photo_slider') slider: Slides;
 
@@ -348,15 +349,18 @@ export class HouseDetailPage {
 				this.isFav = data.isFav; //check if houseFav and routeFav
 				this.setHouseList();
 				this.houseM.setProperties(this.auth.authenticated(), this.switchF2M);
+				this.location = {'lat':this.houseM.house.latitude,'lng':this.houseM.house.longitude};
 
 				this.slider.slideTo(0);
 
-				this.initMap();
+				//this.initMap();
 				this.lockRefresh = { 'school': false, 'similar': false, 'community': false };//Lock tab page refresh
+				this.section = 'housedetail';
 
 			}
 		)
 	}
+	
 
 	setHouseList() {
 		this.houseList = { prev: null, next: null, index: 0, total: 0 };

@@ -17,6 +17,7 @@ import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { HouseList } from '../components/house-list/house-list';
 import { SchoolListComponent} from '../components/school-list/school-list';
 import { HouseCityStatsComponent} from '../components/house-city-stats/house-city-stats';
+import { SimpleMapComponent} from '../components/simple-map/simple-map';
 import { Search } from '../components/search/search';
 import { ElasticHeader } from '../components/elastic-header/elastic-header';
 
@@ -78,6 +79,7 @@ export function authFactory(http: any) {
     HouseList,
     SchoolListComponent,
     HouseCityStatsComponent,
+    SimpleMapComponent,
     Search,
     MapleApp,
     AboutPage,
@@ -131,6 +133,7 @@ export function authFactory(http: any) {
     HouseList,
     SchoolListComponent,
     HouseCityStatsComponent,
+    SimpleMapComponent,
     Search,
     MapleApp,
     AboutPage,

@@ -105,7 +105,7 @@
 			<img [src]="photo" class="slide-image" />
 		</ion-slide>
 	</ion-slides>
-	<ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null" class="segment_css" >
+	<ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null" class="segment_css">
 
 		<ion-segment-button value="housedetail">
 			详情
@@ -116,6 +116,9 @@
 		</ion-segment-button>
 		<ion-segment-button value="school" (ionSelect)="gotoSchool()">
 			学校
+		</ion-segment-button>
+		<ion-segment-button value="map">
+			地图
 		</ion-segment-button>
 		<!--<ion-segment-button value="video" [disabled]="(houseM.house.tour_url)?'false':'true'" (ionSelect)="gotoVideo()">
 			视频
@@ -210,7 +213,9 @@
 						<ion-item>
 							<ion-label fixed class="xqlb_label">MLS编号：</ion-label>
 							<ion-label>
-								{{houseM.house.ml_num}}<ion-badge>{{houseM.listDate}}</ion-badge></ion-label>
+								{{houseM.house.ml_num}}
+								<ion-badge>{{houseM.listDate}}</ion-badge>
+							</ion-label>
 						</ion-item>
 						<ion-item *ngIf="auth.authenticated() && houseM.house.orig_dol && houseM.house.orig_dol != houseM.house.lp_dol">
 							<ion-label fixed class="xqlb_label">原来价格：</ion-label>
@@ -305,8 +310,8 @@
 							<ion-label fixed class="xqlb_label">中央吸尘：</ion-label>
 							<ion-label>{{(houseM.house.central_vac=="Y ")?"是 ":"否 "}}</ion-label>
 						</ion-item>
-			
-		
+
+
 						<ion-item *ngIf="houseM.house.bsmt1_out">
 							<ion-label fixed class="xqlb_label">地下室：</ion-label>
 							<ion-label>{{houseM.house.bsmt1_out}}&nbsp;{{houseM.house.bsmt2_out}}</ion-label>
@@ -367,7 +372,8 @@
 			<!--End-->
 
 			<!--Map Start-->
-			<div #maphouse id="maphouse"></div>
+			<!--<div #maphouse id="maphouse"></div>-->
+
 			<!--Map End-->
 		</div>
 
@@ -377,6 +383,10 @@
 
 		<div *ngSwitchCase="'school'">
 			<school-list [schoolList]='schoolList'></school-list>
+		</div>
+
+		<div *ngSwitchCase="'map'">
+			<simple-map [center]="location"></simple-map>
 		</div>
 
 		<div *ngSwitchCase="'similar'">
