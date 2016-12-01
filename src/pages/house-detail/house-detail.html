@@ -74,8 +74,8 @@
 
 		<ion-fab-list side="top">
 			<button ion-fab (click)="nav.pop()"><ion-icon name="undo" ></ion-icon></button>
-			<button ion-fab *ngIf="parms.list" [disabled]="!houseList.prev" (click)="go2PrevHouse()"><ion-icon name="arrow-dropleft-circle"></ion-icon></button>
-			<button ion-fab *ngIf="parms.list" [disabled]="!houseList.next" (click)="go2NextHouse()"><ion-icon name="arrow-dropright-circle"></ion-icon></button>
+			<button ion-fab *ngIf="parms.list" [disabled]="!houseList.prev" (click)="go2PrevHouse()"><ion-icon name="arrow-back"></ion-icon></button>
+			<button ion-fab *ngIf="parms.list" [disabled]="!houseList.next" (click)="go2NextHouse()"><ion-icon name="arrow-forward"></ion-icon></button>
 			<button ion-fab *ngIf="platform.is('cordova')" (click)="share()"><ion-icon name="share"></ion-icon></button>
 			<!--<button ion-fab (click)="fav('houseFav')"><ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon></button>
 			<button ion-fab *ngIf="platform.is('cordova')" (click)="mapDirection()"><ion-icon name="navigate"></ion-icon></button>-->
