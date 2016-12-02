@@ -6,7 +6,7 @@
 -->
 <div>
       
-    <ion-searchbar primary  [(ngModel)]="queryText"  (ionInput)="getItems($event)" (ionFocus)="searchInFocus()" 
+    <ion-searchbar [(ngModel)]="queryText"  (ionInput)="getItems($event)" (ionFocus)="searchInFocus()" 
     [placeholder]="searchPlaceHolder"></ion-searchbar>
   
     <div class="map-search" *ngIf="currentDiv == 'searchlist'">

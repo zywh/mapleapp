@@ -28,6 +28,7 @@ export class Search {
   public currentDiv;
   public queryText ='';
   public searchPlaceHolder;
+  public searchValue='';
   //private defaultItems;
 
 
@@ -74,6 +75,7 @@ export class Search {
     this.currentDiv = '';
     this.queryText = '';
     this.searchPlaceHolder = item.value;
+    this.searchValue = item.value;
   
     this.searchInput.emit(item);
 
