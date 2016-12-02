@@ -12,9 +12,9 @@
 		</button>
 		</ion-buttons>
 
-		<ion-title *ngIf="parms.list"> 
+		<ion-title *ngIf="parms.list">
 			房源({{houseList.index + 1}}/{{houseList.total}})
-		</ion-title >
+		</ion-title>
 
 
 		<ion-title *ngIf="!parms.list">
@@ -77,52 +77,34 @@
 
 
 
-	<ion-slides #photo_slider [options]="swiperOptions" class="swiper-container">
-
-		<ion-slide *ngFor="let photo of houseM.cdnPhotos">
-			<ion-fab top right style="opacity:0.8;">
-				<button ion-fab mini (click)="mapDirection()"><ion-icon name="navigate" ></ion-icon></button>
-			</ion-fab>
-			<ion-fab top center *ngIf="(houseM.house.tour_url)?true:false" style="opacity:0.8;">
-				<button ion-fab mini (click)="gotoVideo()"><ion-icon name="videocam" ></ion-icon></button>
-			</ion-fab>
-
-			<ion-fab top left style="opacity:0.8;">
-				<button ion-fab mini (click)="fav('houseFav')"><ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon></button>
-			</ion-fab>
-
-			<img [src]="photo" class="slide-image" />
-		</ion-slide>
-	</ion-slides>
-	<ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null" class="segment_css">
-
-		<ion-segment-button value="housedetail" (ionSelect)="popLock = false">
-			详情
-		</ion-segment-button>
-		<!--<ion-segment-button value="citystats" (ionSelect)="gotoCityStats()">-->
-		<ion-segment-button value="citystats" (ionSelect)="popLock = true">
-			社区
-		</ion-segment-button>
-		<ion-segment-button value="school" (ionSelect)="gotoSchool()">
-			学校
-		</ion-segment-button>
-		<ion-segment-button value="map" (ionSelect)="popLock = false">
-			地图
-		</ion-segment-button>
-		<!--<ion-segment-button value="video" [disabled]="(houseM.house.tour_url)?'false':'true'" (ionSelect)="gotoVideo()">
-			视频
-		</ion-segment-button>-->
-		<ion-segment-button value="similar" (ionSelect)="similar()">
-			类似
-		</ion-segment-button>
-	</ion-segment>
 
 	<div [ngSwitch]="section">
 
 
 		<div *ngSwitchCase="'housedetail'">
+
+
+
+			<ion-slides #photo_slider [options]="swiperOptions" class="swiper-container">
+
+				<ion-slide *ngFor="let photo of houseM.cdnPhotos">
+					<ion-fab top right style="opacity:0.8;">
+						<button ion-fab mini (click)="mapDirection()"><ion-icon name="navigate" ></ion-icon></button>
+					</ion-fab>
+					<ion-fab top center *ngIf="(houseM.house.tour_url)?true:false" style="opacity:0.8;">
+						<button ion-fab mini (click)="gotoVideo()"><ion-icon name="videocam" ></ion-icon></button>
+					</ion-fab>
+
+					<ion-fab top left style="opacity:0.8;">
+						<button ion-fab mini (click)="fav('houseFav')"><ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon></button>
+					</ion-fab>
+
+					<img [src]="photo" class="slide-image" />
+				</ion-slide>
+			</ion-slides>
+
 			<div (swipe)="swipeEvent($event)">
-			<!--<div >-->
+				<!--<div >-->
 				<div class="fyxq_rx">热线：
 					<img src="assets/img/maple/plat.jpg " />
 					<a href="tel:{{houseM.rxPhone}} "><span>{{houseM.rxPhone}}</span></a>
@@ -368,28 +350,48 @@
 		</div>
 
 		<div *ngSwitchCase="'citystats'">
-			
+
 			<house-city-stats [city]="houseM.house.municipality"></house-city-stats>
-			
+
 		</div>
 
 		<div *ngSwitchCase="'school'">
 			<school-list [schoolList]='schoolList'></school-list>
 		</div>
 
-		<div *ngSwitchCase="'map'" id="housemap" >
+		<div *ngSwitchCase="'map'" id="housemap">
 			<simple-map [center]="location"></simple-map>
 		</div>
 
 		<div *ngSwitchCase="'similar'">
-		
+
 			<house-list [houselist]='similarHouseList' isList="true"></house-list>
-		
+
 		</div>
 
 	</div>
 
 </ion-content>
 <ion-footer>
+	<ion-toolbar>
+		<ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null" class="segment_css">
 
+			<ion-segment-button value="housedetail" (ionSelect)="popLock = false">
+				详情
+			</ion-segment-button>
+			<!--<ion-segment-button value="citystats" (ionSelect)="gotoCityStats()">-->
+			<ion-segment-button value="citystats" (ionSelect)="popLock = true">
+				社区
+			</ion-segment-button>
+			<ion-segment-button value="school" (ionSelect)="gotoSchool()">
+				学校
+			</ion-segment-button>
+			<ion-segment-button value="map" (ionSelect)="popLock = false">
+				地图
+			</ion-segment-button>
+			<ion-segment-button value="similar" (ionSelect)="similar()">
+				类似
+			</ion-segment-button>
+		</ion-segment>
+	</ion-toolbar>
 </ion-footer>
