@@ -31,11 +31,11 @@ export class SimpleMapComponent {
       minZoom: 4,
       zoom: 14,
       //draggable: false,
-      scrollwheel: false,
-      navigationControl: false,
-      mapTypeControl: false,
-      scaleControl: false,
-      draggable: false,
+      //scrollwheel: false,
+      // navigationControl: false,
+      // mapTypeControl: false,
+      // scaleControl: false,
+      //draggable: false,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
     let map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
