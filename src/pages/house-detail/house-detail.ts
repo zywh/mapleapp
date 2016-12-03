@@ -105,19 +105,6 @@ export class HouseDetailPage {
 
 	}
 
-	swiperOptions = {
-
-		//loop: true,
-		pager: true,
-		//speed: 4000,
-		//autoplay: 300
-
-	};
-
-	// ionViewDidLoad(){
-
-	// }
-
 	ionViewWillEnter() {
 
 
@@ -156,39 +143,6 @@ export class HouseDetailPage {
 	}
 
 
-
-
-	// //this.content.resize();
-	// ionViewDidEnter() {
-	// }
-
-
-	// initMap() {
-
-	// 	let point = new google.maps.LatLng(this.houseM.house.latitude, this.houseM.house.longitude);
-	// 	let mapOptions = {
-	// 		//center: latLng,
-	// 		center: point,
-	// 		minZoom: 4,
-	// 		zoom: 14,
-	// 		//draggable: false,
-	// 		scrollwheel: false,
-	// 		navigationControl: false,
-	// 		mapTypeControl: false,
-	// 		scaleControl: false,
-	// 		draggable: false,
-	// 		mapTypeId: google.maps.MapTypeId.ROADMAP
-	// 	}
-	// 	let map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-	// 	new google.maps.Marker({
-	// 		position: point,
-	// 		map: map,
-	// 		animation: google.maps.Animation.DROP,
-	// 		draggable: false,
-	// 	});
-
-
-	// }
 
 	similar() {
 		//this.houseM.house.lp_dol = '';
@@ -441,17 +395,6 @@ export class HouseDetailPage {
 
 	}
 
-	gotoVideo() {
-		if (this.houseM.house.tour_url) window.open(this.houseM.house.tour_url, "_blank");
-		/*this.platform.ready().then(() => {
-				if (this.houseM.house.tour_url) cordova.InAppBrowser.open(this.houseM.house.tour_url, "_system", "location=true");
-		})*/
-	}
-
-	f2m() {
-		this.houseM.getLandArea(this.switchF2M);
-		this.houseM.houseRooms(this.switchF2M);
-	}
 
 	go2PrevHouse() {
 		if (this.houseList.prev)

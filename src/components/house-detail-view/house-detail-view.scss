@@ -1,0 +1,172 @@
+house-detail-view {
+
+  
+
+    ion-list.houselist-search.list.list-ios {
+        margin: 0;
+    }
+    .swiper-pagination-bullet { opacity: 1; background: #fff; }
+    .swiper-pagination-bullet-active { opacity: 1; background: #ff4103; }
+    // z-index: 11;
+    .swiper-container {
+       // width: 100%;
+        //height: auto; //66.8vw;
+        min-height: 66.8vw;
+        max-height: 66.8vw;
+        //  min-height: 350px;
+        // max-height: 350px;
+        display: block;
+        .swiper-wrapper {
+            margin-bottom: -5px;
+            //height: auto;
+            min-height: 66.8vw;
+           max-height: 66.8vw;
+        //      min-height: 350px;
+        // max-height: 350px;
+            .swiper-slide {
+               min-height: 66.8vw;
+               max-height: 66.8vw;
+            }
+        }
+    }
+
+    
+   
+    
+    ion-card.fyxq_cont {
+        margin: 0px; 
+        padding-left:5px;
+        width: 100%; 
+        .cl { clear: both;}
+        img { 
+            width: auto; 
+            display: inline-block;
+        }
+
+        .fyxq_ptss { 
+            clear: both;
+            padding:1px 0;
+
+            &::after {clear: both; }
+        .fyxq_ptssleft {
+                float:left;
+                font-size:18px;
+                font-weight:bold;
+            }
+            .fyxq_ptssright { 
+                font-size:16px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                padding-top: 1px;
+
+                &.fyxq_ptpd {
+                        span { 
+                            margin-left:5px; margin-right:10px; /* margin-bottom:10px; */margin-top:3px;  
+                            white-space:nowrap; 
+                            color:#999999; 
+                            float:left; height:20px;
+                        }
+                        span b { 
+                            display: inline-block;
+                            background:url(../assets/img/maple/xz.jpg) 0 center no-repeat; 
+                            width:22px; height:14px; 
+                        }
+                        span s { 
+                            display: inline-block;
+                            background:url(../assets/img/maple/wxz.jpg) 0 0 no-repeat; 
+                            vertical-align:middle; 
+                            width:22px; height:14px; 
+                        }
+                    }
+                }
+        }
+
+      }
+        .fyxq_rx {
+                padding: 5px;
+                font-weight: bold;
+                font-size: 120%;
+        }
+   
+
+    ion-card.fyxqlb_cont { 
+        margin: 0;
+        padding:0 5px; 
+        width: 100%;
+        ion-item-divider#housedivider { 
+            font-size: 18px;
+            padding: 5px 0;
+            color:color($colors, primary);
+            ion-label.switchF2M {
+                text-align: right;
+                padding-right: 5px;
+            }
+            .switchF2M {
+                float: right;
+                &::after {clear: both}
+                ion-label {
+                    display: inline-block;
+                }
+                ion-toggle {
+                    display: inline-block;
+                }
+            }
+        }
+       
+        .xqlb_list {
+            ion-item { 
+                padding: 0px; 
+                white-space: normal;
+                min-height: 24px;
+                .switchF2M {
+                    text-align: right;
+                    padding-right: 6px;
+                }
+                ion-toggle {
+                    padding: 0px;
+                }
+            }
+            ion-label {
+                margin: 0px;
+                
+            }
+            ion-label[fixed] {
+                flex: 0 0 90px;
+                width: 90px;
+                min-width: 60px;
+                max-width: 90px; 
+            }
+        }
+
+        .fwbj_table {
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+            tr, td {
+                border-bottom: 1px solid #CCCCCC;
+            }
+        }
+        .fwms_item {
+            line-height: 23px;
+            font-size: medium;
+        }
+    }
+
+    #houseList_control {
+        //z-index: 100;
+        opacity: 0.8;
+        .button-fab {
+        font-size: 10px; 
+        }
+    }
+
+
+    #housemap {
+        width: 100%;
+        height: 350px;
+    
+    }
+}
+
+
+
