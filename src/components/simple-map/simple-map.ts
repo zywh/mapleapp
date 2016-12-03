@@ -21,7 +21,7 @@ export class SimpleMapComponent {
   //   this.initMap();
   // }
 
- 
+
   // ngOnDestroy() {
   //     console.log("ngOnDestroy");
   //   // Speak now or forever hold your peace
@@ -32,8 +32,11 @@ export class SimpleMapComponent {
   // }
   ngOnChanges(changes) {
 
-     console.log("ngOnChanges");
-     this.initMap();
+    console.log("ngOnChanges");
+    if (this.center) {
+      this.initMap();
+    }
+
     // Called right after our bindings have been checked but only
     // if one of our bindings has changed.
     //

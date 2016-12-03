@@ -1,4 +1,4 @@
-import { ModalController, LoadingController, Events, AlertController, PopoverController, MenuController, Platform, NavController, NavParams, ViewController } from 'ionic-angular';
+import { ModalController, Content,LoadingController, Events, AlertController, PopoverController, MenuController, Platform, NavController, NavParams, ViewController } from 'ionic-angular';
 
 import { NgZone, Component, ElementRef, ViewChild } from '@angular/core';;
 import { Connectivity } from '../../providers/connectivity';
@@ -29,6 +29,8 @@ declare var google;
 export class MapSearchPage {
 
   @ViewChild('map') public mapElement: ElementRef;
+   @ViewChild(Content) content: Content;
+
   public mapLib = 1; // 0 is java and 1 is native google SDK
   public queryText: String = '';
   public mapInitialised: boolean = false;
@@ -212,6 +214,7 @@ export class MapSearchPage {
 
   ionViewWillEnter() {
     console.log("Map View will enter");
+    this.content.resize(); //resize to have fab position after housedetail page is back
     this.lockMapListener = false; //unlock after view enter
    // let optionType = (this.mapType == 0) ? 'houseSearch' : 'schoolSearch';
 

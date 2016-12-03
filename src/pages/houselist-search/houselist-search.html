@@ -42,17 +42,17 @@
 
 <ion-content class="houselist-search">
 
-  <ion-fab bottom right style="opacity:0.8;">
+  <!--<ion-fab bottom right style="opacity:0.8;">
     <button ion-fab><ion-icon name="add"></ion-icon></button>
 
     <ion-fab-list side="top">
       <button ion-fab (click)="nav.pop()"><ion-icon name="undo" ></ion-icon></button>
-      <!--<button ion-fab (click)="sortAction()"><ion-icon name="swap"></ion-icon></button>-->
+     
          <button ion-fab (click)="sortAction()"><ion-icon name="shuffle"></ion-icon></button>
       <button ion-fab (click)="toggleView()"><ion-icon [name]="viewType"></ion-icon></button>
 
     </ion-fab-list>
-  </ion-fab>
+  </ion-fab>-->
 
   <house-list [houselist]='currentHouseList' [imgHost]='imgHost' [isList]='isList'></house-list>
 

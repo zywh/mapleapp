@@ -53,7 +53,8 @@ export class HouseDetailPage {
 	@ViewChild(Content) content: Content;
 	//showToolbar: boolean = false;
 	private lockRefresh = { 'school': false, 'similar': false, 'community': false };//Lock tab page refresh
-	public location = { 'lat': 44, 'lng': -79 };
+	//public location = { 'lat': 44, 'lng': -79 };
+	public location;
 
 	@ViewChild('photo_slider') slider: Slides;
 	public popLock:boolean = false;
@@ -145,7 +146,7 @@ export class HouseDetailPage {
 	}
 
 	ionViewCanLeave() {
-		console.log("Should I leave?" + this.popLock);
+		console.log("Should I leave?" + this.popLock); //prevent swipe to leave page and tigger tab bar back to detail page
 		return this.popLock;
 	}
 

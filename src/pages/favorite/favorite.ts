@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, reorderArray } from 'ionic-angular';
+import { Component,ViewChild } from '@angular/core';
+import { NavController, Content,NavParams, reorderArray } from 'ionic-angular';
 import {HouseDetailPage} from '../house-detail/house-detail';
 //import {HouselistSearch} from '../houselist-search/houselist-search';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
@@ -12,6 +12,7 @@ import {houseListModel} from '../../models/houseListModel';
   templateUrl: 'favorite.html'
 })
 export class FavoritePage {
+   @ViewChild(Content) content: Content;
   public favList: houseListModel;
   public imgHost = '';
   public pageTitle;
@@ -38,7 +39,7 @@ export class FavoritePage {
   }
 
   ionViewWillEnter() {
-
+    this.content.resize();
     this.userData.getUserData(this.pageType).then(res => {
       this.imgHost = res.imgHost;
    
