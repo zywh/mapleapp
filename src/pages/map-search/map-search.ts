@@ -278,7 +278,7 @@ export class MapSearchPage {
 
   openModal() {
     this.lockMapListener = true;
-    //console.log(this.selectOptions);
+    console.log(this.selectOptions);
     let modal = this.modalc.create(this.optionPage, { data: this.selectOptions, type: this.mapType ,searchflag: true});
     modal.onDidDismiss(data => {
       this.selectOptions = data;
@@ -290,7 +290,8 @@ export class MapSearchPage {
         if (this.selectOptions.selectSearch.lat > 20) {
         let center = new google.maps.LatLng(this.selectOptions.selectSearch.lat, this.selectOptions.selectSearch.lng);
         this.setLocation(center, this.defaultZoom, true);
-        this.selectOptions.selectSearch = {};
+        //this.selectOptions.selectSearch = {};
+       // this.selectOptions.selectSearch
 
       } else {
 

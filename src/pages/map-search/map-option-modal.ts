@@ -72,6 +72,13 @@ export class SelectOptionModal {
     ) {
 
         this.selectOptions = params.get('data');
+        //console.log(this.selectOptions);
+        if (this.selectOptions.hasOwnProperty("selectSearch")) {
+            this.inputText = this.selectOptions.selectSearch['id'];
+            console.log("Select search existi");
+            console.log(this.selectOptions.selectSearch);
+        }
+
         this.searchFlag = params.get('searchflag');
         this.mapType = params.get('type');
         this.unit = 10;
@@ -96,7 +103,7 @@ export class SelectOptionModal {
     }
 
     searchSelection(e) {
-     
+
         if (e != 'INFOCUS') {
             this.selectOptions['selectSearch'] = e;
             this.userData.saveCenter('recentCenter', e.id, e.lat, e.lng);
@@ -138,19 +145,19 @@ export class SelectOptionModal {
             differ = this.selectOptions.selectPrice.upper - this.selectOptions.selectPrice.lower;
             step = Math.floor((smax - smin) / 40);
         }
-       
-        if (differ < (smax-smin) * 0.2 && differ > (smax-smin) * 0.01) {
-           
+
+        if (differ < (smax - smin) * 0.2 && differ > (smax - smin) * 0.01) {
+
             let i = Math.floor(this.selectOptions.selectPrice.lower - differ * 1.2);
             let a = Math.ceil(this.selectOptions.selectPrice.upper + differ * 1.2);
             smin = (i > 0) ? i : min;
             smax = (a < max) ? a : max;
-             console.log("Rescale- i:" + i + " smin:" + smin +  "A:" + a + " smax:" + smax);
+            console.log("Rescale- i:" + i + " smin:" + smin + "A:" + a + " smax:" + smax);
         }
 
         if (this.selectOptions.selectPrice.upper == smax) { smax = max };
         if (this.selectOptions.selectPrice.lower == smin) { smin = min };
-        console.log("type:"+ type + "min:"+min + "smin:"+ smin + " max:" + max + " smax:"+ smax + " step:" + step);
+        console.log("type:" + type + "min:" + min + "smin:" + smin + " max:" + max + " smax:" + smax + " step:" + step);
         if (type == 'min') return smin;
         if (type == 'max') return smax;
         if (type == 'step') return step;

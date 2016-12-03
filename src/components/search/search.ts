@@ -44,17 +44,18 @@ export class Search {
   }
 
 
-  ngOnInit() { //Need wait after constructor
+  ngOnChanges() { //Need wait after constructor
 
-    
-   this.searchPlaceHolder = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
-    // if ( this.inputText != '' ){
-    //   this.searchPlaceHolder = this.inputText;
-    //   console.log("Search Componet input is not empty:" + this.inputText)
-    // }else {
-    //   console.log("Search component is empty default")
-    //   this.searchPlaceHolder = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
-    // }
+    console.log("search bar change event");
+    console.log(this.inputText);
+  // this.searchPlaceHolder = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
+    if ( this.inputText != '' ){
+      this.searchPlaceHolder = this.inputText;
+      console.log("Search Componet input is not empty:" + this.inputText)
+    }else {
+      console.log("Search component is empty default")
+      this.searchPlaceHolder = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
+    }
     
   }
 
