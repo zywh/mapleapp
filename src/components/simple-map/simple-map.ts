@@ -16,10 +16,49 @@ export class SimpleMapComponent {
   }
 
 
-  ngOnInit() {
-    console.log("Init simple map component");
-    this.initMap();
+  // ngOnInit() {
+  //   console.log("Init simple map component");
+  //   this.initMap();
+  // }
+
+ 
+  // ngOnDestroy() {
+  //     console.log("ngOnDestroy");
+  //   // Speak now or forever hold your peace
+  // }
+  // ngDoCheck() {
+  //     console.log("ngDoCheck");
+  //   // Custom change detection
+  // }
+  ngOnChanges(changes) {
+
+     console.log("ngOnChanges");
+     this.initMap();
+    // Called right after our bindings have been checked but only
+    // if one of our bindings has changed.
+    //
+    // changes is an object of the format:
+    // {
+    //   'prop': PropertyUpdate
+    // }
   }
+  // ngAfterContentInit() {
+
+  //    console.log( "ngAfterContentInits");
+  //   // Component content has been initialized
+  // }
+  // ngAfterContentChecked() {
+  //    console.log("ngAfterContentChecked");
+  //   // Component content has been Checked
+  // }
+  // ngAfterViewInit() {
+  //    console.log("ngAfterViewInit");
+  //   // Component views are initialized
+  // }
+  // ngAfterViewChecked() {
+  //    console.log("ngAfterViewChecked");
+  //   // Component views have been checked
+  // }
 
   initMap() {
 

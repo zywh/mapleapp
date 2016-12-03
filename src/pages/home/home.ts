@@ -209,6 +209,7 @@ export class HomePage {
             console.log(data);
             if (data.Data.Type == 'house') {
               this.imgHost = data.Data.imgHost;
+              
 
               if (s == 'nearby') {
                 this.nearbyHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
