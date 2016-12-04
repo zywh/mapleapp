@@ -1,11 +1,11 @@
-<ion-header class="house-header" id="house-header">
+<ion-header class="house-header" id="house-header" *ngIf="parms.list">
 
 	<!--<ion-navbar no-border-bottom hideBackButton="true">-->
 
 	<ion-navbar hideBackButton="true">
 
 
-		<ion-buttons left *ngIf="parms.list">
+		<ion-buttons left >
 			<button ion-button (click)="unlockPop()">
 				返回
 			<!--房源({{houseList.index + 1}}/{{houseList.total}})-->
@@ -16,10 +16,6 @@
 			房源({{houseList.index + 1}}/{{houseList.total}})
 		</ion-title>
 
-
-		<ion-title *ngIf="!parms.list">
-			{{parms.id}}
-		</ion-title>
 
 
 		<!--		
@@ -57,7 +53,7 @@
 <!--<ion-content class="house-detail" elastic-header>-->
 <ion-content class="house-detail" fullscreen="true">
 
-	<ion-fab bottom right style="opacity:0.8;" *ngIf="section=='housedetail'">
+	<ion-fab bottom right style="opacity:0.8;" *ngIf="parms.list">
 		<button ion-fab><ion-icon name="add"></ion-icon></button>
 
 		<ion-fab-list side="top">

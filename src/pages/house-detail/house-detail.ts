@@ -57,7 +57,8 @@ export class HouseDetailPage {
 	public location;
 
 	@ViewChild('photo_slider') slider: Slides;
-	public popLock:boolean = false;
+	public popLock: boolean = false;
+	private currentMLS;
 
 	constructor(
 		public nav: NavController,
@@ -137,7 +138,7 @@ export class HouseDetailPage {
 		return this.popLock;
 	}
 
-	unlockPop(){
+	unlockPop() {
 		this.popLock = true;
 		this.nav.pop();
 	}
@@ -148,6 +149,7 @@ export class HouseDetailPage {
 		//this.houseM.house.lp_dol = '';
 		this.popLock = true;
 		if (this.lockRefresh.similar == false) {
+		//if (this.currentMLS != this.houseM.house.ml_num) {
 			//let similarHouses;
 			let range: number = 0.1;
 
@@ -195,6 +197,7 @@ export class HouseDetailPage {
 						//console.log(similarHouses);
 						//this.nav.push(HouselistSearch, { list: similarHouses, imgHost: '', listType: 'house' });
 						this.lockRefresh.similar = true;
+						this.currentMLS = this.houseM.house.ml_num;
 
 					}
 				})
@@ -305,14 +308,26 @@ export class HouseDetailPage {
 
 
 	getResult(url, id) {
-		console.log("house detail get result")
+
 		this.parms.id = id;
 		let username = (this.auth.authenticated()) ? this.auth.user['email'] : 'NO';
 		let token = this.parms.VOWtoken;
 		this.mapleRestData.load(url, { 'id': id, 'username': username, 'VOWtoken': token }).subscribe(
 			data => {
 
+				this.lockRefresh = { 'school': false, 'similar': false, 'community': false };//Lock tab page refresh
+			
+				if (this.section == "similar") {
+					console.log("Refresh similar house list");
+					this.similar();
+
+				}
+				if (this.section == "school") {
+					this.gotoSchool();
+
+				}
 				this.houseM.rxPhone = this.mapleConf.data.phone;
+			
 				this.houseM.house = data.house;
 				this.houseM.houseMname = data.house_mname;
 				this.houseM.houseProvince = data.house_province;
@@ -329,8 +344,11 @@ export class HouseDetailPage {
 				this.slider.slideTo(0);
 
 				//this.initMap();
-				this.lockRefresh = { 'school': false, 'similar': false, 'community': false };//Lock tab page refresh
+			
 				this.section = 'housedetail';
+
+				//call similar if selected
+
 
 			}
 		)
