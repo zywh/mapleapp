@@ -15,8 +15,7 @@ export class SimpleMapComponent {
 
   }
 
-
-  // ngOnInit() {
+// ngOnInit() {
   //   console.log("Init simple map component");
   //   this.initMap();
   // }
@@ -30,13 +29,17 @@ export class SimpleMapComponent {
   //     console.log("ngDoCheck");
   //   // Custom change detection
   // }
+
   ngOnChanges(changes) {
-
-    console.log("ngOnChanges");
-    if (this.center) {
-      this.initMap();
+    for (let propName in changes) {
+      let chng = changes[propName];
+      let cur  = JSON.stringify(chng.currentValue);
+      let prev = JSON.stringify(chng.previousValue);
+      if (propName == 'center' && cur != prev) {
+        console.log('ngOnChanges property ' + propName);
+        this.initMap();
+      }
     }
-
     // Called right after our bindings have been checked but only
     // if one of our bindings has changed.
     //
@@ -45,6 +48,7 @@ export class SimpleMapComponent {
     //   'prop': PropertyUpdate
     // }
   }
+  
   // ngAfterContentInit() {
 
   //    console.log( "ngAfterContentInits");
