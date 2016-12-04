@@ -29,7 +29,8 @@ declare var google;
 export class MapSearchPage {
 
   @ViewChild('map') public mapElement: ElementRef;
-   @ViewChild(Content) content: Content;
+ 	tabBarElement: any;
+  @ViewChild(Content) content: Content;
 
   public mapLib = 1; // 0 is java and 1 is native google SDK
   public queryText: String = '';
@@ -109,6 +110,7 @@ export class MapSearchPage {
     //this.resetItems();
 
     this.setMapType(this.mapType);
+ 		this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
     this.listenEvents();
 
   }
@@ -221,7 +223,7 @@ export class MapSearchPage {
   ionViewWillEnter() {
     console.log("Map View will enter");
     this.content.resize(); //resize to have fab position after housedetail page is back
-    this.lockMapListener = false; //unlock after view enter
+    this.lockMapListener = false; //unlock after view enter  
    // let optionType = (this.mapType == 0) ? 'houseSearch' : 'schoolSearch';
 
     // if (this.auth.authenticated()) {
@@ -239,7 +241,11 @@ export class MapSearchPage {
 
 
   ionViewDidEnter() {
+<<<<<<< HEAD
     console.log("map view did enter")
+=======
+		if (this.nav.length() >1) this.tabBarElement.style.display = 'none';
+>>>>>>> e0b59f727580334465e2a012cbadf17e50778994
 
     if (!this.mapInitialised ) {
 
