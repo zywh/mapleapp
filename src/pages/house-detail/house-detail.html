@@ -57,7 +57,7 @@
 		<button ion-fab><ion-icon name="add"></ion-icon></button>
 
 		<ion-fab-list side="top">
-			<button ion-fab *ngIf="parms.list" (click)="unlockPop()"><ion-icon name="undo" ></ion-icon></button>
+			<button ion-fab *ngIf="nav.length() > 1" (click)="pop2first()"><ion-icon name="undo" ></ion-icon></button>
 			<button ion-fab *ngIf="parms.list" [disabled]="!houseList.prev" (click)="go2PrevHouse()"><ion-icon name="arrow-back"></ion-icon></button>
 			<button ion-fab *ngIf="parms.list" [disabled]="!houseList.next" (click)="go2NextHouse()"><ion-icon name="arrow-forward"></ion-icon></button>
 			<button ion-fab *ngIf="platform.is('cordova')" (click)="share()"><ion-icon name="share"></ion-icon></button>

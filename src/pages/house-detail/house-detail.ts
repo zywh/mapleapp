@@ -147,7 +147,10 @@ export class HouseDetailPage {
 		this.nav.pop();
 	}
 
-
+	pop2first() {
+		this.popLock = true;
+		this.nav.setRoot(this.nav.first());
+	}
 
 	similar() {
 		//this.houseM.house.lp_dol = '';
