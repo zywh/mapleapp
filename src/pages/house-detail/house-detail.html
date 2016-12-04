@@ -112,6 +112,7 @@
 			<ion-segment-button value="citystats" (ionSelect)="popLock = true">
 				社区
 			</ion-segment-button>
+			<button ion-button [navPush]="schoolPushPage" [navParams]="schoolPushParams" (click)="popLock = true">学校</button>
 			<ion-segment-button value="school" (ionSelect)="gotoSchool()">
 				学校
 			</ion-segment-button>

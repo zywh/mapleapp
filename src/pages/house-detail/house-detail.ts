@@ -11,6 +11,7 @@ import { ShareService } from '../../providers/share';
 import { houseInterface, houseModel } from '../../models/houseModel';
 import { houseListModel } from '../../models/houseListModel';
 //import { HouselistSearch } from '../houselist-search/houselist-search';
+import { MapSearchPage } from '../map-search/map-search';
 
 declare var google: any;
 
@@ -55,6 +56,8 @@ export class HouseDetailPage {
 	private lockRefresh = { 'school': false, 'similar': false, 'community': false };//Lock tab page refresh
 	//public location = { 'lat': 44, 'lng': -79 };
 	public location;
+	public schoolPushPage = MapSearchPage;
+	public schoolPushParams = '';
 
 	@ViewChild('photo_slider') slider: Slides;
 	public popLock: boolean = false;
@@ -80,6 +83,7 @@ export class HouseDetailPage {
 		this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
 		this.listenEvents();
 		//this.house = this.houseM.house;
+
 
 
 
