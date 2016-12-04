@@ -241,12 +241,8 @@ export class MapSearchPage {
 
 
   ionViewDidEnter() {
-<<<<<<< HEAD
-    console.log("map view did enter")
-=======
+    
 		if (this.nav.length() >1) this.tabBarElement.style.display = 'none';
->>>>>>> e0b59f727580334465e2a012cbadf17e50778994
-
     if (!this.mapInitialised ) {
 
       this.initMap();
