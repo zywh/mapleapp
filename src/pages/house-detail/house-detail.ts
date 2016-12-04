@@ -57,7 +57,7 @@ export class HouseDetailPage {
 	//public location = { 'lat': 44, 'lng': -79 };
 	public location;
 	public schoolPushPage = MapSearchPage;
-	public schoolPushParams = '{pageType: 1}';
+	public schoolPushParams = {'pageType': 1};
 
 	@ViewChild('photo_slider') slider: Slides;
 	public popLock: boolean = false;

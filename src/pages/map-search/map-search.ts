@@ -78,7 +78,7 @@ export class MapSearchPage {
   public currentHouseList : houseListModel; //Hold list of all houses on current map
   public currentHouses; //Hold array of houses for single marker
   public currentDiv;
-  public mapType: Number = 1; // 0 for house and 1 for school
+  public mapType: number = 1; // 0 for house and 1 for school
   public markerDrop;
   public lockMapListener: Boolean = false;
 
@@ -104,6 +104,8 @@ export class MapSearchPage {
 
 
     this.mapType = this.navparm.data.pageType;
+    console.log(this.navparm);
+    console.log(this.mapType);
     //this.resetItems();
 
     this.setMapType(this.mapType);
@@ -137,6 +139,7 @@ export class MapSearchPage {
   }
 
   initMap() {
+    console.log("init map"+ this.mapType);
 
     this.mapInitialised = true;
 
@@ -148,6 +151,8 @@ export class MapSearchPage {
 
     //let mapEle = document.getElementById('map');
     this.mapleconf.getLocation().then(data => {
+       console.log(data);
+      console.log(this.mapElement.nativeElement);
       this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
       //this.defaultcenter = this.mapLatLng(data['lat'], data['lng']);
 
@@ -186,7 +191,8 @@ export class MapSearchPage {
         mapTypeId: google.maps.MapTypeId.ROADMAP
       }
 
-
+      console.log(mapOptions);
+      console.log(this.mapElement.nativeElement);
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
       //loading.dismiss();
@@ -233,6 +239,7 @@ export class MapSearchPage {
 
 
   ionViewDidEnter() {
+    console.log("map view did enter")
 
     if (!this.mapInitialised ) {
 
