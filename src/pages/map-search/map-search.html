@@ -10,12 +10,15 @@
    
   </ion-fab>
 
- <ion-fab left bottom >
-		<button ion-fab *ngIf="nav.length() > 1" (click)="nav.pop()"><ion-icon name="undo" ></ion-icon></button>
+ <ion-fab left bottom *ngIf="nav.length() <=1">
     <button ion-fab (click)="openModal()"><ion-icon name="options"></ion-icon></button>
 </ion-fab>
 
- <ion-fab right bottom >
+ <ion-fab right bottom *ngIf="nav.length() > 1">
+		<button ion-fab  (click)="nav.pop()"><ion-icon name="undo" ></ion-icon></button>
+</ion-fab>
+
+ <ion-fab right bottom *ngIf="nav.length() <=1">
     <button ion-fab (click)="setCenter(true)"><ion-icon name="locate"></ion-icon></button>
  </ion-fab>
 </div>
