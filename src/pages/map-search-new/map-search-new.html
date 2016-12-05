@@ -15,8 +15,9 @@
 
 <ion-content>
 
-<div style="height: 100%; width: 100%">
-
-				<maple-map-search  [center]="location"></maple-map-search>
-	</div>	
+  <div style="height: 100%; width: 100%">
+    <!--<maple-map-search [center]="location"></maple-map-search>-->
+     <maple-map-search [mapType]="mapType" [center]="center" [lockMapListener]="lockMapListener"></maple-map-search>
+    <!--<simple-map [center]="location"></simple-map>-->
+  </div>
 </ion-content>

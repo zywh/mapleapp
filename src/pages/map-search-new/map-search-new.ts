@@ -13,14 +13,18 @@ import { NavController,NavParams } from 'ionic-angular';
 })
 export class MapSearchNewPage {
    public location ;
+   public mapType;
+   public center;
+   public lockMapListener: boolean = false;
   constructor(public navCtrl: NavController,private navparms: NavParams) {}
 
   ionViewWillEnter() {
     console.log("Map new page will enter")
-    
-    this.location = this.navparms.data;
-    console.log(this.location);
-   // this.location = { 'lat': 44, 'lng': -79 }
+    console.log(this.navparms.data);
+    this.mapType= this.navparms.data.mapType;
+    this.center =  this.navparms.data.center;
+    //this.mapInput= {'pageType': 1};
+  
    
   }
 
