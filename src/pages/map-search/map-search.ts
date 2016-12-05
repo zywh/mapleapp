@@ -182,11 +182,11 @@ export class MapSearchPage {
     console.log("Map View will enter");
     this.content.resize(); //resize to have fab position after housedetail page is back
     this.lockMapListener = false; //unlock after view enter  
-    //this.center = {'lat':43,'lng':-79};
+   // this.center = {'lat':43,'lng':-79};
    
-  //   if (this.navparm.data.parms.lat > 20){
-  //     this.center = { 'lat': this.navparm.data.parms.lat, 'lng': this.navparm.data.parms.lng };
-  //   }else {
+    if (this.navparm.data.parms.lat > 20){
+      this.center = { 'lat': this.navparm.data.parms.lat, 'lng': this.navparm.data.parms.lng };
+    }else {
 
        this.mapleconf.getLocation().then(data => {
          console.log("Get current location");
@@ -202,7 +202,7 @@ export class MapSearchPage {
 
 
 
-  //  }
+   }
   
    
     // let optionType = (this.mapType == 0) ? 'houseSearch' : 'schoolSearch';

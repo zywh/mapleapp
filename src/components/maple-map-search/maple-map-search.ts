@@ -129,28 +129,8 @@ export class MapleMapSearchComponent {
 
   }
 
-  getCenter() {
-    console.log("get center" + this.center);
 
-    console.log(this.mapElement.nativeElement);
-
-    if (this.center['lat'] > 20) {
-
-      let center = new google.maps.LatLng(this.center['lat'], this.center['lng']);
-      this.initMap(center,1);// 0 = no marker,1= house marker, 2 = school marker
-
-    } else {
-
-      this.mapleconf.getLocation().then(data => {
-
-        let center = new google.maps.LatLng(data['lat'], data['lng']);
-      
-        this.initMap(center,0);
-      });
-    }
-
-
-  }
+  
   initMap(center,markerType: number) {
 
     this.mapInitialised = true;
@@ -320,7 +300,7 @@ export class MapleMapSearchComponent {
 
 
   //SetCenter and Zoom if location button is clicked
-  setCenter(isMarker) {
+  setmapCenter(isMarker) {
     this.lockMapListener = true; // lock listener to prevent Android map listener trigger
     this.locateLock = true; //lock locate click to prevent frozen from double click
     this.mapleconf.getLocation().then(data => {
@@ -349,7 +329,7 @@ export class MapleMapSearchComponent {
   setLocation(center, zoom, isMarker) {
 
     this.map.setZoom(zoom);
-    this.map.setCenter(center);
+    //this.map.setCenter(center);
     if (this.markerDrop != null) {
       this.markerDrop.setMap(null);
     }
@@ -495,7 +475,7 @@ export class MapleMapSearchComponent {
 
     this.markerArray.push(marker);
     google.maps.event.addListener(marker, 'click', function () {
-      this.map.setCenter(this.position);
+      //this.map.setCenter(this.position);
       let currentzoom = this.map.getZoom();
       this.map.setZoom(currentzoom + 2);
     });
@@ -839,7 +819,9 @@ export class MapleMapSearchComponent {
      
       this.setMapType(this.mapType);
       this.listenEvents();
-      this.getCenter();
+      //this.getCenter();
+     // this.initTestMap();
+      this.initMap(this.center,0);
       let alert = this.alertc.create({
         title: '提示',
         message: '根据TREB数据协议，有些房源只有登录后才可以显示，请注册/登录后查找更多房源',
