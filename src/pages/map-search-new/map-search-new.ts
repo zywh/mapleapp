@@ -19,13 +19,11 @@ export class MapSearchNewPage {
   constructor(public navCtrl: NavController,private navparms: NavParams) {}
 
   ionViewWillEnter() {
-    console.log("Map new page will enter")
+    console.log("School Map new page will enter")
     console.log(this.navparms.data);
-    this.mapType= this.navparms.data.mapType;
-    this.center =  this.navparms.data.center;
-    //this.mapInput= {'pageType': 1};
-  
-   
+    this.mapType= this.navparms.data.mapType; // 0 for house and 1 for school
+    this.center =  {'lat':this.navparms.data.center.lat,'lng':this.navparms.data.center.lng,'type': 2}; // 2 for school marker
+    
   }
 
 

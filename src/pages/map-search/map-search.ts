@@ -1,4 +1,4 @@
-import { Content,NavController,NavParams,Events} from 'ionic-angular';
+import { Content, NavController, NavParams, Events } from 'ionic-angular';
 
 import { Component, ViewChild } from '@angular/core';;
 // import { Connectivity } from '../../providers/connectivity';
@@ -26,11 +26,11 @@ import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 export class MapSearchPage {
 
   //@ViewChild('map') public mapElement: ElementRef;
- // @ViewChild('mapCanvas') mapElement: ElementRef;
+  // @ViewChild('mapCanvas') mapElement: ElementRef;
   tabBarElement: any;
   @ViewChild(Content) content: Content;
   public mapInitialised: boolean = false;
-  public center ;
+  public center;
 
   public mapType: number = 1; // 0 for house and 1 for school
   //public markerDrop;
@@ -45,8 +45,8 @@ export class MapSearchPage {
     // private userData: UserData,
     // public connectivityService: Connectivity,
     // private menu: MenuController,
-     private mapleconf: MapleConf,
-     private navparm: NavParams,
+    private mapleconf: MapleConf,
+    private navparm: NavParams,
     // private _zone: NgZone,
     // private viewCtrl: ViewController,
     // private alertc: AlertController,
@@ -58,7 +58,7 @@ export class MapSearchPage {
 
 
     this.mapType = this.navparm.data.pageType;
-    
+
     console.log(this.navparm);
     console.log(this.mapType);
     //this.resetItems();
@@ -182,29 +182,29 @@ export class MapSearchPage {
     console.log("Map View will enter");
     this.content.resize(); //resize to have fab position after housedetail page is back
     this.lockMapListener = false; //unlock after view enter  
-   // this.center = {'lat':43,'lng':-79};
-   
-    if (this.navparm.data.parms.lat > 20){
-      this.center = { 'lat': this.navparm.data.parms.lat, 'lng': this.navparm.data.parms.lng };
-    }else {
+    // this.center = {'lat':43,'lng':-79};
 
-       this.mapleconf.getLocation().then(data => {
-         console.log("Get current location");
-         console.log(data);
+    if (this.navparm.data.parms.lat > 20) {
+      this.center = { 'lat': this.navparm.data.parms.lat, 'lng': this.navparm.data.parms.lng, 'type': 0 };
+    } else {
 
-      if (data['lat'] > 20) {
-        this.center = { 'lat': data['lat'], 'lng': data['lng'] };
-       //this.center = data;
-      } else {
-        this.center = { 'lat': 43, 'lng': -78 };
-      }
-    })
+      this.mapleconf.getLocation().then(data => {
+        console.log("Get current location");
+        console.log(data);
+
+        if (data['lat'] > 20) {
+          this.center = { 'lat': data['lat'], 'lng': data['lng'], 'type': 0 };
+          //this.center = data;
+        } else {
+          this.center = { 'lat': 43.6532, 'lng': -79.3832, 'type': 0 };
+        }
+      })
 
 
 
-   }
-  
-   
+    }
+
+
     // let optionType = (this.mapType == 0) ? 'houseSearch' : 'schoolSearch';
 
     // if (this.auth.authenticated()) {
@@ -224,7 +224,7 @@ export class MapSearchPage {
     // ionViewDidEnter() {
 
     if (this.nav.length() > 1) this.tabBarElement.style.display = 'none';
-   
+
   }
 
   ionViewDidLeave() {
