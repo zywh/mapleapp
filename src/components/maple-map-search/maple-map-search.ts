@@ -28,7 +28,7 @@ declare var google: any;
 })
 export class MapleMapSearchComponent {
   @ViewChild('maplemap') mapElement: ElementRef;
-  @Input() mapType: number; // 1 = house, 2=school
+  @Input() mapType: number; // 0 = house, 1=school
   @Input() lockMapListener: boolean; //false= allow changeMap to refresh, true= changeMap is locked
   @Input() center; // center
 
