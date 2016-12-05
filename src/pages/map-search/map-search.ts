@@ -1,4 +1,4 @@
-import { ModalController, Content,LoadingController, Events, AlertController, PopoverController, MenuController, Platform, NavController, NavParams, ViewController } from 'ionic-angular';
+import { ModalController, Content, LoadingController, Events, AlertController, PopoverController, MenuController, Platform, NavController, NavParams, ViewController } from 'ionic-angular';
 
 import { NgZone, Component, ElementRef, ViewChild } from '@angular/core';;
 import { Connectivity } from '../../providers/connectivity';
@@ -15,34 +15,36 @@ import { SchoolListModal } from '../school-map/school-list-modal';
 
 import { AuthService } from '../../providers/auth/auth';
 import { UserData } from '../../providers/user-data';
-import {houseListModel} from '../../models/houseListModel';
+import { houseListModel } from '../../models/houseListModel';
 
 
 declare var RichMarker: any;
 declare var google;
 
 @Component({
+  selector: 'page-map',
   templateUrl: 'map-search.html'
 })
 
 
 export class MapSearchPage {
 
-  @ViewChild('map') public mapElement: ElementRef;
- 	tabBarElement: any;
+  //@ViewChild('map') public mapElement: ElementRef;
+  @ViewChild('mapCanvas') mapElement: ElementRef;
+  tabBarElement: any;
   @ViewChild(Content) content: Content;
 
   public mapLib = 1; // 0 is java and 1 is native google SDK
   public queryText: String = '';
   public mapInitialised: boolean = false;
-  
+
   public searchInFocus: boolean = false;
   public cityItems: any;
   public addressItems: any;
   public mlsItems: any;
   public schoolItems: any;
   public parms: Object;
- 
+
   public defaultcenter;
   public houselist: any;
   public map = null;
@@ -76,7 +78,7 @@ export class MapSearchPage {
   public selectOptions;
   public optionPage;
   public savedOptions;
-  public currentHouseList : houseListModel; //Hold list of all houses on current map
+  public currentHouseList: houseListModel; //Hold list of all houses on current map
   public currentHouses; //Hold array of houses for single marker
   public currentDiv;
   public mapType: number = 1; // 0 for house and 1 for school
@@ -110,7 +112,7 @@ export class MapSearchPage {
     //this.resetItems();
 
     this.setMapType(this.mapType);
- 		this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
+    this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
     this.listenEvents();
 
   }
@@ -122,7 +124,7 @@ export class MapSearchPage {
       this.setLocation(this.defaultcenter, this.defaultZoom, true);
     });
     this.events.subscribe('schoolmap:center', () => {
-     // console.log("List modal dismiss")
+      // console.log("List modal dismiss")
       this.listModal.dismiss();
     });
     this.events.subscribe('user:login', (data) => {
@@ -141,9 +143,10 @@ export class MapSearchPage {
   }
 
   initMap() {
-    console.log("init map"+ this.mapType);
+    console.log("init map" + this.mapType);
 
     this.mapInitialised = true;
+    //let mapEle = this.mapElement.nativeElement;
 
     // let loading = this.loadingc.create({
     //   content: '加载地图...'
@@ -153,13 +156,13 @@ export class MapSearchPage {
 
     //let mapEle = document.getElementById('map');
     this.mapleconf.getLocation().then(data => {
-       console.log(data);
+      console.log(data);
       console.log(this.mapElement.nativeElement);
       this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
       //this.defaultcenter = this.mapLatLng(data['lat'], data['lng']);
 
       if (this.navparm.data.parms.lat > 20) {
-       // console.log("Redirect from other page with center");
+        // console.log("Redirect from other page with center");
         this.defaultcenter = new google.maps.LatLng(this.navparm.data.parms.lat, this.navparm.data.parms.lng);
         //this.defaultcenter = this.mapLatLng(data['lat'], data['lng']);
       }
@@ -198,6 +201,10 @@ export class MapSearchPage {
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
       //loading.dismiss();
+
+      google.maps.event.addListenerOnce(this.map, 'idle', () => {
+        this.mapElement.nativeElement.classList.add('show-map');
+      });
       google.maps.event.addListener(this.map, 'idle', () => {
         this.changeMap(this.mapType);
       });
@@ -206,7 +213,7 @@ export class MapSearchPage {
 
 
       //Add marker if it's redirected from school page
-     // console.log(this.navparm.data.parms.type);
+      // console.log(this.navparm.data.parms.type);
       if (this.navparm.data.parms.type != 'NONE') {
 
         this.setLocation(this.defaultcenter, 13, this.navparm.data.parms.type)
@@ -224,7 +231,7 @@ export class MapSearchPage {
     console.log("Map View will enter");
     this.content.resize(); //resize to have fab position after housedetail page is back
     this.lockMapListener = false; //unlock after view enter  
-   // let optionType = (this.mapType == 0) ? 'houseSearch' : 'schoolSearch';
+    // let optionType = (this.mapType == 0) ? 'houseSearch' : 'schoolSearch';
 
     // if (this.auth.authenticated()) {
     //   this.userData.getUserSelections(optionType).then(res => {
@@ -239,11 +246,11 @@ export class MapSearchPage {
 
   }
 
+  ionViewDidLoad() {
+    // ionViewDidEnter() {
 
-  ionViewDidEnter() {
-    
-		if (this.nav.length() >1) this.tabBarElement.style.display = 'none';
-    if (!this.mapInitialised ) {
+    if (this.nav.length() > 1) this.tabBarElement.style.display = 'none';
+    if (!this.mapInitialised) {
 
       this.initMap();
       let alert = this.alertc.create({
@@ -288,7 +295,7 @@ export class MapSearchPage {
   openModal() {
     this.lockMapListener = true;
     console.log(this.selectOptions);
-    let modal = this.modalc.create(this.optionPage, { data: this.selectOptions, type: this.mapType ,searchflag: true});
+    let modal = this.modalc.create(this.optionPage, { data: this.selectOptions, type: this.mapType, searchflag: true });
     modal.onDidDismiss(data => {
       this.selectOptions = data;
       this.lockMapListener = false;
@@ -296,11 +303,11 @@ export class MapSearchPage {
       //console.log(data);
       //if ( this.selectOptions.hasOwnProperty('selectSearch')) {
       //if (this.selectOptions.selectSearch.type == 'CITY') {
-        if (this.selectOptions.selectSearch.lat > 20) {
+      if (this.selectOptions.selectSearch.lat > 20) {
         let center = new google.maps.LatLng(this.selectOptions.selectSearch.lat, this.selectOptions.selectSearch.lng);
         this.setLocation(center, this.defaultZoom, true);
         //this.selectOptions.selectSearch = {};
-       // this.selectOptions.selectSearch
+        // this.selectOptions.selectSearch
 
       } else {
 
@@ -450,10 +457,10 @@ export class MapSearchPage {
   }
 
 
-  setContent(lat, lng, count, html, houses, price, house,vowflag) {
+  setContent(lat, lng, count, html, houses, price, house, vowflag) {
     let point = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
     //let content = this.setMarkerCss(count, price);
-   // console.log("Set House Content Marker")
+    // console.log("Set House Content Marker")
     let content = this.mapleconf.setHouseMarkerCss(count, price);
     let marker = new RichMarker({
       position: point,
@@ -467,7 +474,7 @@ export class MapSearchPage {
 
     marker.addListener('click', () => {
       if (count == 1) {
-       // let text = (vowflag)? 
+        // let text = (vowflag)? 
         let alert = this.alertc.create({
           //title: 'Confirm purchase',
           message: html,
@@ -479,18 +486,18 @@ export class MapSearchPage {
 
             },
             {
-              text: (vowflag)? '详情':'登录',
+              text: (vowflag) ? '详情' : '登录',
               handler: () => {
                 //let navTransition = alert.dismiss();
                 // navTransition.then(() => {
                 //this.nav.pop();
                 alert.dismiss();
-                if( vowflag){
-                    this.nav.push(HouseDetailPage, { id: house.MLS, list: this.currentHouseList.list });
-                }else {
+                if (vowflag) {
+                  this.nav.push(HouseDetailPage, { id: house.MLS, list: this.currentHouseList.list });
+                } else {
                   this.userData.loginAlert();
                 }
-              
+
                 //this.nav.push(HouseDetailPage, mls); 
                 //});
                 return false;
@@ -502,7 +509,7 @@ export class MapSearchPage {
         alert.present();
         //this.housePopover(house);
       } else {
-       // console.log("More than one");
+        // console.log("More than one");
         this.nav.push(HouselistSearch, { list: this.currentHouseList, imgHost: this.imgHost, listType: 'house' });
 
       }
@@ -616,9 +623,9 @@ export class MapSearchPage {
       let _ne = this.map.getBounds().getNorthEast();
       //let centerlat = (_ne.lat() + _sw.lat()) / 2;
       //let centerlng = (_ne.lng() + _sw.lng()) / 2;
-     // let HouseArray = [];
+      // let HouseArray = [];
 
-      
+
       let mapParms;
       this._bounds = _sw.lat() + "," + _sw.lng() + "," + _ne.lat() + "," + _ne.lng();
       if (type == 1) {
@@ -651,7 +658,7 @@ export class MapSearchPage {
         };
       }
 
-     // console.log("Map House Search Parms:" + mapParms);
+      // console.log("Map House Search Parms:" + mapParms);
       this.mapleconf.load().then(data => {
 
         let restUrl = data.mapHouseRest;
@@ -748,7 +755,7 @@ export class MapSearchPage {
       let nextLng;
       //let listAllHtml;
       //this.currentHouseList = this.userData.setVowMask(data.Data.HouseList);
-      this.currentHouseList = new houseListModel(data.Data.HouseList,this.auth.authenticated());
+      this.currentHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
       let panelhtml;
       // console.log("Current House List Length:" + this.currentHouseList.length);
 
@@ -762,48 +769,47 @@ export class MapSearchPage {
           nextLng = data.Data.HouseList[index + 1].GeocodeLng;
 
         }
-       
+
         //let hprice = (house.SaleLease == 'Lease') ? Math.round(house.Price) * 10000 + '加元/月' : Math.round(house.Price) + '万加元';
         let markerprice = Math.round(house.Price);
 
         let tlat = parseFloat(house.GeocodeLat);
         let tlng = parseFloat(house.GeocodeLng);
         //let vowflag: Boolean = ( house.src == 'VOW' || this.auth.authenticated());
-       // console.log("MLS:"+ house.MLS + " SRC:" + house.src + " isAuth:" + this.auth.authenticated());
+        // console.log("MLS:"+ house.MLS + " SRC:" + house.src + " isAuth:" + this.auth.authenticated());
         let vowflag: boolean = (!this.auth.authenticated() && house.Src == 'VOW') ? false : true;
-       
-        let li:String;
-        if (!vowflag){
-         // console.log("MLS:" + house.MLS + "VOW Hide DATA");
-           li = "<h2>登录用户可见</h2>"
-        } else 
-        {
+
+        let li: String;
+        if (!vowflag) {
+          // console.log("MLS:" + house.MLS + "VOW Hide DATA");
+          li = "<h2>登录用户可见</h2>"
+        } else {
 
           //console.log("MLS:" + house.MLS + "NOT VOW DATA");
-         li = ' <ion-card>'
-          + '<img src="' + house.CdnCoverImg + '" />'
-          + '<div class="house_desc" text-left text-nowrap>'
-          // + '<ion-item padding-left>'
-          + '<ion-badge item-left>MLS:' + house.MLS + '</ion-badge>'
-          + '  <ion-badge item-right><i class="fa fa-usd" aria-hidden="true"></i>' + this.mapleconf.getPriceTxt(house.SaleLease, house.Price) + '</ion-badge>'
-          // + '   </ion-item>'
+          li = ' <ion-card>'
+            + '<img src="' + house.CdnCoverImg + '" />'
+            + '<div class="house_desc" text-left text-nowrap>'
+            // + '<ion-item padding-left>'
+            + '<ion-badge item-left>MLS:' + house.MLS + '</ion-badge>'
+            + '  <ion-badge item-right><i class="fa fa-usd" aria-hidden="true"></i>' + this.mapleconf.getPriceTxt(house.SaleLease, house.Price) + '</ion-badge>'
+            // + '   </ion-item>'
 
-          + '    <div class="card-subtitle" text-left>'
-          // + '     <div><i padding-right secondary class="fa fa-building" aria-hidden="true"></i><span padding-right>' + house.HouseType + '</span>' + house.Beds + '卧' + house.Baths + '卫' + house.Kitchen + '厨</div>'
-          // + '     <div><i padding-right secondary class="fa fa-location-arrow" aria-hidden="true"></i><span padding-right>' + house.Address + '</span>' + house.MunicipalityName + '</div>'
-          + '<div>' + house.HouseType + '</div>'
-          + '<div>' + house.Address + ',' + house.MunicipalityName + '</div>'
-          + '</div></div>'
-          + ' </ion-card> '
-          }
+            + '    <div class="card-subtitle" text-left>'
+            // + '     <div><i padding-right secondary class="fa fa-building" aria-hidden="true"></i><span padding-right>' + house.HouseType + '</span>' + house.Beds + '卧' + house.Baths + '卫' + house.Kitchen + '厨</div>'
+            // + '     <div><i padding-right secondary class="fa fa-location-arrow" aria-hidden="true"></i><span padding-right>' + house.Address + '</span>' + house.MunicipalityName + '</div>'
+            + '<div>' + house.HouseType + '</div>'
+            + '<div>' + house.Address + ',' + house.MunicipalityName + '</div>'
+            + '</div></div>'
+            + ' </ion-card> '
+        }
 
         if ((nextLng != house.GeocodeLng) || (nextLat != house.GeocodeLat)) {
 
           if (count == 1) {
 
             houses.push(house);
-          
-            this.setContent(tlat, tlng, 1, li, house, markerprice, house,vowflag);
+
+            this.setContent(tlat, tlng, 1, li, house, markerprice, house, vowflag);
             houses = [];
             totalprice = 0;
             panelhtml = '';

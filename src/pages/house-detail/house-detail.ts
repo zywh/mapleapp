@@ -12,6 +12,7 @@ import { houseInterface, houseModel } from '../../models/houseModel';
 import { houseListModel } from '../../models/houseListModel';
 //import { HouselistSearch } from '../houselist-search/houselist-search';
 import { MapSearchPage } from '../map-search/map-search';
+import { MapSearchNewPage } from '../map-search-new/map-search-new';
 
 declare var google: any;
 
@@ -56,8 +57,10 @@ export class HouseDetailPage {
 	private lockRefresh = { 'school': false, 'similar': false, 'community': false };//Lock tab page refresh
 	//public location = { 'lat': 44, 'lng': -79 };
 	public location;
-	public schoolPushPage = MapSearchPage;
-	public schoolPushParams = {'pageType': 1};
+	public schoolPushPage = MapSearchNewPage;
+	//public schoolPushPage = MapSearchPage;
+	//public schoolPushParams = {'pageType': 1};
+	public schoolPushParams ;
 
 	@ViewChild('photo_slider') slider: Slides;
 	public popLock: boolean = false;
@@ -150,6 +153,12 @@ export class HouseDetailPage {
 	pop2first() {
 		this.popLock = true;
 		this.nav.setRoot(this.nav.first());
+	}
+	gotoMap(){
+		this.popLock = true;
+		this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude };
+		this.nav.push(MapSearchNewPage,this.location);
+		//this.nav.push(MapSearchPage,{'pageType': 1});
 	}
 
 	similar() {

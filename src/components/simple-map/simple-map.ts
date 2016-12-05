@@ -39,7 +39,12 @@ export class SimpleMapComponent {
         console.log('ngOnChanges property ' + propName);
         this.initMap();
       }
-    }
+
+    // if (this.center){
+    //    this.initMap();
+    //
+     }
+    
     // Called right after our bindings have been checked but only
     // if one of our bindings has changed.
     //

@@ -18,6 +18,7 @@ import { HouseList } from '../components/house-list/house-list';
 import { SchoolListComponent} from '../components/school-list/school-list';
 import { HouseCityStatsComponent} from '../components/house-city-stats/house-city-stats';
 import { SimpleMapComponent} from '../components/simple-map/simple-map';
+import { MapleMapSearchComponent} from '../components/maple-map-search/maple-map-search';
 import {HouseDetailViewComponent} from '../components/house-detail-view/house-detail-view';
 import { Search } from '../components/search/search';
 import { ElasticHeader } from '../components/elastic-header/elastic-header';
@@ -37,6 +38,7 @@ import {HouselistSearch} from '../pages/houselist-search/houselist-search';
 import {SelectOptionModal} from '../pages/map-search/map-option-modal';
 import {MapHouselist} from '../pages/map-search/map-houselist';
 import {MapSearchPage} from '../pages/map-search/map-search';
+import {MapSearchNewPage} from '../pages/map-search-new/map-search-new';
 import {SchoolSelectOptionModal} from '../pages/school-map/schoolmap-option-modal';
 import {SchoolListModal} from '../pages/school-map/school-list-modal';
 import {MyCenterPage} from '../pages/my-center/my-center';
@@ -82,6 +84,7 @@ export function authFactory(http: any) {
     HouseCityStatsComponent,
     SimpleMapComponent,
     HouseDetailViewComponent,
+    MapleMapSearchComponent,
     Search,
     MapleApp,
     AboutPage,
@@ -92,6 +95,7 @@ export function authFactory(http: any) {
     //HouseCityStatsPage,
     HouseDetailPage,
     MapSearchPage,
+    MapSearchNewPage,
     HouselistSearch,
     SelectOptionModal,
     MapHouselist,
@@ -137,6 +141,7 @@ export function authFactory(http: any) {
     HouseCityStatsComponent,
     SimpleMapComponent,
     HouseDetailViewComponent,
+    MapleMapSearchComponent,
     Search,
     MapleApp,
     AboutPage,
@@ -146,6 +151,7 @@ export function authFactory(http: any) {
     //HouseCityStatsPage,
     HouseDetailPage,
     MapSearchPage,
+    MapSearchNewPage,
     HouselistSearch,
     SelectOptionModal,
     MapHouselist,

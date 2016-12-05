@@ -6,10 +6,10 @@
 
 
 		<ion-buttons left >
-			<button ion-button (click)="unlockPop()">
-				返回
-			<!--房源({{houseList.index + 1}}/{{houseList.total}})-->
-		</button>
+			<button ion-button (click)="unlockPop()">返回	</button>
+		</ion-buttons>
+		<ion-buttons left >
+			<button ion-button (click)="gotoMap()">学校</button>
 		</ion-buttons>
 
 		<ion-title *ngIf="parms.list">
@@ -100,6 +100,7 @@
 
 	</div>
 
+<button ion-button  (click)="gotoMap()">学校</button>
 </ion-content>
 <ion-footer>
 	<ion-toolbar>
@@ -112,7 +113,8 @@
 			<ion-segment-button value="citystats" (ionSelect)="popLock = true">
 				社区
 			</ion-segment-button>
-			<button ion-button [navPush]="schoolPushPage" [navParams]="schoolPushParams" (click)="popLock = true">学校</button>
+			<!--<button ion-button [navPush]="schoolPushPage" [navParams]="schoolPushParams" (click)="popLock = true">学校</button>-->
+			
 			<ion-segment-button value="school" (ionSelect)="gotoSchool()">
 				学校
 			</ion-segment-button>
