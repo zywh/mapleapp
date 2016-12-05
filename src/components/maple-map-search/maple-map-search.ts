@@ -100,7 +100,7 @@ export class MapleMapSearchComponent {
   ) {
 
 
-    // this.mapType = this.navparm.data.pageType;
+    
 
   }
 
@@ -130,7 +130,7 @@ export class MapleMapSearchComponent {
   }
 
   getCenter() {
-    console.log("get center" + this.mapType);
+    console.log("get center" + this.center);
 
     console.log(this.mapElement.nativeElement);
 
@@ -184,7 +184,7 @@ export class MapleMapSearchComponent {
     }
 
    
-    console.log(this.mapElement.nativeElement);
+
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
@@ -826,14 +826,17 @@ export class MapleMapSearchComponent {
 
 
 
-  ngOnChanges(changes) {
+  ngOnChanges() {
 
     console.log('maple-map-search ngonchanges:' + this.mapType);
+    console.log(this.center);
 
     //if (this.mapInput && !this.mapInitialised) {
     if (this.center && !this.mapInitialised) {
+
+      console.log('maple-map-search map init:' + this.center);
       
-      console.log(this.mapType);
+     
       this.setMapType(this.mapType);
       this.listenEvents();
       this.getCenter();

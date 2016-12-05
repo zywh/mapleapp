@@ -1,21 +1,21 @@
-import { ModalController, Content, LoadingController, Events, AlertController, PopoverController, MenuController, Platform, NavController, NavParams, ViewController } from 'ionic-angular';
+import { Content,NavController,NavParams,Events} from 'ionic-angular';
 
-import { NgZone, Component, ElementRef, ViewChild } from '@angular/core';;
-import { Connectivity } from '../../providers/connectivity';
-import { HouseDetailPage } from '../house-detail/house-detail';
-import { HouselistSearch } from '../houselist-search/houselist-search';
+import { Component, ViewChild } from '@angular/core';;
+// import { Connectivity } from '../../providers/connectivity';
+// import { HouseDetailPage } from '../house-detail/house-detail';
+// import { HouselistSearch } from '../houselist-search/houselist-search';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
-import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
+//import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 
-import { SelectOptionModal } from './map-option-modal';
+//import { SelectOptionModal } from './map-option-modal';
 //import { MapHouselist } from './map-houselist';
 
-import { SchoolSelectOptionModal } from '../school-map/schoolmap-option-modal';
-import { SchoolListModal } from '../school-map/school-list-modal';
+//import { SchoolSelectOptionModal } from '../school-map/schoolmap-option-modal';
+//import { SchoolListModal } from '../school-map/school-list-modal';
 
-import { AuthService } from '../../providers/auth/auth';
-import { UserData } from '../../providers/user-data';
-import { houseListModel } from '../../models/houseListModel';
+//import { AuthService } from '../../providers/auth/auth';
+//import { UserData } from '../../providers/user-data';
+//import { houseListModel } from '../../models/houseListModel';
 
 @Component({
   selector: 'page-map',
@@ -26,59 +26,12 @@ import { houseListModel } from '../../models/houseListModel';
 export class MapSearchPage {
 
   //@ViewChild('map') public mapElement: ElementRef;
-  @ViewChild('mapCanvas') mapElement: ElementRef;
+ // @ViewChild('mapCanvas') mapElement: ElementRef;
   tabBarElement: any;
   @ViewChild(Content) content: Content;
   public mapInitialised: boolean = false;
-  public center;
+  public center ;
 
-  // public mapLib = 1; // 0 is java and 1 is native google SDK
-  // public queryText: String = '';
-  
-
-  // public searchInFocus: boolean = false;
-  // public cityItems: any;
-  // public addressItems: any;
-  // public mlsItems: any;
-  // public schoolItems: any;
-  // public parms: Object;
-
-  // public defaultcenter;
-  // public houselist: any;
-  // public map = null;
-  // public center;
-  // public markerArray = [];
-  // public htmlArray = [];
-  // public mviewLoaded: boolean = false;
-  // public htmlArrayPosition = 0;
-  // public totalCount: number; //Returned House
-  // public listAllHtml = ''; //hold houses on current map
-  // public isListShow: boolean = false;
-  // public markerType;
-  // public imgHost: String;
-  // //public listModal: ViewController;
-  // public listModal;
-  // public defaultZoom: number = 14;
-  // public _bounds;
-  // public locateLock: boolean = false; //lock location button if there is input popup
-
-  // public schoolList: Array<any>;
-  // public swiperOptions = {
-  //   //loop: true,
-  //   //pager: true,
-  //   //speed: 4000,
-  //   spaceBetween: 20,
-  //   slidesPerView: 'auto',
-  //   //loopedSlides: 10
-  //   autoplay: 3000
-  // };
-
-  // public selectOptions;
-  // public optionPage;
-  // public savedOptions;
-  // public currentHouseList: houseListModel; //Hold list of all houses on current map
-  // public currentHouses; //Hold array of houses for single marker
-  // public currentDiv;
   public mapType: number = 1; // 0 for house and 1 for school
   //public markerDrop;
   public lockMapListener: Boolean = false;
@@ -105,6 +58,7 @@ export class MapSearchPage {
 
 
     this.mapType = this.navparm.data.pageType;
+    
     console.log(this.navparm);
     console.log(this.mapType);
     //this.resetItems();
@@ -228,21 +182,27 @@ export class MapSearchPage {
     console.log("Map View will enter");
     this.content.resize(); //resize to have fab position after housedetail page is back
     this.lockMapListener = false; //unlock after view enter  
-    this.mapType = this.navparm.data.pageType;
-    if (this.navparm.data.parms.lat > 20){
-      this.center = { 'lat': this.navparm.data.parms.lat, 'lng': this.navparm.data.parms.lng };
-    }else {
+    //this.center = {'lat':43,'lng':-79};
+   
+  //   if (this.navparm.data.parms.lat > 20){
+  //     this.center = { 'lat': this.navparm.data.parms.lat, 'lng': this.navparm.data.parms.lng };
+  //   }else {
 
        this.mapleconf.getLocation().then(data => {
+         console.log("Get current location");
+         console.log(data);
 
-      if (this.navparm.data.parms.lat > 20) {
+      if (data['lat'] > 20) {
         this.center = { 'lat': data['lat'], 'lng': data['lng'] };
+       //this.center = data;
+      } else {
+        this.center = { 'lat': 43, 'lng': -78 };
       }
     })
 
 
 
-    }
+  //  }
   
    
     // let optionType = (this.mapType == 0) ? 'houseSearch' : 'schoolSearch';

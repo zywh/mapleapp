@@ -7,7 +7,7 @@ import {FavoritePage} from '../favorite/favorite';
 import {HelpPage} from '../help/help';
 import {MyCenterPage} from '../my-center/my-center'
 import {UserData} from '../../providers/user-data';
-import {SelectOptionModal} from '../map-search/map-option-modal';
+import {SelectOptionModal} from '../../components/maple-map-search/map-option-modal';
 import {SchoolSelectOptionModal} from '../school-map/schoolmap-option-modal';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 

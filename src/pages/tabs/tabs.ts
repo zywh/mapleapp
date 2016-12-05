@@ -38,7 +38,7 @@ export class TabsPage {
 
   constructor(private nav: NavController, navParams: NavParams, private events: Events) {
     this.mySelectedIndex = navParams.data.tabIndex || 0;
-    this.mapParms = navParams.data.rootParms || { lat: 0, lng: 0, type: "NONE" };
+    this.mapParms = navParams.data.rootParms ||{};
     this.tabMapParms = { pageType: 0, parms: this.mapParms };
     this.tabSchoolParms = { pageType: 1, parms: this.mapParms };
     
