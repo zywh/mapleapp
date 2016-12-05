@@ -571,7 +571,7 @@ export class houseModel {
     getAddr() {
         let txt = this.house.addr;
         if (this.house.apt_num) txt = this.house.apt_num + '-' + this.house.addr;
-        this.addr = txt;
+        this.addr = this.house.ml_num? txt: "房源已不在MLS列表";
         return txt;
     }
 
