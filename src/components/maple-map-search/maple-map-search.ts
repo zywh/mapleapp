@@ -28,12 +28,10 @@ declare var google: any;
 })
 export class MapleMapSearchComponent {
   @ViewChild('maplemap') mapElement: ElementRef;
-  @Input() mapType: number; // 1 = house, 2=school
-  @Input() lockMapListener: boolean; //false= allow changeMap to refresh, true= changeMap is locked
-  @Input() center; // center
-
-
-
+  @Input() mapType: number; // 0 = house, 1=school
+  @Input() lockMapListener: boolean; // false= allow changeMap to refresh, true= changeMap is locked
+  @Input() center; // // center: object  = {'lat':lat,'lng':lng,'type': type}  ,type  0 = no marker drop, 1= house marker ,2= school marker 
+   
 
   public mapLib = 1; // 0 is java and 1 is native google SDK
   public mapInitialised: boolean = false;
@@ -100,7 +98,7 @@ export class MapleMapSearchComponent {
   ) {
 
 
-    // this.mapType = this.navparm.data.pageType;
+    
 
   }
 
@@ -129,35 +127,15 @@ export class MapleMapSearchComponent {
 
   }
 
-  getCenter() {
-    console.log("get center" + this.mapType);
 
-    console.log(this.mapElement.nativeElement);
-
-    if (this.center['lat'] > 20) {
-
-      let center = new google.maps.LatLng(this.center['lat'], this.center['lng']);
-      this.initMap(center,1);// 0 = no marker,1= house marker, 2 = school marker
-
-    } else {
-
-      this.mapleconf.getLocation().then(data => {
-
-        let center = new google.maps.LatLng(data['lat'], data['lng']);
-      
-        this.initMap(center,0);
-      });
-    }
-
-
-  }
-  initMap(center,markerType: number) {
+  
+  initMap(point,markerType: number) {
 
     this.mapInitialised = true;
 
     let mapOptions = {
       //center: latLng,
-      center: center,
+      center: point,
       minZoom: 4,
       controls: {
         'compass': true,
@@ -184,7 +162,7 @@ export class MapleMapSearchComponent {
     }
 
    
-    console.log(this.mapElement.nativeElement);
+
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
@@ -195,8 +173,9 @@ export class MapleMapSearchComponent {
 
 
 
-    if (markerType > 0) {   // later, marertype can be set to different symbol house vs school etc
-      this.setLocation(this.defaultcenter, 13, true)
+    if (markerType > 0) {   // 0 = no marker drop, 1= house marker ,2= school marker 
+    
+      this.setLocation(point, 13, true)
     }
 
 
@@ -221,8 +200,8 @@ export class MapleMapSearchComponent {
       //if ( this.selectOptions.hasOwnProperty('selectSearch')) {
       //if (this.selectOptions.selectSearch.type == 'CITY') {
       if (this.selectOptions.selectSearch.lat > 20) {
-        let center = new google.maps.LatLng(this.selectOptions.selectSearch.lat, this.selectOptions.selectSearch.lng);
-        this.setLocation(center, this.defaultZoom, true);
+        let point = new google.maps.LatLng(this.selectOptions.selectSearch.lat, this.selectOptions.selectSearch.lng);
+        this.setLocation(point, this.defaultZoom, true);
         //this.selectOptions.selectSearch = {};
         // this.selectOptions.selectSearch
 
@@ -320,7 +299,7 @@ export class MapleMapSearchComponent {
 
 
   //SetCenter and Zoom if location button is clicked
-  setCenter(isMarker) {
+  setmapCenter(isMarker) {
     this.lockMapListener = true; // lock listener to prevent Android map listener trigger
     this.locateLock = true; //lock locate click to prevent frozen from double click
     this.mapleconf.getLocation().then(data => {
@@ -346,17 +325,17 @@ export class MapleMapSearchComponent {
   }
 
   // //Move to center and creata a marker
-  setLocation(center, zoom, isMarker) {
+  setLocation(point, zoom, isMarker) {
 
     this.map.setZoom(zoom);
-    this.map.setCenter(center);
+    //this.map.setCenter(center);
     if (this.markerDrop != null) {
       this.markerDrop.setMap(null);
     }
 
     if (isMarker) {
       this.markerDrop = new google.maps.Marker({
-        position: center,
+        position: point,
         map: this.map,
         animation: google.maps.Animation.DROP,
         draggable: false,
@@ -495,7 +474,7 @@ export class MapleMapSearchComponent {
 
     this.markerArray.push(marker);
     google.maps.event.addListener(marker, 'click', function () {
-      this.map.setCenter(this.position);
+      //this.map.setCenter(this.position);
       let currentzoom = this.map.getZoom();
       this.map.setZoom(currentzoom + 2);
     });
@@ -826,17 +805,25 @@ export class MapleMapSearchComponent {
 
 
 
-  ngOnChanges(changes) {
+  ngOnChanges() {
 
     console.log('maple-map-search ngonchanges:' + this.mapType);
+    
+    console.log(this.center);
 
     //if (this.mapInput && !this.mapInitialised) {
     if (this.center && !this.mapInitialised) {
+
+      let point = new google.maps.LatLng(this.center['lat'], this.center['lng']);
+     
+      console.log('maple-map-search map init:' + point);
       
-      console.log(this.mapType);
+     
       this.setMapType(this.mapType);
       this.listenEvents();
-      this.getCenter();
+      //this.getCenter();
+     // this.initTestMap();
+      this.initMap(point,this.center['type']);
       let alert = this.alertc.create({
         title: '提示',
         message: '根据TREB数据协议，有些房源只有登录后才可以显示，请注册/登录后查找更多房源',

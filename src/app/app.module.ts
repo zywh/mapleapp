@@ -35,8 +35,8 @@ import {CityStats} from '../pages/house-city-stats/city-stats';
 
 import {HouseDetailPage} from '../pages/house-detail/house-detail';
 import {HouselistSearch} from '../pages/houselist-search/houselist-search';
-import {SelectOptionModal} from '../pages/map-search/map-option-modal';
-import {MapHouselist} from '../pages/map-search/map-houselist';
+//import {SelectOptionModal} from '../pages/map-search/map-option-modal';
+//import {MapHouselist} from '../pages/map-search/map-houselist';
 import {MapSearchPage} from '../pages/map-search/map-search';
 import {MapSearchNewPage} from '../pages/map-search-new/map-search-new';
 import {SchoolSelectOptionModal} from '../pages/school-map/schoolmap-option-modal';
@@ -97,8 +97,8 @@ export function authFactory(http: any) {
     MapSearchPage,
     MapSearchNewPage,
     HouselistSearch,
-    SelectOptionModal,
-    MapHouselist,
+    //SelectOptionModal,
+   // MapHouselist,
     SchoolSelectOptionModal,
     SchoolListModal,
     MyCenterPage,
@@ -153,8 +153,8 @@ export function authFactory(http: any) {
     MapSearchPage,
     MapSearchNewPage,
     HouselistSearch,
-    SelectOptionModal,
-    MapHouselist,
+    //SelectOptionModal,
+   // MapHouselist,
     SchoolSelectOptionModal,    
     SchoolListModal,
     MyCenterPage,

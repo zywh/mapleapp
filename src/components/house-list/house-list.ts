@@ -4,7 +4,7 @@ import { HouseDetailPage } from '../../pages/house-detail/house-detail';
 import { NavController,  ModalController, Events } from 'ionic-angular';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
-import { MapHouselist } from '../../pages/map-search/map-houselist';
+//import { MapHouselist } from '../../pages/map-search/map-houselist';
 import {houseListModel } from '../../models/houseListModel';
 import { AuthService } from '../../providers/auth/auth';
 
@@ -40,9 +40,6 @@ export class HouseList {
   }
 
 
-  ngInit(){
-   // this.houseListM.setList(this.houselist);
-  }
 
   listenEvents() {
     this.events.subscribe('user:login', () => {
@@ -70,51 +67,6 @@ export class HouseList {
   }
 
 
-
-  nearByHouses(lat, lng, mls) {
-
-
-    let range: number = 0.015;
-
-    let swLat = lat - range;
-    let swLng = lng - range;
-    let neLat = lat + range;
-    let neLng = lng + range;
-    let bounds = swLat + "," + swLng + "," + neLat + "," + neLng;
-    let mapParms = {
-
-      bounds: bounds,
-      centerLat: lat,
-      centerLng: lng,
-      type: 'nearby',
-      sr: 'Sale'
-    };
-
-    this.mapleConf.load().then(data => {
-      //this.postListRest = data.postRest;
-      let restURL = data.mapHouseRest;
-
-      this.mapleRestData.load(restURL, mapParms).subscribe(
-        data => {
-          console.log(data);
-          if (data.Data.Type == 'house') {
-
-            this.nearbyHouseList = data.Data.HouseList;
-            // let modal = this.modalc.create(MapHouselist, { list: this.nearbyHouseList, imgHost: this.imgHost });
-            // modal.present();
-            this.nav.push(MapHouselist, { list: this.nearbyHouseList, imgHost: this.imgHost });
-            //console.log(this.nearbyHouseList);
-
-
-          }
-        });
-
-    });
-
-
-
-
-  }
 
   mapSearch(lat, lng) {
     this.events.publish('map:center', { lat: lat, lng: lng, type: 'HOUSE' });
