@@ -157,7 +157,7 @@ export class HouseDetailPage {
 		this.popLock = true;
 		this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude };
 		//this.nav.push(MapSearchNewPage,this.location);
-		this.nav.push(MapSearchNewPage,{'mapType': 1,'center':this.location, 'zoomlevel':15});
+		this.nav.push(MapSearchNewPage,{'mapType': 1,'center':this.location, 'zoomlevel':16});
 	}
 
 	similar() {
