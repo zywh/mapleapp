@@ -62,8 +62,8 @@ export class HouseDetailPage {
 	public popLock: boolean = false;
 	private currentMLS;
 	public simpleMap: boolean = true;
-	public lockMapListener:boolean = false;
-	public noChangeMap:boolean = true;
+	public lockMapListener: boolean = false;
+	public noChangeMap: boolean = true;
 
 	constructor(
 		public nav: NavController,
@@ -153,18 +153,31 @@ export class HouseDetailPage {
 		this.popLock = true;
 		this.nav.setRoot(this.nav.first());
 	}
-	gotoMap(){
+	gotoMap() {
 		this.popLock = true;
 		this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude };
 		//this.nav.push(MapSearchNewPage,this.location);
-		this.nav.push(MapSearchNewPage,{'mapType': 1,'center':this.location, 'zoomlevel':16});
+		this.nav.push(MapSearchNewPage, { 'mapType': 1, 'center': this.location, 'zoomlevel': 16 });
+	}
+	houseViewSwipe(e) {
+		console.log(e);
+
+		if (e.direction == 2) {
+			//direction 2 = right to left swipe.
+			console.log("Swipe event right to left");
+			this.go2NextHouse();
+
+		} else if (e.direction == 4) {
+			console.log("Swipe event left to right");
+			this.go2PrevHouse();
+		}
 	}
 
 	similar() {
 		//this.houseM.house.lp_dol = '';
 		this.popLock = true;
 		if (this.lockRefresh.similar == false) {
-		//if (this.currentMLS != this.houseM.house.ml_num) {
+			//if (this.currentMLS != this.houseM.house.ml_num) {
 			//let similarHouses;
 			let range: number = 0.1;
 
@@ -308,18 +321,18 @@ export class HouseDetailPage {
 
 	}
 
-	swipeEvent(e) {
-		if (e.direction == 2) {
-			//direction 2 = right to left swipe.
-			console.log("Swipe event right to left");
-			this.go2NextHouse();
+	// swipeEvent(e) {
+	// 	if (e.direction == 2) {
+	// 		//direction 2 = right to left swipe.
+	// 		console.log("Swipe event right to left");
+	// 		this.go2NextHouse();
 
-		} else if (e.direction == 4) {
-			console.log("Swipe event left to right");
-			this.go2PrevHouse();
-		}
+	// 	} else if (e.direction == 4) {
+	// 		console.log("Swipe event left to right");
+	// 		this.go2PrevHouse();
+	// 	}
 
-	}
+	// }
 
 
 	getResult(url, id) {
@@ -331,7 +344,7 @@ export class HouseDetailPage {
 			data => {
 
 				this.lockRefresh = { 'school': false, 'similar': false, 'community': false };//Lock tab page refresh
-			
+
 				if (this.section == "similar") {
 					console.log("Refresh similar house list");
 					this.similar();
@@ -342,7 +355,7 @@ export class HouseDetailPage {
 
 				}
 				this.houseM.rxPhone = this.mapleConf.data.phone;
-			
+
 				this.houseM.house = data.house;
 				this.houseM.houseMname = data.house_mname;
 				this.houseM.houseProvince = data.house_province;
@@ -355,13 +368,13 @@ export class HouseDetailPage {
 				this.setHouseList();
 				this.houseM.setProperties(this.auth.authenticated(), this.switchF2M);
 				//this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude };
-			    this.location =  {'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude,'type': 1}; // 2 for school marker
-				
+				this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude, 'type': 1 }; // 2 for school marker
+
 
 				this.slider.slideTo(0);
 
 				//this.initMap();
-			
+
 				this.section = 'housedetail';
 
 				//call similar if selected

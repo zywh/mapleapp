@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, Input, Output,ElementRef, ViewChild,EventEmitter } from '@angular/core';
 import { Slides } from 'ionic-angular';
 import { houseInterface, houseModel } from '../../models/houseModel';
 //import { houseListModel } from '../../models/houseListModel';
@@ -22,6 +22,7 @@ import { AuthService } from '../../providers/auth/auth';
 export class HouseDetailViewComponent {
   @Input() houseM: houseModel;
   @Input() isFav;
+  @Output() swipFlag = new EventEmitter();
   @ViewChild('maphouse') mapElement: ElementRef;
 
   //public isFav = { houseFav: false, routeFav: false };
@@ -90,6 +91,12 @@ export class HouseDetailViewComponent {
   mapDirection() {
     this.mapleConf.mapDirection(this.houseM.house.latitude, this.houseM.house.longitude)
   }
+
+	swipeEvent(e) {
+    console.log(e);
+		this.swipFlag.emit(e);
+
+	}
 
 
   fav(type) {
