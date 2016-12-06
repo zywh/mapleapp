@@ -90,7 +90,6 @@
 <!--
 		<div *ngSwitchCase="'school'">
 			<div id="housemap">
-				<!--<simple-map [center]="location"></simple-map>-->
 				  <maple-map-search mapType="1" [center]="location" [lockMapListener]="lockMapListener" [simpleMap]="simpleMap"></maple-map-search>
 			</div>
 			<school-list [schoolList]='schoolList'></school-list>
@@ -106,11 +105,8 @@
 		</div>
 
 	</div>
-<<<<<<< HEAD
-=======
-
->>>>>>> dc7df87b2152a3df9fc6fd3cb3ca30b5c66675a5
 </ion-content>
+
 <ion-footer>
 	<ion-toolbar>
 		<ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null" class="segment_css">
@@ -122,7 +118,7 @@
 			<ion-segment-button value="citystats" (ionSelect)="popLock = true">
 				社区
 			</ion-segment-button>	
-			<ion-segment-button value="school" (ionSelect)="gotoMap();section='housedetail'">
+			<ion-segment-button value="school" (ionSelect)="gotoMap()">
 				学校
 			</ion-segment-button>
 			<ion-segment-button value="similar" (ionSelect)="similar()">
