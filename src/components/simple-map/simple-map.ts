@@ -39,6 +39,7 @@ export class SimpleMapComponent {
     //     this.initMap();
     //   }
     console.log("simple map ngonchange");
+    console.log('Changed', changes.property.currentValue, changes.property.previousValue);
    
     if (this.center){
        this.initMap();
@@ -90,7 +91,14 @@ export class SimpleMapComponent {
       //draggable: false,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
+
     let map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+
+    google.maps.event.addListener(map, 'idle', () => {
+      console.log("add map listener");
+      
+    });
+
     new google.maps.Marker({
       position: point,
       map: map,

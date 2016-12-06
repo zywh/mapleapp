@@ -18,6 +18,7 @@ export class MapSearchNewPage {
   public mapType;
   public center;
   public lockMapListener: boolean = false;
+  public simpleMap:boolean = false;
 
   constructor(public nav: NavController,private navparms: NavParams) {
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
