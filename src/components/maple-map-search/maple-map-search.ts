@@ -32,6 +32,7 @@ export class MapleMapSearchComponent {
   @Input() lockMapListener: boolean = false; // false= allow changeMap to refresh, true= changeMap is locked
   @Input() center; // // center: object  = {'lat':lat,'lng':lng,'type': type}  ,type  0 = no marker drop, 1= house marker ,2= school marker 
   @Input() simpleMap:boolean = true ; // true = no button , false = display button
+  @Input() zoomlevel; // community
 
 
   public mapLib = 1; // 0 is java and 1 is native google SDK
@@ -158,7 +159,7 @@ export class MapleMapSearchComponent {
       streetViewControlOptions: {
         position: google.maps.ControlPosition.TOP_RIGHT
       },
-      zoom: 14,
+      zoom: this.zoomlevel? this.zoomlevel: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 

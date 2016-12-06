@@ -19,6 +19,7 @@ export class MapSearchNewPage {
   public center;
   public lockMapListener: boolean = false;
   public simpleMap:boolean = false;
+  public zoomlevel;
 
   constructor(public nav: NavController,private navparms: NavParams) {
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
@@ -29,6 +30,7 @@ export class MapSearchNewPage {
     console.log(this.navparms.data);
     this.mapType= this.navparms.data.mapType; // 0 for house and 1 for school
     this.center =  {'lat':this.navparms.data.center.lat,'lng':this.navparms.data.center.lng,'type': 2}; // 2 for school marker
+    this.zoomlevel = this.navparms.data.zoomlevel;
 
     if (this.nav.length() > 1) this.tabBarElement.style.display = 'none';
     
