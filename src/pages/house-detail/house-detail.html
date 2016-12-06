@@ -8,10 +8,11 @@
 		<ion-buttons left>
 			<button ion-button (click)="unlockPop()">返回	</button>
 		</ion-buttons>
+<!--
 		<ion-buttons left>
 			<button ion-button (click)="gotoMap()">学校</button>
 		</ion-buttons>
-
+-->
 		<ion-title *ngIf="parms.list">
 			房源({{houseList.index + 1}}/{{houseList.total}})
 		</ion-title>
@@ -71,41 +72,41 @@
 
 	<div [ngSwitch]="section">
 
-
-		<div *ngSwitchCase="'housedetail'">
-			<house-detail-view [houseM]="houseM" [isFav]="isFav"></house-detail-view>
-			<div id="housemap">
-				<maple-map-search mapType="1" [center]="location" [lockMapListener]="noChangeMap"></maple-map-search>
-			</div>
-
+		<div *ngSwitchDefault>
+<!--		<div *ngSwitchCase="'housedetail'">-->
+				<house-detail-view [houseM]="houseM" [isFav]="isFav"></house-detail-view>
+				<div id="housemap">
+				  <maple-map-search mapType="1" [center]="location" [lockMapListener]="noChangeMap" [simpleMap]="simpleMap"></maple-map-search>
 		</div>
 
+		</div>
+		
 		<div *ngSwitchCase="'citystats'">
 
 			<house-city-stats [city]="houseM.house.municipality"></house-city-stats>
 
 		</div>
 
+<!--
 		<div *ngSwitchCase="'school'">
 			<div id="housemap">
-				<!--<simple-map [center]="location"></simple-map>-->
-				<maple-map-search mapType="1" [center]="location"></maple-map-search>
+				  <maple-map-search mapType="1" [center]="location" [lockMapListener]="lockMapListener" [simpleMap]="simpleMap"></maple-map-search>
 			</div>
 			<school-list [schoolList]='schoolList'></school-list>
 		</div>
-
+-->
 		<div *ngSwitchCase="'similar'">
 			<div id="housemap">
 				<!--<simple-map [center]="location"></simple-map>-->
-				<maple-map-search [center]="location"></maple-map-search>
+		  <maple-map-search mapType="0" [center]="location" [lockMapListener]="lockMapListener" [simpleMap]="simpleMap"></maple-map-search>
 			</div>
 			<house-list [houselist]='similarHouseList' isList="true"></house-list>
 
 		</div>
 
 	</div>
-
 </ion-content>
+
 <ion-footer>
 	<ion-toolbar>
 		<ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null" class="segment_css">
@@ -116,10 +117,8 @@
 			<!--<ion-segment-button value="citystats" (ionSelect)="gotoCityStats()">-->
 			<ion-segment-button value="citystats" (ionSelect)="popLock = true">
 				社区
-			</ion-segment-button>
-			<!--<button ion-button [navPush]="schoolPushPage" [navParams]="schoolPushParams" (click)="popLock = true">学校</button>-->
-
-			<ion-segment-button value="school" (ionSelect)="gotoSchool()">
+			</ion-segment-button>	
+			<ion-segment-button value="school" (ionSelect)="gotoMap()">
 				学校
 			</ion-segment-button>
 			<ion-segment-button value="similar" (ionSelect)="similar()">
