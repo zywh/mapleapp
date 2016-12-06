@@ -1,9 +1,9 @@
 import { Component, Input, ElementRef, ViewChild } from '@angular/core';
-import { NavController, Slides } from 'ionic-angular';
+import { Slides } from 'ionic-angular';
 import { houseInterface, houseModel } from '../../models/houseModel';
-import { houseListModel } from '../../models/houseListModel';
+//import { houseListModel } from '../../models/houseListModel';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
-import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
+//import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { UserData } from '../../providers/user-data';
 //import { HouseCityStatsPage } from '../../pages/house-city-stats/house-city-stats';
 import { AuthService } from '../../providers/auth/auth';
@@ -45,6 +45,14 @@ export class HouseDetailViewComponent {
   public S_R = { "Sale": "出售", "Lease": "出租" };
   public F2M = { feet: "尺", meter: "米", sfeet: "平方英尺", smeter: "平方米" };
   public location;
+
+	swiperOptions = {
+		//loop: true,
+		autoHeight: true,
+		pager: true,
+		speed: 1000,
+		autoplay: 3000
+	};
 
   @ViewChild('photo_slider') slider: Slides;
 

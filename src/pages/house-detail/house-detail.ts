@@ -11,7 +11,7 @@ import { ShareService } from '../../providers/share';
 import { houseInterface, houseModel } from '../../models/houseModel';
 import { houseListModel } from '../../models/houseListModel';
 //import { HouselistSearch } from '../houselist-search/houselist-search';
-import { MapSearchPage } from '../map-search/map-search';
+//import { MapSearchPage } from '../map-search/map-search';
 import { MapSearchNewPage } from '../map-search-new/map-search-new';
 
 declare var google: any;

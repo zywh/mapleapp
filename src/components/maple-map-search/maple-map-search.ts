@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, Input } from '@angular/core';
-import { ModalController, Content, LoadingController, Events, AlertController, PopoverController, MenuController, Platform, NavController, NavParams, ViewController } from 'ionic-angular';
+import { ModalController, LoadingController, Events, AlertController, PopoverController, MenuController, Platform, NavController, NavParams, ViewController } from 'ionic-angular';
 import { Connectivity } from '../../providers/connectivity';
 import { HouseDetailPage } from '../../pages/house-detail/house-detail';
 import { HouselistSearch } from '../../pages/houselist-search/houselist-search';

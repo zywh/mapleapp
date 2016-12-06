@@ -19,7 +19,7 @@ export class HouseList {
   @Input() fav?: boolean;
   @Input() isList?: boolean;
   //private data;
-  private nearbyHouseList;
+  //private nearbyHouseList;
   public houseListM: houseListModel;
   //public houselist: Array<houseShort>;
   public vowShow: Object;
