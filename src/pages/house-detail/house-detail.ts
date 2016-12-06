@@ -153,11 +153,11 @@ export class HouseDetailPage {
 		this.popLock = true;
 		this.nav.setRoot(this.nav.first());
 	}
-	gotoMap() {
+	gotoMap(mapType) { // 0 for house map - 1 for school map
 		this.popLock = true;
 		this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude };
 		//this.nav.push(MapSearchNewPage,this.location);
-		this.nav.push(MapSearchNewPage, { 'mapType': 1, 'center': this.location, 'zoomlevel': 16 });
+		this.nav.push(MapSearchNewPage, { 'mapType': mapType, 'center': this.location, 'zoomlevel': 16 });
 	}
 	houseViewSwipe(e) {
 		console.log(e);

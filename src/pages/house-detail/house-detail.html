@@ -74,9 +74,8 @@
 
 		<div *ngSwitchDefault>
 <!--		<div *ngSwitchCase="'housedetail'">-->
-				<house-detail-view [houseM]="houseM" [isFav]="isFav" (swipFlag)="houseViewSwipe($event)"></house-detail-view>
-				<div id="housemap">
-				  <maple-map-search mapType="1" [center]="location" [lockMapListener]="noChangeMap" [simpleMap]="simpleMap"></maple-map-search>
+				<house-detail-view [houseM]="houseM" [isFav]="isFav" (swipFlag)="houseViewSwipe($event)"></house-detail-view>				<div id="housemap">
+<!--				  <maple-map-search mapType="1" [center]="location" [lockMapListener]="noChangeMap" [simpleMap]="simpleMap"></maple-map-search>-->
 		</div>
 
 		</div>
@@ -111,14 +110,17 @@
 	<ion-toolbar>
 		<ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null" class="segment_css">
 
-			<ion-segment-button value="housedetail" (ionSelect)="popLock = false">
+<!--			<ion-segment-button value="housedetail" (ionSelect)="popLock = false">
 				详情
-			</ion-segment-button>
+			</ion-segment-button>-->
 			<!--<ion-segment-button value="citystats" (ionSelect)="gotoCityStats()">-->
 			<ion-segment-button value="citystats" (ionSelect)="popLock = true">
 				社区
-			</ion-segment-button>	
-			<ion-segment-button value="school" (ionSelect)="gotoMap()">
+			</ion-segment-button>
+			<ion-segment-button value="housemap" (ionSelect)="gotoMap(0)">
+				地图
+			</ion-segment-button>
+			<ion-segment-button value="schoolmap" (ionSelect)="gotoMap(1)">
 				学校
 			</ion-segment-button>
 			<ion-segment-button value="similar" (ionSelect)="similar()">
