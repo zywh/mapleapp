@@ -68,7 +68,7 @@ export class HouseDetailViewComponent {
   }
 
 
-  ngOnChanges() {
+  ngOnChanges(changes) {
     console.log("house detail view component on changes event");
     console.log(this.houseM);
     this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude };

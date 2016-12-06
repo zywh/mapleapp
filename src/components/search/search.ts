@@ -44,7 +44,7 @@ export class Search {
   }
 
 
-  ngOnChanges() { //Need wait after constructor
+  ngOnChanges(changes) { //Need wait after constructor
 
     console.log("search bar change event");
     console.log(this.inputText);

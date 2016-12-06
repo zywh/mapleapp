@@ -35,7 +35,7 @@ import {CityStats} from '../pages/house-city-stats/city-stats';
 
 import {HouseDetailPage} from '../pages/house-detail/house-detail';
 import {HouselistSearch} from '../pages/houselist-search/houselist-search';
-//import {SelectOptionModal} from '../pages/map-search/map-option-modal';
+import {SelectOptionModal} from '../components/maple-map-search/map-option-modal';
 //import {MapHouselist} from '../pages/map-search/map-houselist';
 import {MapSearchPage} from '../pages/map-search/map-search';
 import {MapSearchNewPage} from '../pages/map-search-new/map-search-new';
@@ -97,7 +97,7 @@ export function authFactory(http: any) {
     MapSearchPage,
     MapSearchNewPage,
     HouselistSearch,
-    //SelectOptionModal,
+    SelectOptionModal,
    // MapHouselist,
     SchoolSelectOptionModal,
     SchoolListModal,
@@ -153,7 +153,7 @@ export function authFactory(http: any) {
     MapSearchPage,
     MapSearchNewPage,
     HouselistSearch,
-    //SelectOptionModal,
+    SelectOptionModal,
    // MapHouselist,
     SchoolSelectOptionModal,    
     SchoolListModal,
