@@ -65,6 +65,9 @@ export class HouseDetailPage {
 	@ViewChild('photo_slider') slider: Slides;
 	public popLock: boolean = false;
 	private currentMLS;
+	public simpleMap: boolean = true;
+	public lockMapListener:boolean = false;
+	public noChangeMap:boolean = true;
 
 	constructor(
 		public nav: NavController,
@@ -355,7 +358,9 @@ export class HouseDetailPage {
 				this.isFav = data.isFav; //check if houseFav and routeFav
 				this.setHouseList();
 				this.houseM.setProperties(this.auth.authenticated(), this.switchF2M);
-				this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude };
+				//this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude };
+			    this.location =  {'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude,'type': 1}; // 2 for school marker
+				
 
 				this.slider.slideTo(0);
 

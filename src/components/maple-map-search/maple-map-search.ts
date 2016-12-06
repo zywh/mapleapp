@@ -31,7 +31,8 @@ export class MapleMapSearchComponent {
   @Input() mapType: number; // 0 = house, 1=school
   @Input() lockMapListener: boolean; // false= allow changeMap to refresh, true= changeMap is locked
   @Input() center; // // center: object  = {'lat':lat,'lng':lng,'type': type}  ,type  0 = no marker drop, 1= house marker ,2= school marker 
-   
+  @Input() simpleMap; // true = no button and no changeMap, false = default
+
 
   public mapLib = 1; // 0 is java and 1 is native google SDK
   public mapInitialised: boolean = false;
@@ -98,7 +99,7 @@ export class MapleMapSearchComponent {
   ) {
 
 
-    
+
 
   }
 
@@ -128,8 +129,8 @@ export class MapleMapSearchComponent {
   }
 
 
-  
-  initMap(point,markerType: number) {
+
+  initMap(point, markerType: number) {
 
     this.mapInitialised = true;
 
@@ -161,20 +162,21 @@ export class MapleMapSearchComponent {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 
-   
+
 
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
 
     google.maps.event.addListener(this.map, 'idle', () => {
+      console.log("add map listener");
       this.changeMap(this.mapType);
     });
 
 
 
     if (markerType > 0) {   // 0 = no marker drop, 1= house marker ,2= school marker 
-    
+
       this.setLocation(point, 13, true)
     }
 
@@ -497,7 +499,7 @@ export class MapleMapSearchComponent {
 
   changeMap(type) {
 
- console.log("change map" + type + "Listenerlock:" + this.lockMapListener);
+    console.log("change map" + type + "Listenerlock:" + this.lockMapListener);
     if (this.lockMapListener == false) {
       console.log("loading map data:" + type);
       // let loading = this.loadingc.create({
@@ -803,27 +805,32 @@ export class MapleMapSearchComponent {
 
   }
 
+  // ngOnInit(){
+  //   this.simpleMap = true;
+  // }
+
 
 
   ngOnChanges() {
 
     console.log('maple-map-search ngonchanges:' + this.mapType);
-    
+
     console.log(this.center);
 
     //if (this.mapInput && !this.mapInitialised) {
     if (this.center && !this.mapInitialised) {
 
+
       let point = new google.maps.LatLng(this.center['lat'], this.center['lng']);
-     
+
       console.log('maple-map-search map init:' + point);
-      
-     
+
+
       this.setMapType(this.mapType);
       this.listenEvents();
       //this.getCenter();
-     // this.initTestMap();
-      this.initMap(point,this.center['type']);
+      // this.initTestMap();
+      this.initMap(point, this.center['type']);
       let alert = this.alertc.create({
         title: '提示',
         message: '根据TREB数据协议，有些房源只有登录后才可以显示，请注册/登录后查找更多房源',

@@ -185,22 +185,23 @@ export class MapSearchPage {
     // this.center = {'lat':43,'lng':-79};
 
     if (this.navparm.data.parms.lat > 20) {
-      this.center = { 'lat': this.navparm.data.parms.lat, 'lng': this.navparm.data.parms.lng, 'type': 0 };
+      this.center = { 'lat': this.navparm.data.parms.lat, 'lng': this.navparm.data.parms.lng, 'type': 1 };
     } else {
 
-      this.mapleconf.getLocation().then(data => {
-        console.log("Get current location");
-        console.log(data);
+      if (this.mapleconf.location) {
+        console.log("location exist");
+        this.center = { 'lat': this.mapleconf.location.lat, 'lng': this.mapleconf.location.lng, 'type': 0 };
+      } else {
 
-        if (data['lat'] > 20) {
+        this.mapleconf.getLocation().then(data => {
+          console.log("Get current location");
+          console.log(data);
+
           this.center = { 'lat': data['lat'], 'lng': data['lng'], 'type': 0 };
-          //this.center = data;
-        } else {
-          this.center = { 'lat': 43.6532, 'lng': -79.3832, 'type': 0 };
-        }
-      })
 
+        })
 
+      }
 
     }
 
