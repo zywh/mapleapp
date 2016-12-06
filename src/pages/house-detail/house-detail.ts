@@ -132,6 +132,8 @@ export class HouseDetailPage {
 			this.mapleConf.helpHouseDetailFlag = true;
 		}
 
+		this.tabBarElement.style.display = 'none';
+		this.content.resize();
 	}
 
 	ionViewWillLeave() {
@@ -139,8 +141,6 @@ export class HouseDetailPage {
 	}
 
 	ionViewDidEnter() {
-		this.tabBarElement.style.display = 'none';
-		this.content.resize();
 	}
 
 	ionViewCanLeave() {
