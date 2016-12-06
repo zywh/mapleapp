@@ -31,18 +31,19 @@ export class SimpleMapComponent {
   // }
 
   ngOnChanges(changes) {
-    for (let propName in changes) {
-      let chng = changes[propName];
-      let cur  = JSON.stringify(chng.currentValue);
-      let prev = JSON.stringify(chng.previousValue);
-      if (propName == 'center' && cur != prev) {
-        console.log('ngOnChanges property ' + propName);
-        this.initMap();
-      }
-
-    // if (this.center){
-    //    this.initMap();
-    //
+    // for (let propName in changes) {
+    //   let chng = changes[propName];
+    //   let cur  = JSON.stringify(chng.currentValue);
+    //   let prev = JSON.stringify(chng.previousValue);
+    //   if (propName == 'center' && cur != prev) {
+    //     console.log('ngOnChanges property ' + propName);
+    //     this.initMap();
+    //   }
+    console.log("simple map ngonchange");
+   
+    if (this.center){
+       this.initMap();
+    
      }
     
     // Called right after our bindings have been checked but only
@@ -75,6 +76,7 @@ export class SimpleMapComponent {
   initMap() {
 
     console.log(this.center);
+    console.log(this.mapElement.nativeElement);
     let point = new google.maps.LatLng(this.center['lat'], this.center['lng']);
     let mapOptions = {
       //center: latLng,

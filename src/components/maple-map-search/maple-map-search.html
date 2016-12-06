@@ -3,7 +3,7 @@
 <div  class="maplemap" #maplemap ></div>
 
 	
-<div style="opacity:0.9;">
+<div style="opacity:0.9;" *ngIf="!simpleMap">
   <ion-fab center bottom >
     <button ion-fab (click)="openList($event)"><ion-icon name="keypad"></ion-icon></button>
    
