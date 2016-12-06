@@ -34,7 +34,8 @@ export class MapSearchPage {
 
   public mapType: number = 1; // 0 for house and 1 for school
   //public markerDrop;
-  public lockMapListener: Boolean = false;
+  public lockMapListener: boolean = false;
+  public simpleMap: boolean = false;
 
 
   constructor(

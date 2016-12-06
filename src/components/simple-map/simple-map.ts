@@ -1,5 +1,4 @@
 import { Component, ViewChild, ElementRef, Input } from '@angular/core';
-
 declare var google: any;
 
 @Component({

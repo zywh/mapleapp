@@ -28,10 +28,10 @@ declare var google: any;
 })
 export class MapleMapSearchComponent {
   @ViewChild('maplemap') mapElement: ElementRef;
-  @Input() mapType: number; // 0 = house, 1=school
-  @Input() lockMapListener: boolean; // false= allow changeMap to refresh, true= changeMap is locked
+  @Input() mapType: number = 0; // 0 = house, 1=school
+  @Input() lockMapListener: boolean = false; // false= allow changeMap to refresh, true= changeMap is locked
   @Input() center; // // center: object  = {'lat':lat,'lng':lng,'type': type}  ,type  0 = no marker drop, 1= house marker ,2= school marker 
-  @Input() simpleMap; // true = no button and no changeMap, false = default
+  @Input() simpleMap:boolean = true ; // true = no button , false = display button
 
 
   public mapLib = 1; // 0 is java and 1 is native google SDK

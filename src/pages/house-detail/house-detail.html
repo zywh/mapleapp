@@ -75,7 +75,7 @@
 		<div *ngSwitchCase="'housedetail'">
 				<house-detail-view [houseM]="houseM" [isFav]="isFav"></house-detail-view>
 				<div id="housemap">
-				  <maple-map-search mapType="1" [center]="location" [lockMapListener]="noChangeMap" [simpleMap]="simpleMap"></maple-map-search>
+				  <maple-map-search mapType="1" [center]="location" [lockMapListener]="noChangeMap" ></maple-map-search>
 		</div>
 
 		</div>
@@ -89,7 +89,7 @@
 		<div *ngSwitchCase="'school'">
 			<div id="housemap">
 				<!--<simple-map [center]="location"></simple-map>-->
-				  <maple-map-search mapType="1" [center]="location" [lockMapListener]="lockMapListener" [simpleMap]="simpleMap"></maple-map-search>
+				  <maple-map-search mapType="1" [center]="location" ></maple-map-search>
 			</div>
 			<school-list [schoolList]='schoolList'></school-list>
 		</div>
@@ -97,7 +97,7 @@
 		<div *ngSwitchCase="'similar'">
 			<div id="housemap">
 				<!--<simple-map [center]="location"></simple-map>-->
-		  <maple-map-search mapType="0" [center]="location" [lockMapListener]="lockMapListener" [simpleMap]="simpleMap"></maple-map-search>
+		  <maple-map-search  [center]="location"  ></maple-map-search>
 			</div>
 			<house-list [houselist]='similarHouseList' isList="true"></house-list>
 
