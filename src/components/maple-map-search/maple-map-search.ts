@@ -159,7 +159,7 @@ export class MapleMapSearchComponent {
       streetViewControlOptions: {
         position: google.maps.ControlPosition.TOP_RIGHT
       },
-      zoom: this.zoomlevel? this.zoomlevel: 14,
+      zoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 
@@ -178,7 +178,7 @@ export class MapleMapSearchComponent {
 
     if (markerType > 0) {   // 0 = no marker drop, 1= house marker ,2= school marker 
 
-      this.setLocation(point, 13, true)
+      this.setLocation(point, this.zoomlevel? this.zoomlevel:this.defaultZoom, true)
     }
 
 
