@@ -57,10 +57,6 @@ export class HouseDetailPage {
 	private lockRefresh = { 'school': false, 'similar': false, 'community': false };//Lock tab page refresh
 	//public location = { 'lat': 44, 'lng': -79 };
 	public location;
-	public schoolPushPage = MapSearchNewPage;
-	//public schoolPushPage = MapSearchPage;
-	//public schoolPushParams = {'pageType': 1};
-	public schoolPushParams ;
 
 	@ViewChild('photo_slider') slider: Slides;
 	public popLock: boolean = false;
@@ -161,7 +157,7 @@ export class HouseDetailPage {
 		this.popLock = true;
 		this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude };
 		//this.nav.push(MapSearchNewPage,this.location);
-		this.nav.push(MapSearchNewPage,{'mapType': 1,'center':this.location});
+		this.nav.push(MapSearchNewPage,{'mapType': 1,'center':this.location, 'zoomlevel':12});
 	}
 
 	similar() {
