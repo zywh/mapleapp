@@ -39,7 +39,7 @@ export class FavoritePage {
   }
 
   ionViewWillEnter() {
-    this.content.resize();
+   // this.content.resize();
     this.userData.getUserData(this.pageType).then(res => {
       this.imgHost = res.imgHost;
    

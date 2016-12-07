@@ -40,7 +40,7 @@ export class MapSearchPage {
   ionViewWillEnter() {
     
     console.log("Map View will enter");
-    this.content.resize(); //resize to have fab position after housedetail page is back
+   // this.content.resize(); //resize to have fab position after housedetail page is back
     this.lockMapListener = false; //unlock after view enter  
 
 

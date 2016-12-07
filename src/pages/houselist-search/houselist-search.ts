@@ -72,7 +72,7 @@ export class HouselistSearch {
         } else {
             this.totalCount = this.currentHouseList.listNumber();
         }
-        	this.content.resize();
+        	//this.content.resize();
 
     }
 
