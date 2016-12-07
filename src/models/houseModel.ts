@@ -413,7 +413,6 @@ export class houseModel {
     public COMP_PTS = { "N": "北", "S": "南", "W": "西", "E": "东" };
     public S_R = { "Sale": "出售", "Lease": "出租" };
     public F2M = { feet: "尺", meter: "米", sfeet: "平方英尺", smeter: "平方米" };
-    public rooms = [];
     public rxPhone: string;
     //private auth: boolean
     public houseMname;
@@ -421,14 +420,16 @@ export class houseModel {
     public cdnPhotos: Array<string>;
     public housePropertyType;
     public houseProvince;
-   // get landArea(){return this.getLandArea(this.switchF2M)};
-    get propertyTxt(){return  this.getPropertyTxt()};
-    get addr(){return this.getAddr()};
-    get priceRMB(){ return this.getPriceRMB(this.house.lp_dol)};
-    get kit() {return this.add2(this.house.num_kit, this.house.kit_plus)};
-    get beds(){return this.add2(this.house.br, this.house.br_plus)};
-    get rms() {return this.add2(this.house.rms, this.house.rooms_plus)};
-    get listDate(){return this.getListDays()};
+    public switchF2M: boolean = true;
+    get landArea() { return this.getLandArea(this.switchF2M) };
+    get rooms() { return this.houseRooms(this.switchF2M) };
+    get propertyTxt() { return this.getPropertyTxt() };
+    get addr() { return this.getAddr() };
+    get priceRMB() { return this.getPriceRMB(this.house.lp_dol) };
+    get kit() { return this.add2(this.house.num_kit, this.house.kit_plus) };
+    get beds() { return this.add2(this.house.br, this.house.br_plus) };
+    get rms() { return this.add2(this.house.rms, this.house.rooms_plus) };
+    get listDate() { return this.getListDays() };
     get priceCurrent() { return this.getPriceTxt(this.house.lp_dol) };
     get priceOrig() { return this.getPriceTxt(this.house.orig_dol) };
 
@@ -438,11 +439,11 @@ export class houseModel {
     }
     setProperties(auth: boolean, fzm: boolean) {
 
-        this.getLandArea(fzm);
-       // this.houseRooms(fzm);
+        // this.getLandArea(fzm);
+        // this.houseRooms(fzm);
         //this.getAddr();
         //this.getListDays();
-       // this.getPropertyTxt();
+        // this.getPropertyTxt();
 
     }
 
@@ -470,10 +471,9 @@ export class houseModel {
 
 
     houseRooms(s: boolean) {
-
+        let rooms = [];
         if (s == true) {  //meter
 
-            this.rooms = [];
             for (let i = 1; i < 12; i++) {
                 let o = {
                     level: this.house["level" + i],
@@ -484,12 +484,13 @@ export class houseModel {
                     desc: this.getRoomDesc(this.house['rm' + i + '_dc1_out'], this.house['rm' + i + '_dc2_out'], this.house['rm' + i + '_dc3_out'])
                 };
 
-                this.rooms.push(o);
+                rooms.push(o);
             }
 
 
+
         } else {  //feet
-            this.rooms = [];
+
             for (let i = 1; i < 12; i++) {
                 let o = {
                     level: this.house["level" + i],
@@ -500,13 +501,13 @@ export class houseModel {
                     desc: this.getRoomDesc(this.house['rm' + i + '_dc1_out'], this.house['rm' + i + '_dc2_out'], this.house['rm' + i + '_dc3_out'])
                 };
 
-                this.rooms.push(o);
+                rooms.push(o);
             }
 
         }
 
 
-        return this.rooms;
+        return rooms;
     }
 
     getPriceTxt(price: number) {
@@ -524,7 +525,7 @@ export class houseModel {
 
     getPropertyTxt() {
 
-        let propertyTxt:string = this.house.prop_feat1_out;
+        let propertyTxt: string = this.house.prop_feat1_out;
 
         if (this.house.prop_feat2_out)
             propertyTxt = propertyTxt + " , " + this.house.prop_feat2_out;
@@ -551,16 +552,17 @@ export class houseModel {
     }
 
     getLandArea(switchF2M: boolean) {
-        let landArea:string;
+       // console.log("MF switch is called:" + switchF2M)
+        let landArea: string;
         if (switchF2M)
             // return this.round2(this.house.land_area * 0.09290304) + this.F2M.smeter;
             landArea = this.round2(this.house.land_area * 0.09290304) + this.F2M.smeter;
 
         else
             //return this.house.land_area + this.F2M.sfeet;
-           landArea = this.house.land_area + this.F2M.sfeet;
-
-         return landArea;   
+            landArea = this.house.land_area + this.F2M.sfeet;
+        
+        return landArea;
     }
 
     getAddr() {

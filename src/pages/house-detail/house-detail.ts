@@ -34,7 +34,7 @@ export class HouseDetailPage {
 	public houseList = { prev: '', next: '', index: 0, total: 0 };
 	public section: string = "housedetail";
 	public isAndroid: boolean = false;
-	public switchF2M: boolean = true; //"Meter"
+	//public switchF2M: boolean = true; //"Meter"
 	public rooms: Array<Object> = [];
 	public house_mname: any;
 	public house_propertyType: any;
@@ -321,18 +321,7 @@ export class HouseDetailPage {
 
 	}
 
-	// swipeEvent(e) {
-	// 	if (e.direction == 2) {
-	// 		//direction 2 = right to left swipe.
-	// 		console.log("Swipe event right to left");
-	// 		this.go2NextHouse();
-
-	// 	} else if (e.direction == 4) {
-	// 		console.log("Swipe event left to right");
-	// 		this.go2PrevHouse();
-	// 	}
-
-	// }
+	
 
 
 	getResult(url, id) {
@@ -366,7 +355,7 @@ export class HouseDetailPage {
 				this.houseM.cdnPhotos = data.cdn_photos;
 				this.isFav = data.isFav; //check if houseFav and routeFav
 				this.setHouseList();
-				this.houseM.setProperties(this.auth.authenticated(), this.switchF2M);
+				//this.houseM.setProperties(this.auth.authenticated());
 				//this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude };
 				this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude, 'type': 1 }; // 2 for school marker
 
@@ -375,7 +364,7 @@ export class HouseDetailPage {
 
 				//this.initMap();
 
-				this.section = 'housedetail';
+				//this.section = 'housedetail';
 
 				//call similar if selected
 

@@ -83,8 +83,9 @@ export class HouseDetailViewComponent {
   }
 
   f2m() {
-    this.houseM.getLandArea(this.switchF2M);
-    this.houseM.houseRooms(this.switchF2M);
+    //this.houseM.getLandArea(this.switchF2M);
+    //this.houseM.houseRooms(this.switchF2M);
+    this.houseM.switchF2M = this.switchF2M;
   }
 
 
