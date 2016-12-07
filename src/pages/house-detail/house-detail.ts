@@ -59,7 +59,7 @@ export class HouseDetailPage {
 	public location;
 
 	@ViewChild('photo_slider') slider: Slides;
-	public popLock: boolean = false;
+	//public popLock: boolean = false;
 	private currentMLS;
 	public simpleMap: boolean = true;
 	public lockMapListener: boolean = false;
@@ -141,16 +141,16 @@ export class HouseDetailPage {
 	// }
 
 	unlockPop() {
-		this.popLock = true;
+		//this.popLock = true;
 		this.nav.pop();
 	}
 
 	pop2first() {
-		this.popLock = true;
+		//this.popLock = true;
 		this.nav.setRoot(this.nav.first());
 	}
 	gotoMap(mapType, zoomlevel = 16) { // 0 for house map - 1 for school map
-		this.popLock = true;
+		//this.popLock = true;
 		this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude };
 		//this.nav.push(MapSearchNewPage,this.location);
 		this.nav.push(MapSearchNewPage, { 'mapType': mapType, 'center': this.location, 'zoomlevel': zoomlevel });
@@ -171,7 +171,7 @@ export class HouseDetailPage {
 
 	similar() {
 		//this.houseM.house.lp_dol = '';
-		this.popLock = true;
+		//this.popLock = true;
 		if (this.lockRefresh.similar == false) {
 			//if (this.currentMLS != this.houseM.house.ml_num) {
 			//let similarHouses;
