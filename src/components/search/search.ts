@@ -18,8 +18,14 @@ import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
   templateUrl: 'search.html'
 })
 export class Search {
-  @Input() mapType: any;
-  @Input() inputText: String;
+  private _name;
+  @Input() mapType: any = 0;
+ // @Input('inputText') searchPlaceHolder: string = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
+  @Input() 
+   set inputText(inputText: string) {
+    this._name = (inputText) || (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
+  }
+  get inputText(): string { return this._name; }
   @Output() searchInput = new EventEmitter();
   private cityItems;
   private addressItems;
@@ -27,7 +33,7 @@ export class Search {
   private schoolItems;
   public currentDiv;
   public queryText ='';
-  public searchPlaceHolder;
+  //public searchPlaceHolder;
   public searchValue='';
   //private defaultItems;
 
@@ -47,8 +53,9 @@ export class Search {
   ngOnChanges(changes) { //Need wait after constructor
 
     console.log("search bar change event");
-    console.log(this.inputText);
+   // console.log(this.inputText);
   // this.searchPlaceHolder = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
+  /*
     if ( this.inputText != '' ){
       this.searchPlaceHolder = this.inputText;
       console.log("Search Componet input is not empty:" + this.inputText)
@@ -56,6 +63,7 @@ export class Search {
       console.log("Search component is empty default")
       this.searchPlaceHolder = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
     }
+    */
     
   }
 
@@ -75,7 +83,7 @@ export class Search {
 
     this.currentDiv = '';
     this.queryText = '';
-    this.searchPlaceHolder = item.value;
+    this.inputText = item.value;
     this.searchValue = item.value;
   
     this.searchInput.emit(item);

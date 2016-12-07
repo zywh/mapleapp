@@ -7,7 +7,7 @@
 <div>
       
     <ion-searchbar [(ngModel)]="queryText"  (ionInput)="getItems($event)" (ionFocus)="searchInFocus()" 
-    [placeholder]="searchPlaceHolder"></ion-searchbar>
+    [placeholder]="inputText"></ion-searchbar>
   
     <div class="map-search" *ngIf="currentDiv == 'searchlist'">
     <ion-item tappable  padding *ngFor="let item of cityItems" (click)="itemTapped(item,1)">

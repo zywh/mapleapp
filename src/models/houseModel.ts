@@ -421,49 +421,42 @@ export class houseModel {
     public cdnPhotos: Array<string>;
     public housePropertyType;
     public houseProvince;
-    public landArea: string;
-    public propertyTxt: string;
-    public addr: string;
-    public priceCurrent: string;
-    public priceOrig: string;
-    public priceRMB: number;
-    public kit: number;
-    public beds: number;
-    public rms: number;
-    public listDate;
-    //public isFav;
+   // get landArea(){return this.getLandArea(this.switchF2M)};
+    get propertyTxt(){return  this.getPropertyTxt()};
+    get addr(){return this.getAddr()};
+    get priceRMB(){ return this.getPriceRMB(this.house.lp_dol)};
+    get kit() {return this.add2(this.house.num_kit, this.house.kit_plus)};
+    get beds(){return this.add2(this.house.br, this.house.br_plus)};
+    get rms() {return this.add2(this.house.rms, this.house.rooms_plus)};
+    get listDate(){return this.getListDays()};
+    get priceCurrent() { return this.getPriceTxt(this.house.lp_dol) };
+    get priceOrig() { return this.getPriceTxt(this.house.orig_dol) };
+
 
     constructor() {
 
     }
-    setProperties(auth: boolean,fzm: boolean){
-         
+    setProperties(auth: boolean, fzm: boolean) {
+
         this.getLandArea(fzm);
-        this.houseRooms(fzm);
-        this.getAddr();
-        //this.getPriceTxt(this.house.)
-        this.priceCurrent =this.getPriceTxt(this.house.lp_dol);
-        this.priceOrig = this.getPriceTxt(this.house.orig_dol);
-        this.kit = this.add2(this.house.num_kit,this.house.kit_plus);
-        this.beds = this.add2(this.house.br,this.house.br_plus);
-        this.rms = this.add2(this.house.rms,this.house.rooms_plus);
-        this.priceRMB = this.getPriceRMB(this.house.lp_dol);
-        this.getListDays();
-        this.getPropertyTxt();
-        
+       // this.houseRooms(fzm);
+        //this.getAddr();
+        //this.getListDays();
+       // this.getPropertyTxt();
+
     }
 
 
-  getListDays() { // yyyy-mm-dd
-    let date1:any = new Date(this.house.pix_updt);
-    let date2:any = new Date();
-    let diffdays = Math.floor((date2 - date1) / (1000*60*60*24));
-    this.listDate = diffdays + "天";
-    return diffdays + "天";
-  }
+    getListDays() { // yyyy-mm-dd
+        let date1: any = new Date(this.house.pix_updt);
+        let date2: any = new Date();
+        let diffdays = Math.floor((date2 - date1) / (1000 * 60 * 60 * 24));
+        //this.listDate = diffdays + "天";
+        return diffdays + "天";
+    }
 
     add2(int1, int2) {
-        
+
         return parseInt(int1, 10) + parseInt(int2, 10);
     }
 
@@ -501,9 +494,9 @@ export class houseModel {
                 let o = {
                     level: this.house["level" + i],
                     out: this.house['rm' + i + '_out'],
-                    len: this.round1(this.house['rm' + i + '_len']*3.3),
-                    wth: this.round1(this.house['rm' + i + '_wth']*3.3),
-                    area: this.round1(this.round1(this.house['rm' + i + '_len'] * this.house['rm' + i + '_wth']) * 3.3 *3.3),
+                    len: this.round1(this.house['rm' + i + '_len'] * 3.3),
+                    wth: this.round1(this.house['rm' + i + '_wth'] * 3.3),
+                    area: this.round1(this.round1(this.house['rm' + i + '_len'] * this.house['rm' + i + '_wth']) * 3.3 * 3.3),
                     desc: this.getRoomDesc(this.house['rm' + i + '_dc1_out'], this.house['rm' + i + '_dc2_out'], this.house['rm' + i + '_dc3_out'])
                 };
 
@@ -530,8 +523,8 @@ export class houseModel {
     }
 
     getPropertyTxt() {
-        
-        let propertyTxt = this.house.prop_feat1_out;
+
+        let propertyTxt:string = this.house.prop_feat1_out;
 
         if (this.house.prop_feat2_out)
             propertyTxt = propertyTxt + " , " + this.house.prop_feat2_out;
@@ -544,7 +537,7 @@ export class houseModel {
         if (this.house.prop_feat6_out)
             propertyTxt = propertyTxt + " , " + this.house.prop_feat6_out;
 
-        this.propertyTxt = propertyTxt  
+        //this.propertyTxt = propertyTxt
         return propertyTxt;
     }
 
@@ -558,31 +551,33 @@ export class houseModel {
     }
 
     getLandArea(switchF2M: boolean) {
-     
+        let landArea:string;
         if (switchF2M)
-           // return this.round2(this.house.land_area * 0.09290304) + this.F2M.smeter;
-           this.landArea = this.round2(this.house.land_area * 0.09290304) + this.F2M.smeter;
+            // return this.round2(this.house.land_area * 0.09290304) + this.F2M.smeter;
+            landArea = this.round2(this.house.land_area * 0.09290304) + this.F2M.smeter;
 
         else
             //return this.house.land_area + this.F2M.sfeet;
-            this.landArea = this.house.land_area + this.F2M.sfeet;
+           landArea = this.house.land_area + this.F2M.sfeet;
+
+         return landArea;   
     }
 
     getAddr() {
         let txt = this.house.addr;
         if (this.house.apt_num) txt = this.house.apt_num + '-' + this.house.addr;
-        this.addr = this.house.ml_num? txt: "房源已不在MLS列表";
-        return txt;
+        let addr = this.house.ml_num ? txt : "房源已不在MLS列表";
+        return addr;
     }
 
     hasOpenHouse(oh_dt, auth: boolean) {
-       
-        if (auth){
-           
-             return (oh_dt && oh_dt != '0000-00-00') ? true : false;
-         
+
+        if (auth) {
+
+            return (oh_dt && oh_dt != '0000-00-00') ? true : false;
+
         }
-         
+
         else
             return false;
     }
