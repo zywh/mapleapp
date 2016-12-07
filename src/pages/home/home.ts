@@ -27,14 +27,7 @@ export class HomePage {
   public VOWTokenRest;
   public post1;
   public favList;
-  public hQueryText: string = '';
-  public sQueryText: string = '';
-  public cityItems: any;
-  //public addressItems: any;
-  // public mlsItems: any;
-  public currentDiv;
-  // public scityItems;
-  // public schoolItems;
+  
   public homeSegment: string = "house1";
   public isAndroid: boolean = false;
   public nearbyHouseList: houseListModel;
@@ -46,12 +39,13 @@ export class HomePage {
   public listFav: boolean = true;
   private refreshLock = { 'nearby': false, 'recommend': false, 'projects': false };
   //public houseListM;
+  // public inputText: string = '城市/地址/MLS#';
 
 
   constructor(
     private nav: NavController,
     private platform: Platform,
-    private alertc: AlertController,
+   // private alertc: AlertController,
     private parms: NavParams,
     private mapleRestData: MapleRestData,
     private userData: UserData,

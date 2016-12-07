@@ -19,7 +19,7 @@ import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 })
 export class Search {
  // private _name;
-  @Input() mapType: any = 0;
+  @Input() mapType: any = 0; // 0 for house autocomplete 1 for school autocomplete
  // @Input('inputText') searchPlaceHolder: string = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
   @Input() inputText;
   //  set inputText(inputText: string) {
@@ -50,23 +50,23 @@ export class Search {
   }
 
 
-  ngOnChanges(changes) { //Need wait after constructor
-    console.log("search component:" + this.mapType);
-    console.log(this.inputText);
-    //console.log("search bar change event");
-   // console.log(this.inputText);
-  // this.searchPlaceHolder = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
-  /*
-    if ( this.inputText != '' ){
-      this.searchPlaceHolder = this.inputText;
-      console.log("Search Componet input is not empty:" + this.inputText)
-    }else {
-      console.log("Search component is empty default")
-      this.searchPlaceHolder = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
-    }
-    */
+  // ngOnChanges(changes) { //Need wait after constructor
+  //   console.log("search component:" + this.mapType);
+  //   console.log(this.inputText);
+  //   //console.log("search bar change event");
+  //  // console.log(this.inputText);
+  // // this.searchPlaceHolder = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
+  // /*
+  //   if ( this.inputText != '' ){
+  //     this.searchPlaceHolder = this.inputText;
+  //     console.log("Search Componet input is not empty:" + this.inputText)
+  //   }else {
+  //     console.log("Search component is empty default")
+  //     this.searchPlaceHolder = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
+  //   }
+  //   */
     
-  }
+  // }
 
 
   resetItems() {
@@ -141,7 +141,7 @@ export class Search {
       this.mapleConf.load().then(data => {
         let restUrl = data.getCitylistDataRest;
         if (this.mapType == 1) {
-          restUrl = data.getSchoolAcDataRest
+          restUrl = data.getSchoolAcDataRest;
         }
         this.mapleRestData.load(restUrl, { term: val }).subscribe(
 
