@@ -13,7 +13,7 @@
 					</ion-fab>
 
 					<ion-fab top left style="opacity:0.8;">
-						<button ion-fab mini (click)="fav('houseFav')"><ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon></button>
+						<button [disabled]="favLock" ion-fab mini (click)="fav('houseFav')"><ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon></button>
 					</ion-fab>
 
 					<img [src]="photo" class="slide-image" />

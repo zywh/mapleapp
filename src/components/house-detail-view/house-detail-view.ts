@@ -46,6 +46,7 @@ export class HouseDetailViewComponent {
   public S_R = { "Sale": "出售", "Lease": "出租" };
   public F2M = { feet: "尺", meter: "米", sfeet: "平方英尺", smeter: "平方米" };
   public location;
+  public favLock: boolean = false; // flag to prevent fav button get hit multiple before REST is done
 
 	swiperOptions = {
 		//loop: true,
@@ -102,8 +103,9 @@ export class HouseDetailViewComponent {
 
   fav(type) {
     //type = 0 for houseFav and 1 for RouteFav
+    this.favLock = true;
     this.userData.favWrapper(this.houseM.house.ml_num, type).then(res => {
-      console.log(this.houseM.house.ml_num + "Return:" + res);
+    
       switch (res) {
         case 'C': //mls doesn't exist .Add MLS into fav'
           if (type == 'houseFav') { this.isFav.houseFav = true; }
@@ -116,6 +118,7 @@ export class HouseDetailViewComponent {
         default:
           console.log("Add fav is aborted");
       }
+      this.favLock = false;
 
     })
 
