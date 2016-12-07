@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, Input } from '@angular/core';
-import { ModalController, LoadingController, Events, AlertController, PopoverController, MenuController, Platform, NavController, NavParams, ViewController } from 'ionic-angular';
+import { ModalController, Events, AlertController, NavController, NavParams, ViewController } from 'ionic-angular';
 import { Connectivity } from '../../providers/connectivity';
 import { HouseDetailPage } from '../../pages/house-detail/house-detail';
 import { HouselistSearch } from '../../pages/houselist-search/houselist-search';
@@ -31,7 +31,7 @@ export class MapleMapSearchComponent {
   @Input() mapType: number = 0; // 0 = house, 1=school
   @Input() lockMapListener: boolean = false; // false= allow changeMap to refresh, true= changeMap is locked
   @Input() center; // // center: object  = {'lat':lat,'lng':lng,'type': type}  ,type  0 = no marker drop, 1= house marker ,2= school marker 
-  @Input() simpleMap:boolean = true ; // true = no button , false = display button
+  @Input() simpleMap: boolean = true; // true = no button , false = display button
   @Input() zoomlevel; // community
 
 
@@ -45,11 +45,11 @@ export class MapleMapSearchComponent {
   //public center;
   public markerArray = [];
   public htmlArray = [];
-  public mviewLoaded: boolean = false;
+ // public mviewLoaded: boolean = false;
   public htmlArrayPosition = 0;
   public totalCount: number; //Returned House
   public listAllHtml = ''; //hold houses on current map
-  public isListShow: boolean = false;
+  //public isListShow: boolean = false;
   public markerType;
   public imgHost: String;
   //public listModal: ViewController;
@@ -57,18 +57,8 @@ export class MapleMapSearchComponent {
   public defaultZoom: number = 14;
   public _bounds;
   public locateLock: boolean = false; //lock location button if there is input popup
-
   public schoolList: Array<any>;
-  public swiperOptions = {
-    //loop: true,
-    //pager: true,
-    //speed: 4000,
-    spaceBetween: 20,
-    slidesPerView: 'auto',
-    //loopedSlides: 10
-    autoplay: 3000
-  };
-
+  
   public selectOptions;
   public optionPage;
   public savedOptions;
@@ -77,25 +67,26 @@ export class MapleMapSearchComponent {
   public currentDiv;
   //public mapType: number = 1; // 0 for house and 1 for school
   public markerDrop;
+  
   //public lockMapListener: Boolean = false;
 
 
   constructor(
     public nav: NavController,
     private auth: AuthService,
-    public platform: Platform,
+   // public platform: Platform,
     private mapleRestData: MapleRestData,
     private userData: UserData,
     public connectivityService: Connectivity,
-    private menu: MenuController,
+   // private menu: MenuController,
     private mapleconf: MapleConf,
     private navparm: NavParams,
 
     private viewCtrl: ViewController,
     private alertc: AlertController,
     private modalc: ModalController,
-    private loadingc: LoadingController,
-    private popoverc: PopoverController,
+   // private loadingc: LoadingController,
+   // private popoverc: PopoverController,
     private events: Events
   ) {
 
@@ -178,7 +169,7 @@ export class MapleMapSearchComponent {
 
     if (markerType > 0) {   // 0 = no marker drop, 1= house marker ,2= school marker 
 
-      this.setLocation(point, this.zoomlevel? this.zoomlevel:this.defaultZoom, true)
+      this.setLocation(point, this.zoomlevel ? this.zoomlevel : this.defaultZoom, true)
     }
 
 
@@ -193,25 +184,24 @@ export class MapleMapSearchComponent {
 
   openModal() {
     this.lockMapListener = true;
-    console.log(this.selectOptions);
+
     let modal = this.modalc.create(this.optionPage, { data: this.selectOptions, type: this.mapType, searchflag: true });
     modal.onDidDismiss(data => {
       this.selectOptions = data;
       this.lockMapListener = false;
+
       this.changeMap(this.mapType);
-      //console.log(data);
-      //if ( this.selectOptions.hasOwnProperty('selectSearch')) {
-      //if (this.selectOptions.selectSearch.type == 'CITY') {
-      if (this.selectOptions.selectSearch.lat > 20) {
+
+
+
+      if (this.selectOptions.selectSearch.lat > 20) {  //change location 
         let point = new google.maps.LatLng(this.selectOptions.selectSearch.lat, this.selectOptions.selectSearch.lng);
+
         this.setLocation(point, this.defaultZoom, true);
-        //this.selectOptions.selectSearch = {};
-        // this.selectOptions.selectSearch
 
-      } else {
-
-        this.changeMap(this.mapType);
       }
+
+
 
 
 
@@ -331,7 +321,7 @@ export class MapleMapSearchComponent {
   setLocation(point, zoom, isMarker) {
 
     this.map.setZoom(zoom);
-    //this.map.setCenter(center);
+    this.map.setCenter(point);
     if (this.markerDrop != null) {
       this.markerDrop.setMap(null);
     }
@@ -820,11 +810,10 @@ export class MapleMapSearchComponent {
 
     //if (this.mapInput && !this.mapInitialised) {
 
-      // no init if this.center doesn't exist
-      //no init if mapinit is done once and no simplemap
-      
+    // no init if this.center doesn't exist
+    //no init if mapinit is done once and no simplemap
+
     if (this.center && (!this.mapInitialised || this.simpleMap)) {
-      // if (this.center){
 
 
       let point = new google.maps.LatLng(this.center['lat'], this.center['lng']);

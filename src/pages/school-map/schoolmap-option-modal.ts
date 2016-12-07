@@ -21,6 +21,7 @@ export interface selectOptionsObj {
 })
 export class SchoolSelectOptionModal {
     public selectOptions: selectOptionsObj;
+    public inputText: string = "城市/学校";
 
     constructor(
 
@@ -32,9 +33,13 @@ export class SchoolSelectOptionModal {
         private userData: UserData,
         private events: Events
     ) {
-
+        
      
         this.selectOptions = params.get('data');
+         if (this.selectOptions.hasOwnProperty("selectSearch")) {
+            this.inputText = this.selectOptions.selectSearch['id'];
+          
+        }
 
 
     }
@@ -42,6 +47,7 @@ export class SchoolSelectOptionModal {
     searchSelection(e) {
      
         this.selectOptions.selectSearch = e;
+        this.inputText = e.id;
     }
 
     resetSelections() {

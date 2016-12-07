@@ -18,14 +18,14 @@ import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
   templateUrl: 'search.html'
 })
 export class Search {
-  private _name;
+ // private _name;
   @Input() mapType: any = 0;
  // @Input('inputText') searchPlaceHolder: string = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
-  @Input() 
-   set inputText(inputText: string) {
-    this._name = (inputText) || (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
-  }
-  get inputText(): string { return this._name; }
+  @Input() inputText;
+  //  set inputText(inputText: string) {
+  //   this._name = (inputText) || (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
+  // }
+  // get inputText(): string { return this._name; }
   @Output() searchInput = new EventEmitter();
   private cityItems;
   private addressItems;
@@ -51,8 +51,9 @@ export class Search {
 
 
   ngOnChanges(changes) { //Need wait after constructor
-
-    console.log("search bar change event");
+    console.log("search component:" + this.mapType);
+    console.log(this.inputText);
+    //console.log("search bar change event");
    // console.log(this.inputText);
   // this.searchPlaceHolder = (this.mapType == 0) ? '城市/地址/MLS#' : '城市/学校';
   /*

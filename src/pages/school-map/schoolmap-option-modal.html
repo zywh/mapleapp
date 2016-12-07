@@ -6,7 +6,7 @@
 
 <ion-content class="map-option-modal">
 
-   <search mapType="1" (searchInput)="searchSelection($event)"></search>
+   <search mapType="1" (searchInput)="searchSelection($event)" [inputText]="inputText"></search>
 
     <ion-item no-lines>
         <ion-label>学校类型({{(selectOptions?.selectType == true)? '中学':'不限'}})</ion-label>

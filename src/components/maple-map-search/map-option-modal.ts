@@ -4,21 +4,7 @@ import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 import { UserData } from '../../providers/user-data';
 import { AuthService } from '../../providers/auth/auth';
-//import { Search } from '../../components/search/search';
 
-// interface selectOptionsObj {
-
-//     selectPrice?: Object,
-//     selectType?: String,
-//     selectBeds?: Number,
-//     selectBaths?: Number,
-//     selectSR?: Boolean,
-//     selectHousesize?: Object,
-//     selectLandsize?: Object,
-//     selectListType?: Boolean,
-//     selectDate?: Number,
-//     selectSearch?: Object
-// }
 
 @Component({
     templateUrl: 'map-option-modal.html'
@@ -26,37 +12,11 @@ import { AuthService } from '../../providers/auth/auth';
 export class SelectOptionModal {
 
     public selectOptions;
-    //public selectOptions: selectOptionsObj;
-    //  public selectOptions: {
-
-    //     selectPrice?: Object,
-    //     selectType?: String,
-    //     selectBeds?: Number,
-    //     selectBaths?: Number,
-    //     selectSR?: Boolean,
-    //     selectHousesize?: Object,
-    //     selectLandsize?: Object,
-    //     selectListType?: Boolean,
-    //     selectDate?: Number,
-    //     selectSearch?: Object
-    // };
-    // public selectOptions = {
-    //     selectSR: true,
-    //     selectBaths: 0,
-    //     selectBeds: 0,
-    //     selectHousesize: { lower: 0, upper: 4000 },
-    //     selectLandsize: { lower: 0, upper: 43560 },
-    //     selectPrice: { lower: 0, upper: 600 },
-    //     selectType: '',
-    //     selectListType: true,
-    //     selectDate: 0,
-    //     //selectSearch: ''
-
-    // }
+  
 
     public selectUnit: Boolean = true;
     public mapType;
-    public inputText;
+    public inputText: string = '城市/地址/MLS#';
     public unit;
     public searchFlag: Boolean;
 
