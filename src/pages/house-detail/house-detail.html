@@ -74,10 +74,11 @@
 
 		<div *ngSwitchDefault>
 <!--		<div *ngSwitchCase="'housedetail'">-->
-				<house-detail-view [houseM]="houseM" [isFav]="isFav" (swipFlag)="houseViewSwipe($event)"></house-detail-view>				<div id="housemap">
-<!--				  <maple-map-search mapType="1" [center]="location" [lockMapListener]="noChangeMap" [simpleMap]="simpleMap"></maple-map-search>-->
+				<house-detail-view [houseM]="houseM" [isFav]="isFav" (swipFlag)="houseViewSwipe($event)"></house-detail-view>
+<!--			<div id="housemap">
+			<maple-map-search mapType="1" [center]="location" [lockMapListener]="noChangeMap" [simpleMap]="simpleMap"></maple-map-search>
 		</div>
-
+-->
 		</div>
 		
 		<div *ngSwitchCase="'citystats'">
