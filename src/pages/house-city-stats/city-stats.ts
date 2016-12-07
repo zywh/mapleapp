@@ -31,13 +31,13 @@ export class CityStats {
     constructor(private parm: NavParams, private view: ViewController) {
         this.city = this.parm.data.city;
         this.options = this.parm.data.options;
-        this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
+       // this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
 
     }
 
 
     ionViewWillEnter() {
-        this.tabBarElement.style.display = 'none';
+       // this.tabBarElement.style.display = 'none';
         setTimeout(() => {
         this.chart = new Highcharts.Chart(this.options);
 
@@ -46,7 +46,7 @@ export class CityStats {
     }
     
     ionViewWillLeave() {
-        this.tabBarElement.style.display = 'flex';
+       // this.tabBarElement.style.display = 'flex';
     }
 
 

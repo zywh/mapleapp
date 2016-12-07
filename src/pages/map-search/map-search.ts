@@ -29,7 +29,7 @@ export class MapSearchPage {
 
 
     this.mapType = this.navparm.data.pageType;
-    this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
+   // this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
 
 
   }
@@ -51,7 +51,7 @@ export class MapSearchPage {
   ionViewDidLoad() {
 
 
-    if (this.nav.length() > 1) this.tabBarElement.style.display = 'none';
+   // if (this.nav.length() > 1) this.tabBarElement.style.display = 'none';
 
     if (this.navparm.data.parms.lat > 20) {
       this.center = { 'lat': this.navparm.data.parms.lat, 'lng': this.navparm.data.parms.lng, 'type': 1 };

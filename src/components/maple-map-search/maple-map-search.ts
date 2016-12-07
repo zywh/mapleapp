@@ -431,6 +431,7 @@ export class MapleMapSearchComponent {
         {
           text: '周边房源',
           handler: () => {
+            //this.nav.parent.switch(2);
             this.events.publish('map:center', { lat: lat, lng: lng, type: 'SCHOOL' });
             // this.events.publish('map:center', point);
             //this.nav.push(MapSearchPage, { lat: lat, lng: lng });

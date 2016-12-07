@@ -82,7 +82,7 @@ export class HouseDetailPage {
 		//this.nav = nav;
 		console.log(navParams);
 		this.parms = navParams.data;
-		this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
+		//this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
 		this.listenEvents();
 		//this.house = this.houseM.house;
 
@@ -94,15 +94,13 @@ export class HouseDetailPage {
 
 	listenEvents() {
 		this.events.subscribe('toast:dismiss', () => {
-			console.log("Toast dismiss event received")
+			//console.log("Toast dismiss event received")
 			this.isMore = true;
 		});
 		this.events.subscribe('user:login', (data) => {
 			// no need after directly jump to auth.login - hu
 			//this.nav.pop(); //dismiss once login page is presented
 			console.log('housedetail user:login detected ' + this.houseM.house.src);
-
-
 			setTimeout(() => {
 				if (!this.houseM.house.src) this.getResult(this.mapleConf.data.houseDetailRest, this.parms.id);
 			}, 600);
@@ -128,21 +126,19 @@ export class HouseDetailPage {
 			this.mapleConf.helpHouseDetailFlag = true;
 		}
 
-		this.tabBarElement.style.display = 'none';
-		this.content.resize();
+		// this.tabBarElement.style.display = 'none';
+		// this.content.resize();
 	}
 
 	ionViewWillLeave() {
-		this.tabBarElement.style.display = 'flex';
+		//this.tabBarElement.style.display = 'flex';
 	}
 
-	ionViewDidEnter() {
-	}
-
-	ionViewCanLeave() {
-		console.log("Should I leave?" + this.popLock); //prevent swipe to leave page and tigger tab bar back to detail page
-		return this.popLock;
-	}
+	
+	// ionViewCanLeave() {
+	// 	console.log("Should I leave?" + this.popLock); //prevent swipe to leave page and tigger tab bar back to detail page
+	// 	return this.popLock;
+	// }
 
 	unlockPop() {
 		this.popLock = true;
