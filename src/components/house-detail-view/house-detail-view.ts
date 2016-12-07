@@ -51,8 +51,8 @@ export class HouseDetailViewComponent {
 		//loop: true,
 		autoHeight: true,
 		pager: true,
-		speed: 1000,
-		autoplay: 3000
+		speed: 2000,
+		autoplay: 4000
 	};
 
   @ViewChild('photo_slider') slider: Slides;

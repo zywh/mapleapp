@@ -38,10 +38,20 @@ export class MapSearchPage {
 
 
   ionViewWillEnter() {
+    
     console.log("Map View will enter");
     this.content.resize(); //resize to have fab position after housedetail page is back
     this.lockMapListener = false; //unlock after view enter  
 
+
+
+
+  }
+
+  ionViewDidLoad() {
+
+
+    if (this.nav.length() > 1) this.tabBarElement.style.display = 'none';
 
     if (this.navparm.data.parms.lat > 20) {
       this.center = { 'lat': this.navparm.data.parms.lat, 'lng': this.navparm.data.parms.lng, 'type': 1 };
@@ -65,17 +75,10 @@ export class MapSearchPage {
     }
 
 
-
   }
 
-  ionViewDidLoad() {
-
-
-    if (this.nav.length() > 1) this.tabBarElement.style.display = 'none';
-
-  }
-
-  ionViewDidLeave() {
+  ionViewWillLeave() {
+    console.log("Map view will leave");
     this.lockMapListener = true; //lock change map after view switch. workaround for android searchbar trigger map data refresh
   }
 

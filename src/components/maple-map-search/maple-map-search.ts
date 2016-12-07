@@ -804,7 +804,7 @@ export class MapleMapSearchComponent {
 
   ngOnChanges(changes) {
 
-    console.log('maple-map-search ngonchanges:' + this.mapType);
+    console.log('maple-map-search ngonchanges:' + this.mapType + "localListener:" + this.lockMapListener);
 
     console.log(this.center);
 
@@ -861,7 +861,6 @@ export class MapleMapSearchComponent {
 
 
   }
-
 
 
 
