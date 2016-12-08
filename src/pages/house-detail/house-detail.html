@@ -2,15 +2,15 @@
 
 	<!--<ion-navbar no-border-bottom hideBackButton="true">-->
 
-	<ion-navbar >
+	<ion-navbar>
 
 
-<!--
+		<!--
 		<ion-buttons left>
 			<button ion-button (click)="gotoMap()">学校</button>
 		</ion-buttons>
 -->
-		<ion-title >
+		<ion-title>
 			房源({{houseList.index + 1}}/{{houseList.total}})
 		</ion-title>
 
@@ -70,35 +70,53 @@
 	<div [ngSwitch]="section">
 
 		<div *ngSwitchDefault>
-<!--		<div *ngSwitchCase="'housedetail'">-->
-				<house-detail-view [houseM]="houseM" [isFav]="isFav" (swipFlag)="houseViewSwipe($event)"></house-detail-view>
-<!--			<div id="housemap">
+			<!--		<div *ngSwitchCase="'housedetail'">-->
+			<house-detail-view [houseM]="houseM" [isFav]="isFav" (swipFlag)="houseViewSwipe($event)"></house-detail-view>
+			<!--			<div id="housemap">
 			<maple-map-search mapType="1" [center]="location" [lockMapListener]="noChangeMap" [simpleMap]="simpleMap"></maple-map-search>
 		</div>
 -->
 		</div>
-		
+
 		<div *ngSwitchCase="'citystats'">
 
 			<house-city-stats [city]="houseM.house.municipality"></house-city-stats>
 
 		</div>
 
-<!--
-		<div *ngSwitchCase="'school'">
+
+		<div *ngSwitchCase="'schoolmap'">
 			<div id="housemap">
-				  <maple-map-search mapType="1" [center]="location" [lockMapListener]="lockMapListener" [simpleMap]="simpleMap"></maple-map-search>
+				<maple-map-search mapType="1" [center]="location" [lockMapListener]="lockMapListener" [simpleMap]="simpleMap" [zoomlevel]="zoomlevel"></maple-map-search>
 			</div>
-			<school-list [schoolList]='schoolList'></school-list>
+			<!--<school-list [schoolList]='schoolList'></school-list>-->
 		</div>
--->
+
+
+		<div *ngSwitchCase="'housemap'">
+			<div id="housemap">
+				<maple-map-search mapType="0" [center]="location" [lockMapListener]="lockMapListener" [simpleMap]="simpleMap" [zoomlevel]="zoomlevel"></maple-map-search>
+			</div>
+			<!--<school-list [schoolList]='schoolList'></school-list>-->
+		</div>
+
+
 		<div *ngSwitchCase="'similar'">
-<!--			<div id="housemap">
+			<!--			<div id="housemap">
 		  <maple-map-search mapType="0" [center]="location" [lockMapListener]="lockMapListener" [simpleMap]="simpleMap"></maple-map-search>
 			</div>
--->
-			<house-list [houselist]='similarHouseList' isList="true"></house-list>
+			
+			-->
 
+			<ion-item-group>
+				<ion-item-divider >当前房源</ion-item-divider>
+				<house-list [houselist]='currentHouseList' isList="true"></house-list>
+			</ion-item-group>
+			
+			<ion-item-group>
+				<ion-item-divider >类似房源</ion-item-divider>
+				<house-list [houselist]='similarHouseList' isList="true"></house-list>
+			</ion-item-group>
 		</div>
 
 	</div>
@@ -108,17 +126,19 @@
 	<ion-toolbar>
 		<ion-segment [(ngModel)]="section" [attr.light]="isAndroid ? '' : null" class="segment_css">
 
-			<ion-segment-button value="housedetail" (ionSelect)="popLock = false">
+			<ion-segment-button value="housedetail">
 				详情
 			</ion-segment-button>
 			<!--<ion-segment-button value="citystats" (ionSelect)="gotoCityStats()">-->
-			<ion-segment-button value="citystats" (ionSelect)="popLock = true">
+			<ion-segment-button value="citystats">
 				社区
 			</ion-segment-button>
 			<ion-segment-button value="housemap" (ionSelect)="gotoMap(0)">
+
 				地图
 			</ion-segment-button>
 			<ion-segment-button value="schoolmap" (ionSelect)="gotoMap(1,15)">
+
 				学校
 			</ion-segment-button>
 			<ion-segment-button value="similar" (ionSelect)="similar()">
