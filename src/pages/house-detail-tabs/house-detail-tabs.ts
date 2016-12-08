@@ -1,4 +1,4 @@
-import { Content, NavController, NavParams, ActionSheetController, AlertController, ToastController, Platform, Slides, Events,Tabs} from 'ionic-angular';
+import { Content, NavController, NavParams, ActionSheetController, AlertController, ToastController, Platform, Slides, Events, Tabs } from 'ionic-angular';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
@@ -7,35 +7,36 @@ import { AuthService } from '../../providers/auth/auth';
 import { ShareService } from '../../providers/share';
 import { houseInterface, houseModel } from '../../models/houseModel';
 import { houseListModel } from '../../models/houseListModel';
-import {MapSearchPage} from '../map-search/map-search';
+import { MapSearchPage } from '../map-search/map-search';
 import { HouseDetailMainPage } from './house-detail-main';
-import {CommunityStatsPage} from './community-stats';
-import {HouseDetailMapPage} from './house-detail-map';
-import {SimilarHousesPage} from './similar-houses';
+import { CommunityStatsPage } from './community-stats';
+import { HouseDetailMapPage } from './house-detail-map';
+import { SimilarHousesPage } from './similar-houses';
 
-import {StatsPage} from '../stats/stats';
+import { StatsPage } from '../stats/stats';
 
 
 
 @Component({
-  selector: 'page-house-detail-tabs',
-  templateUrl: 'house-detail-tabs.html'
+	selector: 'page-house-detail-tabs',
+	templateUrl: 'house-detail-tabs.html'
 })
 export class HouseDetailTabsPage {
 
-  public map: any = HouseDetailMapPage;
-  public detail: any = HouseDetailMainPage;
-  public similar: any = SimilarHousesPage;
-  public stats: any= CommunityStatsPage;
-  public mls;
+	public map: any = HouseDetailMapPage;
+	public detail: any = HouseDetailMainPage;
+	public similar: any = SimilarHousesPage;
+	public stats: any = CommunityStatsPage;
+	public mls;
 
-  
-  public houseDetailSelectedIndex: number;
-  //public parms;
-  public tabMapParms;
-  public tabSchoolParms;
+
+	public houseDetailSelectedIndex: number;
+	//public parms;
+	public mapParms;
+	public schoolParms;
+	public statsParms;
+	public similarParms;
 	public isFav = { houseFav: false, routeFav: false };
-  public detailParms;	
 	public parms = { id: '', list: [], VOWtoken: '' };
 	public houseList = { prev: '', next: '', index: 0, total: 0 };
 	private houseRestURL;
@@ -44,18 +45,19 @@ export class HouseDetailTabsPage {
 	public location;
 
 	private currentMLS;
-  public houseM = new houseModel;
+	public houseM = new houseModel;
 	public house: houseInterface;
-  public isMore: boolean =true;
+	public isMore: boolean = true;
 	
+   public detailParms = {'houseM':this.houseM,'isFav': this.isFav, 'houseList': {}};
 
 
 
-  constructor(
-    private nav: NavController, 
-    private navParams: NavParams, 
-    private events: Events,
-  	private mapleRestData: MapleRestData,
+	constructor(
+		private nav: NavController,
+		private navParams: NavParams,
+		private events: Events,
+		private mapleRestData: MapleRestData,
 		public mapleConf: MapleConf,
 		private userData: UserData,
 		private alertc: AlertController,
@@ -63,21 +65,19 @@ export class HouseDetailTabsPage {
 		private toastCtrl: ToastController,
 		public platform: Platform,
 		private shareService: ShareService,
-    private actionSheetCtrl: ActionSheetController,
-  ) {
-    this.houseDetailSelectedIndex =  0;
-    console.log("house detail tab page is pushed");
-    this.parms = navParams.data;
-    this.mls = this.parms.id;
-    console.log(this.parms)
-    this.tabMapParms = { pageType: 0, parms: this.parms };
-    this.tabSchoolParms = { pageType: 1, parms: this.parms };
-    
-   
+		private actionSheetCtrl: ActionSheetController,
+	) {
+		this.houseDetailSelectedIndex = 0;
+		console.log("house detail tab page is pushed");
+		this.parms = navParams.data;
+		this.mls = this.parms.id;
+		console.log(this.parms)
+	
 
-  }
 
-  ionViewWillEnter() {
+	}
+
+	ionViewWillEnter() {
 
 
 		console.log("House Detail Tabs page view will enter")
@@ -138,7 +138,7 @@ export class HouseDetailTabsPage {
 						text: '地图导航',
 						handler: () => {
 							actionSheet.dismiss().then(res => {
-									this.mapleConf.mapDirection(this.houseM.house.latitude, this.houseM.house.longitude);
+								this.mapleConf.mapDirection(this.houseM.house.latitude, this.houseM.house.longitude);
 							})
 
 						}
@@ -186,7 +186,7 @@ export class HouseDetailTabsPage {
 
 	}
 
-	
+
 
 
 	getResult(url, id) {
@@ -197,20 +197,25 @@ export class HouseDetailTabsPage {
 		this.mapleRestData.load(url, { 'id': id, 'username': username, 'VOWtoken': token }).subscribe(
 			data => {
 
-			
+
 				this.houseM.rxPhone = this.mapleConf.data.phone;
 
 				this.houseM.house = data.house;
 				this.houseM.houseMname = data.house_mname;
 				this.houseM.houseProvince = data.house_province;
-			
+
 				this.houseM.housePropertyType = data.house_propertyType;
 				this.houseM.exchangeRate = data.exchangeRate;
 				this.houseM.cdnPhotos = data.cdn_photos;
 				this.isFav = data.isFav; //check if houseFav and routeFav
 				this.setHouseList();
-		
+
 				this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude, 'type': 1 }; // 2 for school marker
+				this.detailParms = {'houseM':this.houseM,'isFav': this.isFav, 'houseList': this.houseList};
+				this.mapParms = { 'mapType': 0, 'center': this.location, 'zoomlevel': 16 };
+				this.schoolParms = { 'mapType': 1, 'center': this.location, 'zoomlevel': 16 };
+				this.statsParms = {'houseM': this.houseM};
+				this.similarParms = {'houseM': this.houseM};
 
 
 

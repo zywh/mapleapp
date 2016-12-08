@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController,NavParams } from 'ionic-angular';
 
 
 /*
@@ -14,10 +14,23 @@ import { NavController } from 'ionic-angular';
 })
 export class HouseDetailMapPage {
 
-  constructor(public navCtrl: NavController) {}
+  //public location ;
+  public mapType;
+  public center;
+  public simpleMap:boolean = false;
+  public zoomlevel;
 
-  ionViewDidLoad() {
-    console.log('Hello HouseDetailMapPage Page');
+  constructor(public navCtrl: NavController,private navparms: NavParams) {}
+
+
+  ionViewWillEnter() {
+    console.log("School Map new page will enter")
+    console.log(this.navparms.data);
+    this.mapType= this.navparms.data.mapType; // 0 for house and 1 for school
+    this.center =  {'lat':this.navparms.data.center.lat,'lng':this.navparms.data.center.lng,'type': 2}; // 2 for school marker
+    this.zoomlevel = this.navparms.data.zoomlevel;
+
+    
   }
 
 }

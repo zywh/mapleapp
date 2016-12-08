@@ -7,21 +7,20 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{pageTitle}}</ion-title>
-    <!--<ion-buttons end>
-      <button ion-button (click)="addCenter()">
-        <ion-icon name="add"></ion-icon>
-    </button>
-    </ion-buttons>-->
-    <ion-buttons end>
-      <button ion-button (click)="toggleEdit()">{{editButton}}
-      </button>
-    </ion-buttons>
+    <ion-title>dummy</ion-title>
+    
   </ion-navbar>
 
 
 </ion-header>
 
-<ion-content padding>
 
+
+<ion-content>
+
+  <div style="height: 100%; width: 100%">
+    
+     <maple-map-search [mapType]="mapType" [center]="center"  [simpleMap]="simpleMap" [zoomlevel]="zoomlevel"></maple-map-search>
+   
+  </div>
 </ion-content>

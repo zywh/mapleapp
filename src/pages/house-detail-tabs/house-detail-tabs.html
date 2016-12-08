@@ -1,40 +1,40 @@
-<ion-header  *ngIf="parms.list">
+<ion-header *ngIf="parms.list">
 
-	<ion-navbar >
+  <ion-navbar>
 
 
-		<ion-title >
-			房源({{houseList.index + 1}}/{{houseList.total}})
-		</ion-title>
+    <ion-title>
+      房源({{houseList.index + 1}}/{{houseList.total}})
+    </ion-title>
 
-		<ion-buttons end>
-			<button ion-button icon-only [disabled]="!platform.is('cordova')" (click)="share()">
+    <ion-buttons end>
+      <button ion-button icon-only [disabled]="!platform.is('cordova')" (click)="share()">
 			<ion-icon isActive="false" name="share" ></ion-icon>
 			</button>
-		</ion-buttons>
+    </ion-buttons>
 
-		<ion-buttons end>
-			<button ion-button icon-only [disabled]="!isMore" (click)="more()">
+    <ion-buttons end>
+      <button ion-button icon-only [disabled]="!isMore" (click)="more()">
 			<ion-icon  name="more" ></ion-icon>
 			</button>
-		</ion-buttons>
+    </ion-buttons>
 
 
 
 
-	</ion-navbar>
-  
+  </ion-navbar>
+
 
 </ion-header>
 
-<ion-tabs #houseDetailTabs [selectedIndex]="houseDetailSelectedIndex" >
-  
-  <ion-tab [root]="detail" tabTitle="详情" [rootParams]="parms" tabsHideOnSubPages="true"	></ion-tab>
-  <ion-tab [root]="map" [rootParams]="tabMapParms" tabTitle="地图"  [rootParams]="tabMapParms" tabsHideOnSubPages="true"	 ></ion-tab>
-  <ion-tab [root]="map" [rootParams]="tabSchoolParms" tabTitle="学校" [rootParams]="tabSchoolParms" tabsHideOnSubPages="true"	></ion-tab>
-  <ion-tab [root]="stats" tabTitle="社区" [rootParams]="parms" tabsHideOnSubPages="true"	></ion-tab>
-   <ion-tab [root]="similar" tabTitle="类似" [rootParams]="parms" tabsHideOnSubPages="true"	></ion-tab>
+<ion-tabs #houseDetailTabs [selectedIndex]="houseDetailSelectedIndex">
 
-  
-  
+  <ion-tab [root]="detail" [rootParams]="detailParms" tabTitle="详情" tabsHideOnSubPages="true"></ion-tab>
+  <ion-tab [root]="map"   [rootParams]="mapParms" tabTitle="地图" tabsHideOnSubPages="true"></ion-tab>
+  <ion-tab [root]="map"   [rootParams]="schoolParms" tabTitle="学校" tabsHideOnSubPages="true"></ion-tab>
+  <ion-tab [root]="stats" [rootParams]="statsParms" tabTitle="社区"  tabsHideOnSubPages="true"></ion-tab>
+  <ion-tab [root]="similar" [rootParams]="similarParms" tabTitle="类似" tabsHideOnSubPages="true"></ion-tab>
+
+
+
 </ion-tabs>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController,NavParams } from 'ionic-angular';
+import { houseModel } from '../../models/houseModel';
 
 /*
   Generated class for the CommunityStats page.
@@ -13,10 +14,11 @@ import { NavController } from 'ionic-angular';
 })
 export class CommunityStatsPage {
 
-  constructor(public navCtrl: NavController) {}
+ public houseM = new houseModel;
+  constructor(public navCtrl: NavController,private navParms: NavParams) {}
 
-  ionViewDidLoad() {
-    console.log('Hello CommunityStatsPage Page');
+  ionViewWillLoad() {
+     this.houseM = this.navParms.data.houseM;
   }
 
 }

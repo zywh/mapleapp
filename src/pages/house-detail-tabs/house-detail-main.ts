@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController,NavParams } from 'ionic-angular';
+import { Component,ViewChild } from '@angular/core';
+import { NavController,NavParams,Content } from 'ionic-angular';
 import { houseInterface, houseModel } from '../../models/houseModel';
 import { houseListModel } from '../../models/houseListModel';
 
@@ -14,17 +14,25 @@ import { houseListModel } from '../../models/houseListModel';
   templateUrl: 'house-detail-main.html'
 })
 export class HouseDetailMainPage {
-  public houseM;
-  public isFav;
+  
+  public houseM = new houseModel;
+  public isFav: boolean = false;
 
 
   constructor(public nav: NavController,private navParms: NavParams) {
-    // this.houseM = this.navParms.data.houseM;
-    // this.isFav = this.navParms.data.isFav;
+   
   }
 
   ionViewDidLoad() {
+   
     console.log('Hello HouseDetailMainPage Page');
+      this.houseM = this.navParms.data.houseM;
+    this.isFav = this.navParms.data.isFav;
+   
+  }
+
+  houseViewSwipe(e){
+
   }
   
 

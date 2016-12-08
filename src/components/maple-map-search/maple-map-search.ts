@@ -824,8 +824,7 @@ export class MapleMapSearchComponent {
 
       this.setMapType(this.mapType);
       this.listenEvents();
-      //this.getCenter();
-      // this.initTestMap();
+   
       this.initMap(point, this.center['type']);
       let alert = this.alertc.create({
         title: '提示',
@@ -850,9 +849,9 @@ export class MapleMapSearchComponent {
         ]
       });
 
-      if (!this.auth.authenticated()) {
-        alert.present();
-      }
+      // if (!this.auth.authenticated()) {
+      //   alert.present();
+      // }
 
     }
 
