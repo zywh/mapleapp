@@ -103,7 +103,7 @@ export class HouseDetailPage {
         this.events.subscribe('user:login', (data) => {
             // no need after directly jump to auth.login - hu
             //this.nav.pop(); //dismiss once login page is presented
-           // console.log('housedetail user:login detected ' + this.houseM.house.src);
+            // console.log('housedetail user:login detected ' + this.houseM.house.src);
             setTimeout(() => {
                 if (!this.houseM.house.src) this.getResult(this.mapleConf.data.houseDetailRest, this.parms.id);
             }, 600);
@@ -160,7 +160,7 @@ export class HouseDetailPage {
         //this.nav.push(MapSearchNewPage, { 'mapType': mapType, 'center': this.location, 'zoomlevel': zoomlevel });
     }
     houseViewSwipe(e) {
-       // console.log(e);
+        // console.log(e);
 
         if (e.direction == 2) {
             //direction 2 = right to left swipe.
@@ -210,11 +210,11 @@ export class HouseDetailPage {
                 type: 'nearby',
                 //housebaths: this.houseM.house.bath_tot
             }
-
+            let mls = this.houseM.house.ml_num;
             // this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
             this.mapleRestData.load(this.houseRestURL, mapParms).subscribe(
                 data => {
-                   // console.log(data);
+                    // console.log(data);
 
 
                     if (data.Data.Type == 'house') {
@@ -223,11 +223,16 @@ export class HouseDetailPage {
                         //console.log(this.similarHouseList);
                         //this.nav.push(HouselistSearch, { list: similarHouses, imgHost: '', listType: 'house' });
                         this.lockRefresh.similar = true;
-								
-						console.log(this.parms.list);
-						console.log(this.currentHouseList);
-						console.log(this.similarHouseList);
-						
+                        let list = data.Data.HouseList.filter(function(obj) {
+                            return obj.MLS == mls;
+                        });
+                      
+                        this.currentHouseList = new houseListModel(list, this.auth.authenticated());
+
+                        console.log(this.parms.list);
+                        console.log(this.currentHouseList);
+                        console.log(this.similarHouseList);
+
 
 
 
@@ -243,7 +248,7 @@ export class HouseDetailPage {
         if (this.auth.authenticated()) {
 
 
-           // console.log(this.isFav);
+            // console.log(this.isFav);
             let s1 = (!this.isFav.houseFav) ? '添加收藏列表' : '删除收藏列表';
             let s2 = (!this.isFav.routeFav) ? '添加看房列表' : '删除看房列表';
 
@@ -287,7 +292,7 @@ export class HouseDetailPage {
                         role: 'cancel',
                         handler: () => {
 
-                           // console.log('Cancel clicked');
+                            // console.log('Cancel clicked');
                         }
                     }
                 ]
@@ -304,7 +309,7 @@ export class HouseDetailPage {
     fav(type) {
         //type = 0 for houseFav and 1 for RouteFav
         this.userData.favWrapper(this.houseM.house.ml_num, type).then(res => {
-           // console.log(this.houseM.house.ml_num + "Return:" + res);
+            // console.log(this.houseM.house.ml_num + "Return:" + res);
             switch (res) {
                 case 'C': //mls doesn't exist .Add MLS into fav'
                     if (type == 'houseFav') { this.isFav.houseFav = true; }
@@ -315,7 +320,7 @@ export class HouseDetailPage {
                     if (type == 'routeFav') { this.isFav.routeFav = false; }
                     break;
                 default:
-                   // console.log("Add fav is aborted");
+                // console.log("Add fav is aborted");
             }
 
         })
@@ -339,7 +344,7 @@ export class HouseDetailPage {
                 this.lockRefresh = { 'school': false, 'similar': false, 'community': false };//Lock tab page refresh
 
                 if (this.section == "similar") {
-                   // console.log("Refresh similar house list");
+                    // console.log("Refresh similar house list");
                     this.similar();
 
                 }
@@ -363,12 +368,8 @@ export class HouseDetailPage {
                 //this.houseM.setProperties(this.auth.authenticated());
                 //this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude };
                 this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude, 'type': 1 }; // 2 for school marker
-				let list = this.parms.list.filter(function(obj) {
-                return obj.MLS == id;
-                });
-				console.log(list);
-				this.currentHouseList = new houseListModel(list, this.auth.authenticated());
-				
+
+
 
 
                 this.slider.slideTo(0);
@@ -388,7 +389,7 @@ export class HouseDetailPage {
     setHouseList() {
         this.houseList = { prev: null, next: null, index: 0, total: 0 };
         if (this.parms.list) {
-           
+
             //console.log(this.currentHouseList);
             let ids = this.parms.list.map(e => e.MLS);
             let pos = ids.indexOf(this.parms.id);
