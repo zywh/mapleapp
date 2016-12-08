@@ -814,8 +814,8 @@ export class MapleMapSearchComponent {
     // no init if this.center doesn't exist
     //no init if mapinit is done once and no simplemap
 
-    if (this.center && (!this.mapInitialised || this.simpleMap)) {
-
+   // if (this.center && (!this.mapInitialised || this.simpleMap)) {
+ if (this.center ) {
 
       let point = new google.maps.LatLng(this.center['lat'], this.center['lng']);
 

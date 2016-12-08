@@ -7,6 +7,18 @@
       房源({{houseList.index + 1}}/{{houseList.total}})
     </ion-title>
 
+    			
+		<ion-buttons end>
+			<button ion-button icon-only [disabled]="!houseList.prev" (click)="go2PrevHouse()">
+			<ion-icon  name="arrow-up" ></ion-icon>
+			</button>
+		</ion-buttons>
+		<ion-buttons end>
+			<button ion-button icon-only [disabled]="!houseList.next" (click)="go2NextHouse()">
+			<ion-icon  name="arrow-down" ></ion-icon>
+			</button>
+		</ion-buttons>
+
     <ion-buttons end>
       <button ion-button icon-only [disabled]="!platform.is('cordova')" (click)="share()">
 			<ion-icon isActive="false" name="share" ></ion-icon>
@@ -30,8 +42,8 @@
 <ion-tabs #houseDetailTabs [selectedIndex]="houseDetailSelectedIndex">
 
   <ion-tab [root]="detail" [rootParams]="detailParms" tabTitle="详情" tabsHideOnSubPages="true"></ion-tab>
-  <ion-tab [root]="map"   [rootParams]="mapParms" tabTitle="地图" tabsHideOnSubPages="true"></ion-tab>
-  <ion-tab [root]="map"   [rootParams]="schoolParms" tabTitle="学校" tabsHideOnSubPages="true"></ion-tab>
+  <ion-tab [root]="map"   [rootParams]="getmapParms()" tabTitle="地图" tabsHideOnSubPages="true"></ion-tab>
+  <ion-tab [root]="map"   [rootParams]="getschoolParms()" tabTitle="学校" tabsHideOnSubPages="true"></ion-tab>
   <ion-tab [root]="stats" [rootParams]="statsParms" tabTitle="社区"  tabsHideOnSubPages="true"></ion-tab>
   <ion-tab [root]="similar" [rootParams]="similarParms" tabTitle="类似" tabsHideOnSubPages="true"></ion-tab>
 

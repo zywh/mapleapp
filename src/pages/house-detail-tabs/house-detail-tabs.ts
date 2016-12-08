@@ -1,19 +1,18 @@
-import { Content, NavController, NavParams, ActionSheetController, AlertController, ToastController, Platform, Slides, Events, Tabs } from 'ionic-angular';
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { NavController, NavParams, ActionSheetController, AlertController, ToastController, Platform,Events ,Tabs} from 'ionic-angular';
+import { Component,ViewChild} from '@angular/core';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 import { UserData } from '../../providers/user-data';
 import { AuthService } from '../../providers/auth/auth';
 import { ShareService } from '../../providers/share';
 import { houseInterface, houseModel } from '../../models/houseModel';
-import { houseListModel } from '../../models/houseListModel';
-import { MapSearchPage } from '../map-search/map-search';
+
+
 import { HouseDetailMainPage } from './house-detail-main';
 import { CommunityStatsPage } from './community-stats';
 import { HouseDetailMapPage } from './house-detail-map';
 import { SimilarHousesPage } from './similar-houses';
 
-import { StatsPage } from '../stats/stats';
 
 
 
@@ -22,6 +21,9 @@ import { StatsPage } from '../stats/stats';
 	templateUrl: 'house-detail-tabs.html'
 })
 export class HouseDetailTabsPage {
+	//  @ViewChild('houseDetailTabs') mapComponent: Tabs;
+	//  private mapObject;
+	private mapO: HouseDetailMapPage;
 
 	public map: any = HouseDetailMapPage;
 	public detail: any = HouseDetailMainPage;
@@ -44,7 +46,7 @@ export class HouseDetailTabsPage {
 	public schoolList;
 	public location;
 
-	private currentMLS;
+	//private currentMLS;
 	public houseM = new houseModel;
 	public house: houseInterface;
 	public isMore: boolean = true;
@@ -72,18 +74,19 @@ export class HouseDetailTabsPage {
 		this.parms = navParams.data;
 		this.mls = this.parms.id;
 		console.log(this.parms)
+		this.listenEvents();
 	
 
 
 	}
 
-	ionViewWillEnter() {
+	ionViewDidLoad() { //load only once
 
 
 		console.log("House Detail Tabs page view will enter")
 		console.log(this.parms)
 		this.mapleConf.load().then(data => {
-			//this.getResult('index.php?r=ngget/getHouseDetail');
+		
 			this.getResult(data.houseDetailRest, this.parms.id);
 			this.houseRestURL = data.mapHouseRest;
 		})
@@ -93,8 +96,16 @@ export class HouseDetailTabsPage {
 			this.mapleConf.helpHouseDetailFlag = true;
 		}
 
-		// this.tabBarElement.style.display = 'none';
-		// this.content.resize();
+	
+	}
+
+	listenEvents() {
+		// this.events.subscribe('housedetail:mlschange', (data) => {
+		// console.log(data);
+		
+		// });	
+
+
 	}
 
 
@@ -211,16 +222,35 @@ export class HouseDetailTabsPage {
 				this.setHouseList();
 
 				this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude, 'type': 1 }; // 2 for school marker
+				
 				this.detailParms = {'houseM':this.houseM,'isFav': this.isFav, 'houseList': this.houseList};
 				this.mapParms = { 'mapType': 0, 'center': this.location, 'zoomlevel': 16 };
+				// console.log("before set");
+			    // this.mapO = ViewChild('houseDetailTabs');
+				// console.log(this.mapO);
+				// this.mapO.setParms(this.mapParms);
+				
 				this.schoolParms = { 'mapType': 1, 'center': this.location, 'zoomlevel': 16 };
 				this.statsParms = {'houseM': this.houseM};
 				this.similarParms = {'houseM': this.houseM};
+
+				this.events.publish('housedetail:mlschange', {'mapParms':this.mapParms,'schooParms':this.schoolParms,'houseM':this.houseM});
+				
+				
 
 
 
 			}
 		)
+	}
+
+	getmapParms(){
+	
+		return this.mapParms;
+	}
+
+	getschoolParms(){
+		return this.schoolParms;
 	}
 
 
@@ -238,6 +268,21 @@ export class HouseDetailTabsPage {
 			console.log(this.houseList);
 		}
 	}
+
+
+	go2PrevHouse() {
+		if (this.houseList.prev)
+			this.getResult(this.mapleConf.data.houseDetailRest, this.houseList.prev);
+	}
+
+	go2NextHouse() {
+		if (this.houseList.next)
+			this.getResult(this.mapleConf.data.houseDetailRest, this.houseList.next);
+	}
+
+	
+
+
 
 
 

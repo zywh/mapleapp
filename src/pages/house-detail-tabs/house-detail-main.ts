@@ -20,10 +20,11 @@ export class HouseDetailMainPage {
 
 
   constructor(public nav: NavController,private navParms: NavParams) {
+    
    
   }
 
-  ionViewDidLoad() {
+  ionViewWillLoad() {
    
     console.log('Hello HouseDetailMainPage Page');
       this.houseM = this.navParms.data.houseM;
