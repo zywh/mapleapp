@@ -11,6 +11,7 @@ import { SchoolListModal } from '../../pages/school-map/school-list-modal';
 import { AuthService } from '../../providers/auth/auth';
 import { UserData } from '../../providers/user-data';
 import { houseListModel } from '../../models/houseListModel';
+import {HouseDetailTabsPage} from '../../pages/house-detail-tabs/house-detail-tabs';
 
 
 declare var RichMarker: any;
@@ -226,6 +227,7 @@ export class MapleMapSearchComponent {
 
   gotoHouseDetail(mls) {
     this.nav.push(HouseDetailPage, { id: mls, list: this.currentHouseList.list });
+    // this.nav.push(HouseDetailTabsPage,{ id: mls, list: this.houselist.list });   //house detail tabs view
   }
 
   openList(ev) {
@@ -382,7 +384,9 @@ export class MapleMapSearchComponent {
                 //this.nav.pop();
                 alert.dismiss();
                 if (vowflag) {
-                  this.nav.push(HouseDetailPage, { id: house.MLS, list: this.currentHouseList.list });
+                  // this.nav.push(HouseDetailPage, { id: house.MLS, list: this.currentHouseList.list });
+                    //this.nav.push(HouseDetailTabsPage,{ id: house.MLS, list: this.houselist.list });  
+                  this.gotoHouseDetail(house.MLS);
                 } else {
                   this.userData.loginAlert();
                 }

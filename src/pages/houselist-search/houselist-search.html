@@ -1,28 +1,9 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons left>
-      <button ion-button (click)="nav.pop()">
-    <ion-icon outline name="arrow-back" ></ion-icon>
-   <!-- {{totalCount}}套 - {{pageIndex + 1}}/{{pageTotal}}页-->
-     {{totalCount}}套
-  </button>
-    </ion-buttons>
+ 
+	<ion-navbar>
 
-
-    <ion-title>房源列表</ion-title>
-    <!--
-    <ion-buttons end>
-      <button ion-button icon-only  (click)="pagePre()" [disabled]="pageIndex <= 0">
-        <ion-icon name="arrow-dropleft"></ion-icon>
-     </button>
-    </ion-buttons>
-
-    <ion-buttons end>
-      <button ion-button  icon-only (click)="pageNext()" [disabled]="(pageIndex + 1) >= pageTotal">
-        <ion-icon name="arrow-dropright"></ion-icon>
-     </button>
-    </ion-buttons>
-    -->
+    <ion-title>房源列表({{totalCount}}套)</ion-title>
+   
     <ion-buttons end>
       <button ion-button icon-only (click)="sortAction()">
           <ion-icon name="shuffle"></ion-icon>
@@ -35,7 +16,7 @@
       </button>
     </ion-buttons>
 
-  </ion-toolbar>
+	</ion-navbar>
 </ion-header>
 
 
