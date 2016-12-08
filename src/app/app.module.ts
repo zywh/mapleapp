@@ -22,21 +22,18 @@ import { MapleMapSearchComponent} from '../components/maple-map-search/maple-map
 import {HouseDetailViewComponent} from '../components/house-detail-view/house-detail-view';
 import { Search } from '../components/search/search';
 import { ElasticHeader } from '../components/elastic-header/elastic-header';
+import {SelectOptionModal} from '../components/maple-map-search/map-option-modal';
 
 
 //import pages
 import {AboutPage} from '../pages/about/about';
-
 import {FavoritePage} from '../pages/favorite/favorite';
 import {HelpPage} from '../pages/help/help';
 import {HomePage} from '../pages/home/home';
-//import {HouseCityStatsPage} from '../pages/house-city-stats/house-city-stats';
 import {CityStats} from '../pages/house-city-stats/city-stats';
-
 import {HouseDetailPage} from '../pages/house-detail/house-detail';
 import {HouselistSearch} from '../pages/houselist-search/houselist-search';
-import {SelectOptionModal} from '../components/maple-map-search/map-option-modal';
-//import {MapHouselist} from '../pages/map-search/map-houselist';
+
 import {MapSearchPage} from '../pages/map-search/map-search';
 import {MapSearchNewPage} from '../pages/map-search-new/map-search-new';
 import {SchoolSelectOptionModal} from '../pages/school-map/schoolmap-option-modal';
@@ -52,7 +49,13 @@ import {StatsPage} from '../pages/stats/stats';
 import { TabsPage } from '../pages/tabs/tabs';
 import {chartStats} from '../pages/stats/chartStats';
 
+//import house detail tab pages
 
+import {HouseDetailTabsPage} from '../pages/house-detail-tabs/house-detail-tabs';
+import {HouseDetailMapPage} from '../pages/house-detail-tabs/house-detail-map';
+import {SimilarHousesPage} from '../pages/house-detail-tabs/similar-houses';
+import {CommunityStatsPage} from '../pages/house-detail-tabs/community-stats';
+import {HouseDetailMainPage} from '../pages/house-detail-tabs/house-detail-main';
 
 const cloudSettings: CloudSettings = {
   // "枫之都" @ionic.io
@@ -92,13 +95,11 @@ export function authFactory(http: any) {
     FavoritePage,
     HelpPage,
     HomePage,
-    //HouseCityStatsPage,
     HouseDetailPage,
     MapSearchPage,
     MapSearchNewPage,
     HouselistSearch,
     SelectOptionModal,
-   // MapHouselist,
     SchoolSelectOptionModal,
     SchoolListModal,
     MyCenterPage,
@@ -111,14 +112,19 @@ export function authFactory(http: any) {
     StatsPage,
     TabsPage,
     chartStats,
-    CityStats
+    CityStats,
+    HouseDetailTabsPage,
+    HouseDetailMapPage,
+    HouseDetailMainPage,
+    SimilarHousesPage,
+    CommunityStatsPage
 
   ],
   imports: [
     IonicModule.forRoot(MapleApp, {
        tabPlacement: "bottom",
-       //backButtonText: "返回",
-       backButtonText: "",
+       backButtonText: "返回",
+       //backButtonText: "",
        prodMode: true,
        //tabSubPages: false, //android house detail has two header bar
        //mode: 'ios',
@@ -148,13 +154,11 @@ export function authFactory(http: any) {
     FavoritePage,
     HelpPage,
     HomePage,
-    //HouseCityStatsPage,
     HouseDetailPage,
     MapSearchPage,
     MapSearchNewPage,
     HouselistSearch,
     SelectOptionModal,
-   // MapHouselist,
     SchoolSelectOptionModal,    
     SchoolListModal,
     MyCenterPage,
@@ -168,6 +172,11 @@ export function authFactory(http: any) {
     TabsPage,
     chartStats,
     CityStats,
+     HouseDetailTabsPage,
+    HouseDetailMapPage,
+    HouseDetailMainPage,
+    SimilarHousesPage,
+    CommunityStatsPage
   ],
   providers: [
     Storage,

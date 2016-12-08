@@ -32,8 +32,7 @@ export class TabsPage {
   public mapParms: MapParmObj;
   public tabMapParms;
   public tabSchoolParms;
-  public preload: Boolean = true;
-
+  
 
 
   constructor(private nav: NavController, navParams: NavParams, private events: Events) {

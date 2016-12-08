@@ -14,7 +14,7 @@ import { houseListModel } from '../../models/houseListModel';
 //import { MapSearchPage } from '../map-search/map-search';
 import { MapSearchNewPage } from '../map-search-new/map-search-new';
 
-declare var google: any;
+//declare var google: any;
 
 /*
   Generated class for the HouseDetailPage page.
@@ -26,7 +26,7 @@ declare var google: any;
 	templateUrl: 'house-detail.html',
 })
 export class HouseDetailPage {
-	@ViewChild('maphouse') mapElement: ElementRef;
+	//@ViewChild('maphouse') mapElement: ElementRef;
 
 	public isFav = { houseFav: false, routeFav: false };
 	public isMore: Boolean = true; //more buttom will be disabled before toast is dismiss
@@ -52,7 +52,7 @@ export class HouseDetailPage {
 	public similarHouseList;
 	public schoolList;
 	tabBarElement: any;
-	@ViewChild(Content) content: Content;
+	//@ViewChild(Content) content: Content;
 	//showToolbar: boolean = false;
 	private lockRefresh = { 'school': false, 'similar': false, 'community': false };//Lock tab page refresh
 	//public location = { 'lat': 44, 'lng': -79 };
