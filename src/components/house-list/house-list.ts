@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { UserData } from '../../providers/user-data';
 import { HouseDetailPage } from '../../pages/house-detail/house-detail';
+import {HouseDetailTabsPage} from '../../pages/house-detail-tabs/house-detail-tabs';
 import { NavController,  ModalController, Events } from 'ionic-angular';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
@@ -58,7 +59,8 @@ export class HouseList {
   gotoHouseDetail(mls, flag) {
 
     if (flag) {
-      this.nav.push(HouseDetailPage, { id: mls, list: this.houselist.list });
+     // this.nav.push(HouseDetailPage, { id: mls, list: this.houselist.list });
+     this.nav.push(HouseDetailTabsPage,{ id: mls, list: this.houselist.list });
     } else {
       this.userData.loginAlert();
     }
