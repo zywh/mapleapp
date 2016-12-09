@@ -9,7 +9,7 @@
     <ion-searchbar [(ngModel)]="queryText"  (ionInput)="getItems($event)" (ionFocus)="searchInFocus()" 
     [placeholder]="inputText"></ion-searchbar>
   
-    <div class="map-search" *ngIf="currentDiv == 'searchlist'">
+    <div  *ngIf="currentDiv == 'searchlist'" >
     <ion-item tappable  padding *ngFor="let item of cityItems" (click)="itemTapped(item,1)">
       <button ion-button light clear> <ion-icon primary padding-right name="search"></ion-icon><span padding-left>{{ item.value }}</span></button>
       <ion-badge item-right>城市</ion-badge>

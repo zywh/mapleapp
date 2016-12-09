@@ -262,7 +262,7 @@ export class HomePage {
         this.userData.saveCenter('recentCenter', e.id, e.lat, e.lng);
 
       } else {
-        this.nav.push(HouseDetailPage, { id: e.id });
+        this.nav.push(HouseDetailPage, { id: e.id ,list:[]});
       }
 
     }

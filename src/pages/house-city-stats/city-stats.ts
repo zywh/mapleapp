@@ -1,4 +1,4 @@
-import { NavParams, ViewController } from 'ionic-angular';
+import { NavParams, ViewController,NavController } from 'ionic-angular';
 import { Component } from '@angular/core';
 //import {  Highcharts } from 'angular2-highcharts';
 declare var Highcharts: any;
@@ -13,6 +13,10 @@ declare var Highcharts: any;
     </ion-header>
   
     <ion-content>
+
+       <ion-fab right bottom style="opacity:0.8;">
+    <button ion-fab (click)="nav.pop()"><ion-icon name="undo"></ion-icon></button>
+ </ion-fab>
        <div id="chart"></div>
     </ion-content>
     `
@@ -28,7 +32,7 @@ export class CityStats {
     private tabBarElement;
     //public chart: HighchartsChartObject;
     public chart;
-    constructor(private parm: NavParams, private view: ViewController) {
+    constructor(private parm: NavParams, public nav: NavController,private view: ViewController) {
         this.city = this.parm.data.city;
         this.options = this.parm.data.options;
        // this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
