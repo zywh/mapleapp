@@ -71,7 +71,7 @@
 		</ion-fab-list>
 	</ion-fab>
 	
-		<div [ngSwitch]="section">
+		<div [ngSwitch]="section" style='height:100%;'>
 
 			<div *ngSwitchDefault>
 				<house-detail-view [houseM]="houseM" [isFav]="isFav" (swipFlag)="houseViewSwipe($event)"></house-detail-view>
@@ -79,11 +79,11 @@
 			<div *ngSwitchCase="'citystats'">
 				<house-city-stats [city]="houseM.house.municipality"></house-city-stats>
 			</div>
-			<div *ngSwitchCase="'schoolmap'" [style.height]="contentHeight">
+			<div *ngSwitchCase="'schoolmap'" id="housemap" >
 				<maple-map-search mapType="1" [center]="location" [lockMapListener]="lockMapListener" [simpleMap]="simpleMap" [zoomlevel]="zoomlevel"></maple-map-search>
 				<!--<school-list [schoolList]='schoolList'></school-list>-->
 			</div>
-			<div *ngSwitchCase="'housemap'" [style.height]="contentHeight">
+			<div *ngSwitchCase="'housemap'" id="housemap">
 
 				<maple-map-search mapType="0" [center]="location" [lockMapListener]="lockMapListener" [simpleMap]="simpleMap" [zoomlevel]="zoomlevel"></maple-map-search>
 

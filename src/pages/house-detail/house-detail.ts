@@ -67,7 +67,7 @@ export class HouseDetailPage {
     public lockMapListener: boolean = false;
     public noChangeMap: boolean = true;
     public currentHouseList;
-    public contentHeight;
+    public contentD;
 
     constructor(
         public nav: NavController,
@@ -118,7 +118,7 @@ export class HouseDetailPage {
 
 
         console.log("House Detail page view did enter");
-       this.contentHeight = this.content.getDimensions().height + "px"; // map div in segment can't use 100%
+       this.contentD = this.content.getDimensions(); // map div in segment can't use 100%
       
         this.mapleConf.load().then(data => {
             //this.getResult('index.php?r=ngget/getHouseDetail');
