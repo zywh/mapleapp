@@ -1,5 +1,5 @@
 import { Content, NavController, NavParams, AlertController, ToastController, Platform, Slides, Events, ActionSheetController } from 'ionic-angular';
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 //import {Geolocation} from 'ionic-native';
 //import { SocialSharing } from 'ionic-native';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
@@ -12,7 +12,7 @@ import { houseInterface, houseModel } from '../../models/houseModel';
 import { houseListModel } from '../../models/houseListModel';
 //import { HouselistSearch } from '../houselist-search/houselist-search';
 //import { MapSearchPage } from '../map-search/map-search';
-import { MapSearchNewPage } from '../map-search-new/map-search-new';
+//import { MapSearchNewPage } from '../map-search-new/map-search-new';
 
 //declare var google: any;
 
@@ -67,7 +67,7 @@ export class HouseDetailPage {
     public lockMapListener: boolean = false;
     public noChangeMap: boolean = true;
     public currentHouseList;
-    public contentD;
+   
 
     constructor(
         public nav: NavController,
@@ -118,7 +118,7 @@ export class HouseDetailPage {
 
 
         console.log("House Detail page view did enter");
-       this.contentD = this.content.getDimensions(); // map div in segment can't use 100%
+       //this.contentD = this.content.getDimensions(); // map div in segment can't use 100%
       
         this.mapleConf.load().then(data => {
             //this.getResult('index.php?r=ngget/getHouseDetail');
