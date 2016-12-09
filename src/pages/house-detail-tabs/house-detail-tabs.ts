@@ -8,7 +8,8 @@ import { ShareService } from '../../providers/share';
 import { houseInterface, houseModel } from '../../models/houseModel';
 
 
-import { HouseDetailMainPage } from './house-detail-main';
+//import { HouseDetailMainPage } from './house-detail-main';
+import { HouseDetailPage } from '../../pages/house-detail/house-detail';
 import { CommunityStatsPage } from './community-stats';
 import { HouseDetailMapPage } from './house-detail-map';
 import { SimilarHousesPage } from './similar-houses';
@@ -21,12 +22,11 @@ import { SimilarHousesPage } from './similar-houses';
 	templateUrl: 'house-detail-tabs.html'
 })
 export class HouseDetailTabsPage {
-	//  @ViewChild('houseDetailTabs') mapComponent: Tabs;
-	//  private mapObject;
-	private mapO: HouseDetailMapPage;
-
+	@ViewChild('houseDetailTabs') detailComponent: Tabs;
+	
 	public map: any = HouseDetailMapPage;
-	public detail: any = HouseDetailMainPage;
+	//public detail: any = HouseDetailMainPage;
+	public detail: any= HouseDetailPage;
 	public similar: any = SimilarHousesPage;
 	public stats: any = CommunityStatsPage;
 	public mls;
@@ -51,7 +51,8 @@ export class HouseDetailTabsPage {
 	public house: houseInterface;
 	public isMore: boolean = true;
 	
-   public detailParms = {'houseM':this.houseM,'isFav': this.isFav, 'houseList': {}};
+   //public detailParms = {'houseM':this.houseM,'isFav': this.isFav, 'houseList': {}};
+     public detailParms;
 
 
 
@@ -73,7 +74,8 @@ export class HouseDetailTabsPage {
 		console.log("house detail tab page is pushed");
 		this.parms = navParams.data;
 		this.mls = this.parms.id;
-		console.log(this.parms)
+		console.log(this.parms);
+		this.detailParms = navParams.data;
 		this.listenEvents();
 	
 
@@ -95,6 +97,8 @@ export class HouseDetailTabsPage {
 			this.userData.presentToast("提示：左右滑动切换上一个和下一个房源");
 			this.mapleConf.helpHouseDetailFlag = true;
 		}
+
+		console.log(this.detailComponent.getActiveChildNav);
 
 	
 	}

@@ -26,7 +26,7 @@ import { MapSearchNewPage } from '../map-search-new/map-search-new';
     templateUrl: 'house-detail.html',
 })
 export class HouseDetailPage {
-    //@ViewChild('maphouse') mapElement: ElementRef;
+    @ViewChild(Content) content: Content;
 
     public isFav = { houseFav: false, routeFav: false };
     public isMore: Boolean = true; //more buttom will be disabled before toast is dismiss
@@ -67,6 +67,7 @@ export class HouseDetailPage {
     public lockMapListener: boolean = false;
     public noChangeMap: boolean = true;
     public currentHouseList;
+    public contentHeight;
 
     constructor(
         public nav: NavController,
@@ -116,8 +117,9 @@ export class HouseDetailPage {
     ionViewWillEnter() {
 
 
-        console.log("House Detail page view did enter")
-        //console.log(this.parms)
+        console.log("House Detail page view did enter");
+       this.contentHeight = this.content.getDimensions().height + "px"; // map div in segment can't use 100%
+      
         this.mapleConf.load().then(data => {
             //this.getResult('index.php?r=ngget/getHouseDetail');
             this.getResult(data.houseDetailRest, this.parms.id);
@@ -129,24 +131,9 @@ export class HouseDetailPage {
             this.mapleConf.helpHouseDetailFlag = true;
         }
 
-        // this.tabBarElement.style.display = 'none';
-        // this.content.resize();
-    }
-
-    ionViewWillLeave() {
-        //this.tabBarElement.style.display = 'flex';
     }
 
 
-    // ionViewCanLeave() {
-    // 	console.log("Should I leave?" + this.popLock); //prevent swipe to leave page and tigger tab bar back to detail page
-    // 	return this.popLock;
-    // }
-
-    unlockPop() {
-        //this.popLock = true;
-        this.nav.pop();
-    }
 
     pop2first() {
         //this.popLock = true;
@@ -365,20 +352,8 @@ export class HouseDetailPage {
                 this.houseM.cdnPhotos = data.cdn_photos;
                 this.isFav = data.isFav; //check if houseFav and routeFav
                 this.setHouseList();
-                //this.houseM.setProperties(this.auth.authenticated());
-                //this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude };
                 this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude, 'type': 1 }; // 2 for school marker
-
-
-
-
                 this.slider.slideTo(0);
-
-                //this.initMap();
-
-                //this.section = 'housedetail';
-
-                //call similar if selected
 
 
             }
@@ -411,15 +386,7 @@ export class HouseDetailPage {
         //this.auth.authenticated();
     }
     gotoSchool() {
-        //this.nav.push(SchoolSearchPage);
-        // let navTransition = this.nav.pop();
-        // navTransition.then(() => {
-        // 	//let center = new google.maps.LatLng(this.houseM.house.latitude, this.houseM.house.longitude);
-        // 	//this.events.publish('schoolmap:center', center);
-        // 	this.events.publish('schoolmap:center', { lat: this.houseM.house.latitude, lng: this.houseM.house.longitude, type: 'HOUSE' });
-        // }
-        // )
-        //this.events.publish('schoolmap:center', { lat: this.houseM.house.latitude, lng: this.houseM.house.longitude, type: 'HOUSE' });
+   
         if (this.lockRefresh.school == false) {
 
 

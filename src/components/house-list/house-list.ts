@@ -60,7 +60,7 @@ export class HouseList {
 
     if (flag) {
      this.nav.push(HouseDetailPage, { id: mls, list: this.houselist.list }); //segment single page view
-     //this.nav.push(HouseDetailTabsPage,{ id: mls, list: this.houselist.list });   //house detail tabs view
+    // this.nav.push(HouseDetailTabsPage,{ id: mls, list: this.houselist.list });   //house detail tabs view
     } else {
       this.userData.loginAlert();
     }
