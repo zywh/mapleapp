@@ -10,10 +10,14 @@
 			<button ion-button (click)="gotoMap()">学校</button>
 		</ion-buttons>
 -->
-		<ion-title>
+
+		<ion-title *ngIf="section != 'citystats'">
 			房源({{houseList.index + 1}}/{{houseList.total}})
 		</ion-title>
 
+		<ion-title *ngIf="section == 'citystats'">
+			{{houseM.house.municipality}} 社区
+		</ion-title>
 
 
 		<!--		
