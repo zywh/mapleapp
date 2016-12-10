@@ -151,7 +151,7 @@ export class MapleMapSearchComponent {
             streetViewControlOptions: {
                 position: google.maps.ControlPosition.TOP_RIGHT
             },
-            zoom: 14,
+            zoom: this.zoomlevel ? this.zoomlevel : 14,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         }
 
