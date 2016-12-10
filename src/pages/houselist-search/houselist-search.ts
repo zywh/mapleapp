@@ -14,6 +14,7 @@ import { houseListModel, houseShort } from '../../models/houseListModel';
     templateUrl: 'houselist-search.html'
 })
 export class HouselistSearch {
+  
 
     public totalCount: number;
     public imgHost;
@@ -210,7 +211,7 @@ export class HouselistSearch {
 
     getHouseList() {
 
-    
+        
         //let HouseArray = [];
         let searchParms = {
             bounds: this.bounds,
@@ -243,6 +244,7 @@ export class HouselistSearch {
                     // this.currentHouseList = this.userData.setVowMask(data.Data.HouseList);
                     //this.currentHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
                     this.currentHouseList = new houseListModel(this.houses, this.auth.authenticated());
+                    this.content.scrollToTop();
 
                 });
 
