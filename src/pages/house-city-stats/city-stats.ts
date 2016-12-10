@@ -7,8 +7,8 @@ declare var Highcharts: any;
 
     template: `
     <ion-header>
-    <ion-navbar>
-      <ion-title>{{city}}-统计</ion-title>
+    <ion-navbar hideBackButton='true'>
+      <ion-title>{{city}} 统计</ion-title>
     </ion-navbar>
     </ion-header>
   
