@@ -139,10 +139,10 @@ export class HouseDetailPage {
         //this.popLock = true;
         this.nav.setRoot(this.nav.first());
     }
-    gotoMap(mapType, zoomlevel = 16) { // 0 for house map - 1 for school map
+    gotoMap(markerType, zoomlevel = 16) { // 1 for house marker- 2 for school marker
         //this.popLock = true;
         this.zoomlevel = zoomlevel;
-        this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude };
+        this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude,'type':markerType};
         //this.nav.push(MapSearchNewPage,this.location);
         //this.nav.push(MapSearchNewPage, { 'mapType': mapType, 'center': this.location, 'zoomlevel': zoomlevel });
     }
