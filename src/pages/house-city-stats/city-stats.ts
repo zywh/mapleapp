@@ -17,7 +17,7 @@ declare var Highcharts: any;
        <ion-fab right bottom style="opacity:0.8;">
     <button ion-fab (click)="nav.pop()"><ion-icon name="undo"></ion-icon></button>
  </ion-fab>
-       <div id="chart"></div>
+       <div id="chart" style="height:100%;"></div>
     </ion-content>
     `
 
