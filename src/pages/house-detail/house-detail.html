@@ -4,13 +4,6 @@
 
 	<ion-navbar>
 
-
-		<!--
-		<ion-buttons left>
-			<button ion-button (click)="gotoMap()">学校</button>
-		</ion-buttons>
--->
-
 		<ion-title *ngIf="section != 'citystats'">
 			房源({{houseList.index + 1}}/{{houseList.total}})
 		</ion-title>
@@ -62,7 +55,7 @@
 			<button ion-fab *ngIf="nav.length() > 1" (click)="pop2first()"><ion-icon name="undo" ></ion-icon></button>
 			<button ion-fab *ngIf="parms.list" [disabled]="!houseList.prev" (click)="go2PrevHouse()"><ion-icon name="arrow-back"></ion-icon></button>
 			<button ion-fab *ngIf="parms.list" [disabled]="!houseList.next" (click)="go2NextHouse()"><ion-icon name="arrow-forward"></ion-icon></button>
-			<button ion-fab *ngIf="platform.is('cordova')" (click)="share()"><ion-icon name="share"></ion-icon></button>
+			<!--<button ion-fab *ngIf="platform.is('cordova')" (click)="share()"><ion-icon name="share"></ion-icon></button>-->
 			<!--<button ion-fab (click)="fav('houseFav')"><ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon></button>
 			<button ion-fab *ngIf="platform.is('cordova')" (click)="mapDirection()"><ion-icon name="navigate"></ion-icon></button>-->
 
@@ -122,7 +115,7 @@
 			<ion-segment-button value="citystats">
 				社区
 			</ion-segment-button>
-			<ion-segment-button value="housemap" (ionSelect)="gotoMap(0)">
+			<ion-segment-button value="housemap" (ionSelect)="gotoMap(1)">
 
 				地图
 			</ion-segment-button>

@@ -7,8 +7,8 @@ declare var Highcharts: any;
 
     template: `
     <ion-header>
-    <ion-navbar>
-      <ion-title>{{city}}-统计</ion-title>
+    <ion-navbar hideBackButton='true'>
+      <ion-title>{{city}} 统计</ion-title>
     </ion-navbar>
     </ion-header>
   
@@ -17,7 +17,7 @@ declare var Highcharts: any;
        <ion-fab right bottom style="opacity:0.8;">
     <button ion-fab (click)="nav.pop()"><ion-icon name="undo"></ion-icon></button>
  </ion-fab>
-       <div id="chart"></div>
+       <div id="chart" style="height:100%;"></div>
     </ion-content>
     `
 

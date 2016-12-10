@@ -34,7 +34,7 @@ export class MapleMapSearchComponent {
     @Input() center; // // center: object  = {'lat':lat,'lng':lng,'type': type}  ,type  0 = no marker drop, 1= house marker ,2= school marker 
     @Input() simpleMap: boolean = true; // true = no button , false = display button
     @Input() zoomlevel; // community
-   
+
 
     public mapLib = 1; // 0 is java and 1 is native google SDK
     public mapInitialised: boolean = false;
@@ -100,7 +100,7 @@ export class MapleMapSearchComponent {
         this.events.subscribe('locate:dismiss', () => {
             this.locateLock = false;
             this.lockMapListener = false;
-            this.setLocation(this.defaultcenter, this.defaultZoom, true);
+            this.setLocation(this.defaultcenter, this.defaultZoom, 1);
         });
         this.events.subscribe('schoolmap:center', () => {
             // console.log("List modal dismiss")
@@ -123,7 +123,7 @@ export class MapleMapSearchComponent {
 
 
 
-    initMap(point, markerType: number) {
+    initMap(point, centerMarker: number) {  // 1 = drop a house marker, 2 = drop a school marker
 
         this.mapInitialised = true;
 
@@ -151,7 +151,7 @@ export class MapleMapSearchComponent {
             streetViewControlOptions: {
                 position: google.maps.ControlPosition.TOP_RIGHT
             },
-            zoom: 14,
+            zoom: this.zoomlevel ? this.zoomlevel : 14,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         }
 
@@ -168,9 +168,9 @@ export class MapleMapSearchComponent {
 
 
 
-        if (markerType > 0) {   // 0 = no marker drop, 1= house marker ,2= school marker 
+        if (centerMarker > 0) {   // 0 = no marker drop, 1= house marker ,2= school marker 
 
-            this.setLocation(point, this.zoomlevel ? this.zoomlevel : this.defaultZoom, true)
+            this.setLocation(point, this.zoomlevel ? this.zoomlevel : this.defaultZoom, this.center.type);
         }
 
 
@@ -198,7 +198,7 @@ export class MapleMapSearchComponent {
             if (this.selectOptions.selectSearch.lat > 20) {  //change location 
                 let point = new google.maps.LatLng(this.selectOptions.selectSearch.lat, this.selectOptions.selectSearch.lng);
 
-                this.setLocation(point, this.defaultZoom, true);
+                this.setLocation(point, this.defaultZoom, 1);
 
             }
 
@@ -311,7 +311,7 @@ export class MapleMapSearchComponent {
                 //});
             } else {
                 this.locateLock = false;
-                this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
+                this.setLocation(this.defaultcenter, this.defaultZoom, 1);
                 this.lockMapListener = false;
             }
 
@@ -320,31 +320,42 @@ export class MapleMapSearchComponent {
     }
 
     // //Move to center and creata a marker
-    setLocation(point, zoom, isMarker) {
+    setLocation(point, zoom, centerType) {
 
         this.map.setZoom(zoom);
         this.map.setCenter(point);
         if (this.markerDrop != null) {
             this.markerDrop.setMap(null);
         }
-
-        if (isMarker) {
-            this.markerDrop = new google.maps.Marker({
-                position: point,
-                map: this.map,
-                animation: google.maps.Animation.DROP,
-                draggable: false,
-            });
-            this.markerDrop.addListener('click', () => {
-                if (this.markerDrop.getAnimation() !== null) {
-                    this.markerDrop.setAnimation(null);
-                } else {
-                    this.markerDrop.setAnimation(google.maps.Animation.BOUNCE);
-                }
-            })
+        this.addCenterMarer(point, centerType);
+    }
 
 
-        }
+    addCenterMarer(point, type) {
+       
+        let iconbase = "assets/img/maple/";
+        let iconurl;
+        iconurl = iconbase + "city.png";
+        if (type == 2) iconurl = iconbase + "university.png";
+
+        if (type == 1) iconurl = iconbase + "bighouse.png";
+
+ console.log("drop marker" + type + "url:"+ iconurl);
+        this.markerDrop = new google.maps.Marker({
+            position: point,
+            map: this.map,
+            animation: google.maps.Animation.DROP,
+            draggable: false,
+            icon: iconurl
+        });
+        this.markerDrop.addListener('click', () => {
+            if (this.markerDrop.getAnimation() !== null) {
+                this.markerDrop.setAnimation(null);
+            } else {
+                this.markerDrop.setAnimation(google.maps.Animation.BOUNCE);
+            }
+        })
+
     }
 
 
@@ -471,7 +482,7 @@ export class MapleMapSearchComponent {
 
 
         this.markerArray.push(marker);
-        google.maps.event.addListener(marker, 'click', function() {
+        google.maps.event.addListener(marker, 'click', function () {
             //this.map.setCenter(this.position);
             let currentzoom = this.map.getZoom();
             this.map.setZoom(currentzoom + 2);
@@ -809,7 +820,7 @@ export class MapleMapSearchComponent {
 
     ngOnChanges(changes) {
 
-      //  console.log('maple-map-search ngonchanges:' + this.mapType + "localListener:" + this.lockMapListener);
+        //  console.log('maple-map-search ngonchanges:' + this.mapType + "localListener:" + this.lockMapListener);
 
         //console.log(this.center);
 
@@ -829,7 +840,7 @@ export class MapleMapSearchComponent {
         //         console.log('ngOnChanges property ' + propName);
 
 
-        if (this.center && !this.mapInitialised ) {
+        if (this.center && !this.mapInitialised) {
 
             let point = new google.maps.LatLng(this.center['lat'], this.center['lng']);
             console.log('maple-map-search map init:' + point + " map init flag:" + this.mapInitialised);

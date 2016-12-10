@@ -58,7 +58,7 @@ export class HouseDetailPage {
     private lockRefresh = { 'school': false, 'similar': false, 'community': false };//Lock tab page refresh
     //public location = { 'lat': 44, 'lng': -79 };
     public location;
-    public zoomLevel;
+    public zoomlevel;
 
     @ViewChild('photo_slider') slider: Slides;
     //public popLock: boolean = false;
@@ -67,7 +67,7 @@ export class HouseDetailPage {
     public lockMapListener: boolean = false;
     public noChangeMap: boolean = true;
     public currentHouseList;
-   
+
 
     constructor(
         public nav: NavController,
@@ -118,8 +118,8 @@ export class HouseDetailPage {
 
 
         console.log("House Detail page view did enter");
-       //this.contentD = this.content.getDimensions(); // map div in segment can't use 100%
-      
+        //this.contentD = this.content.getDimensions(); // map div in segment can't use 100%
+
         this.mapleConf.load().then(data => {
             //this.getResult('index.php?r=ngget/getHouseDetail');
             this.getResult(data.houseDetailRest, this.parms.id);
@@ -139,10 +139,10 @@ export class HouseDetailPage {
         //this.popLock = true;
         this.nav.setRoot(this.nav.first());
     }
-    gotoMap(mapType, zoomlevel = 16) { // 0 for house map - 1 for school map
+    gotoMap(markerType, zoomlevel = 16) { // 1 for house marker- 2 for school marker
         //this.popLock = true;
-        this.zoomLevel = zoomlevel;
-        this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude };
+        this.zoomlevel = zoomlevel;
+        this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude,'type':markerType};
         //this.nav.push(MapSearchNewPage,this.location);
         //this.nav.push(MapSearchNewPage, { 'mapType': mapType, 'center': this.location, 'zoomlevel': zoomlevel });
     }
@@ -210,15 +210,12 @@ export class HouseDetailPage {
                         //console.log(this.similarHouseList);
                         //this.nav.push(HouselistSearch, { list: similarHouses, imgHost: '', listType: 'house' });
                         this.lockRefresh.similar = true;
-                        let list = data.Data.HouseList.filter(function(obj) {
+                        let list = data.Data.HouseList.filter(function (obj) {
                             return obj.MLS == mls;
                         });
-                      
+
                         this.currentHouseList = new houseListModel(list, this.auth.authenticated());
 
-                        console.log(this.parms.list);
-                        console.log(this.currentHouseList);
-                        console.log(this.similarHouseList);
 
 
 
@@ -321,6 +318,7 @@ export class HouseDetailPage {
 
 
     getResult(url, id) {
+       
 
         this.parms.id = id;
         let username = (this.auth.authenticated()) ? this.auth.user['email'] : 'NO';
@@ -354,6 +352,7 @@ export class HouseDetailPage {
                 this.setHouseList();
                 this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude, 'type': 1 }; // 2 for school marker
                 this.slider.slideTo(0);
+                this.content.scrollToTop();
 
 
             }
@@ -386,7 +385,7 @@ export class HouseDetailPage {
         //this.auth.authenticated();
     }
     gotoSchool() {
-   
+
         if (this.lockRefresh.school == false) {
 
 
