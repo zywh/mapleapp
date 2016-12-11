@@ -126,9 +126,9 @@ export class HouseDetailPage {
             this.houseRestURL = data.mapHouseRest;
         })
 
-        if (this.mapleConf.helpHouseDetailFlag == false && this.parms.list.length > 1) {
+        if (this.mapleConf.helpFlag.houseDetail == false && this.parms.list.length > 1) {
             this.userData.presentToast("提示：左右滑动切换上一个和下一个房源");
-            this.mapleConf.helpHouseDetailFlag = true;
+            this.mapleConf.helpFlag.houseDetail = true;
         }
 
     }

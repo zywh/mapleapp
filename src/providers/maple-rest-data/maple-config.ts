@@ -10,7 +10,11 @@ export class MapleConf {
   data: any;
   location;
   VOWtoken: string = '';
-  public helpHouseDetailFlag: boolean = false;
+  public helpFlag = {
+    houseDetail: false,
+    stats: false
+  }
+  
   public restHost: string = 'http://cdnr.citym.ca/';
   //public restHost: string = 'http://r.maplecity.com.cn/';
   //public restHost: string = 'http://devr.citym.ca/';
