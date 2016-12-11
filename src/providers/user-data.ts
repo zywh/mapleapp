@@ -110,10 +110,10 @@ export class UserData {
   }
 
 
-  presentToast(msg) {
+  presentToast(msg,duration = 1000) {
     let toast = this.toastCtrl.create({
       message: msg,
-      duration: 2000,
+      duration: duration,
       position: 'bottom'
       //dismissOnPageChange: true
     });

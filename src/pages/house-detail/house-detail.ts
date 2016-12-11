@@ -127,7 +127,7 @@ export class HouseDetailPage {
         })
 
         if (this.mapleConf.helpFlag.houseDetail == false && this.parms.list.length > 1) {
-            this.userData.presentToast("提示：左右滑动切换上一个和下一个房源");
+            this.userData.presentToast("提示：左右滑动切换上一个和下一个房源",2000);
             this.mapleConf.helpFlag.houseDetail = true;
         }
 

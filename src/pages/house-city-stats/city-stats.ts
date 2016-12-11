@@ -50,7 +50,7 @@ export class CityStats {
 
         }, 100); //add timeout to avoid chart size is over screen size initially
          if (this.mapleConf.helpFlag.stats == false ) {
-            this.userData.presentToast("点击图表查看详情");
+            this.userData.presentToast("点击图表查看详情",2000);
             this.mapleConf.helpFlag.stats = true;
         }
 
