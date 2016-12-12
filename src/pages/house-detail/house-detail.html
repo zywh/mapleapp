@@ -9,7 +9,7 @@
 		</ion-title>
 
 		<ion-title *ngIf="section == 'citystats'">
-			{{houseM.house.municipality}} 社区
+			{{houseM?.house.municipality}} 社区
 		</ion-title>
 
 
@@ -70,7 +70,7 @@
 				<house-detail-view [houseM]="houseM" [isFav]="isFav" (swipFlag)="houseViewSwipe($event)"></house-detail-view>
 			</div>
 			<div *ngSwitchCase="'citystats'">
-				<house-city-stats [city]="houseM.house.municipality"></house-city-stats>
+				<house-city-stats [city]="houseM?.house.municipality"></house-city-stats>
 			</div>
 			<div *ngSwitchCase="'schoolmap'" id="housemap" >
 				<maple-map-search mapType="1" [center]="location" [lockMapListener]="lockMapListener" [simpleMap]="simpleMap" [zoomlevel]="zoomlevel"></maple-map-search>

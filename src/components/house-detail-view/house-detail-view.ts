@@ -1,4 +1,4 @@
-import { Component, Input, Output,ElementRef, ViewChild,EventEmitter } from '@angular/core';
+import { Component, Input, Output, ElementRef, ViewChild, EventEmitter } from '@angular/core';
 import { Slides } from 'ionic-angular';
 import { houseInterface, houseModel } from '../../models/houseModel';
 //import { houseListModel } from '../../models/houseListModel';
@@ -20,7 +20,7 @@ import { AuthService } from '../../providers/auth/auth';
   templateUrl: 'house-detail-view.html'
 })
 export class HouseDetailViewComponent {
-  @Input() houseM: houseModel;
+  @Input() houseM;
   @Input() isFav;
   @Output() swipFlag = new EventEmitter();
   @ViewChild('maphouse') mapElement: ElementRef;
@@ -48,13 +48,13 @@ export class HouseDetailViewComponent {
   public location;
   public favLock: boolean = false; // flag to prevent fav button get hit multiple before REST is done
 
-	swiperOptions = {
-		//loop: true,
-		autoHeight: true,
-		pager: true,
-		//speed: 2000,
-		autoplay: 4000
-	};
+  swiperOptions = {
+    loop: true,
+    //autoHeight: true,
+    pager: true,
+    //speed: 2000,
+    autoplay: 4000
+  };
 
   @ViewChild('photo_slider') slider: Slides;
 
@@ -74,6 +74,10 @@ export class HouseDetailViewComponent {
     console.log("house detail view component on changes event");
     console.log(this.houseM);
     this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude };
+    if (this.houseM.house.lp_dol) {
+      this.slider.slideTo(0);
+    }
+
   }
 
   gotoVideo() {
@@ -94,18 +98,18 @@ export class HouseDetailViewComponent {
     this.mapleConf.mapDirection(this.houseM.house.latitude, this.houseM.house.longitude)
   }
 
-	swipeEvent(e) {
+  swipeEvent(e) {
     console.log(e);
-		this.swipFlag.emit(e);
+    this.swipFlag.emit(e);
 
-	}
+  }
 
 
   fav(type) {
     //type = 0 for houseFav and 1 for RouteFav
     this.favLock = true;
     this.userData.favWrapper(this.houseM.house.ml_num, type).then(res => {
-    
+
       switch (res) {
         case 'C': //mls doesn't exist .Add MLS into fav'
           if (type == 'houseFav') { this.isFav.houseFav = true; }

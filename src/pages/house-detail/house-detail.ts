@@ -43,6 +43,7 @@ export class HouseDetailPage {
     public exchangeRate: number;
     public username: string;
     public houseM = new houseModel;
+    //public houseM:houseModel;
     public house: houseInterface;
     public rx_phone: string;
     public COMP_PTS = { "N": "北", "S": "南", "W": "西", "E": "东" };
@@ -60,7 +61,7 @@ export class HouseDetailPage {
     public location;
     public zoomlevel;
 
-    @ViewChild('photo_slider') slider: Slides;
+   // @ViewChild('photo_slider') slider: Slides;
     //public popLock: boolean = false;
     private currentMLS;
     public simpleMap: boolean = true;
@@ -351,7 +352,7 @@ export class HouseDetailPage {
                 this.isFav = data.isFav; //check if houseFav and routeFav
                 this.setHouseList();
                 this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude, 'type': 1 }; // 2 for school marker
-                this.slider.slideTo(0);
+                //this.slider.slideTo(0);
                 this.content.scrollToTop();
 
 

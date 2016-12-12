@@ -567,9 +567,10 @@ export class houseModel {
 
     getAddr() {
         let txt = this.house.addr;
-        if (this.house.apt_num) txt = this.house.apt_num + '-' + this.house.addr;
-        let addr = this.house.ml_num ? txt : "房源已不在MLS列表";
-        return addr;
+        txt = (this.house.apt_num)?this.house.apt_num + '-' + txt :txt;
+       //let addr = this.house.ml_num ? txt : "房源已不在MLS列表";
+       // let addr = this.house.ml_num ? txt : "房源已不在MLS列表";
+        return txt;
     }
 
     hasOpenHouse(oh_dt, auth: boolean) {
