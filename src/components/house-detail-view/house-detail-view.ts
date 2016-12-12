@@ -20,7 +20,7 @@ import { AuthService } from '../../providers/auth/auth';
   templateUrl: 'house-detail-view.html'
 })
 export class HouseDetailViewComponent {
-  @Input() houseM;
+  @Input() houseM: houseModel;
   @Input() isFav;
   @Output() swipFlag = new EventEmitter();
   @ViewChild('maphouse') mapElement: ElementRef;
@@ -49,14 +49,14 @@ export class HouseDetailViewComponent {
   public favLock: boolean = false; // flag to prevent fav button get hit multiple before REST is done
 
   swiperOptions = {
-    loop: true,
+    //loop: true,
     //autoHeight: true,
     pager: true,
     //speed: 2000,
-    autoplay: 4000
+    //autoplay: 4000
   };
 
-  @ViewChild('photo_slider') slider: Slides;
+  @ViewChild('photoslider') slider: Slides;
 
 
   constructor(
@@ -72,12 +72,12 @@ export class HouseDetailViewComponent {
 
   ngOnChanges(changes) {
     console.log("house detail view component on changes event");
+
+    //console.log(this.slider.length()); //slider function cause blank screen
     console.log(this.houseM);
     this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude };
-    if (this.houseM.house.lp_dol) {
-      this.slider.slideTo(0);
-    }
-
+   
+    //}
   }
 
   gotoVideo() {

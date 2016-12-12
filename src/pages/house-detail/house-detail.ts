@@ -61,7 +61,7 @@ export class HouseDetailPage {
     public location;
     public zoomlevel;
 
-   // @ViewChild('photo_slider') slider: Slides;
+     @ViewChild('photo_slider') slider: Slides;
     //public popLock: boolean = false;
     private currentMLS;
     public simpleMap: boolean = true;
@@ -352,7 +352,7 @@ export class HouseDetailPage {
                 this.isFav = data.isFav; //check if houseFav and routeFav
                 this.setHouseList();
                 this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude, 'type': 1 }; // 2 for school marker
-                //this.slider.slideTo(0);
+                this.slider.slideTo(0);
                 this.content.scrollToTop();
 
 
