@@ -73,7 +73,9 @@ export const deepLinkConfig: DeepLinkConfig = {
     { component: HouseDetailPage, name: '房源详情2', segment: 'housedetail/:id/:VOWtoken' },
     { component: ProjectDetailPage, name: '项目详情', segment: 'projectdetail/:id' },
     { component: ProjectsPage, name: '项目', segment: 'projects' },
-    { component: MapSearchPage, name: '地图找房', segment: 'mapsearch/:pageType' }
+    { component: MapSearchPage, name: '地图找房', segment: 'mapsearch/:pageType' },
+    { component: AboutPage, name: '关于我们', segment: 'about/:section' }
+    
   ]
 };
 

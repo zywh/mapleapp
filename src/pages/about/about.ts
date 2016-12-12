@@ -1,6 +1,6 @@
 
 import {Component} from '@angular/core';
-import { NavController} from 'ionic-angular';
+import { NavController, NavParams} from 'ionic-angular';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 
@@ -26,13 +26,17 @@ export class AboutPage  {
   public postContact: Post;
   public postHire: Post;
   public imgHost;
+
  // public postAbout: Post;
 
   // static get parameters() {
   //   return [[MapleRestData],[MapleConf]];
   // }
 
-  constructor(private mapleRestData: MapleRestData, private mapleconf: MapleConf,public nav:NavController) { }
+  constructor(private mapleRestData: MapleRestData, private mapleconf: MapleConf,public nav:NavController,private navParams: NavParams,
+) {
+    if (navParams.data.section) this.section = navParams.data.section;
+   }
 
 
   ngAfterViewInit(): void {
