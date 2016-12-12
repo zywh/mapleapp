@@ -15,7 +15,7 @@
 	<ion-slide *ngFor="let photo of houseM.cdnPhotos">
 
 
-		<img [src]="photo" class="slide-image" alt="assets/img/maple/zanwu.jpg"/>
+		<img [src]="photo" class="slide-image" onerror="this.src='assets/img/maple/zanwu.jpg'"/>
 	</ion-slide>
 </ion-slides>
 

@@ -52,7 +52,7 @@
 
   <ion-card  class="house_card" *ngFor="let house of houselist?.list">
    
-    <img tappable  *ngIf="house.vowShowFlag" [src]="house.CdnCoverImg" (click)="gotoHouseDetail(house.MLS,house.vowShowFlag)" alt="assets/img/maple/zanwu.jpg"/>
+    <img tappable  *ngIf="house.vowShowFlag" [src]="house.CdnCoverImg" (click)="gotoHouseDetail(house.MLS,house.vowShowFlag)" onerror="this.src='assets/img/maple/zanwu.jpg'"/>
     <img tappable  *ngIf="!house.vowShowFlag" [src]="house.MemberOnlyImg" (click)="gotoHouseDetail(house.MLS,house.vowShowFlag)" />
     
      <ion-item>
