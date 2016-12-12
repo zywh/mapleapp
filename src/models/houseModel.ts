@@ -425,6 +425,7 @@ export class houseModel {
     get rooms() { return this.houseRooms(this.switchF2M) };
     get propertyTxt() { return this.getPropertyTxt() };
     get addr() { return this.getAddr() };
+    set addr(address) { this.setAddr(address) };
     get priceRMB() { return this.getPriceRMB(this.house.lp_dol) };
     get kit() { return this.add2(this.house.num_kit, this.house.kit_plus) };
     get beds() { return this.add2(this.house.br, this.house.br_plus) };
@@ -571,6 +572,10 @@ export class houseModel {
        //let addr = this.house.ml_num ? txt : "房源已不在MLS列表";
        // let addr = this.house.ml_num ? txt : "房源已不在MLS列表";
         return txt;
+    }
+
+    setAddr(address) {
+        this.house.addr = this.house.ml_num ? address : "房源已不在MLS列表";
     }
 
     hasOpenHouse(oh_dt, auth: boolean) {
