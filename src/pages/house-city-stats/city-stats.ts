@@ -31,7 +31,7 @@ export class CityStats {
     public type: number; // 0 for chart and 1 for highstock
     public pagetitle: string;
     public city;
-    private tabBarElement;
+    //private tabBarElement;
     public chartHeight = "100%";
     //public chart: HighchartsChartObject;
     public chart;
