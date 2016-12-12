@@ -18,7 +18,7 @@ declare var Highcharts: any;
         <button ion-fab (click)="nav.pop()"><ion-icon name="undo"></ion-icon></button>
     </ion-fab>
     
-       <div id="chart"></div>
+       <div id="chart" [style.height]="chartHeight"></div>
       
     </ion-content>
     `
@@ -31,6 +31,7 @@ export class chartStats {
     public type: number; // 0 for chart and 1 for highstock
     public pagetitle: string;
     public chart;
+    chartHeight = "100%";
     constructor(private parm: NavParams, private view: ViewController,public nav:NavController) {
         this.type = this.parm.data.type;
         this.options = this.parm.data.options;

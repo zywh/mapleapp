@@ -1,5 +1,7 @@
 import { NavParams, ViewController,NavController } from 'ionic-angular';
 import { Component } from '@angular/core';
+import { MapleConf } from '../../providers/maple-rest-data/maple-config';
+import { UserData } from '../../providers/user-data';
 //import {  Highcharts } from 'angular2-highcharts';
 declare var Highcharts: any;
 
@@ -17,7 +19,7 @@ declare var Highcharts: any;
        <ion-fab right bottom style="opacity:0.8;">
     <button ion-fab (click)="nav.pop()"><ion-icon name="undo"></ion-icon></button>
  </ion-fab>
-       <div id="chart" style="height:100%;"></div>
+       <div id="chart" [style.height]="chartHeight"></div>
     </ion-content>
     `
 
@@ -29,10 +31,11 @@ export class CityStats {
     public type: number; // 0 for chart and 1 for highstock
     public pagetitle: string;
     public city;
-    private tabBarElement;
+    //private tabBarElement;
+    public chartHeight = "100%";
     //public chart: HighchartsChartObject;
     public chart;
-    constructor(private parm: NavParams, public nav: NavController,private view: ViewController) {
+    constructor(private parm: NavParams, public nav: NavController,private view: ViewController,private mapleConf: MapleConf,private userData: UserData) {
         this.city = this.parm.data.city;
         this.options = this.parm.data.options;
        // this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
@@ -46,6 +49,10 @@ export class CityStats {
         this.chart = new Highcharts.Chart(this.options);
 
         }, 100); //add timeout to avoid chart size is over screen size initially
+         if (this.mapleConf.helpFlag.stats == false ) {
+            this.userData.presentToast("点击图表查看详情",2000);
+            this.mapleConf.helpFlag.stats = true;
+        }
 
     }
     
