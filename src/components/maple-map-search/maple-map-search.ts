@@ -332,7 +332,7 @@ export class MapleMapSearchComponent {
 
 
     addCenterMarer(point, type) {
-       
+
         let iconbase = "assets/img/maple/";
         let iconurl;
         iconurl = iconbase + "city.png";
@@ -340,7 +340,7 @@ export class MapleMapSearchComponent {
 
         if (type == 1) iconurl = iconbase + "bighouse.png";
 
- console.log("drop marker" + type + "url:"+ iconurl);
+        console.log("drop marker" + type + "url:" + iconurl);
         this.markerDrop = new google.maps.Marker({
             position: point,
             map: this.map,
@@ -842,13 +842,14 @@ export class MapleMapSearchComponent {
 
         if (this.center && !this.mapInitialised) {
 
-            let point = new google.maps.LatLng(this.center['lat'], this.center['lng']);
-            console.log('maple-map-search map init:' + point + " map init flag:" + this.mapInitialised);
+           
+            console.log('maple-map-search map init');
 
             this.setMapType(this.mapType);
             this.listenEvents();
 
-            this.initMap(point, this.center['type']);
+            //this.initMap(point, this.center['type']);
+            this.loadGoogleMaps();
             let alert = this.alertc.create({
                 title: '提示',
                 message: '根据TREB数据协议，有些房源只有登录后才可以显示，请注册/登录后查找更多房源',
@@ -880,7 +881,50 @@ export class MapleMapSearchComponent {
 
     }
 
+    loadGoogleMaps() {
+        
 
+        if (typeof google == "undefined" || typeof google.maps == "undefined") {
+
+            console.log("Google maps JavaScript needs to be loaded.");
+
+
+            if (this.connectivityService.isOnline()) {
+                console.log("online, loading map");
+
+                //Load the SDK
+                window['mapInit'] = () => {
+                    let script = document.createElement("script");
+                    script.src = "assets/extjs/richmarker.js";
+                    console.log("Load Richmarker JS")
+                    document.body.appendChild(script);
+                    let point = new google.maps.LatLng(this.center['lat'], this.center['lng']);
+
+
+                    this.initMap(point, this.center['type']);
+
+                }
+
+                let script = document.createElement("script");
+                script.id = "googleMaps";
+                script.src = "http://ditu.google.cn/maps/api/js?&amp;libraries=places&amp;language=zh-cn&callback=mapInit";
+                document.body.appendChild(script);
+
+            }
+        }
+        else {
+
+            if (this.connectivityService.isOnline()) {
+                console.log("showing map");
+                 let point = new google.maps.LatLng(this.center['lat'], this.center['lng']);
+
+                this.initMap(point, this.center['type']);
+            }
+
+
+        }
+
+    }
 
 
 

@@ -29,7 +29,7 @@ export class MapSearchPage {
 
 
     this.mapType = this.navparm.data.pageType;
-   // this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
+    // this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
 
 
   }
@@ -38,9 +38,9 @@ export class MapSearchPage {
 
 
   ionViewWillEnter() {
-    
+
     console.log("Map View will enter");
-   // this.content.resize(); //resize to have fab position after housedetail page is back
+    // this.content.resize(); //resize to have fab position after housedetail page is back
     this.lockMapListener = false; //unlock after view enter  
 
 
@@ -51,30 +51,42 @@ export class MapSearchPage {
   ionViewDidLoad() {
 
 
-   // if (this.nav.length() > 1) this.tabBarElement.style.display = 'none';
+    // if (this.nav.length() > 1) this.tabBarElement.style.display = 'none';
 
-    if (this.navparm.data.parms.lat > 20) {
-      this.center = { 'lat': this.navparm.data.parms.lat, 'lng': this.navparm.data.parms.lng, 'type': 1 };
-    } else {
 
-      if (this.mapleconf.location) {
-        console.log("location exist");
-        this.center = { 'lat': this.mapleconf.location.lat, 'lng': this.mapleconf.location.lng, 'type': 0 };
-      } else {
-
-        this.mapleconf.getLocation().then(data => {
-          console.log("Get current location");
-          console.log(data);
-
-          this.center = { 'lat': data['lat'], 'lng': data['lng'], 'type': 0 };
-
-        })
-
+    //if (this.navparm.data.parms.lat > 20) {
+    if (this.navparm.data.hasOwnProperty('parms')) {
+      if (this.navparm.data.parms.lat > 20) {
+        this.center = { 'lat': this.navparm.data.parms.lat, 'lng': this.navparm.data.parms.lng, 'type': 1 };
+      } else { //tab map view, no center is passed
+        this.setCenter();
       }
+
+    } else { //load from deeperlink
+
+      this.setCenter();
 
     }
 
 
+  }
+
+  setCenter() {
+
+    if (this.mapleconf.location) {
+      console.log("location exist");
+      this.center = { 'lat': this.mapleconf.location.lat, 'lng': this.mapleconf.location.lng, 'type': 0 };
+    } else {
+
+      this.mapleconf.getLocation().then(data => {
+        console.log("Get current location");
+        console.log(data);
+
+        this.center = { 'lat': data['lat'], 'lng': data['lng'], 'type': 0 };
+
+      })
+
+    }
   }
 
   ionViewWillLeave() {
