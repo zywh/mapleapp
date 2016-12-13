@@ -342,6 +342,7 @@ export class HouseDetailPage {
                 this.currentMLS = this.houseM.house.ml_num;
 
                 this.houseM.house = data.house;
+                this.houseM.setSoldAddr();
                 this.houseM.houseMname = data.house_mname;
                 this.houseM.houseProvince = data.house_province;
                 //console.log(this.houseM.houseProvince);
