@@ -60,8 +60,16 @@ export class HouseDetailPage {
     //public location = { 'lat': 44, 'lng': -79 };
     public location;
     public zoomlevel;
+    
+  swiperOptions = {
+    //loop: true,
+    //autoHeight: true,
+    pager: true,
+    //speed: 2000,
+    //autoplay: 4000
+  };
 
-     @ViewChild('photo_slider') slider: Slides;
+     @ViewChild('photoslider') slider: Slides;
     //public popLock: boolean = false;
     private currentMLS;
     public simpleMap: boolean = true;
