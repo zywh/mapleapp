@@ -194,13 +194,15 @@ export class MapleMapSearchComponent {
             this.changeMap(this.mapType);
 
 
+            if (this.selectOptions.hasOwnProperty("selectSearch")) { //avoid no lat error
+                if (this.selectOptions.selectSearch.lat > 20) {  //change location 
+                    let point = new google.maps.LatLng(this.selectOptions.selectSearch.lat, this.selectOptions.selectSearch.lng);
 
-            if (this.selectOptions.selectSearch.lat > 20) {  //change location 
-                let point = new google.maps.LatLng(this.selectOptions.selectSearch.lat, this.selectOptions.selectSearch.lng);
+                    this.setLocation(point, this.defaultZoom, 1);
 
-                this.setLocation(point, this.defaultZoom, 1);
-
+                }
             }
+
 
 
 
@@ -830,19 +832,25 @@ export class MapleMapSearchComponent {
         //no init if mapinit is done once and no simplemap
 
         // if (this.center && (!this.mapInitialised || this.simpleMap)) {
+        // let centerChange: boolean = false;
+        // console.log("map ngchanges");
+        // console.log(changes);
 
-        // for (let propName in changes) {
-        //     let chng = changes[propName];
-        //     let cur = JSON.stringify(chng.currentValue);
-        //     let prev = JSON.stringify(chng.previousValue);
-        //      console.log('ngOnChanges property ' + propName + " prev value:" + prev + " current value:" + cur);
-        //     if (propName == 'center' && cur != prev) {
-        //         console.log('ngOnChanges property ' + propName);
+        // // for (let propName in changes) {
+        // //     let chng = changes[propName];
+        // let cur = JSON.stringify(changes['center'].currentValue);
+        // let prev = JSON.stringify(changes['center'].previousValue);
+        // // console.log('ngOnChanges property ' + propName + " prev value:" + prev + " current value:" + cur);
+        // //if (propName == 'center' && cur != prev) {
+        // if (cur != prev) {
+        //     console.log('ngOnChanges property ');
+        //     centerChange = true;
+        // }
 
 
-        if (this.center && !this.mapInitialised) {
+        if ((this.center && !this.mapInitialised)) {
 
-           
+
             console.log('maple-map-search map init');
 
             this.setMapType(this.mapType);
@@ -882,7 +890,7 @@ export class MapleMapSearchComponent {
     }
 
     loadGoogleMaps() {
-        
+
 
         if (typeof google == "undefined" || typeof google.maps == "undefined") {
 
@@ -916,7 +924,7 @@ export class MapleMapSearchComponent {
 
             if (this.connectivityService.isOnline()) {
                 console.log("showing map");
-                 let point = new google.maps.LatLng(this.center['lat'], this.center['lng']);
+                let point = new google.maps.LatLng(this.center['lat'], this.center['lng']);
 
                 this.initMap(point, this.center['type']);
             }
