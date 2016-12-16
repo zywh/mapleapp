@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { UserData } from '../../providers/user-data';
 import { HouseDetailPage } from '../../pages/house-detail/house-detail';
-import {HouseDetailTabsPage} from '../../pages/house-detail-tabs/house-detail-tabs';
+//import {HouseDetailTabsPage} from '../../pages/house-detail-tabs/house-detail-tabs';
 import { NavController,  ModalController, Events } from 'ionic-angular';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';

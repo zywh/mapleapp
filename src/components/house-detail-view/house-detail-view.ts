@@ -1,4 +1,4 @@
-import { Component, Input, Output, ElementRef, ViewChild, EventEmitter } from '@angular/core';
+import { Component, Input, Output,  ViewChild, EventEmitter } from '@angular/core';
 import { Slides } from 'ionic-angular';
 import { houseInterface, houseModel } from '../../models/houseModel';
 //import { houseListModel } from '../../models/houseListModel';

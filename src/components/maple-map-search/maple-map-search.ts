@@ -11,7 +11,7 @@ import { SchoolListModal } from '../../pages/school-map/school-list-modal';
 import { AuthService } from '../../providers/auth/auth';
 import { UserData } from '../../providers/user-data';
 import { houseListModel } from '../../models/houseListModel';
-import { HouseDetailTabsPage } from '../../pages/house-detail-tabs/house-detail-tabs';
+//import { HouseDetailTabsPage } from '../../pages/house-detail-tabs/house-detail-tabs';
 
 
 declare var RichMarker: any;
