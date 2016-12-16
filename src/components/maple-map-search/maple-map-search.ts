@@ -196,7 +196,9 @@ export class MapleMapSearchComponent {
 
             if (this.selectOptions.hasOwnProperty("selectSearch")) { //avoid no lat error
                 if (this.selectOptions.selectSearch.lat > 20) {  //change location 
-                    let point = new google.maps.LatLng(this.selectOptions.selectSearch.lat, this.selectOptions.selectSearch.lng);
+
+                    //let point = new google.maps.LatLng(this.selectOptions.selectSearch.lat, this.selectOptions.selectSearch.lng);
+                    let point = {lat:this.selectOptions.selectSearch.lat,lng:this.selectOptions.selectSearch.lng};
 
                     this.setLocation(point, this.defaultZoom, 1);
 
@@ -301,7 +303,8 @@ export class MapleMapSearchComponent {
         this.locateLock = true; //lock locate click to prevent frozen from double click
         this.mapleconf.getLocation().then(data => {
 
-            this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
+            //this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
+             this.defaultcenter = {lat:data['lat'], lng:data['lng']};
             if (this.auth.authenticated()) {
                 this.userData.addCenterAlert(data['lat'], data['lng'], "保存中心位置到我的收藏");
 
