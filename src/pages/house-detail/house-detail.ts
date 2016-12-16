@@ -91,7 +91,7 @@ export class HouseDetailPage {
         private toastCtrl: ToastController,
         private actionSheetCtrl: ActionSheetController,
         public platform: Platform,
-        private mapleMap: MapleMapSearchComponent,
+       // mapleMap: MapleMapSearchComponent, //housedetail can't be loaded after this. ???
         private shareService: ShareService) {
 
         //this.nav = nav;
@@ -348,7 +348,7 @@ export class HouseDetailPage {
                     this.gotoSchool();
 
                 }
-                this.mapleMap.mapInitialised = false; //trigger map refresh 
+               // this.mapleMap.mapInitialised = false; //trigger map refresh 
                 this.location = { 'lat': data.house.latitude, 'lng': data.house.longitude, 'type': 1 }; // 2 for school marker
                 this.houseM.rxPhone = this.mapleConf.data.phone;
                 this.currentMLS = this.houseM.house.ml_num;

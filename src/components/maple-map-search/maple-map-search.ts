@@ -851,10 +851,6 @@ export class MapleMapSearchComponent {
         if ((this.center && !this.mapInitialised)) {
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 66c71dbca6082aed51b89f7cf640ea07a1ec8717
             console.log('maple-map-search map init');
 
             this.setMapType(this.mapType);
@@ -917,10 +913,7 @@ export class MapleMapSearchComponent {
             if (this.connectivityService.isOnline()) {
                 console.log("showing map");
                 let point = new google.maps.LatLng(this.center['lat'], this.center['lng']);
-<<<<<<< HEAD
-=======
 
->>>>>>> 66c71dbca6082aed51b89f7cf640ea07a1ec8717
                 this.initMap(point, this.center['type']);
             }
 
