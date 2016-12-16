@@ -842,7 +842,7 @@ export class MapleMapSearchComponent {
 
         if (this.center && !this.mapInitialised) {
 
-           
+
             console.log('maple-map-search map init');
 
             this.setMapType(this.mapType);
@@ -882,42 +882,29 @@ export class MapleMapSearchComponent {
     }
 
     loadGoogleMaps() {
-        
+
 
         if (typeof google == "undefined" || typeof google.maps == "undefined") {
 
             console.log("Google maps JavaScript needs to be loaded.");
 
-
             if (this.connectivityService.isOnline()) {
-                console.log("online, loading map");
-
-                //Load the SDK
-                window['mapInit'] = () => {
-                    let script = document.createElement("script");
-                    script.src = "assets/extjs/richmarker.js";
-                    console.log("Load Richmarker JS")
-                    document.body.appendChild(script);
+                console.log("online, loading map.....");
+                this.connectivityService.loadJs().then(() => {
+                 
                     let point = new google.maps.LatLng(this.center['lat'], this.center['lng']);
-
-
                     this.initMap(point, this.center['type']);
 
-                }
+                });
 
-                let script = document.createElement("script");
-                script.id = "googleMaps";
-                script.src = "http://ditu.google.cn/maps/api/js?&amp;libraries=places&amp;language=zh-cn&callback=mapInit";
-                document.body.appendChild(script);
-
+          
             }
         }
         else {
 
             if (this.connectivityService.isOnline()) {
                 console.log("showing map");
-                 let point = new google.maps.LatLng(this.center['lat'], this.center['lng']);
-
+                let point = new google.maps.LatLng(this.center['lat'], this.center['lng']);
                 this.initMap(point, this.center['type']);
             }
 

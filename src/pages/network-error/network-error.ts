@@ -66,10 +66,7 @@ export class NetworkErrorPage {
       setTimeout(function () {
         if (typeof google == "undefined" || typeof google.maps == "undefined") {
           this.connectivity.loadJs();
-          // let script = document.createElement("script");
-          // //script.id = "googleMaps";
-          // script.src = "http://ditu.google.cn/maps/api/js?&amp;libraries=places&amp;language=zh-cn";
-          // document.body.appendChild(script);
+       
 
         } 
           this.nav.setRoot(TabsPage);

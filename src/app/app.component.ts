@@ -104,17 +104,7 @@ export class MapleApp {
   }
 
   listenEvents() {
-    // this.events.subscribe('user:login', () => {
-    //   this.enableMenu(true);
-    // });
-
-    // this.events.subscribe('user:signup', () => {
-    //   this.enableMenu(true);
-    // });
-
-    // this.events.subscribe('user:logout', () => {
-    //   this.enableMenu(false);
-    // });
+  
      this.events.subscribe('profile:login', (data) => {
 
       setTimeout(() => {
@@ -148,7 +138,7 @@ export class MapleApp {
     //this.addConnectivityListeners();
     //console.log("Google maps JavaScript needs to be loaded.");
     if (this.connectivity.isOnline()) {
-      this.connectivity.loadJs();
+      //this.connectivity.loadJs();
 
     } else {
      // console.log("Network Offline: load error page")

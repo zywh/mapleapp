@@ -1,8 +1,9 @@
 import { Content, NavController, NavParams, Events } from 'ionic-angular';
 import { Component, ViewChild } from '@angular/core';;
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
+import { Connectivity } from '../../providers/connectivity';
 
-
+var google;
 @Component({
   selector: 'page-map',
   templateUrl: 'map-search.html'
@@ -24,7 +25,8 @@ export class MapSearchPage {
     public nav: NavController,
     private mapleconf: MapleConf,
     private navparm: NavParams,
-    private events: Events
+    private events: Events,
+    private connectivityService: Connectivity
   ) {
 
 
@@ -59,17 +61,47 @@ export class MapSearchPage {
       if (this.navparm.data.parms.lat > 20) {
         this.center = { 'lat': this.navparm.data.parms.lat, 'lng': this.navparm.data.parms.lng, 'type': 1 };
       } else { //tab map view, no center is passed
-        this.setCenter();
+       this.loadGoogleMaps();
       }
 
     } else { //load from deeperlink
 
-      this.setCenter();
-
+     this.loadGoogleMaps();
     }
 
 
   }
+
+
+    loadGoogleMaps() {
+
+
+        if (typeof google == "undefined" || typeof google.maps == "undefined") {
+
+            console.log("Google maps JavaScript needs to be loaded.");
+
+            if (this.connectivityService.isOnline()) {
+                console.log("online, loading map.....");
+                this.connectivityService.loadJs().then(() => {
+                    this.setCenter();
+
+                });
+
+          
+            }
+        }
+        else {
+
+            if (this.connectivityService.isOnline()) {
+             
+                  this.setCenter();
+
+            }
+
+
+        }
+
+    }
 
   setCenter() {
 
