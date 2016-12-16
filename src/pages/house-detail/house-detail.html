@@ -49,59 +49,68 @@
 <ion-content class="house-detail">
 
 	<ion-fab bottom right style="opacity:0.8;" *ngIf="parms.list">
-		<button ion-fab><ion-icon name="add"></ion-icon></button>
+<button ion-fab><ion-icon name="add"></ion-icon></button>
 
-		<ion-fab-list side="top">
-			<button ion-fab *ngIf="nav.length() > 1" (click)="pop2first()"><ion-icon name="undo" ></ion-icon></button>
-			<button ion-fab *ngIf="parms.list" [disabled]="!houseList.prev" (click)="go2PrevHouse()"><ion-icon name="arrow-back"></ion-icon></button>
-			<button ion-fab *ngIf="parms.list" [disabled]="!houseList.next" (click)="go2NextHouse()"><ion-icon name="arrow-forward"></ion-icon></button>
-			<!--<button ion-fab *ngIf="platform.is('cordova')" (click)="share()"><ion-icon name="share"></ion-icon></button>-->
-			<!--<button ion-fab (click)="fav('houseFav')"><ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon></button>
+<ion-fab-list side="top">
+	<button ion-fab *ngIf="nav.length() > 1" (click)="pop2first()"><ion-icon name="undo" ></ion-icon></button>
+	<button ion-fab *ngIf="parms.list" [disabled]="!houseList.prev" (click)="go2PrevHouse()"><ion-icon name="arrow-back"></ion-icon></button>
+	<button ion-fab *ngIf="parms.list" [disabled]="!houseList.next" (click)="go2NextHouse()"><ion-icon name="arrow-forward"></ion-icon></button>
+	<!--<button ion-fab *ngIf="platform.is('cordova')" (click)="share()"><ion-icon name="share"></ion-icon></button>-->
+	<!--<button ion-fab (click)="fav('houseFav')"><ion-icon name="heart" [isActive]="!isFav.houseFav"></ion-icon></button>
 			<button ion-fab *ngIf="platform.is('cordova')" (click)="mapDirection()"><ion-icon name="navigate"></ion-icon></button>-->
 
-			<!--<button ion-fab (click)="more()"><ion-icon name="more"></ion-icon></button>-->
+	<!--<button ion-fab (click)="more()"><ion-icon name="more"></ion-icon></button>-->
 
-		</ion-fab-list>
-	</ion-fab>
-	
-		<div [ngSwitch]="section" style='height:100%;'>
+</ion-fab-list>
+</ion-fab>
 
-			<div *ngSwitchDefault>
-				<house-detail-view [houseM]="houseM" [isFav]="isFav" (swipFlag)="houseViewSwipe($event)"></house-detail-view>
-			</div>
-			<div *ngSwitchCase="'citystats'">
-				<house-city-stats [city]="houseM.house.municipality"></house-city-stats>
-			</div>
-			<div *ngSwitchCase="'schoolmap'" id="housemap" >
-				<maple-map-search mapType="1" [center]="location" [lockMapListener]="lockMapListener" [simpleMap]="simpleMap" [zoomlevel]="zoomlevel"></maple-map-search>
-				<!--<school-list [schoolList]='schoolList'></school-list>-->
-			</div>
-			<div *ngSwitchCase="'housemap'" id="housemap">
+<div [ngSwitch]="section" style='height:100%;'>
 
-				<maple-map-search mapType="0" [center]="location" [lockMapListener]="lockMapListener" [simpleMap]="simpleMap" [zoomlevel]="zoomlevel"></maple-map-search>
+<div *ngSwitchDefault>
 
-				<!--<school-list [schoolList]='schoolList'></school-list>-->
-			</div>
-			<div *ngSwitchCase="'similar'">
-				<!--			<div id="housemap">
+	<ion-slides #photoslider [options]="swiperOptions" class="swiper-container">
+
+		<ion-slide *ngFor="let photo of houseM?.cdnPhotos">
+			<img [src]="photo" class="slide-image" onerror="this.src='assets/img/maple/zanwu.jpg'"/>
+	</ion-slide>
+	</ion-slides>
+
+
+	<house-detail-view [houseM]="houseM" [isFav]="isFav" (swipFlag)="houseViewSwipe($event)"></house-detail-view>
+</div>
+<div *ngSwitchCase="'citystats'">
+	<house-city-stats [city]="houseM.house.municipality"></house-city-stats>
+</div>
+<div *ngSwitchCase="'schoolmap'" id="housemap">
+	<maple-map-search mapType="1" [center]="location" [lockMapListener]="lockMapListener" [simpleMap]="simpleMap" [zoomlevel]="zoomlevel"></maple-map-search>
+	<!--<school-list [schoolList]='schoolList'></school-list>-->
+</div>
+<div *ngSwitchCase="'housemap'" id="housemap">
+
+	<maple-map-search mapType="0" [center]="location" [lockMapListener]="lockMapListener" [simpleMap]="simpleMap" [zoomlevel]="zoomlevel"></maple-map-search>
+
+	<!--<school-list [schoolList]='schoolList'></school-list>-->
+</div>
+<div *ngSwitchCase="'similar'">
+	<!--			<div id="housemap">
 		  <maple-map-search mapType="0" [center]="location" [lockMapListener]="lockMapListener" [simpleMap]="simpleMap"></maple-map-search>
 			</div>
 			
 			-->
 
-				<!--<ion-item-group>
+	<!--<ion-item-group>
 					<ion-item-divider>当前房源</ion-item-divider>
 					<house-list [houselist]='currentHouseList' isList="true"></house-list>
 				</ion-item-group>-->
 
-				<ion-item-group>
-					<ion-item-divider>类似房源</ion-item-divider>
-					<house-list [houselist]='similarHouseList' isList="true"></house-list>
-				</ion-item-group>
-			</div>
+	<ion-item-group>
+		<ion-item-divider>类似房源</ion-item-divider>
+		<house-list [houselist]='similarHouseList' isList="true"></house-list>
+	</ion-item-group>
+</div>
 
-		</div>
-	
+</div>
+
 </ion-content>
 
 <ion-footer>

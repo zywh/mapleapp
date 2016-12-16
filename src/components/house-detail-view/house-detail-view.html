@@ -10,15 +10,6 @@
 </ion-fab>
 
 
-<ion-slides #photoslider [options]="swiperOptions" class="swiper-container">
-
-	<ion-slide *ngFor="let photo of houseM?.cdnPhotos">
-
-
-		<img [src]="photo" class="slide-image" onerror="this.src='assets/img/maple/zanwu.jpg'"/>
-	</ion-slide>
-</ion-slides>
-
 <div>
 	<div (swipe)="swipeEvent($event)">
 		<div class="fyxq_rx">热线：

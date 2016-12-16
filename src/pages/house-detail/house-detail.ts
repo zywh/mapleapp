@@ -9,6 +9,7 @@ import { UserData } from '../../providers/user-data';
 import { AuthService } from '../../providers/auth/auth';
 import { ShareService } from '../../providers/share';
 import { houseInterface, houseModel } from '../../models/houseModel';
+import {MapleMapSearchComponent} from '../../components/maple-map-search/maple-map-search'
 import { houseListModel } from '../../models/houseListModel';
 //import { HouselistSearch } from '../houselist-search/houselist-search';
 //import { MapSearchPage } from '../map-search/map-search';
@@ -60,8 +61,16 @@ export class HouseDetailPage {
     //public location = { 'lat': 44, 'lng': -79 };
     public location;
     public zoomlevel;
+    
+  swiperOptions = {
+    //loop: true,
+    //autoHeight: true,
+    pager: true,
+    //speed: 2000,
+    //autoplay: 4000
+  };
 
-     @ViewChild('photo_slider') slider: Slides;
+     @ViewChild('photoslider') slider: Slides;
     //public popLock: boolean = false;
     private currentMLS;
     public simpleMap: boolean = true;
@@ -82,6 +91,7 @@ export class HouseDetailPage {
         private toastCtrl: ToastController,
         private actionSheetCtrl: ActionSheetController,
         public platform: Platform,
+        private mapleMap: MapleMapSearchComponent,
         private shareService: ShareService) {
 
         //this.nav = nav;
@@ -338,6 +348,8 @@ export class HouseDetailPage {
                     this.gotoSchool();
 
                 }
+                this.mapleMap.mapInitialised = false; //trigger map refresh 
+                this.location = { 'lat': data.house.latitude, 'lng': data.house.longitude, 'type': 1 }; // 2 for school marker
                 this.houseM.rxPhone = this.mapleConf.data.phone;
                 this.currentMLS = this.houseM.house.ml_num;
 
@@ -345,14 +357,14 @@ export class HouseDetailPage {
                 this.houseM.setSoldAddr();
                 this.houseM.houseMname = data.house_mname;
                 this.houseM.houseProvince = data.house_province;
-                //console.log(this.houseM.houseProvince);
                 this.house_propertyType = data.house_propertyType;
                 this.houseM.housePropertyType = data.house_propertyType;
                 this.houseM.exchangeRate = data.exchangeRate;
                 this.houseM.cdnPhotos = data.cdn_photos;
                 this.isFav = data.isFav; //check if houseFav and routeFav
                 this.setHouseList();
-                this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude, 'type': 1 }; // 2 for school marker
+                console.log(this.houseM)
+               
                 this.slider.slideTo(0);
                 this.content.scrollToTop();
 
