@@ -374,8 +374,10 @@ export class HouseDetailPage {
                     this.houseDetailView.slider.slideTo(0); //trigger slide to 0 and scroll to top
                     this.content.scrollToTop();
                 }
-                 if(this.section == "schoolmap" || this.section == "housemap"){ //if statement. otherwise it will not execute next one
-                  this.mapleMap.mapInitialised = false; //trigger map refresh 
+                 if((this.section == "schoolmap" || this.section == "housemap") && this.mapleMap.mapInitialised == true){ //if statement. otherwise it will not execute next one
+                  //this.mapleMap.mapInitialised = false; //trigger map refresh 
+
+                  this.mapleMap.setLocation(this.location,16,1);
                 }
                 
 

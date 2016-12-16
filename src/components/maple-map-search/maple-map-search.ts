@@ -323,13 +323,13 @@ export class MapleMapSearchComponent {
 
     // //Move to center and creata a marker
     setLocation(point, zoom, centerType) {
-
+        let center = new google.maps.LatLng(point['lat'], point['lng']);
         this.map.setZoom(zoom);
-        this.map.setCenter(point);
+        this.map.setCenter(center);
         if (this.markerDrop != null) {
             this.markerDrop.setMap(null);
         }
-        this.addCenterMarer(point, centerType);
+        this.addCenterMarer(center, centerType);
     }
 
 
@@ -847,7 +847,7 @@ export class MapleMapSearchComponent {
         //     centerChange = true;
         // }
 
-
+        console.log("map init" + this.mapInitialised)
         if ((this.center && !this.mapInitialised)) {
 
 
@@ -900,8 +900,8 @@ export class MapleMapSearchComponent {
                 console.log("online, loading map.....");
                 this.connectivityService.loadJs().then(() => {
                  
-                    let point = new google.maps.LatLng(this.center['lat'], this.center['lng']);
-                    this.initMap(point, this.center['type']);
+                   
+                    this.initMap(this.center, this.center['type']);
 
                 });
 
@@ -912,9 +912,9 @@ export class MapleMapSearchComponent {
 
             if (this.connectivityService.isOnline()) {
                 console.log("showing map");
-                let point = new google.maps.LatLng(this.center['lat'], this.center['lng']);
+                //let point = new google.maps.LatLng(this.center['lat'], this.center['lng']);
 
-                this.initMap(point, this.center['type']);
+                this.initMap(this.center, this.center['type']);
             }
 
 
