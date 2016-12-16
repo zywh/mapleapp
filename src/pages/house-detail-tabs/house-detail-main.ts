@@ -1,7 +1,7 @@
-import { Component,ViewChild } from '@angular/core';
-import { NavController,NavParams,Content } from 'ionic-angular';
-import { houseInterface, houseModel } from '../../models/houseModel';
-import { houseListModel } from '../../models/houseListModel';
+import { Component} from '@angular/core';
+import { NavController,NavParams } from 'ionic-angular';
+import {  houseModel } from '../../models/houseModel';
+//import { houseListModel } from '../../models/houseListModel';
 
 /*
   Generated class for the HouseDetailMain page.

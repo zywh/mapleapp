@@ -23,7 +23,7 @@ export class HouseDetailViewComponent {
   @Input() houseM: houseModel;
   @Input() isFav;
   @Output() swipFlag = new EventEmitter();
-  @ViewChild('maphouse') mapElement: ElementRef;
+  //@ViewChild('maphouse') mapElement: ElementRef;
 
   //public isFav = { houseFav: false, routeFav: false };
   public isMore: Boolean = true; //more buttom will be disabled before toast is dismiss

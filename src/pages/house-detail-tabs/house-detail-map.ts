@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController,NavParams,Events } from 'ionic-angular';
-import { houseModel } from '../../models/houseModel';
+//import { houseModel } from '../../models/houseModel';
 
 
 /*

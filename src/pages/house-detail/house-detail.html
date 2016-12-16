@@ -68,13 +68,6 @@
 
 <div *ngSwitchDefault>
 
-	<ion-slides #photoslider [options]="swiperOptions" class="swiper-container">
-
-		<ion-slide *ngFor="let photo of houseM?.cdnPhotos">
-			<img [src]="photo" class="slide-image" onerror="this.src='assets/img/maple/zanwu.jpg'"/>
-	</ion-slide>
-	</ion-slides>
-
 
 	<house-detail-view [houseM]="houseM" [isFav]="isFav" (swipFlag)="houseViewSwipe($event)"></house-detail-view>
 </div>

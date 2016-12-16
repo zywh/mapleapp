@@ -9,7 +9,8 @@ import { UserData } from '../../providers/user-data';
 import { AuthService } from '../../providers/auth/auth';
 import { ShareService } from '../../providers/share';
 import { houseInterface, houseModel } from '../../models/houseModel';
-import {MapleMapSearchComponent} from '../../components/maple-map-search/maple-map-search'
+import {MapleMapSearchComponent} from '../../components/maple-map-search/maple-map-search';
+import {HouseDetailViewComponent} from '../../components/house-detail-view/house-detail-view';
 import { houseListModel } from '../../models/houseListModel';
 //import { HouselistSearch } from '../houselist-search/houselist-search';
 //import { MapSearchPage } from '../map-search/map-search';
@@ -28,6 +29,10 @@ import { houseListModel } from '../../models/houseListModel';
 })
 export class HouseDetailPage {
     @ViewChild(Content) content: Content;
+    @ViewChild(HouseDetailViewComponent)
+    private houseDetailView: HouseDetailViewComponent;
+    @ViewChild(MapleMapSearchComponent)
+    private mapleMap: MapleMapSearchComponent;
 
     public isFav = { houseFav: false, routeFav: false };
     public isMore: Boolean = true; //more buttom will be disabled before toast is dismiss
@@ -91,7 +96,6 @@ export class HouseDetailPage {
         private toastCtrl: ToastController,
         private actionSheetCtrl: ActionSheetController,
         public platform: Platform,
-       // mapleMap: MapleMapSearchComponent, //housedetail can't be loaded after this. ???
         private shareService: ShareService) {
 
         //this.nav = nav;
@@ -348,7 +352,7 @@ export class HouseDetailPage {
                     this.gotoSchool();
 
                 }
-               // this.mapleMap.mapInitialised = false; //trigger map refresh 
+               
                 this.location = { 'lat': data.house.latitude, 'lng': data.house.longitude, 'type': 1 }; // 2 for school marker
                 this.houseM.rxPhone = this.mapleConf.data.phone;
                 this.currentMLS = this.houseM.house.ml_num;
@@ -363,11 +367,20 @@ export class HouseDetailPage {
                 this.houseM.cdnPhotos = data.cdn_photos;
                 this.isFav = data.isFav; //check if houseFav and routeFav
                 this.setHouseList();
-                console.log(this.houseM)
+                console.log(this.houseM);
                
-                this.slider.slideTo(0);
-                this.content.scrollToTop();
+                //this.slider.slideTo(0);
+                if(this.section == "housedetail"){  //if statement. otherwise it will not execute next one
+                    this.houseDetailView.slider.slideTo(0); //trigger slide to 0 and scroll to top
+                    this.content.scrollToTop();
+                }
+                 if(this.section == "schoolmap" || this.section == "housemap"){ //if statement. otherwise it will not execute next one
+                  this.mapleMap.mapInitialised = false; //trigger map refresh 
+                }
+                
 
+               
+               
 
             }
         )

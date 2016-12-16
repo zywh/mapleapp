@@ -4,7 +4,7 @@ import { houseModel } from '../../models/houseModel';
 import { houseListModel } from '../../models/houseListModel';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
-import { UserData } from '../../providers/user-data';
+//import { UserData } from '../../providers/user-data';
 import { AuthService } from '../../providers/auth/auth';
 
 /*
@@ -37,7 +37,7 @@ export class SimilarHousesPage {
   ionViewWillEnter() {
     this.mapleConf.load().then(data => { 
       this.houseM = this.navParms.data.houseM;
-      this.houseRestURL = data.mapHouseRest;
+      this.houseRestURL = data['mapHouseRest'];
       this.similar();
     })
    
