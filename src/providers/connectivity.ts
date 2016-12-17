@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { Network } from 'ionic-native';
-declare var Connection;
+//declare var Connection;
 declare var google;
 
 @Injectable()
@@ -15,7 +15,7 @@ export class Connectivity {
 
   isOnline(): boolean {
     if (this.onDevice && Network.connection) {
-      return Network.connection !== Connection.NONE;
+      return Network.connection !== 'none';
     } else {
       return navigator.onLine;
     }
@@ -23,7 +23,7 @@ export class Connectivity {
 
   isOffline(): boolean {
     if (this.onDevice && Network.connection) {
-      return Network.connection === Connection.NONE;
+      return Network.connection !== 'none';
     } else {
       return !navigator.onLine;
     }
