@@ -2,6 +2,7 @@
   "name": "maplecity-app",
   "description": "Maple City Mobile App",
   "license": "Apache-2.0",
+  "version": "1.0.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/zywh/maplecityapp.git"
