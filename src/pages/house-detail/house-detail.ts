@@ -29,10 +29,8 @@ import { houseListModel } from '../../models/houseListModel';
 })
 export class HouseDetailPage {
     @ViewChild(Content) content: Content;
-    @ViewChild(HouseDetailViewComponent)
-    private houseDetailView: HouseDetailViewComponent;
-    @ViewChild(MapleMapSearchComponent)
-    private mapleMap: MapleMapSearchComponent;
+    @ViewChild(HouseDetailViewComponent) houseDetailView: HouseDetailViewComponent;
+    @ViewChild(MapleMapSearchComponent) mapleMap: MapleMapSearchComponent;
 
     public isFav = { houseFav: false, routeFav: false };
     public isMore: Boolean = true; //more buttom will be disabled before toast is dismiss
