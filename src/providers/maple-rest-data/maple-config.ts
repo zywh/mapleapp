@@ -15,13 +15,13 @@ export class MapleConf {
     stats: false
   }
   
-  public restHost: string = 'http://cdnr.citym.ca/';
+ // public restHost: string = 'http://cdnr.citym.ca/';
   //public restHost: string = 'http://r.maplecity.com.cn/';
-  //public restHost: string = 'http://devr.citym.ca/';
+  public restHost: string = 'http://devr.citym.ca/';
 
   private confJson = "mapleconf2.json"; //production
   //private confJson = "mapleconf_dev.json"; //development
-  public localVersion: string = '1.0.1';
+  public localVersion: string = '1.0.2';
   public remoteVersion;
 
   constructor(private http: Http, private platform: Platform, private alertc: AlertController) {

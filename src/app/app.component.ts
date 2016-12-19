@@ -138,7 +138,7 @@ export class MapleApp {
     //this.addConnectivityListeners();
     //console.log("Google maps JavaScript needs to be loaded.");
     if (this.connectivity.isOnline()) {
-      //this.connectivity.loadJs();
+      this.connectivity.loadJs();
 
     } else {
      // console.log("Network Offline: load error page")

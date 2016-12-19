@@ -34,7 +34,8 @@ export class Connectivity {
       window['mapInit'] = () => {
 
         let script = document.createElement("script");
-        script.src = "/assets/extjs/richmarker.js";
+        //script.src = "/assets/extjs/richmarker.js";  //absolute path break runn ONLY in IOS phone. Works in browser and simulator
+        script.src = "assets/extjs/richmarker.js";
         console.log("Load Richmarker JS")
         document.body.appendChild(script);
         setTimeout(function() {
