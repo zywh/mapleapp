@@ -298,25 +298,28 @@ export class MapleMapSearchComponent {
 
     //SetCenter and Zoom if location button is clicked
     setmapCenter(isMarker) {
-        this.lockMapListener = true; // lock listener to prevent Android map listener trigger
-        this.locateLock = true; //lock locate click to prevent frozen from double click
+        //this.lockMapListener = true; // lock listener to prevent Android map listener trigger
+        //this.locateLock = true; //lock locate click to prevent frozen from double click
+
         this.mapleconf.getLocation().then(data => {
 
-            this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
-            if (this.auth.authenticated()) {
-                this.userData.addCenterAlert(data['lat'], data['lng'], "保存中心位置到我的收藏");
+            //this.defaultcenter = new google.maps.LatLng(data['lat'], data['lng']);
+            this.defaultcenter = {lat:data['lat'],lng:data['lng']};
+             this.setLocation(this.defaultcenter, this.defaultZoom, 1);
+            // if (this.auth.authenticated()) {
+            //     //this.userData.addCenterAlert(data['lat'], data['lng'], "保存中心位置到我的收藏");
 
 
-                // this.userData.addCenterAlert(data['lat'], data['lng'], "保存中心位置到我的收藏").then(res=>{
-                //  this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
-                //  this.lockMapListener = false;
+            //     // this.userData.addCenterAlert(data['lat'], data['lng'], "保存中心位置到我的收藏").then(res=>{
+            //     //  this.setLocation(this.defaultcenter, this.defaultZoom, isMarker);
+            //     //  this.lockMapListener = false;
 
-                //});
-            } else {
-                this.locateLock = false;
-                this.setLocation(this.defaultcenter, this.defaultZoom, 1);
-                this.lockMapListener = false;
-            }
+            //     //});
+            // } else {
+            //     this.locateLock = false;
+            //     this.setLocation(this.defaultcenter, this.defaultZoom, 1);
+            //     this.lockMapListener = false;
+            // }
 
 
         })
