@@ -34,7 +34,7 @@ export class Connectivity {
       window['mapInit'] = () => {
 
         let script = document.createElement("script");
-        script.src = "/assets/extjs/richmarker.js";
+        script.src = "assets/extjs/richmarker.js"; //remove slash in front.!!! Cause no marker js loaded in IOS
         console.log("Load Richmarker JS")
         document.body.appendChild(script);
         setTimeout(function() {
