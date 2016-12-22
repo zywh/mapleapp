@@ -80,7 +80,7 @@ export class SelectOptionModal {
         this.userData.getUserSelections('houseSearch').then(res => {
             if (res != null) {
                 this.selectOptions = res;
-                this.selectOptions.selectSearch = searchObject;
+               // this.selectOptions.selectSearch = searchObject;
 
             }
             // this.inputText = this.searchSelection['selectSearch']['id'];
