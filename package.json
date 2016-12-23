@@ -7,15 +7,14 @@
     "type": "git",
     "url": "https://github.com/zywh/maplecityapp.git"
   },
-   "scripts": {
+  "scripts": {
     "build": "ionic-app-scripts build",
     "watch": "ionic-app-scripts watch",
-     "serve:before": "watch",
+    "serve:before": "watch",
     "emulate:before": "build",
     "deploy:before": "build",
     "build:before": "build",
     "run:before": "build"
-   
   },
   "globalDependencies": {
     "highcharts": "^4.2.5"
@@ -43,10 +42,9 @@
     "angular2-jwt": "^0.1.25"
   },
   "devDependencies": {
-   "@ionic/app-scripts": "0.0.47",
-   "@types/js-base64": "^2.1.4",
-   "typescript": "2.0.9"
-   
+    "@ionic/app-scripts": "0.0.47",
+    "@types/js-base64": "^2.1.4",
+    "typescript": "2.0.9"
   },
   "config": {
     "ionic_bundler": "webpack"
@@ -58,23 +56,33 @@
       "id": "cordova-plugin-splashscreen"
     },
     "ionic-plugin-deploy",
-    "cordova-plugin-geolocation",
-    "cordova-plugin-compat",
-    "cordova-plugin-x-socialsharing",
-    "cordova-plugin-network-information",
     "cordova-plugin-inappbrowser",
-    "cordova-plugin-statusbar",
     {
       "id": "cordova-plugin-wechat",
       "locator": "cordova-plugin-wechat",
       "variables": {
         "WECHATAPPID": "wx98c2bc19d0082863"
       }
-    }
+    },
+    "cordova-plugin-geolocation",
+    "cordova-plugin-compat",
+    "cordova-plugin-x-socialsharing",
+    "cordova-plugin-network-information",
+    "cordova-plugin-statusbar",
+    "cordova-plugin-crosswalk-webview"
   ],
   "cordovaPlatforms": [
     "ios",
-    "android"
-   
+    "android",
+    {
+      "platform": "android",
+      "version": "",
+      "locator": "android"
+    },
+    {
+      "platform": "ios",
+      "version": "",
+      "locator": "ios"
+    }
   ]
 }
