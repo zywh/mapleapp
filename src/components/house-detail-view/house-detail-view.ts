@@ -49,11 +49,30 @@ export class HouseDetailViewComponent {
   public favLock: boolean = false; // flag to prevent fav button get hit multiple before REST is done
 
   swiperOptions = {
-    //loop: true,
-    //autoHeight: true,
-    pager: true,
-    //speed: 2000,
-    //autoplay: 4000
+     pagination: '.swiper-pagination',
+        paginationClickable: true,
+    // slidesPerView: 'auto',
+     slidesPerView: 4,
+       //spaceBetween: 50,
+       spaceBetween: 20,
+        breakpoints: {
+            1024: {
+                slidesPerView: 3,
+                spaceBetween: 40
+            },
+            768: {
+                slidesPerView: 2,
+                spaceBetween: 30
+            },
+            640: {
+                slidesPerView: 1,
+                spaceBetween: 20
+            },
+            320: {
+                slidesPerView: 1,
+                spaceBetween: 10
+            }
+        }
   };
 
   @ViewChild('photoslider') slider: Slides;

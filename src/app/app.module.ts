@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 import { MapleApp } from './app.component';
 import { Http } from '@angular/http'
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import {KSSwiperModule} from 'angular2-swiper';
 
 //import service and compoment
 import { UserData } from '../providers/user-data';
@@ -146,6 +147,7 @@ export function authFactory(http: any) {
       }
     }, deepLinkConfig),
     CloudModule.forRoot(cloudSettings),
+    KSSwiperModule
 
   ],
   bootstrap: [IonicApp],
