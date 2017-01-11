@@ -1,5 +1,5 @@
 //import {Page, NavController} from 'ionic-angular';
-import { NavController, NavParams, Events,  Platform } from 'ionic-angular';
+import { NavController, NavParams, Events, Platform } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
@@ -27,13 +27,15 @@ export class HomePage {
   public VOWTokenRest;
   public post1;
   public favList;
-  
+  public todayList;
+
   public homeSegment: string = "house1";
   public isAndroid: boolean = false;
   public nearbyHouseList: houseListModel;
   public recommendHouseList: houseListModel;
   public imgHost;
   public houseRestURL;
+  private todayListRestURL;
   private data = { 'lat': 0, 'lng': 0 };
   public listHouse: boolean = false;
   public listFav: boolean = true;
@@ -45,7 +47,7 @@ export class HomePage {
   constructor(
     private nav: NavController,
     private platform: Platform,
-   // private alertc: AlertController,
+    // private alertc: AlertController,
     private parms: NavParams,
     private mapleRestData: MapleRestData,
     private userData: UserData,
@@ -103,11 +105,12 @@ export class HomePage {
     // ionViewWillEnter() {
 
     this.mapleConf.load().then(data => {
-      console.log(data);
+     // console.log(data);
       //this.postListRest = data.postRest;
       this.remoteVersion = data.version;
       this.houseRestURL = data.mapHouseRest;
       this.projectRest = data.projectRest;
+      this.todayListRestURL = data.todayListRest;
       this.VOWTokenRest = data.getVOWTokenRest;
       //this.googleURL = data.googleURL;
       // this.iosURL = data.iosURL;
@@ -139,7 +142,20 @@ export class HomePage {
   //   }
 
   // }
+  today() {
 
+    let user = this.auth.authenticated()? this.auth.user['email']: "NO";
+    this.mapleRestData.load(this.todayListRestURL, { username: user }).subscribe(
+      data => {
+        console.log("today rest");
+       
+        this.imgHost = data.Data.imgHost;
+        this.todayList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
+         console.log(this.todayList);
+      })
+
+
+  }
 
 
   getPostList() {
@@ -203,7 +219,7 @@ export class HomePage {
             console.log(data);
             if (data.Data.Type == 'house') {
               this.imgHost = data.Data.imgHost;
-              
+
 
               if (s == 'nearby') {
                 this.nearbyHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
@@ -212,8 +228,8 @@ export class HomePage {
               if (s == 'recommend') {
                 this.recommendHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
                 this.refreshLock.recommend = true;
-             }
-             // this.nearbyHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
+              }
+              // this.nearbyHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
 
 
             }
@@ -262,7 +278,7 @@ export class HomePage {
         this.userData.saveCenter('recentCenter', e.id, e.lat, e.lng);
 
       } else {
-        this.nav.push(HouseDetailPage, { id: e.id ,list:[]});
+        this.nav.push(HouseDetailPage, { id: e.id, list: [] });
       }
 
     }

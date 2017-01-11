@@ -198,6 +198,10 @@ export class MapleMapSearchComponent {
                 if (this.selectOptions.selectSearch.lat > 20) {  //change location 
                     //let point = new google.maps.LatLng(this.selectOptions.selectSearch.lat, this.selectOptions.selectSearch.lng);
                     let point = {lat:this.selectOptions.selectSearch.lat,lng:this.selectOptions.selectSearch.lng};
+                    console.log(this.selectOptions.selectSearch);
+                    if (this.selectOptions.selectSearch.type == 'CITY'){
+                        this.userData.saveCenter('myCenter',this.selectOptions.selectSearch.id,this.selectOptions.selectSearch.lat,this.selectOptions.selectSearch.lng);
+                    }
 
                     this.setLocation(point, this.defaultZoom, 1);
 
