@@ -40,7 +40,35 @@ export class HouseList {
 
   }
 
+    ngOnChanges(changes) {
 
+        //  console.log('maple-map-search ngonchanges:' + this.mapType + "localListener:" + this.lockMapListener);
+
+        //console.log(this.center);
+        console.log(changes);
+
+        //if (this.mapInput && !this.mapInitialised) {
+
+        // no init if this.center doesn't exist
+        //no init if mapinit is done once and no simplemap
+
+        // if (this.center && (!this.mapInitialised || this.simpleMap)) {
+        // let centerChange: boolean = false;
+        // console.log("map ngchanges");
+        // console.log(changes);
+
+        // // for (let propName in changes) {
+        // //     let chng = changes[propName];
+        // let cur = JSON.stringify(changes['center'].currentValue);
+        // let prev = JSON.stringify(changes['center'].previousValue);
+        // // console.log('ngOnChanges property ' + propName + " prev value:" + prev + " current value:" + cur);
+        // //if (propName == 'center' && cur != prev) {
+        // if (cur != prev) {
+        //     console.log('ngOnChanges property ');
+        //     centerChange = true;
+        // }
+
+        }
 
   listenEvents() {
     this.events.subscribe('user:login', () => {

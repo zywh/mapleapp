@@ -35,7 +35,7 @@
     </ion-fab-list>
   </ion-fab>-->
 
-  <house-list [houselist]='currentHouseList' [imgHost]='imgHost' [isList]='isList'></house-list>
+  <house-list [houselist]='currentHouseList' [imgHost]='imgHost' [isList]='getViewType()'></house-list>
 
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>

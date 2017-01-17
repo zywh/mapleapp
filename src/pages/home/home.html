@@ -43,20 +43,20 @@
       </ion-list>
     </div>
     <div *ngSwitchCase="'house1'">
-      <house-list [houselist]='nearbyHouseList' [imgHost]='imgHost' [fav]='listHouse' [isList]='true'></house-list>
+      <house-list [houselist]='nearbyHouseList' [imgHost]='imgHost' [fav]='listHouse' [isList]='getViewType()'></house-list>
     </div>
 
 
     <div *ngSwitchCase="'house2'">
-      <house-list [houselist]='recommendHouseList' [imgHost]='imgHost' [fav]='listHouse' [isList]='true'></house-list>
+      <house-list [houselist]='recommendHouseList' [imgHost]='imgHost' [fav]='listHouse' [isList]='getViewType()'></house-list>
     </div>
 
     <div *ngSwitchCase="'house3'">
-      <house-list [houselist]='favList' [imgHost]='imgHost' [fav]='listFav' [isList]='true'></house-list>
+      <house-list [houselist]='favList' [imgHost]='imgHost' [fav]='listFav' [isList]='getViewType()'></house-list>
     </div>
     <div *ngSwitchCase="'today'">
 
-      <house-list [houselist]='todayList' [imgHost]='imgHost' [fav]='listHouse' [isList]='true'></house-list>
+      <house-list [houselist]='todayList' [imgHost]='imgHost' [fav]='listHouse' [isList]='getViewType()'></house-list>
     </div>
 
     <div *ngSwitchCase="'projects'" class="projects">

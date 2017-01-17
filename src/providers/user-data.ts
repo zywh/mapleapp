@@ -17,6 +17,7 @@ export class UserData {
   _houseSearchDefault: Object;
   _schoolSearchDefault: Object;
   HAS_LOGGED_IN = 'hasLoggedIn';
+  viewType: boolean = true;
 
 
   //fbid: number;

@@ -21,56 +21,80 @@
 
   <div *ngIf="auth.authenticated()">
 
-    <ion-card tappable  (click)="auth.logout()">
-     
+    <ion-card tappable (click)="auth.logout()">
+
       <ion-item *ngIf="auth.user">
         <ion-avatar item-left>
           <img src="{{ auth.user.picture }}">
         </ion-avatar>
         <h2>{{ auth.user.nickname }}</h2>
         <p>{{ auth.user.email }}</p>
-        <ion-icon primary  name="log-out" item-right></ion-icon>
+        <ion-icon primary name="log-out" item-right></ion-icon>
       </ion-item>
-     
+
     </ion-card>
 
 
     <ion-item-group>
       <ion-item-divider divider>收藏</ion-item-divider>
       <ion-list>
-        <a ion-item (click)="favorite('houseFav')"><ion-icon color="primary" name="home" item-left></ion-icon>我的房源<ion-badge item-right>{{count?.houseFav}}</ion-badge></a>
-        <a ion-item (click)="favorite('routeFav')"><ion-icon color="primary"  name="compass" item-left></ion-icon>看房列表<ion-badge item-right>{{count?.routeFav}}</ion-badge></a>
-         <a ion-item (click)="favorite('recentView')"><ion-icon color="primary" name="eye" item-left></ion-icon>最近浏览<ion-badge item-right>{{count?.recentView}}</ion-badge></a>
+        <a ion-item (click)="favorite('houseFav')">
+          <ion-icon color="primary" name="home" item-left></ion-icon>我的房源
+          <ion-badge item-right>{{count?.houseFav}}</ion-badge>
+        </a>
+        <a ion-item (click)="favorite('routeFav')">
+          <ion-icon color="primary" name="compass" item-left></ion-icon>看房列表
+          <ion-badge item-right>{{count?.routeFav}}</ion-badge>
+        </a>
+        <a ion-item (click)="favorite('recentView')">
+          <ion-icon color="primary" name="eye" item-left></ion-icon>最近浏览
+          <ion-badge item-right>{{count?.recentView}}</ion-badge>
+        </a>
       </ion-list>
     </ion-item-group>
     <ion-item-group>
       <ion-item-divider divider>设置</ion-item-divider>
       <ion-list>
-        <a ion-item (click)="searchDefault(0)"> <ion-icon color="primary" name="home" item-left></ion-icon>缺省房源搜索条件</a>
-        <a ion-item (click)="searchDefault(1)"> <ion-icon color="primary" name="school" item-left></ion-icon>缺省学校搜索条件</a>
-        <a ion-item (click)="myCenter('myCenter')"> <ion-icon color="primary" name="locate" item-left></ion-icon>我的位置<ion-badge item-right>{{count?.myCenter}}</ion-badge></a>
-        <a ion-item (click)="myCenter('recentCenter')"> <ion-icon color="primary"  name="locate" item-left></ion-icon>最近搜索位置<ion-badge item-right>{{count?.recentCenter}}</ion-badge></a>
-      
-     
+        <a ion-item (click)="searchDefault(0)">
+          <ion-icon color="primary" name="home" item-left></ion-icon>缺省房源搜索条件</a>
+        <a ion-item (click)="searchDefault(1)">
+          <ion-icon color="primary" name="school" item-left></ion-icon>缺省学校搜索条件</a>
+        <a ion-item (click)="myCenter('myCenter')">
+          <ion-icon color="primary" name="locate" item-left></ion-icon>我的位置
+          <ion-badge item-right>{{count?.myCenter}}</ion-badge>
+        </a>
+        <a ion-item (click)="myCenter('recentCenter')">
+          <ion-icon color="primary" name="locate" item-left></ion-icon>最近搜索位置
+          <ion-badge item-right>{{count?.recentCenter}}</ion-badge>
+        </a>
+
+
         <ion-item>
-           
-           <ion-toggle [(ngModel)]="notificationFlag" (ionChange)="emailFlag($event)"></ion-toggle>
-            <ion-label>新房源通知</ion-label>
-         </ion-item>   
+
+          <ion-toggle [(ngModel)]="notificationFlag" (ionChange)="changeEmailFlag($event)"></ion-toggle>
+          <ion-label>新房源通知</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-toggle [(ngModel)]="viewFlag" (ionChange)="changeViewFlag($event)"></ion-toggle>
+          <ion-label>缺省列表方式：{{(viewFlag == true)? '列表':'大图'}}</ion-label>
+        </ion-item>
       </ion-list>
     </ion-item-group>
-     <ion-list>
-     <a ion-item  (click)="auth.logout()"><ion-icon color='primary'  name="log-out" item-left></ion-icon>退出登录</a>
-     </ion-list>
-   
+    <ion-list>
+      <a ion-item (click)="auth.logout()">
+        <ion-icon color='primary' name="log-out" item-left></ion-icon>退出登录</a>
+    </ion-list>
+
   </div>
   <ion-item-group>
     <ion-list>
-        <a ion-item (click)="aboutUs()"> <ion-icon color="primary" name="information-circle" item-left></ion-icon>关于我们</a>
-        <a ion-item (click)="help()"> <ion-icon color="primary" name="help" item-left></ion-icon>帮助与反馈(版本{{mapleConf.localVersion}}）</a>
-        
-      </ion-list>
-  
+      <a ion-item (click)="aboutUs()">
+        <ion-icon color="primary" name="information-circle" item-left></ion-icon>关于我们</a>
+      <a ion-item (click)="help()">
+        <ion-icon color="primary" name="help" item-left></ion-icon>帮助与反馈(版本{{mapleConf.localVersion}}）</a>
+
+    </ion-list>
+
   </ion-item-group>
 
 </ion-content>

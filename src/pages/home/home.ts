@@ -60,6 +60,11 @@ export class HomePage {
     this.listenEvents();
   }
 
+  
+    getViewType(){
+        return this.userData.viewType;
+    }
+
   projectSwiperOptions = {
     loop: true,
     //pager: true,

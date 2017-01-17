@@ -74,7 +74,13 @@ export class HouselistSearch {
             this.totalCount = this.currentHouseList.listNumber();
         }
         	//this.content.resize();
+            console.log(this.getViewType());
 
+    }
+
+    getViewType(){
+        //console.log("ViewTYpe:" + this.userData.viewType);
+        return this.userData.viewType;
     }
 
    
@@ -201,8 +207,9 @@ export class HouselistSearch {
     }
 
     toggleView() {
-        this.isList = !this.isList;
-        if (this.isList) {
+        //this.isList = !this.isList;
+        this.userData.viewType = !this.userData.viewType;
+        if (this.userData.viewType) {
             this.viewType = 'apps';
         } else {
             this.viewType = 'list';
