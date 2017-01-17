@@ -50,6 +50,13 @@
         <a ion-item (click)="searchDefault(1)"> <ion-icon color="primary" name="school" item-left></ion-icon>缺省学校搜索条件</a>
         <a ion-item (click)="myCenter('myCenter')"> <ion-icon color="primary" name="locate" item-left></ion-icon>我的位置<ion-badge item-right>{{count?.myCenter}}</ion-badge></a>
         <a ion-item (click)="myCenter('recentCenter')"> <ion-icon color="primary"  name="locate" item-left></ion-icon>最近搜索位置<ion-badge item-right>{{count?.recentCenter}}</ion-badge></a>
+      
+     
+        <ion-item>
+           
+           <ion-toggle [(ngModel)]="notificationFlag" (ionChange)="emailFlag($event)"></ion-toggle>
+            <ion-label>新房源通知</ion-label>
+         </ion-item>   
       </ion-list>
     </ion-item-group>
      <ion-list>

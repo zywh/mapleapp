@@ -19,6 +19,7 @@ export class ProfilePage {
 
   public selectOptions;
   public count;
+  public notificationFlag: boolean= false;
 
   // We need to inject AuthService so that we can
   // use it in the view
@@ -42,7 +43,12 @@ export class ProfilePage {
     this.nav.push(FavoritePage, { type: type });
 
   }
-
+  emailFlag($e){
+    //console.log($e);
+    //console.log(this.notificationFlag);
+    let flag = (this.notificationFlag == true)? 1: 0;
+    this.userData.saveSelectOption(flag,'mailFlag');
+  }
   searchDefault(type) {
     let optionPage: any;
     let optionName;
@@ -95,11 +101,16 @@ export class ProfilePage {
     this.nav.push(MyCenterPage, {type: type});
   }
 
+  getCount(){
+    
+  }
+
   ionViewWillEnter() {
     console.log("profile page will enter");
     //get count
     this.userData.getFavCount().then(res => {
       this.count = res;
+      this.notificationFlag = (this.count.mailFlag == 1)? true:false;
     });
 
 
