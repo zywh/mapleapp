@@ -56,28 +56,31 @@
       <ion-item-divider divider>设置</ion-item-divider>
       <ion-list>
         <a ion-item (click)="searchDefault(0)">
-          <ion-icon color="primary" name="home" item-left></ion-icon>缺省房源搜索条件</a>
+          <ion-icon color="primary" name="home" item-left></ion-icon>房源搜索条件</a>
         <a ion-item (click)="searchDefault(1)">
-          <ion-icon color="primary" name="school" item-left></ion-icon>缺省学校搜索条件</a>
+          <ion-icon color="primary" name="school" item-left></ion-icon>学校搜索条件</a>
         <a ion-item (click)="myCenter('myCenter')">
-          <ion-icon color="primary" name="locate" item-left></ion-icon>我的位置
+          <ion-icon color="primary" name="locate" item-left></ion-icon>关注城市
           <ion-badge item-right>{{count?.myCenter}}</ion-badge>
         </a>
         <a ion-item (click)="myCenter('recentCenter')">
           <ion-icon color="primary" name="locate" item-left></ion-icon>最近搜索位置
           <ion-badge item-right>{{count?.recentCenter}}</ion-badge>
         </a>
-
-
+      <ion-item>
+          <ion-icon color="primary" name="notifications" item-left></ion-icon><ion-label>房源通知</ion-label>
+          <ion-toggle item-right [(ngModel)]="notificationFlag" (ionChange)="changeEmailFlag($event)"></ion-toggle>
+          
+      </ion-item>
         <ion-item>
+         
+          <ion-icon color="primary" name="image" *ngIf="!viewFlag" item-left></ion-icon>
+          <ion-icon color="primary" name="list" *ngIf="viewFlag" item-left></ion-icon> <ion-label> 列表方式</ion-label>
 
-          <ion-toggle [(ngModel)]="notificationFlag" (ionChange)="changeEmailFlag($event)"></ion-toggle>
-          <ion-label>新房源通知</ion-label>
-        </ion-item>
-        <ion-item>
           <ion-toggle [(ngModel)]="viewFlag" (ionChange)="changeViewFlag($event)"></ion-toggle>
-          <ion-label>缺省列表方式：{{(viewFlag == true)? '列表':'大图'}}</ion-label>
+         
         </ion-item>
+
       </ion-list>
     </ion-item-group>
     <ion-list>

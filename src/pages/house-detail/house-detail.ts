@@ -111,13 +111,13 @@ export class HouseDetailPage {
 
     listenEvents() {
         this.events.subscribe('toast:dismiss', () => {
-            //console.log("Toast dismiss event received")
+          
             this.isMore = true;
         });
         this.events.subscribe('user:login', (data) => {
             // no need after directly jump to auth.login - hu
             //this.nav.pop(); //dismiss once login page is presented
-            // console.log('housedetail user:login detected ' + this.houseM.house.src);
+           
             setTimeout(() => {
                 if (!this.houseM.house.src) this.getResult(this.mapleConf.data.houseDetailRest, this.parms.id);
             }, 600);
@@ -130,11 +130,8 @@ export class HouseDetailPage {
     ionViewWillEnter() {
 
 
-        console.log("House Detail page view did enter");
-        //this.contentD = this.content.getDimensions(); // map div in segment can't use 100%
-
         this.mapleConf.load().then(data => {
-            //this.getResult('index.php?r=ngget/getHouseDetail');
+         
             this.getResult(data.houseDetailRest, this.parms.id);
             this.houseRestURL = data.mapHouseRest;
         })
@@ -317,7 +314,7 @@ export class HouseDetailPage {
                     if (type == 'routeFav') { this.isFav.routeFav = false; }
                     break;
                 default:
-                // console.log("Add fav is aborted");
+               
             }
 
         })
@@ -334,11 +331,14 @@ export class HouseDetailPage {
        
 
         this.parms.id = id;
-        let username = (this.auth.authenticated()) ? this.auth.user['email'] : 'NO';
+       
+      
+        let username = (this.auth.authenticated() && this.auth.user) ? this.auth.user['email'] : 'NO';
+       
         let token = this.parms.VOWtoken;
         this.mapleRestData.load(url, { 'id': id, 'username': username, 'VOWtoken': token }).subscribe(
             data => {
-
+             
                 this.lockRefresh = { 'school': false, 'similar': false, 'community': false };//Lock tab page refresh
 
                 if (this.section == "similar") {
@@ -365,7 +365,7 @@ export class HouseDetailPage {
                 this.houseM.cdnPhotos = data.cdn_photos;
                 this.isFav = data.isFav; //check if houseFav and routeFav
                 this.setHouseList();
-                console.log(this.houseM);
+               
                
                 //this.slider.slideTo(0);
                 if(this.section == "housedetail"){  //if statement. otherwise it will not execute next one
