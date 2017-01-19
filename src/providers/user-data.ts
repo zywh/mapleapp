@@ -289,11 +289,11 @@ export class UserData {
           let parms = { username: this.auth.user['email'], data: options, type: type };
           console.log(parms);
           this.mapleRestData.load(rest, parms).subscribe(data => {
-            if ( type == 'mailFlag') {
-              this.presentToast("新房通知设置保存成功");
-            }else {
-                this.presentToast("搜索条件保存成功");
-            }
+            // if ( type == 'mailFlag') {
+            //   this.presentToast("新房通知设置保存成功");
+            // }else {
+            //     this.presentToast("搜索条件保存成功");
+            // }
           
             return resolve(data);
           });

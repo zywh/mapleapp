@@ -34,10 +34,10 @@
 
     </ion-card>
 
-
-    <ion-item-group>
-      <ion-item-divider divider>收藏</ion-item-divider>
+    
+    
       <ion-list>
+        <ion-list-header>  收藏 </ion-list-header>
         <a ion-item (click)="favorite('houseFav')">
           <ion-icon color="primary" name="home" item-left></ion-icon>我的房源
           <ion-badge item-right>{{count?.houseFav}}</ion-badge>
@@ -51,16 +51,16 @@
           <ion-badge item-right>{{count?.recentView}}</ion-badge>
         </a>
       </ion-list>
-    </ion-item-group>
-    <ion-item-group>
-      <ion-item-divider divider>设置</ion-item-divider>
+  
+  
       <ion-list>
+        <ion-list-header>  设置 </ion-list-header>
         <a ion-item (click)="searchDefault(0)">
           <ion-icon color="primary" name="home" item-left></ion-icon>房源搜索条件</a>
         <a ion-item (click)="searchDefault(1)">
           <ion-icon color="primary" name="school" item-left></ion-icon>学校搜索条件</a>
         <a ion-item (click)="myCenter('myCenter')">
-          <ion-icon color="primary" name="locate" item-left></ion-icon>关注城市
+          <ion-icon color="primary" name="pulse" item-left></ion-icon>关注城市
           <ion-badge item-right>{{count?.myCenter}}</ion-badge>
         </a>
         <a ion-item (click)="myCenter('recentCenter')">
@@ -68,29 +68,32 @@
           <ion-badge item-right>{{count?.recentCenter}}</ion-badge>
         </a>
       <ion-item>
-          <ion-icon color="primary" name="notifications" item-left></ion-icon><ion-label>房源通知</ion-label>
+          <ion-icon color="primary" name="notifications" *ngIf="notificationFlag" item-left></ion-icon>
+            <ion-icon color="primary" name="notifications-off" *ngIf="!notificationFlag" item-left></ion-icon>
+            <ion-label>房源通知</ion-label>
           <ion-toggle item-right [(ngModel)]="notificationFlag" (ionChange)="changeEmailFlag($event)"></ion-toggle>
           
       </ion-item>
         <ion-item>
          
           <ion-icon color="primary" name="image" *ngIf="!viewFlag" item-left></ion-icon>
-          <ion-icon color="primary" name="list" *ngIf="viewFlag" item-left></ion-icon> <ion-label> 列表方式</ion-label>
+          <ion-icon color="primary" name="list" *ngIf="viewFlag" item-left></ion-icon> 
+          <ion-label *ngIf="viewFlag"> 列表方式</ion-label>
+          <ion-label *ngIf="!viewFlag"> 图片列表</ion-label>
 
           <ion-toggle [(ngModel)]="viewFlag" (ionChange)="changeViewFlag($event)"></ion-toggle>
          
         </ion-item>
 
       </ion-list>
-    </ion-item-group>
-    <ion-list>
-      <a ion-item (click)="auth.logout()">
-        <ion-icon color='primary' name="log-out" item-left></ion-icon>退出登录</a>
-    </ion-list>
+  
+  
 
   </div>
-  <ion-item-group>
+
+  
     <ion-list>
+         <ion-list-header>  其他 </ion-list-header>
       <a ion-item (click)="aboutUs()">
         <ion-icon color="primary" name="information-circle" item-left></ion-icon>关于我们</a>
       <a ion-item (click)="help()">
@@ -98,6 +101,5 @@
 
     </ion-list>
 
-  </ion-item-group>
-
+  
 </ion-content>
