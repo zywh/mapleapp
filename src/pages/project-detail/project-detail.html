@@ -49,7 +49,7 @@
       <h4>开发商：{{project.developer_intro}}</h4>
       <p> {{project.summary}} </p>
       
-      <ion-slides class="swiper-container">
+      <ion-slides class="swiper-container"  pager>
         <ion-slide *ngFor="let image of converto2a(project.image_list)">
           <img [src]="smallImg(image.file)" class="slide-image" />
         </ion-slide>
@@ -64,7 +64,7 @@
     </div>
 
     <div *ngSwitchCase="'layout'">
-      <ion-slides  class="swiper-container">
+      <ion-slides  class="swiper-container" pager>
         <ion-slide *ngFor="let image of converto2a(project.layout_list)">
           <img [src]="smallImg(image.file)" class="slide-image" />
         </ion-slide>
