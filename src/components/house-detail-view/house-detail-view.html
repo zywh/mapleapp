@@ -10,7 +10,7 @@
 </ion-fab>
 
 
-	<ion-slides #photoslider [options]="swiperOptions" class="swiper-container">
+	<ion-slides #photoslider class="swiper-container">
 
 		<ion-slide *ngFor="let photo of houseM?.cdnPhotos">
 			<img [src]="photo" class="slide-image" onerror="this.src='assets/img/maple/zanwu.jpg'"/>

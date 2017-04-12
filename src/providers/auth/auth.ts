@@ -44,6 +44,7 @@ export class AuthService {
   user: Object;
   zoneImpl: NgZone;
   storage: Storage = new Storage();
+  //storage: Storage;
   idToken: string;
 
   constructor(zone: NgZone, private events: Events) {

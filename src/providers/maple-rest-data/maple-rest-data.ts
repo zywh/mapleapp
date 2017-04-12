@@ -37,7 +37,7 @@ export class MapleRestData {
 
     return this.authhttp.post(url, body, options)
       .retryWhen(error => error.delay(500))
-      .timeout(8000, new Error('delay exceeded')) // <------
+     // .timeout(8000, new Error('delay exceeded')) // <------
       .map(res => res.json())
       //.catch(this.handleError);
   }

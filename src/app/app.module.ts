@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
 import { IonicApp, IonicModule, DeepLinkConfig } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+//import { IonicStorageModule } from '@ionic/storage';
 import { MapleApp } from './app.component';
 import { Http } from '@angular/http'
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
@@ -66,7 +69,7 @@ const cloudSettings: CloudSettings = {
   }
 };
 
-let storage: Storage = new Storage();
+
 
 export const deepLinkConfig: DeepLinkConfig = {
   links: [
@@ -82,6 +85,8 @@ export const deepLinkConfig: DeepLinkConfig = {
 };
 
 export function authFactory(http: any) {
+  //let storage: Storage;
+  let storage = new Storage();
   return new AuthHttp(new AuthConfig({
     globalHeaders: [{ 'Accept': 'application/json' }],
     tokenGetter: (() => storage.get('id_token')), noJwtError: true
@@ -144,20 +149,17 @@ export function authFactory(http: any) {
 
         },
       }
-    }, deepLinkConfig),
+    },
+      deepLinkConfig),
+    BrowserModule,
+    HttpModule,
     CloudModule.forRoot(cloudSettings),
-
+   
   ],
   bootstrap: [IonicApp],
   entryComponents: [
 
     HouseList,
-    // SchoolListComponent,
-    // HouseCityStatsComponent,
-    // SimpleMapComponent,
-    // HouseDetailViewComponent,
-    // MapleMapSearchComponent,
-    //Search,
     MapleApp,
     AboutPage,
     FavoritePage,
