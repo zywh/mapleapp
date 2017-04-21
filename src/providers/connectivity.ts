@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
-import { Network } from 'ionic-native';
+import { Network } from '@ionic-native/network';
 //declare var Connection;
 declare var google;
 
@@ -9,21 +9,21 @@ export class Connectivity {
 
   onDevice: boolean;
 
-  constructor(public platform: Platform) {
+  constructor(public platform: Platform,private network: Network) {
     this.onDevice = this.platform.is('cordova');
   }
 
   isOnline(): boolean {
-    if (this.onDevice && Network.connection) {
-      return Network.connection !== "none";
+    if (this.onDevice && this.network.type) {
+      return this.network.type !== "none";
     } else {
       return navigator.onLine;
     }
   }
 
   isOffline(): boolean {
-    if (this.onDevice && Network.connection) {
-      return Network.connection === "none";
+    if (this.onDevice && this.network.type) {
+      return this.network.type === "none";
     } else {
       return !navigator.onLine;
     }

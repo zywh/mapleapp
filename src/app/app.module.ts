@@ -1,7 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
 import { HttpModule } from '@angular/http';
 import { IonicApp, IonicModule, DeepLinkConfig } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
+import {SplashScreen} from '@ionic-native/splash-screen';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { Network } from '@ionic-native/network';
+import { SocialSharing } from '@ionic-native/social-sharing';
+
 import { Storage } from '@ionic/storage';
 //import { IonicStorageModule } from '@ionic/storage';
 import { MapleApp } from './app.component';
@@ -195,6 +202,11 @@ export function authFactory(http: any) {
     MapleRestData,
     MapleConf,
     Connectivity,
+    InAppBrowser,
+    SplashScreen,
+    StatusBar,
+    Network,
+    SocialSharing,
     {
       provide: AuthHttp,
       // useFactory: (http) => {

@@ -1,7 +1,5 @@
 import { Content, NavController, NavParams, AlertController, ToastController, Platform, Slides, Events, ActionSheetController } from 'ionic-angular';
 import { Component, ViewChild } from '@angular/core';
-//import {Geolocation} from 'ionic-native';
-//import { SocialSharing } from 'ionic-native';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 import { UserData } from '../../providers/user-data';
@@ -12,18 +10,8 @@ import { houseInterface, houseModel } from '../../models/houseModel';
 import {MapleMapSearchComponent} from '../../components/maple-map-search/maple-map-search';
 import {HouseDetailViewComponent} from '../../components/house-detail-view/house-detail-view';
 import { houseListModel } from '../../models/houseListModel';
-//import { HouselistSearch } from '../houselist-search/houselist-search';
-//import { MapSearchPage } from '../map-search/map-search';
-//import { MapSearchNewPage } from '../map-search-new/map-search-new';
 
-//declare var google: any;
 
-/*
-  Generated class for the HouseDetailPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
     templateUrl: 'house-detail.html',
 })

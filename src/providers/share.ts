@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Platform, PopoverController } from 'ionic-angular';
-import { SocialSharing } from 'ionic-native';
+//import { SocialSharing } from 'ionic-native';
+import { SocialSharing } from '@ionic-native/social-sharing';
 import 'rxjs/add/operator/map';
 declare var Wechat: any;
 
@@ -13,8 +14,11 @@ declare var Wechat: any;
 @Injectable()
 export class ShareService {
 
-  constructor(private platform: Platform,
-    public popoverCtrl: PopoverController) {
+  constructor(
+    private platform: Platform,
+    public popoverCtrl: PopoverController,
+    private socialSharing: SocialSharing
+    ) {
   }
 
   share(link, img, title, des) {
@@ -78,6 +82,7 @@ export class ShareService {
     // var onError = function (msg) {
     //   console.log("Sharing failed with message: " + msg);
     // }
-    SocialSharing.shareWithOptions(options);
+   // SocialSharing.shareWithOptions(options);
+    this.socialSharing.shareWithOptions(options);
   }
 }

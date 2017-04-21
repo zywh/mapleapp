@@ -1,13 +1,12 @@
 import {ViewChild, Component} from '@angular/core';
 import {Events, Platform, Nav, MenuController} from 'ionic-angular';
 
-import {StatusBar, Splashscreen} from 'ionic-native';
+import { StatusBar } from '@ionic-native/status-bar';
+import {SplashScreen} from '@ionic-native/splash-screen';
+
 //import {AccountPage} from '../pages/account/account';
 import {TabsPage} from '../pages/tabs/tabs';
-//import {LoginPage} from '../pages/login/login';
-//import {SignupPage} from '../pages/signup/signup';
-//import {SettingsPage} from '../pages/settings/settings';
-//import {ProfilePage} from '../pages/profile/profile';
+
 import {NetworkErrorPage} from '../pages/network-error/network-error';
 //import {HouselistSearch} from '../pages/houselist-search/houselist-search'
 //import {ConferenceData} from './providers/conference-data';
@@ -58,6 +57,8 @@ export class MapleApp {
     private menu: MenuController,
     platform: Platform,
     mapleconf: MapleConf,
+    private statusBar: StatusBar,
+    private splashScreen: SplashScreen,
     public connectivity: Connectivity,
     private auth: AuthService,
     private update: UpdateService
@@ -65,8 +66,8 @@ export class MapleApp {
   ) {
     // Call any initial plugins when ready
     platform.ready().then(() => {
-      StatusBar.styleDefault();
-      Splashscreen.hide();
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
       this.update.newUpdate();
       auth.startupTokenRefresh();
     });
