@@ -4,12 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { IonicApp, IonicModule, DeepLinkConfig } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
-import {SplashScreen} from '@ionic-native/splash-screen';
+import { SplashScreen } from '@ionic-native/splash-screen';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Network } from '@ionic-native/network';
 import { SocialSharing } from '@ionic-native/social-sharing';
 
-import { Storage } from '@ionic/storage';
+//import { Storage } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage';
 //import { IonicStorageModule } from '@ionic/storage';
 import { MapleApp } from './app.component';
 import { Http } from '@angular/http'
@@ -20,10 +21,9 @@ import { UserData } from '../providers/user-data';
 import { MapleConf } from '../providers/maple-rest-data/maple-config';
 import { MapleRestData } from '../providers/maple-rest-data/maple-rest-data';
 import { Connectivity } from '../providers/connectivity';
-import { AuthService } from '../providers/auth/auth';
+
 import { UpdateService } from '../providers/update';
 import { ShareService } from '../providers/share';
-import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { HouseList } from '../components/house-list/house-list';
 import { SchoolListComponent } from '../components/school-list/school-list';
 import { HouseCityStatsComponent } from '../components/house-city-stats/house-city-stats';
@@ -68,13 +68,15 @@ import { HouseDetailMapPage } from '../pages/house-detail-tabs/house-detail-map'
 import { SimilarHousesPage } from '../pages/house-detail-tabs/similar-houses';
 import { CommunityStatsPage } from '../pages/house-detail-tabs/community-stats';
 import { HouseDetailMainPage } from '../pages/house-detail-tabs/house-detail-main';
+import { AuthService } from '../services/auth.service';
+import { Storage } from '@ionic/storage';
 
-const cloudSettings: CloudSettings = {
-  // "枫之都" @ionic.io
-  'core': {
-    'app_id': 'aab7d6de'
-  }
-};
+// const cloudSettings: CloudSettings = {
+//   // "枫之都" @ionic.io
+//   'core': {
+//     'app_id': 'aab7d6de'
+//   }
+// };
 
 
 
@@ -93,7 +95,7 @@ export const deepLinkConfig: DeepLinkConfig = {
 
 export function authFactory(http: any) {
   //let storage: Storage;
-  let storage = new Storage();
+  let storage: Storage;
   return new AuthHttp(new AuthConfig({
     globalHeaders: [{ 'Accept': 'application/json' }],
     tokenGetter: (() => storage.get('id_token')), noJwtError: true
@@ -157,11 +159,12 @@ export function authFactory(http: any) {
         },
       }
     },
-      deepLinkConfig),
+    deepLinkConfig),
     BrowserModule,
     HttpModule,
-    CloudModule.forRoot(cloudSettings),
-   
+    IonicStorageModule.forRoot()
+    //CloudModule.forRoot(cloudSettings),
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -197,7 +200,7 @@ export function authFactory(http: any) {
     CommunityStatsPage
   ],
   providers: [
-    Storage,
+    //Storage,
     UserData,
     MapleRestData,
     MapleConf,

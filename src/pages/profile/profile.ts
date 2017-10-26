@@ -1,7 +1,7 @@
 
 import { Component } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
-import { AuthService } from '../../providers/auth/auth';
+import { AuthService } from '../../services/auth.service';
 import { AboutPage } from '../about/about';
 import { FavoritePage } from '../favorite/favorite';
 import { HelpPage } from '../help/help';

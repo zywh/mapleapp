@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 import { UserData } from '../../providers/user-data';
-import { AuthService } from '../../providers/auth/auth';
+import { AuthService } from '../../services/auth.service';
 
 
 export interface selectOptionsObj {

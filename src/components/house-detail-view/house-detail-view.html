@@ -72,15 +72,15 @@
 					</div>
 				</div>
 			</div>
-			<div class="fyxq_ptss" *ngIf="houseM?.hasOpenHouse(houseM?.house.oh_date1,auth.authenticated())">
+			<div class="fyxq_ptss" *ngIf="houseM?.hasOpenHouse(houseM?.house.oh_date1,auth.isAuthenticated())">
 				<div class="fyxq_ptssleft">开放日一：</div>
 				<div class="fyxq_ptssright">{{houseM?.getOpenHouse(houseM?.house.oh_date1,houseM?.house.oh_from1,houseM?.house.oh_to1)}}</div>
 			</div>
-			<div class="fyxq_ptss" *ngIf="houseM?.hasOpenHouse(houseM?.house.oh_date2,auth.authenticated())">
+			<div class="fyxq_ptss" *ngIf="houseM?.hasOpenHouse(houseM?.house.oh_date2,auth.isAuthenticated())">
 				<div class="fyxq_ptssleft">开放日二：</div>
 				<div class="fyxq_ptssright">{{houseM?.getOpenHouse(houseM?.house.oh_date2,houseM?.house.oh_from2,houseM?.house.oh_to2)}}</div>
 			</div>
-			<div class="fyxq_ptss" *ngIf="houseM?.hasOpenHouse(houseM?.house.oh_date3,auth.authenticated())">
+			<div class="fyxq_ptss" *ngIf="houseM?.hasOpenHouse(houseM?.house.oh_date3,auth.isAuthenticated())">
 				<div class="fyxq_ptssleft">开放日三：</div>
 				<div class="fyxq_ptssright">{{houseM?.getOpenHouse(houseM?.house.oh_date3,houseM?.house.oh_from3,houseM?.house.oh_to3)}}</div>
 			</div>
@@ -100,7 +100,7 @@
 						<ion-badge>{{houseM?.listDate}}</ion-badge>
 					</ion-label>
 				</ion-item>
-				<ion-item *ngIf="auth.authenticated() && houseM?.house.orig_dol && houseM?.house.orig_dol != houseM?.house.lp_dol">
+				<ion-item *ngIf="auth.isAuthenticated() && houseM?.house.orig_dol && houseM?.house.orig_dol != houseM?.house.lp_dol">
 					<ion-label fixed class="xqlb_label">原来价格：</ion-label>
 					<ion-label>
 						<s>{{houseM?.priceOrig}}</s>

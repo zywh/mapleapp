@@ -1,5 +1,8 @@
 {
   "name": "枫之都",
   "app_id": "aab7d6de",
-  "v2": true
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
 }

@@ -1,21 +1,22 @@
-import {ViewChild, Component} from '@angular/core';
-import {Events, Platform, Nav, MenuController} from 'ionic-angular';
+import { ViewChild, Component } from '@angular/core';
+import { Events, Platform, Nav, MenuController } from 'ionic-angular';
 
 import { StatusBar } from '@ionic-native/status-bar';
-import {SplashScreen} from '@ionic-native/splash-screen';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
-//import {AccountPage} from '../pages/account/account';
-import {TabsPage} from '../pages/tabs/tabs';
+import { TabsPage } from '../pages/tabs/tabs';
 
-import {NetworkErrorPage} from '../pages/network-error/network-error';
+import { NetworkErrorPage } from '../pages/network-error/network-error';
 //import {HouselistSearch} from '../pages/houselist-search/houselist-search'
 //import {ConferenceData} from './providers/conference-data';
-import {UserData} from '../providers/user-data';
+import { UserData } from '../providers/user-data';
 //import {MapleRestData} from '../providers/maple-rest-data/maple-rest-data';
-import {Connectivity} from '../providers/connectivity';
-import {MapleConf} from '../providers/maple-rest-data/maple-config';
-import {AuthService} from '../providers/auth/auth';
-import {UpdateService} from '../providers/update';
+import { Connectivity } from '../providers/connectivity';
+import { MapleConf } from '../providers/maple-rest-data/maple-config';
+//import { AuthService } from '../providers/auth/auth';
+import { UpdateService } from '../providers/update';
+import Auth0Cordova from '@auth0/cordova';
+import { AuthService } from '../services/auth.service';
 
 export interface PageObj {
   title: string;
@@ -56,7 +57,7 @@ export class MapleApp {
     public userData: UserData,
     private menu: MenuController,
     platform: Platform,
-    mapleconf: MapleConf,
+    //mapleconf: MapleConf,
     private statusBar: StatusBar,
     private splashScreen: SplashScreen,
     public connectivity: Connectivity,
@@ -69,21 +70,19 @@ export class MapleApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.update.newUpdate();
-      auth.startupTokenRefresh();
+      //auth.startupTokenRefresh();
+      // This function is part of "Set Up Auth0-Cordova"
+      (<any>window).handleOpenURL = (url) => {
+        Auth0Cordova.onRedirectUri(url);
+      };
     });
 
-    // load the conference data
-    //confData.load();
-
-    // decide which menu items should be hidden by current login status stored in local storage
-    // this.userData.hasLoggedIn().then((hasLoggedIn) => {
-    //   this.enableMenu(hasLoggedIn == 'true');
-    // });
+   
 
     this.listenEvents();
     this.checkConnectivity();
   }
-  
+
 
   openPage(page: PageObj) {
     // the nav component was found using @ViewChild(Nav)
@@ -106,8 +105,8 @@ export class MapleApp {
   }
 
   listenEvents() {
-  
-     this.events.subscribe('profile:login', (data) => {
+
+    this.events.subscribe('profile:login', () => {
 
       setTimeout(() => {
         this.auth.login();
@@ -117,13 +116,13 @@ export class MapleApp {
 
     this.events.subscribe('map:center', (data) => {
 
-     setTimeout(() => {
-       console.log(data);
+      setTimeout(() => {
+        console.log(data);
         this.nav.setRoot(TabsPage, { tabIndex: 1, rootParms: data });
       }, 300);
     });
     this.events.subscribe('schoolmap:center', (data) => {
-     setTimeout(() => {
+      setTimeout(() => {
         this.nav.setRoot(TabsPage, { tabIndex: 2, rootParms: data });
       }, 1000);
 
@@ -144,7 +143,7 @@ export class MapleApp {
       this.connectivity.loadJs();
 
     } else {
-     // console.log("Network Offline: load error page")
+      // console.log("Network Offline: load error page")
       this.rootPage = NetworkErrorPage;
     }
   }

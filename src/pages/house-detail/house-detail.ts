@@ -4,11 +4,11 @@ import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 import { UserData } from '../../providers/user-data';
 //import { HouseCityStatsPage } from '../../pages/house-city-stats/house-city-stats';
-import { AuthService } from '../../providers/auth/auth';
+import { AuthService } from '../../services/auth.service';
 import { ShareService } from '../../providers/share';
 import { houseInterface, houseModel } from '../../models/houseModel';
-import {MapleMapSearchComponent} from '../../components/maple-map-search/maple-map-search';
-import {HouseDetailViewComponent} from '../../components/house-detail-view/house-detail-view';
+import { MapleMapSearchComponent } from '../../components/maple-map-search/maple-map-search';
+import { HouseDetailViewComponent } from '../../components/house-detail-view/house-detail-view';
 import { houseListModel } from '../../models/houseListModel';
 
 
@@ -52,16 +52,16 @@ export class HouseDetailPage {
     //public location = { 'lat': 44, 'lng': -79 };
     public location;
     public zoomlevel;
-    
-  swiperOptions = {
-    //loop: true,
-    //autoHeight: true,
-    pager: true,
-    //speed: 2000,
-    //autoplay: 4000
-  };
 
-     @ViewChild('photoslider') slider: Slides;
+    swiperOptions = {
+        //loop: true,
+        //autoHeight: true,
+        pager: true,
+        //speed: 2000,
+        //autoplay: 4000
+    };
+
+    @ViewChild('photoslider') slider: Slides;
     //public popLock: boolean = false;
     private currentMLS;
     public simpleMap: boolean = true;
@@ -99,13 +99,13 @@ export class HouseDetailPage {
 
     listenEvents() {
         this.events.subscribe('toast:dismiss', () => {
-          
+
             this.isMore = true;
         });
         this.events.subscribe('user:login', (data) => {
             // no need after directly jump to auth.login - hu
             //this.nav.pop(); //dismiss once login page is presented
-           
+
             setTimeout(() => {
                 if (!this.houseM.house.src) this.getResult(this.mapleConf.data.houseDetailRest, this.parms.id);
             }, 600);
@@ -119,13 +119,13 @@ export class HouseDetailPage {
 
 
         this.mapleConf.load().then(data => {
-         
+
             this.getResult(data.houseDetailRest, this.parms.id);
             this.houseRestURL = data.mapHouseRest;
         })
 
         if (this.mapleConf.helpFlag.houseDetail == false && this.parms.list.length > 1) {
-            this.userData.presentToast("提示：左右滑动切换上一个和下一个房源",2000);
+            this.userData.presentToast("提示：左右滑动切换上一个和下一个房源", 2000);
             this.mapleConf.helpFlag.houseDetail = true;
         }
 
@@ -140,7 +140,7 @@ export class HouseDetailPage {
     gotoMap(markerType, zoomlevel = 16) { // 1 for house marker- 2 for school marker
         //this.popLock = true;
         this.zoomlevel = zoomlevel;
-        this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude,'type':markerType};
+        this.location = { 'lat': this.houseM.house.latitude, 'lng': this.houseM.house.longitude, 'type': markerType };
         //this.nav.push(MapSearchNewPage,this.location);
         //this.nav.push(MapSearchNewPage, { 'mapType': mapType, 'center': this.location, 'zoomlevel': zoomlevel });
     }
@@ -203,8 +203,8 @@ export class HouseDetailPage {
 
 
                     if (data.Data.Type == 'house') {
-                        //similarHouses = new houseListModel(data.Data.HouseList, this.auth.authenticated());
-                        this.similarHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
+
+                        this.similarHouseList = new houseListModel(data.Data.HouseList, this.auth.isAuthenticated());
                         //console.log(this.similarHouseList);
                         //this.nav.push(HouselistSearch, { list: similarHouses, imgHost: '', listType: 'house' });
                         this.lockRefresh.similar = true;
@@ -212,7 +212,7 @@ export class HouseDetailPage {
                             return obj.MLS == mls;
                         });
 
-                        this.currentHouseList = new houseListModel(list, this.auth.authenticated());
+                        this.currentHouseList = new houseListModel(list, this.auth.isAuthenticated());
 
 
 
@@ -227,7 +227,7 @@ export class HouseDetailPage {
     more() {
         //this.userData.hasFavorite(this.parms.id).then(res => {
         //this.isFav = res;
-        if (this.auth.authenticated()) {
+        if (this.auth.isAuthenticated()) {
 
 
             // console.log(this.isFav);
@@ -302,7 +302,7 @@ export class HouseDetailPage {
                     if (type == 'routeFav') { this.isFav.routeFav = false; }
                     break;
                 default:
-               
+
             }
 
         })
@@ -316,17 +316,17 @@ export class HouseDetailPage {
 
 
     getResult(url, id) {
-       
+
 
         this.parms.id = id;
-       
-      
-        let username = (this.auth.authenticated() && this.auth.user) ? this.auth.user['email'] : 'NO';
-       
+
+
+        let username = (this.auth.isAuthenticated() && this.auth.user) ? this.auth.user['email'] : 'NO';
+
         let token = this.parms.VOWtoken;
         this.mapleRestData.load(url, { 'id': id, 'username': username, 'VOWtoken': token }).subscribe(
             data => {
-             
+
                 this.lockRefresh = { 'school': false, 'similar': false, 'community': false };//Lock tab page refresh
 
                 if (this.section == "similar") {
@@ -338,7 +338,7 @@ export class HouseDetailPage {
                     this.gotoSchool();
 
                 }
-               
+
                 this.location = { 'lat': data.house.latitude, 'lng': data.house.longitude, 'type': 1 }; // 2 for school marker
                 this.houseM.rxPhone = this.mapleConf.data.phone;
                 this.currentMLS = this.houseM.house.ml_num;
@@ -353,22 +353,22 @@ export class HouseDetailPage {
                 this.houseM.cdnPhotos = data.cdn_photos;
                 this.isFav = data.isFav; //check if houseFav and routeFav
                 this.setHouseList();
-               
-               
+
+
                 //this.slider.slideTo(0);
-                if(this.section == "housedetail"){  //if statement. otherwise it will not execute next one
+                if (this.section == "housedetail") {  //if statement. otherwise it will not execute next one
                     this.houseDetailView.slider.slideTo(0); //trigger slide to 0 and scroll to top
                     this.content.scrollToTop();
                 }
-                 if((this.section == "schoolmap" || this.section == "housemap") && this.mapleMap.mapInitialised == true){ //if statement. otherwise it will not execute next one
-                  //this.mapleMap.mapInitialised = false; //trigger map refresh 
+                if ((this.section == "schoolmap" || this.section == "housemap") && this.mapleMap.mapInitialised == true) { //if statement. otherwise it will not execute next one
+                    //this.mapleMap.mapInitialised = false; //trigger map refresh 
 
-                  this.mapleMap.setLocation(this.location,16,1);
+                    this.mapleMap.setLocation(this.location, 16, 1);
                 }
-                
 
-               
-               
+
+
+
 
             }
         )

@@ -3,7 +3,8 @@ import { Component,ViewChild} from '@angular/core';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 import { UserData } from '../../providers/user-data';
-import { AuthService } from '../../providers/auth/auth';
+import { AuthService } from '../../services/auth.service';
+
 import { ShareService } from '../../providers/share';
 import { houseInterface, houseModel } from '../../models/houseModel';
 
@@ -98,7 +99,7 @@ export class HouseDetailTabsPage {
 			this.mapleConf.helpFlag.houseDetail = true;
 		}
 
-		console.log(this.detailComponent.getActiveChildNav);
+		//console.log(this.detailComponent.getActiveChildNav);
 
 	
 	}
@@ -116,7 +117,7 @@ export class HouseDetailTabsPage {
 	more() {
 		//this.userData.hasFavorite(this.parms.id).then(res => {
 		//this.isFav = res;
-		if (this.auth.authenticated()) {
+		if (this.auth.isAuthenticated()) {
 
 
 			console.log(this.isFav);
@@ -207,7 +208,7 @@ export class HouseDetailTabsPage {
 	getResult(url, id) {
 
 		this.parms.id = id;
-		let username = (this.auth.authenticated()) ? this.auth.user['email'] : 'NO';
+		let username = (this.auth.isAuthenticated()) ? this.auth.user['email'] : 'NO';
 		let token = this.parms.VOWtoken;
 		this.mapleRestData.load(url, { 'id': id, 'username': username, 'VOWtoken': token }).subscribe(
 			data => {

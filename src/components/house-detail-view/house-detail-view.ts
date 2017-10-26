@@ -6,7 +6,9 @@ import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 //import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { UserData } from '../../providers/user-data';
 //import { HouseCityStatsPage } from '../../pages/house-city-stats/house-city-stats';
-import { AuthService } from '../../providers/auth/auth';
+//import { AuthService } from '../../providers/auth/auth';
+import { AuthService } from '../../services/auth.service';
+
 //import { ShareService } from '../../providers/share';
 
 /*
@@ -70,7 +72,7 @@ export class HouseDetailViewComponent {
   }
 
 
-  ngOnChanges(changes) {
+  ngOnChanges() {
     console.log("house detail view component on changes event");
 
     //console.log(this.slider.length()); //slider function cause blank screen

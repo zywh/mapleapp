@@ -1,9 +1,8 @@
 import { NavParams, ViewController, Events } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
-import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 import { UserData } from '../../providers/user-data';
-import { AuthService } from '../../providers/auth/auth';
+import { AuthService } from '../../services/auth.service';
+
 
 
 @Component({
@@ -25,13 +24,13 @@ export class SelectOptionModal {
         private params: NavParams,
         public auth: AuthService,
         private viewCtrl: ViewController,
-        private mapleRestData: MapleRestData,
-        private mapleConf: MapleConf,
+        //private mapleRestData: MapleRestData,
+        //private mapleConf: MapleConf,
         private userData: UserData,
         private events: Events
     ) {
 
-        this.selectOptions = params.get('data');
+        this.selectOptions = this.params.get('data');
         //console.log(this.selectOptions);
         if (this.selectOptions.hasOwnProperty("selectSearch")) {
             this.inputText = this.selectOptions.selectSearch['id'];
@@ -76,7 +75,7 @@ export class SelectOptionModal {
     }
 
     getMySelections() {
-        let searchObject = this.selectOptions.selectSearch;
+        //let searchObject = this.selectOptions.selectSearch;
         this.userData.getUserSelections('houseSearch').then(res => {
             if (res != null) {
                 this.selectOptions = res;
@@ -88,7 +87,7 @@ export class SelectOptionModal {
         })
     }
 
-    getMinMax(type: string, selection: string, sr: boolean) {
+    getMinMax(type: string, selection: string ) {
         let min: number, max: number, step: number, differ: number;
         let smin: number, smax: number;
         if (selection == "Price") {
@@ -162,7 +161,7 @@ export class SelectOptionModal {
     }
 
     listenEvents() {
-        this.events.subscribe('profile:login', (data) => {
+        this.events.subscribe('profile:login', () => {
 
             this.dismiss(); //dismiss once login page is presented
 

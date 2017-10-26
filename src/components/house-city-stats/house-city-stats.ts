@@ -1,10 +1,10 @@
 import { Component,Input } from '@angular/core';
-import {NavController,NavParams} from 'ionic-angular';
+import {NavController} from 'ionic-angular';
 import {MapleRestData} from '../../providers/maple-rest-data/maple-rest-data';
 import {MapleConf} from '../../providers/maple-rest-data/maple-config';
 //import { HouseDetailPage } from '../../pages/house-detail/house-detail';
 import { CityStats} from '../../pages/house-city-stats/city-stats';
-declare var Highcharts: any;
+//declare var Highcharts: any;
 
 @Component({
   selector: 'house-city-stats',
@@ -21,7 +21,7 @@ export class HouseCityStatsComponent {
 
   constructor(
     private mapleRestData: MapleRestData,
-    private parm: NavParams,
+    //private parm: NavParams,
     private mapleconf: MapleConf,
     public nav: NavController
   ) { 

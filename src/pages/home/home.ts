@@ -8,7 +8,8 @@ import { HouseDetailPage } from '../house-detail/house-detail';
 import { UserData } from '../../providers/user-data';
 import { PostPage } from '../post/post';
 import { ProfilePage } from '../profile/profile';
-import { AuthService } from '../../providers/auth/auth';
+import { AuthService } from '../../services/auth.service';
+
 //import { HouseList } from '../../components/house-list/house-list';
 //import { Search } from '../../components/search/search';
 import { houseListModel } from '../../models/houseListModel';
@@ -88,7 +89,7 @@ export class HomePage {
 
   fav() {
 
-    if (this.auth.authenticated()) {
+    if (this.auth.isAuthenticated()) {
       this.userData.getUserData('houseFav').then(res => {
         this.imgHost = res.imgHost;
         this.favList = res.HouseList;
@@ -149,13 +150,13 @@ export class HomePage {
   // }
   today() {
 
-    let user = this.auth.authenticated()? this.auth.user['email']: "NO";
+    let user = this.auth.isAuthenticated()? this.auth.user['email']: "NO";
     this.mapleRestData.load(this.todayListRestURL, { username: user }).subscribe(
       data => {
         console.log("today rest");
        
         this.imgHost = data.Data.imgHost;
-        this.todayList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
+        this.todayList = new houseListModel(data.Data.HouseList, this.auth.isAuthenticated());
          console.log(this.todayList);
       })
 
@@ -227,11 +228,11 @@ export class HomePage {
 
 
               if (s == 'nearby') {
-                this.nearbyHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
+                this.nearbyHouseList = new houseListModel(data.Data.HouseList, this.auth.isAuthenticated());
                 this.refreshLock.nearby = true;
               }
               if (s == 'recommend') {
-                this.recommendHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
+                this.recommendHouseList = new houseListModel(data.Data.HouseList, this.auth.isAuthenticated());
                 this.refreshLock.recommend = true;
               }
               // this.nearbyHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());

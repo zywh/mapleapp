@@ -15,11 +15,11 @@
 
 <ion-content padding>
 
-  <div padding *ngIf="!auth.authenticated()">
+  <div padding *ngIf="!auth.isAuthenticated()">
     <button ion-button block (click)="auth.login()">登录</button>
   </div>
 
-  <div *ngIf="auth.authenticated()">
+  <div *ngIf="auth.isAuthenticated()">
 
     <ion-card tappable (click)="auth.logout()">
 

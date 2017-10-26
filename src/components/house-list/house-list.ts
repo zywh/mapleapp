@@ -7,7 +7,9 @@ import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 //import { MapHouselist } from '../../pages/map-search/map-houselist';
 import {houseListModel } from '../../models/houseListModel';
-import { AuthService } from '../../providers/auth/auth';
+//import { AuthService } from '../../providers/auth/auth';
+import { AuthService } from '../../services/auth.service';
+
 
 @Component({
   selector: 'house-list',
@@ -26,9 +28,9 @@ export class HouseList {
   public vowShow: Object;
   constructor(
     private userData: UserData,
-    private mapleConf: MapleConf,
-    private mapleRestData: MapleRestData,
-    private modalc: ModalController,
+    //private mapleConf: MapleConf,
+    //private mapleRestData: MapleRestData,
+    //private modalc: ModalController,
     //public houseListM: houseListModel,
     private events: Events,
     public auth: AuthService,

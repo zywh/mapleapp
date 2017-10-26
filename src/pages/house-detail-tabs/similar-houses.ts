@@ -5,7 +5,8 @@ import { houseListModel } from '../../models/houseListModel';
 import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
 //import { UserData } from '../../providers/user-data';
-import { AuthService } from '../../providers/auth/auth';
+import { AuthService } from '../../services/auth.service';
+
 
 /*
   Generated class for the SimilarHouses page.
@@ -90,7 +91,7 @@ export class SimilarHousesPage {
 
         if (data.Data.Type == 'house') {
        
-          this.similarHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
+          this.similarHouseList = new houseListModel(data.Data.HouseList, this.auth.isAuthenticated());
           //console.log(similarHouses);
           //this.nav.push(HouselistSearch, { list: similarHouses, imgHost: '', listType: 'house' });
 

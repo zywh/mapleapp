@@ -5,7 +5,7 @@ import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { UserData } from '../../providers/user-data'
 //import { SelectOptionModal } from '../map-search/map-option-modal';
 import { MapleConf } from '../../providers/maple-rest-data/maple-config';
-import { AuthService } from '../../providers/auth/auth';
+import { AuthService } from '../../services/auth.service';
 //import { HouseList } from '../../components/house-list/house-list';
 import { houseListModel, houseShort } from '../../models/houseListModel';
 
@@ -248,9 +248,8 @@ export class HouselistSearch {
                     //let totalprice = 0;
                     //let totalhouse = data.Data.HouseList.length;
                     this.imgHost = data.Data.imgHost;
-                    // this.currentHouseList = this.userData.setVowMask(data.Data.HouseList);
-                    //this.currentHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
-                    this.currentHouseList = new houseListModel(this.houses, this.auth.authenticated());
+                    
+                    this.currentHouseList = new houseListModel(this.houses, this.auth.isAuthenticated());
                     this.content.scrollToTop();
 
                 });

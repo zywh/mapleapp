@@ -43,7 +43,7 @@ export class AuthService {
   refreshSubscription: any;
   user: Object;
   zoneImpl: NgZone;
-  storage: Storage = new Storage();
+  storage: Storage ;
   //storage: Storage;
   idToken: string;
 

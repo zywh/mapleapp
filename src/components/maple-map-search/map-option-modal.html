@@ -100,7 +100,7 @@
      <ion-buttons left>
         <button ion-button  (click)="saveSelections()"> 保存条件</button>
     </ion-buttons>
-      <ion-buttons left *ngIf="auth.authenticated()">
+      <ion-buttons left *ngIf="auth.isAuthenticated()">
         <button ion-button  (click)="getMySelections()"> 我的条件</button>
     </ion-buttons>
     

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Events, ToastController, AlertController } from 'ionic-angular';
-import { AuthService } from './auth/auth';
+import { AuthService } from '../services/auth.service';
 import { MapleRestData } from './maple-rest-data/maple-rest-data';
 import { MapleConf } from './maple-rest-data/maple-config';
 import { Storage } from '@ionic/storage';
@@ -221,7 +221,7 @@ export class UserData {
     //check if user is logged in
     return new Promise(resolve => {
 
-      if (this.auth.authenticated()) {
+      if (this.auth.isAuthenticated()) {
 
         this.hasFavorite(mls).then(res => {
           console.log(res)
@@ -282,7 +282,7 @@ export class UserData {
   }
 
   saveSelectOption(options, type) {
-    if (this.auth.authenticated()) {
+    if (this.auth.isAuthenticated()) {
       return new Promise(resolve => {
         this.mapleConf.load().then(res => {
           let rest = res.saveOptionsDataRest;
@@ -342,21 +342,7 @@ export class UserData {
 
   }
 
-  /*
-  setVowMask(list) {
-
-    for (var i = 0; i < list.length; i++) {
-
-      let src = list[i].Src;
-      let flag: boolean = ((!this.auth.authenticated()) && (src == 'VOW')) ? false : true;
-      list[i]['vowShowFlag'] = flag;
-      //console.log(src + "flag:" + flag)
-
-    }
-    return list;
-
-  }
-  */
+ 
  
   login(username) {
     this.storage.set(this.HAS_LOGGED_IN, true);

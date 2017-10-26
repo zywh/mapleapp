@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AlertController } from 'ionic-angular';
-import { Deploy } from '@ionic/cloud-angular';
+//import { Deploy } from '@ionic/cloud-angular';
 
 /*
   Generated class for the Update provider.
@@ -11,7 +11,8 @@ import { Deploy } from '@ionic/cloud-angular';
 @Injectable()
 export class UpdateService {
 
-  constructor(public deploy: Deploy,
+  constructor(
+      //public deploy: Deploy,
       private alertc: AlertController) {
   }
 
@@ -31,7 +32,7 @@ export class UpdateService {
           text: '重启应用',
           handler: () => {
             alert.dismiss().then(res => {
-              this.deploy.load();
+              //this.deploy.load();
             })
           }
         }
@@ -42,15 +43,15 @@ export class UpdateService {
 
 
   newUpdate() {
-    this.deploy.check().then((snapshotAvailable: boolean) => {
-        if (snapshotAvailable) {
-          this.deploy.download().then(() => {
-            this.deploy.extract().then(() => {
-              this.newUpdateAlert();
-            });
-          });
-        }
-      });
+    // this.deploy.check().then((snapshotAvailable: boolean) => {
+    //     if (snapshotAvailable) {
+    //       this.deploy.download().then(() => {
+    //         this.deploy.extract().then(() => {
+    //           this.newUpdateAlert();
+    //         });
+    //       });
+    //     }
+    //   });
  }
 }
 

@@ -8,7 +8,7 @@ import { MapleRestData } from '../../providers/maple-rest-data/maple-rest-data';
 import { SelectOptionModal } from './map-option-modal';
 import { SchoolSelectOptionModal } from '../../pages/school-map/schoolmap-option-modal';
 import { SchoolListModal } from '../../pages/school-map/school-list-modal';
-import { AuthService } from '../../providers/auth/auth';
+import { AuthService } from '../../services/auth.service';
 import { UserData } from '../../providers/user-data';
 import { houseListModel } from '../../models/houseListModel';
 //import { HouseDetailTabsPage } from '../../pages/house-detail-tabs/house-detail-tabs';
@@ -671,7 +671,7 @@ export class MapleMapSearchComponent {
             let nextLng;
             //let listAllHtml;
             //this.currentHouseList = this.userData.setVowMask(data.Data.HouseList);
-            this.currentHouseList = new houseListModel(data.Data.HouseList, this.auth.authenticated());
+            this.currentHouseList = new houseListModel(data.Data.HouseList, this.auth.isAuthenticated());
             let panelhtml;
             // console.log("Current House List Length:" + this.currentHouseList.length);
 
@@ -692,8 +692,8 @@ export class MapleMapSearchComponent {
                 let tlat = parseFloat(house.GeocodeLat);
                 let tlng = parseFloat(house.GeocodeLng);
                 //let vowflag: Boolean = ( house.src == 'VOW' || this.auth.authenticated());
-                // console.log("MLS:"+ house.MLS + " SRC:" + house.src + " isAuth:" + this.auth.authenticated());
-                let vowflag: boolean = (!this.auth.authenticated() && house.Src == 'VOW') ? false : true;
+                // console.log("MLS:"+ house.MLS + " SRC:" + house.src + " isAuth:" + this.auth.isAuthenticated());
+                let vowflag: boolean = (!this.auth.isAuthenticated() && house.Src == 'VOW') ? false : true;
 
                 let li: String;
                 if (!vowflag) {

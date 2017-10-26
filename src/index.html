@@ -4,13 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>&#x67AB;&#x4E4B;&#x90FD;</title>
-	<!-- Auth0.js script 
-  <script src="https://cdn.auth0.com/w2/auth0-7.0.4.min.js"></script>
-    -->
-	<!-- Auth0 Lock script 
-  <script src="http://cdn.auth0.com/js/lock/10.4.0/lock.min.js"></script>
-  -->
-  <script src="assets/extjs/auth0-7.2.min.js"></script>
+
 	<script src="assets/extjs/lock.min.js"></script>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -47,6 +41,10 @@
 	<!-- The polyfills js is generated during the build process -->
 	<script src="build/polyfills.js"></script>
 
+	
+  <!-- The bundle js is generated during the build process -->
+	<script src="build/vendor.js"></script>
+	
 	<!-- The bundle js is generated during the build process -->
 	<script src="build/main.js"></script>
 
@@ -55,6 +53,9 @@
 	<!--<script src="http://ditu.google.cn/maps/api/js?&amp;libraries=places&amp;language=zh-cn"></script>-->
 	<!-- richmarker for google map -->
 	<!--<script src="extjs/richmarker.js"></script>-->
+	
+  <!-- google maps script is loaded last as to not block rendering -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js"></script>
 	<script src="assets/extjs/highstock.js"></script>
 	<script src="assets/extjs/drilldown.js"></script>
 
